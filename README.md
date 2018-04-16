@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm i v-dialog --save
+npm i v-dialogs --save
 ```
 
 Include plugin in your `main.js` file.
