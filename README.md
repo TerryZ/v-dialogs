@@ -13,7 +13,7 @@ Include plugin in your `main.js` file.
 
 ```js
 import Vue from 'vue'
-import vDialog from 'v-dialog';
+import vDialog from 'v-dialogs';
 ...
 
 Vue.use(vDialog);
