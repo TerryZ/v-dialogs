@@ -114,7 +114,7 @@ this.$vDialog.mask('my data loading...', function(){
 });
 ```
 
-some time, you can use mask link this:
+some time, you can use mask like this:
 ```js
 let that = this;
 let dialogKey = this.$vDialog.mask();
