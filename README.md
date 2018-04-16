@@ -13,7 +13,7 @@ Include plugin in your `main.js` file.
 
 ```js
 import Vue from 'vue'
-import vDialog from 'v-dialog';
+import vDialog from 'v-dialogs';
 ...
 
 Vue.use(vDialog);
@@ -22,6 +22,8 @@ Vue.use(vDialog);
 ## Use case
 
 ### Modal
+
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-modal.png" alt="v-dialogs-modal" height="411px"></p>
 
 ```js
 import myComponent from './myComponent';//import component you want to open in Modal dialog
@@ -80,6 +82,8 @@ export default {
 
 ### Alert
 
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-alert.png" alt="v-dialogs-alert" height="290px"></p>
+
 ```js
 //call a message alert dialog
 this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!');
@@ -100,6 +104,8 @@ this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
 ```
 
 ### Mask
+
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-mask.png" alt="v-dialogs-mask" height="307px"></p>
 
 ```js
 //open a full screen mask
@@ -127,6 +133,8 @@ axios.post(...).then(resp){
 
 
 ### Toast
+
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-toast.png" alt="v-dialogs-toast" height="322px"></p>
 
 open a Toast dialog in a corner
 ```js
