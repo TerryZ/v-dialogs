@@ -1,18 +1,62 @@
-# y
+# v-dialog
 
-> A Vue.js project
+> A simple and powful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x
 
-## Build Setup
+## Install
 
 ``` bash
 # install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
+npm i v-dialog --save
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Include plugin in your `main.js` file.
+
+```js
+import Vue from 'vue'
+import vDialog from 'v-dialog';
+...
+
+Vue.use(vDialog);
+```
+
+## Use case
+
+### Modal
+
+```js
+import myComponent from './myComponent';//import component you want to open in Modal dialog
+
+new Vue({
+  el: '#app',
+  methods: {
+    click(){
+      //open component in Modal, and passing params to component
+      this.$vDialog.modal(myComponent, {
+        params: {
+          a: 1,
+          b: 2
+        }
+      });
+    }
+  }
+});
+```
+
+receive params in component
+
+```js
+export default {
+  name: 'myComponent',
+  props: ['params']
+  data(){
+    console.log(this.params);//{a:1, b:2}
+    return {};
+  }
+}
+```
+
+### Alert
+
+### Mask
+
+### Toast
