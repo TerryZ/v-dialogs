@@ -2,6 +2,12 @@
 
 > A simple and powerful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x
 
+### The Dialog Icon
+
+the icons in alert dialog used are made by [Elegant Themes](http://www.elegantthemes.com/blog/freebie-of-the-week/beautiful-flat-icons-for-free)
+
+and control icon, toast icon used are come from [IconFont](http://www.iconfont.cn)
+
 ## Install
 
 ``` bash
