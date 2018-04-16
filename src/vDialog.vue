@@ -3,7 +3,7 @@
         <!--<transition enter-class="vDialogOpen">-->
         <div dialog="vDialog" tabindex="-1" v-show="true"
              :class="[dialogClass, toastPosition]"
-             :style="[{'z-index':dialogZIndex},dialogSize]" @click="outsideClick" >
+             :style="[{'z-index':dialogZIndex},dialogSize]" @click.self="outsideClick" >
             <div class="modal-dialog" role="document" :style="{width:dlg.width+'px',height:dlg.height+'px',top:dialogTop+'px'}">
                 <div class="modal-content">
                     <div class="modal-header vDialogHeader" ref="dialogHeader" v-show="dlg.title !== false">
@@ -279,7 +279,7 @@
             position: relative;
             width: 100%;
             padding: 0;
-            overflow: hidden;
+            overflow: auto;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
 

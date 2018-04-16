@@ -20,11 +20,9 @@ const Plugin = {
                 params.callback = callback;
                 return dlg.addAlert(params);
             },
-            mask(msg, callback){
-                let params = {
-                    message: msg,
-                    callback: callback
-                };
+            mask(msg, callback, params = {}){
+                params.message = msg;
+                params.callback = callback;
                 return dlg.addMask(params);
             },
             toast(msg, callback, params = {}){

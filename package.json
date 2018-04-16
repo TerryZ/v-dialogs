@@ -1,10 +1,10 @@
 {
   "name": "v-dialogs",
   "description": "A simple and powful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "TerryZ <terry5@foxmail.com>",
   "license": "MIT",
-  "main": "dist/v-dialog.js",
+  "main": "dist/v-dialogs.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"

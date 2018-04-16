@@ -8,7 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     //filename: 'build.js'
-	filename: 'v-dialog.js',
+	filename: 'v-dialogs.js',
 	library: 'vDialog',
 	libraryTarget: 'umd',
 	umdNamedDefine: true
