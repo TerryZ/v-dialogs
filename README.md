@@ -82,6 +82,8 @@ export default {
 
 ### Alert
 
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-alert.png" alt="v-dialogs-alert"></p>
+
 ```js
 //call a message alert dialog
 this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!');
@@ -102,6 +104,8 @@ this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
 ```
 
 ### Mask
+
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-mask.png" alt="v-dialogs-mask"></p>
 
 ```js
 //open a full screen mask
@@ -129,6 +133,8 @@ axios.post(...).then(resp){
 
 
 ### Toast
+
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-toast.png" alt="v-dialogs-toast"></p>
 
 open a Toast dialog in a corner
 ```js
