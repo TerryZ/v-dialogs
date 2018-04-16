@@ -1,4 +1,4 @@
-# v-dialog
+# v-dialogs
 
 > A simple and powful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x
 
