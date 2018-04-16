@@ -127,3 +127,38 @@ axios.post(...).then(resp){
 
 
 ### Toast
+
+open a Toast dialog in a corner
+```js
+//open a Toast dialog with message, default show to right bottom position
+this.$vDialog.toast('This is a Vue <b>vDialog</b> Toast!');
+
+//open a Toast dialog with a close callback
+this.$vDialog.toast('This is a Vue <b>vDialog</b> Toast!', function(){
+  // do something...
+});
+
+//open a Toast with some options
+this.$vDialog.toast('This is a Vue <b>vDialog</b> Toast!',null, {
+  messageType: 'warning',//theme set
+  position: 'topLeft',// show position
+  dialogCloseButton: false, // show dialog without close button
+  closeTime: 3 // auto close toast times(second)
+});
+```
+
+messageType:
+
+- 'info'(default)
+- 'warning'
+- 'error'
+- 'success'
+
+position:
+
+- 'topLeft'
+- 'topCenter'
+- 'topRight'
+- 'bottomLeft'
+- 'bottomCenter'
+- 'bottomRight'
