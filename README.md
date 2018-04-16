@@ -57,6 +57,23 @@ export default {
 
 ### Alert
 
+```js
+//call a message alert dialog
+this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!');
+
+//call a message alert dialog with dialog close callback
+this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
+  //your callback code
+});
+
+//call a error type message alert dialog with dialog close callback
+this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
+  //your callback code
+},{
+  messageType: 'error'
+});
+```
+
 ### Mask
 
 ### Toast
