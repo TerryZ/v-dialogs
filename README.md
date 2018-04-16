@@ -23,7 +23,7 @@ Vue.use(vDialog);
 
 ### Modal
 
-<p align="center"><img src="https://terryz.github.io/image/logo/SelectPage.png" alt="v-dialogs-modal" height="300px"></p>
+<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-modal.png" alt="v-dialogs-modal" height="300px"></p>
 
 ```js
 import myComponent from './myComponent';//import component you want to open in Modal dialog
