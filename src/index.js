@@ -1,3 +1,7 @@
+/**
+ * v-dialog
+ */
+
 import vDialog from './vDialogContainer';
 
 const Plugin = {

@@ -29,14 +29,17 @@
                 keyNum: 0
             };
         },
-        watch:{
-            setting(val){
-
-            }
-        },
         methods: {
             buildDialogConfig(config){
                 let merged = Object.assign({}, dialogDefaults, config);
+                merged.closeCallback = function(data){
+                    let that = this;
+                    return new Promise(function(success, fail){
+                        let cb = that.callback;
+                        if(cb && typeof(cb) === 'function') cb(cb.returnData);
+                        success();
+                    });
+                };
                 return merged;
             },
             /**
@@ -155,7 +158,12 @@
                 }
             },
             closeDialog(index){
-                this.dialogs.splice(index, 1);
+                let dlg = this.dialogs[index], that = this;
+                if(dlg){
+                    dlg.closeCallback(dlg.returnData).then(function(){
+                        that.dialogs.splice(index, 1);
+                    });
+                }
             }
         }
     }

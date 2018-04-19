@@ -146,6 +146,7 @@
                 }, that.dlg.closeTime * 1000);
             }
 
+            //dialog open animate
             if(this.dlg.type !== 'toast') {
                 this.dialogClass.vDialogOpen = true;
                 setTimeout(function(){
@@ -155,9 +156,11 @@
         },
         destroyed(){
             //this.$emit('dialog-closed');
+            /*
             let cb = this.dlg.callback;
             if( this.dlg.returnData && Object.keys(this.dlg.returnData).length ) this.needCallback = true;
             if(cb && typeof(cb) === 'function' && this.needCallback) cb(this.dlg.returnData);
+            */
         }
     }
 </script>
