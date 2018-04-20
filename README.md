@@ -2,6 +2,12 @@
 
 > A simple and powerful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x
 
+## State
+
+[![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
+[![npm](https://img.shields.io/npm/dy/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
+
 ### The Dialog Icon
 
 the icons in alert dialog used are made by [Elegant Themes](http://www.elegantthemes.com/blog/freebie-of-the-week/beautiful-flat-icons-for-free)
