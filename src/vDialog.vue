@@ -5,7 +5,7 @@
              :class="[dialogClass, toastPosition]"
              :style="[{'z-index':dialogZIndex},dialogSize]" @click.self="outsideClick" >
             <div class="modal-dialog" role="document" :style="{width:dlg.width+'px',height:dlg.height+'px',top:dialogTop+'px'}">
-                <div class="modal-content">
+                <div :class="[{'modal-content': true}, dialogContentClass]">
                     <div class="modal-header vDialogHeader" ref="dialogHeader" v-show="dlg.title !== false">
                         <button type="button" class="vDialogCloseButton" v-show="dlg.dialogCloseButton" @click="closeDialog(false)"><i class="vDialogFont vDialog-close"></i></button>
                         <button type="button" class="maximize vDialogMaxButton" v-show="dlg.dialogMaxButton" @click="dialogMax" >
@@ -73,6 +73,10 @@
                     maximize: false,
                     vDialogOpen: false,
                     vDialogBuzzOut: false
+
+                },
+                dialogContentClass: {
+                    vDialogErrorBg: false
                 },
                 toastPosition: this.setting.type === 'toast'?this.setting.position:''
             };
@@ -131,7 +135,7 @@
             }
         },
         mounted(){
-            var that = this;
+            var that = this, dlg = this.dlg;
             this.adjust();
 
             //z-index step number
@@ -139,15 +143,18 @@
             this.dialogZIndex = commonConstants.baseZIndex + (step * this.dialogIndex);
             this.backdropZIndex = this.dialogZIndex - 10;
 
+            if(dlg.type === 'alert' && dlg.messageType === 'error')
+                this.dialogContentClass.vDialogErrorBg = true;
+
             //auto close dialog
-            if(this.dlg.type !== 'modal' && this.dlg.closeTime){
+            if(dlg.type !== 'modal' && dlg.closeTime){
                 setTimeout(function(){
                     that.closeDialog(true);
-                }, that.dlg.closeTime * 1000);
+                }, dlg.closeTime * 1000);
             }
 
             //dialog open animate
-            if(this.dlg.type !== 'toast') {
+            if(dlg.type !== 'toast') {
                 this.dialogClass.vDialogOpen = true;
                 setTimeout(function(){
                     that.dialogClass.vDialogOpen = false;
@@ -410,6 +417,12 @@
                 display: none;
             }
         }
+    }
+
+    .vDialogErrorBg{
+        box-shadow: 0 0px 30px rgba(255,0,0,0.5) !important;
+        -moz-box-shadow: 0 0px 30px rgba(255,0,0,0.5) !important;
+        -webkit-box-shadow: 0 0px 30px rgba(255,0,0,0.5) !important;
     }
     /* Alert mode style sheet */
 

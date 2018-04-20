@@ -30,16 +30,13 @@
             };
         },
         methods: {
+            /**
+             * Merge user options and default options
+             * @param config - user options
+             * @return merged options
+             */
             buildDialogConfig(config){
                 let merged = Object.assign({}, dialogDefaults, config);
-                merged.closeCallback = function(data){
-                    let that = this;
-                    return new Promise(function(success, fail){
-                        let cb = that.callback;
-                        if(cb && typeof(cb) === 'function') cb(cb.returnData);
-                        success();
-                    });
-                };
                 return merged;
             },
             /**
@@ -60,6 +57,9 @@
                 }
                 return str;
             },
+            /**
+             * Init default options
+             */
             buildDialog(config){
                 this.keyNum++;
                 let key = this.keyPrefix + this.keyNum;
@@ -67,11 +67,19 @@
                 this.dialogs.push(config);
                 return key;
             },
+            /**
+             * Open a Modal dialog
+             * @param p - options
+             */
             addModal(p){
                 let config = this.buildDialogConfig(p);
                 config.type = 'modal';
                 return this.buildDialog(config);
             },
+            /**
+             * Open a message alert dialog, types including info, warning, error, success, confirm
+             * @param p - options
+             */
             addAlert(p){
                 let config = this.buildDialogConfig(p);
                 //console.log('Alert');
@@ -102,6 +110,10 @@
 
                 return this.buildDialog(config);
             },
+            /**
+             * Open a full screen mask
+             * @param p - options
+             */
             addMask(p){
                 let config = this.buildDialogConfig(p);
                 config.type = 'mask';
@@ -114,6 +126,19 @@
 
                 return this.buildDialog(config);
             },
+            /**
+             * Open a Toast dialog (corner dialog)
+             *
+             * @param p - options
+             *
+             * @enum position
+             * 'topLeft'
+             * 'topCenter'
+             * 'topRight'
+             * 'bottomLeft'
+             * 'bottomCenter'
+             * 'bottomRight'
+             */
             addToast(p){
                 let config = this.buildDialogConfig(p);
                 config.type = 'toast';
@@ -144,25 +169,32 @@
                 return this.buildDialog(config);
             },
             /**
-             * close last dialog(Modal, Alert, Mask, Toast)
-             * @param data
+             * Close dialog, last one or specified key dialog (Modal, Alert, Mask, Toast)
+             * @param data - the data return to caller
+             * @param key - the dialog key, you can get it like this: let key = this.$vDialog.alert('your msg');
              */
             close(data, key){
+                if(this.dialogs.length === 0) return;
                 let idx = -1;
                 if(key){
                     idx = this.dialogs.findIndex(function(row, index){
                         return row.dialogKey === key;
                     });
+                }else idx = this.dialogs.length -1;
+                if(idx >= 0){
                     this.dialogs[idx].returnData = data;
                     this.closeDialog(idx);
                 }
             },
+            /**
+             * Close dialog (remove dialogs array item) and call user callback function
+             * @param index - dialog index
+             */
             closeDialog(index){
-                let dlg = this.dialogs[index], that = this;
+                let dlg = this.dialogs[index];
                 if(dlg){
-                    dlg.closeCallback(dlg.returnData).then(function(){
-                        that.dialogs.splice(index, 1);
-                    });
+                    this.dialogs.splice(index, 1);
+                    if(dlg.callback && typeof(dlg.callback) === 'function') dlg.callback();
                 }
             }
         }
