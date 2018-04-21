@@ -129,6 +129,15 @@ const dialogDefaults = {
      * work on Toast mode
      */
     position : 'bottomRight',
+    /**
+     * Specified a key to make dialog singleton
+     * @type string
+     */
+    singletonKey: undefined,
+    /**
+     * Dialog inner key
+     * @private
+     */
     dialogKey: '',
     /**
      * Use custom class in Dialog
@@ -138,6 +147,7 @@ const dialogDefaults = {
     iconClassName: '',
     /**
      * Dialog use language
+     * @type string
      * @enum cn - default
      * @enum en
      * @enum jp
@@ -149,7 +159,22 @@ const dialogDefaults = {
      * auto close dialog seconds
      * @type number | boolean
      */
-    closeTime: false
+    closeTime: false,
+    /**
+     * Just close dialog, don`t trigger callback but cancelCallback
+     * @private
+     * @type boolean
+     */
+    cancel: false,
+    /**
+     * Close dialog callback, trigger by some case:
+     * click the close button in top right corner(Model,Toast mode)
+     * click 'cancel' button in Alert mode ('confirm' message type)
+     *
+     * @type function
+     */
+    cancelCallback: undefined
+
 };
 
 const commonConstants = {

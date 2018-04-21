@@ -61,11 +61,14 @@
              * Init default options
              */
             buildDialog(config){
-                this.keyNum++;
-                let key = this.keyPrefix + this.keyNum;
-                config.dialogKey = key;
-                this.dialogs.push(config);
-                return key;
+                let idx = this.dialogs.findIndex( (val) => config.singletonKey && val.singletonKey === config.singletonKey );
+                if(idx === -1){
+                    this.keyNum++;
+                    let key = this.keyPrefix + this.keyNum;
+                    config.dialogKey = key;
+                    this.dialogs.push(config);
+                    return key;
+                }else return null;
             },
             /**
              * Open a Modal dialog
@@ -194,7 +197,8 @@
                 let dlg = this.dialogs[index];
                 if(dlg){
                     this.dialogs.splice(index, 1);
-                    if(dlg.callback && typeof(dlg.callback) === 'function') dlg.callback();
+                    if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback();
+                    if(dlg.cancel && dlg.cancelCallback && typeof(dlg.cancelCallback) === 'function') dlg.cancelCallback();
                 }
             }
         }

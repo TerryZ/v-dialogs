@@ -7,7 +7,7 @@
             <div class="modal-dialog" role="document" :style="{width:dlg.width+'px',height:dlg.height+'px',top:dialogTop+'px'}">
                 <div :class="[{'modal-content': true}, dialogContentClass]">
                     <div class="modal-header vDialogHeader" ref="dialogHeader" v-show="dlg.title !== false">
-                        <button type="button" class="vDialogCloseButton" v-show="dlg.dialogCloseButton" @click="closeDialog(false)"><i class="vDialogFont vDialog-close"></i></button>
+                        <button type="button" class="vDialogCloseButton" v-show="dlg.dialogCloseButton" @click="closeDialog(true)"><i class="vDialogFont vDialog-close"></i></button>
                         <button type="button" class="maximize vDialogMaxButton" v-show="dlg.dialogMaxButton" @click="dialogMax" >
                             <i :class="[{vDialogFont:true}, dialogClass.maximize?'vDialog-restore':'vDialog-max']"></i>
                         </button>
@@ -21,8 +21,8 @@
                         <div :class="[ {vDialogAlert:true}, dlg.iconClassName ]" v-else-if="dlg.type === 'alert'">
                             <div class="messageContent" v-html="dlg.message"></div>
                             <div class="vDialogButtons">
-                                <button type="button" class="vDialogOk" @click="closeDialog(true)">{{dlg.i18n.btnOk}}</button>
-                                <button type="button" class="vDialogCancel" @click="closeDialog(false)" v-show="dlg.messageType === 'confirm' || dlg.messageType === 'inputConfirm'">{{dlg.i18n.btnCancel}}</button>
+                                <button type="button" class="vDialogOk" @click="closeDialog(false)">{{dlg.i18n.btnOk}}</button>
+                                <button type="button" class="vDialogCancel" @click="closeDialog(true)" v-show="dlg.messageType === 'confirm' || dlg.messageType === 'inputConfirm'">{{dlg.i18n.btnCancel}}</button>
                             </div>
                         </div>
 
@@ -34,7 +34,7 @@
 
                         <!-- Toast mode content -->
                         <div :class="[ {vDialogToastContent:true}, dlg.contentClass]" v-else-if="dlg.type === 'toast'" >
-                            <button type="button" class="vDialogToastClose" v-show="dlg.dialogCloseButton" @click="closeDialog(true)">×</button>
+                            <button type="button" class="vDialogToastClose" v-show="dlg.dialogCloseButton" @click="closeDialog(false)">×</button>
                             <div class="vDialogToastIcon"><i :class="[{vDialogFont: true},dlg.iconClassName]"></i></div>
                             <div class="messageContent">
                                 <h3>{{dlg.titleStr}}</h3>
@@ -63,7 +63,6 @@
                 dlg: this.setting,
                 bodyHeight: 50,
                 dialogTop: 0,
-                needCallback: false,
                 dialogZIndex: 0,
                 backdropZIndex: 0,
                 dialogSize: {},
@@ -90,7 +89,7 @@
              */
             closeDialog(trigger){
                 //console.log(typeof trigger);
-                this.needCallback = trigger;
+                this.setting.cancel = trigger;
                 this.$emit('close',this.dialogIndex);
             },
             /**
@@ -116,7 +115,7 @@
              */
             adjust(){
                 if(this.dlg.title){
-                    let headerHeight = parseFloat(window.getComputedStyle(this.$refs.dialogHeader).height);
+                    let headerHeight = parseFloat(this.$refs.dialogHeader.getBoundingClientRect().height);
                     this.bodyHeight = this.dlg.height - headerHeight;
                 }else this.bodyHeight = this.dlg.height;
 
@@ -162,7 +161,7 @@
             //auto close dialog
             if(dlg.type !== 'modal' && dlg.closeTime){
                 setTimeout(function(){
-                    that.closeDialog(true);
+                    that.closeDialog(false);
                 }, dlg.closeTime * 1000);
             }
 
@@ -173,14 +172,6 @@
                     that.dialogClass.vDialogOpen = false;
                 }, 500);
             }
-        },
-        destroyed(){
-            //this.$emit('dialog-closed');
-            /*
-            let cb = this.dlg.callback;
-            if( this.dlg.returnData && Object.keys(this.dlg.returnData).length ) this.needCallback = true;
-            if(cb && typeof(cb) === 'function' && this.needCallback) cb(this.dlg.returnData);
-            */
         }
     }
 </script>
@@ -427,7 +418,6 @@
             .vDialogCancel{
                 border: 1px solid #F0F0F0;
                 background-color: #F0F0F0;
-                display: none;
             }
         }
     }
