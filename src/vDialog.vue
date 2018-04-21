@@ -76,7 +76,9 @@
 
                 },
                 dialogContentClass: {
-                    vDialogErrorBg: false
+                    vDialogErrorBg: false,
+                    vDialogWarnBg: false,
+                    vDialogSuccessBg: false
                 },
                 toastPosition: this.setting.type === 'toast'?this.setting.position:''
             };
@@ -143,8 +145,19 @@
             this.dialogZIndex = commonConstants.baseZIndex + (step * this.dialogIndex);
             this.backdropZIndex = this.dialogZIndex - 10;
 
-            if(dlg.type === 'alert' && dlg.messageType === 'error')
-                this.dialogContentClass.vDialogErrorBg = true;
+            if(dlg.type === 'alert') {
+                switch (dlg.messageType){
+                    case messageTypes.error:
+                        this.dialogContentClass.vDialogErrorBg = true;
+                        break;
+                    case messageTypes.warning:
+                        this.dialogContentClass.vDialogWarnBg = true;
+                        break;
+                    case messageTypes.success:
+                        this.dialogContentClass.vDialogSuccessBg = true;
+                        break;
+                }
+            }
 
             //auto close dialog
             if(dlg.type !== 'modal' && dlg.closeTime){
@@ -420,9 +433,19 @@
     }
 
     .vDialogErrorBg{
-        box-shadow: 0 0px 30px rgba(255,0,0,0.5) !important;
-        -moz-box-shadow: 0 0px 30px rgba(255,0,0,0.5) !important;
-        -webkit-box-shadow: 0 0px 30px rgba(255,0,0,0.5) !important;
+        box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
+        -moz-box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
+        -webkit-box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
+    }
+    .vDialogWarnBg{
+        box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
+        -moz-box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
+        -webkit-box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
+    }
+    .vDialogSuccessBg{
+        box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
+        -moz-box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
+        -webkit-box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
     }
     /* Alert mode style sheet */
 
