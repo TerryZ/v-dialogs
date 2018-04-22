@@ -90,7 +90,7 @@
             closeDialog(trigger){
                 //console.log(typeof trigger);
                 this.setting.cancel = trigger;
-                this.$emit('close',this.dialogIndex);
+                this.$emit('close',this.setting.dialogKey);
             },
             /**
              * dialog max size

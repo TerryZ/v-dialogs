@@ -3,10 +3,11 @@
         <!--<transition-group name="animated" enter-class="bounce" enter-active-class="bounce">-->
         <!--<transition enter-class="vDialogOpen">-->
         <vDialog v-for="(dlg,index) in dialogs"
+                 is="vDialog"
                  :setting="dlg"
                  :dialogIndex="index"
-                 :key="index"
-                 :dialogKey="keyPrefix + keyNum"
+                 :key="dlg.dialogKey"
+                 :dialogKey="dlg.dialogKey"
                  @close="closeDialog"></vDialog>
         <!--</transition>-->
         <!--</transition-group>-->
@@ -61,7 +62,7 @@
              * Init default options
              */
             buildDialog(config){
-                let idx = this.dialogs.findIndex( (val) => config.singletonKey && val.singletonKey === config.singletonKey );
+                let idx = this.dialogs.findIndex(val => config.singletonKey && val.singletonKey === config.singletonKey );
                 if(idx === -1){
                     this.keyNum++;
                     let key = this.keyPrefix + this.keyNum;
@@ -178,25 +179,26 @@
              */
             close(data, key){
                 if(this.dialogs.length === 0) return;
-                let idx = -1;
-                if(key){
-                    idx = this.dialogs.findIndex(function(row, index){
-                        return row.dialogKey === key;
-                    });
-                }else idx = this.dialogs.length -1;
-                if(idx >= 0){
-                    this.dialogs[idx].returnData = data;
-                    this.closeDialog(idx);
+                let idx = -1, dKey = key, dlg;
+
+                if(!key){
+                    dKey = this.dialogs[this.dialogs.length -1].dialogKey;
                 }
+
+                if(typeof(data) !== 'undefined'){
+                    this.dialogs.find(val=>val.dialogKey === dKey).returnData = data;
+                }
+                this.closeDialog(dKey);
             },
             /**
              * Close dialog (remove dialogs array item) and call user callback function
-             * @param index - dialog index
+             * @param key - dialog key
              */
-            closeDialog(index){
-                let dlg = this.dialogs[index];
+            closeDialog(key){
+                if(!key) return;
+                let dlg = this.dialogs.find(val => val.dialogKey === key);
                 if(dlg){
-                    this.dialogs.splice(index, 1);
+                    this.dialogs = this.dialogs.filter(val => val.dialogKey !== key);
                     if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback(dlg.returnData);
                     if(dlg.cancel && dlg.cancelCallback && typeof(dlg.cancelCallback) === 'function') dlg.cancelCallback();
                 }
