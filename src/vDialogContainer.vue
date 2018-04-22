@@ -197,7 +197,7 @@
                 let dlg = this.dialogs[index];
                 if(dlg){
                     this.dialogs.splice(index, 1);
-                    if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback();
+                    if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback(dlg.returnData);
                     if(dlg.cancel && dlg.cancelCallback && typeof(dlg.cancelCallback) === 'function') dlg.cancelCallback();
                 }
             }
