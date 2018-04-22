@@ -18,14 +18,14 @@
     import constant from './vDialogConstants';
     let {dialogDefaults, messageTypes, alertIconClass, toastConstants,languages} = constant;
     export default {
-        name: "v-dialog",
+        name: "v-dialogs",
         components: {
             vDialog
         },
         data(){
             return {
                 dialogs: [],
-                keyPrefix: 'v-dialog-',
+                keyPrefix: 'v-dialogs-',
                 keyNum: 0
             };
         },

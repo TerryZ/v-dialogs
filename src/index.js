@@ -1,5 +1,5 @@
 /**
- * v-dialog
+ * v-dialogs
  */
 
 import vDialog from './vDialogContainer';

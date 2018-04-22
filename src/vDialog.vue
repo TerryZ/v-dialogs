@@ -56,7 +56,7 @@
     import constant from './vDialogConstants';
     let {dialogDefaults, messageTypes, alertIconClass, toastConstants, languages, commonConstants} = constant;
     export default {
-        name: "v-dialog-content",
+        name: "v-dialogs-content",
         props: ['setting', 'dialogIndex'],
         data(){
             return {
@@ -518,7 +518,7 @@
             overflow-y: auto;
             min-height: 80px;
             h3{ margin: 0 0 3px 0;font-size: 16px;font-weight: bold;color: black; }
-            p{ font-size: 14px; }
+            p{ font-size: 14px;line-height: 1 }
         }
     }
     /* Toast mode style sheet */
