@@ -1,6 +1,8 @@
 # v-dialogs
 
-A simple and powerful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x
+A simple and powerful dialog, dialog type including **Modal**, **Alert**, **Mask** and **Toast**, based on **Vue2.x**
+
+<br><br>
 
 ## Demo、Document、Changelog
 Explorer on
