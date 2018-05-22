@@ -167,10 +167,12 @@
 
             //dialog open animate
             if(dlg.type !== 'toast') {
-                this.dialogClass.vDialogOpen = true;
-                setTimeout(function(){
-                    that.dialogClass.vDialogOpen = false;
-                }, 500);
+                this.$nextTick(()=>{
+                    that.dialogClass.vDialogOpen = true;
+                    setTimeout(function(){
+                        that.dialogClass.vDialogOpen = false;
+                    }, 500);
+                });
             }
         }
     }

@@ -199,8 +199,21 @@
                 let dlg = this.dialogs.find(val => val.dialogKey === key);
                 if(dlg){
                     this.dialogs = this.dialogs.filter(val => val.dialogKey !== key);
-                    if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback(dlg.returnData);
-                    if(dlg.cancel && dlg.cancelCallback && typeof(dlg.cancelCallback) === 'function') dlg.cancelCallback();
+                    this.$nextTick(()=>{
+                        if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback(dlg.returnData);
+                        if(dlg.cancel && dlg.cancelCallback && typeof(dlg.cancelCallback) === 'function') dlg.cancelCallback();
+                    });
+                }
+            },
+            /**
+             * Close all dialog
+             */
+            closeAll(callback){
+                if(this.dialogs.length){
+                    this.dialogs.splice(0, this.dialogs.length);
+                    this.$nextTick(()=>{
+                        if(callback && typeof(callback)==='function') callback();
+                    });
                 }
             }
         }

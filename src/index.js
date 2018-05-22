@@ -37,6 +37,9 @@ const Plugin = {
             },
             close(data, key){
                 dlg.close(data, key);
+            },
+            closeAll(callback){
+                dlg.closeAll(callback);
             }
         };
     }
