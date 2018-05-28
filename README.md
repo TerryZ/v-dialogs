@@ -7,8 +7,8 @@ A simple and powerful dialog, dialog type including **Modal**, **Alert**, **Mask
 ## Demo、Document、Changelog
 Explorer on
 
-- [English official site](https://terryz.github.io/vue/#/dialog)
-- [中文官网](https://terryz.gitee.io/vue/#/dialog)
+- [English site](https://terryz.github.io/vue/#/dialog)
+- [国内站点](https://terryz.gitee.io/vue/#/dialog)
 
 the jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
 
