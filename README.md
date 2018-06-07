@@ -176,7 +176,7 @@ axios.post(...).then(resp){
 
 ### Toast
 
-<p align="center"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-toast.png" alt="v-dialogs-toast" height="322px"></p>
+<p align="right"><img src="https://terryz.github.io/image/v-dialogs/v-dialogs-toast.png" alt="v-dialogs-toast" height="322px"></p>
 
 open a Toast dialog in a corner
 ```js
