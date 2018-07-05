@@ -1,6 +1,6 @@
 # v-dialogs
 
-A simple and powerful dialog, dialog type including **Modal**, **Alert**, **Mask** and **Toast**, based on **Vue2.x**
+A simple and powerful dialog, dialog type including **Modal**, **Alert**, **Mask** and **Toast**, based on **Vue2**
 
 <br><br>
 
@@ -49,7 +49,6 @@ and control icon, toast icon used are come from [IconFont](http://www.iconfont.c
 ## Install
 
 ``` bash
-# install dependencies
 npm i v-dialogs --save
 ```
 
@@ -58,8 +57,6 @@ Include plugin in your `main.js` file.
 ```js
 import Vue from 'vue'
 import vDialog from 'v-dialogs';
-...
-
 Vue.use(vDialog);
 ```
 
