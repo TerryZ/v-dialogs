@@ -1,6 +1,6 @@
 # v-dialogs
 
-A simple and powerful dialog, dialog type including **Modal**, **Alert**, **Mask** and **Toast**, based on **Vue2**
+A simple and powerful dialog for **Vue2**, dialog type including **Modal**, **Alert**, **Mask** and **Toast**
 
 <br><br>
 
