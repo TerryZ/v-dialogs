@@ -51,6 +51,16 @@ const languages = {
         btnCancel : 'Cancel',
         maskText : 'Loading……'
     },
+    pt: {
+        titleInfo : 'aviso',
+        titleWarning : 'alerta',
+        titleError : 'erro',
+        titleSuccess : 'sucesso',
+        titleConfirm : 'confirmaço',
+        btnOk : 'OK',
+        btnCancel : 'Cancelar',
+        maskText : 'Carregando……'
+    },
     jp: {
         titleInfo : 'ヒント',
         titleWarning : '警告',
