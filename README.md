@@ -4,13 +4,13 @@ A simple and powerful dialog for **Vue2**, dialog type including **Modal**, **Al
 
 <br><br>
 
-## Demo、Document、Changelog
+## Demos and Documents
 Explorer on
 
 - [English site](https://terryz.github.io/vue/#/dialog)
 - [国内站点](https://terryz.gitee.io/vue/#/dialog)
 
-the jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
+The jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
 
 <br><br>
 
