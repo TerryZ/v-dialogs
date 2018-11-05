@@ -1,6 +1,9 @@
 # v-dialogs
 
 A simple and powerful dialog for **Vue2**, dialog type including **Modal**, **Alert**, **Mask** and **Toast**
+[![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
+[![npm](https://img.shields.io/npm/dy/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
 
 <br><br>
 
@@ -11,14 +14,6 @@ Explorer on
 - [国内站点](https://terryz.gitee.io/vue/#/dialog)
 
 The jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
-
-<br><br>
-
-## State
-
-[![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
-[![npm](https://img.shields.io/npm/dy/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
 
 <br><br>
 
