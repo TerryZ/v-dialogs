@@ -58,6 +58,8 @@ import vDialog from 'v-dialogs';
 Vue.use(vDialog);
 ```
 
+<br><br>
+
 ## Use case
 
 ### Modal
