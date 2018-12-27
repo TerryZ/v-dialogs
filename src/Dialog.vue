@@ -1,271 +1,93 @@
 <template>
     <div>
-        <!--<transition enter-class="vDialogOpen">-->
-        <div dialog="vDialog" tabindex="-1" v-show="true"
-             :class="[dialogClass, toastPosition]"
-             :style="[{'z-index':dialogZIndex},dialogSize]" @click.self="outsideClick" >
-            <div class="modal-dialog" role="document" :style="{width:dlg.width+'px',height:dlg.height+'px',top:dialogTop+'px'}">
-                <div :class="[{'modal-content': true}, dialogContentClass]">
-                    <div class="modal-header vDialogHeader" ref="dialogHeader" v-show="dlg.title !== false">
-                        <button type="button" class="vDialogCloseButton" v-show="dlg.dialogCloseButton" @click="closeDialog(true)"><i class="vDialogFont vDialog-close"></i></button>
-                        <button type="button" class="maximize vDialogMaxButton" v-show="dlg.dialogMaxButton" @click="dialogMax" >
-                            <i :class="[{vDialogFont:true}, dialogClass.maximize?'vDialog-restore':'vDialog-max']"></i>
-                        </button>
-                        <h3 class="vDialogHeaderLabel">{{dlg.title}}</h3>
-                    </div>
-                    <div class="modal-body vDialogBody" :style="{height:bodyHeight+'px'}" >
-                        <!-- Modal mode content -->
-                        <component v-if="dlg.type === 'modal'" :is="dlg.component" :params="dlg.params"></component>
-
-                        <!-- Alert mode content -->
-                        <div :class="[ {vDialogAlert:true}, dlg.iconClassName ]" v-else-if="dlg.type === 'alert'">
-                            <div class="messageContent" v-html="dlg.message"></div>
-                            <div class="vDialogButtons">
-                                <button type="button" class="vDialogOk" @click="closeDialog(false)">{{dlg.i18n.btnOk}}</button>
-                                <button type="button" class="vDialogCancel" @click="closeDialog(true)" v-show="dlg.messageType === 'confirm' || dlg.messageType === 'inputConfirm'">{{dlg.i18n.btnCancel}}</button>
-                            </div>
-                        </div>
-
-                        <!-- Mask mode content -->
-                        <div class="vDialogMaskContent" v-else-if="dlg.type === 'mask'" >
-                            <div class="vDialogTimer"></div>
-                            <div class="messageContent">{{dlg.message}}</div>
-                        </div>
-
-                        <!-- Toast mode content -->
-                        <div :class="[ {vDialogToastContent:true}, dlg.contentClass]" v-else-if="dlg.type === 'toast'" >
-                            <button type="button" class="vDialogToastClose" v-show="dlg.dialogCloseButton" @click="closeDialog(false)">×</button>
-                            <div class="vDialogToastIcon"><i :class="[{vDialogFont: true},dlg.iconClassName]"></i></div>
-                            <div class="messageContent">
-                                <h3>{{dlg.titleStr}}</h3>
-                                <p v-html="dlg.message"></p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer vDialogFooter hide">&nbsp;</div>
-                </div>
-            </div>
-        </div>
-        <!--</transition>-->
-        <div class="vDialog-backdrop" :style="{'z-index':backdropZIndex}" v-if="dlg.type !== 'toast' && dlg.backdrop"></div>
+        <dlg-modal v-bind="$attrs" v-on="$listeners" v-if="type === 'modal'"></dlg-modal>
+        <dlg-alert v-bind="$attrs" v-on="$listeners" v-if="type === 'alert'"></dlg-alert>
+        <dlg-mask v-bind="$attrs" v-on="$listeners" v-if="type === 'mask'"></dlg-mask>
+        <dlg-toast v-bind="$attrs" v-on="$listeners" v-if="type === 'toast'"></dlg-toast>
     </div>
 </template>
 
 <script>
-    import constant from './vDialogConstants';
-    let {dialogDefaults, messageTypes, alertIconClass, toastConstants, languages, commonConstants} = constant;
+    import modal from './components/Modal';
+    import alert from './components/Alert';
+    import mask from './components/Mask';
+    import toast from './components/Toast';
     export default {
-        name: "v-dialogs-content",
-        props: ['setting', 'dialogIndex'],
-        data(){
+        components: {
+            'dlg-modal': modal,
+            'dlg-alert': alert,
+            'dlg-mask': mask,
+            'dlg-toast': toast
+        },
+        props:{
+            /**
+             * Dialog type
+             * @type string
+             * @enum 'modal' Modal dialog
+             * @enum 'alert' Alert dialog
+             * @enum 'mask' Mask dialog
+             * @enum 'toast' Toast(corner) dialog
+             */
+            type: {
+                type: String,
+                default: 'modal',
+                required: true
+            }
+        },
+        provide(){
             return {
-                dlg: this.setting,
-                bodyHeight: 50,
-                dialogTop: 0,
-                dialogZIndex: 0,
-                backdropZIndex: 0,
-                dialogSize: {},
-                dialogClass:{
-                    vDialog: true,
-                    vDialogToast: this.setting.type === 'toast',
-                    maximize: false,
-                    vDialogOpen: false,
-                    vDialogBuzzOut: false
-
-                },
-                dialogContentClass: {
-                    vDialogErrorBg: false,
-                    vDialogWarnBg: false,
-                    vDialogSuccessBg: false
-                },
-                toastPosition: this.setting.type === 'toast'?this.setting.position:''
+                type: this.type
             };
-        },
-        methods:{
-            /**
-             * Close current dialog
-             * @param trigger [boolean] whether close dialog and trigger callback function
-             */
-            closeDialog(trigger){
-                //console.log(typeof trigger);
-                this.setting.cancel = trigger;
-                this.$emit('close',this.setting.dialogKey);
-            },
-            /**
-             * dialog max size
-             * work on modal mode
-             */
-            dialogMax(){
-                this.dialogClass.maximize = !this.dialogClass.maximize;
-                this.adjust();
-            },
-            /**
-             * backdrop click animate
-             */
-            outsideClick(){
-                var that = this;
-                this.dialogClass.vDialogBuzzOut = true;
-                setTimeout(function(){
-                    that.dialogClass.vDialogBuzzOut = false;
-                }, 1000);
-            },
-            /**
-             * adjust position and size
-             */
-            adjust(){
-                if(this.dlg.title){
-                    let headerHeight = parseFloat(this.$refs.dialogHeader.getBoundingClientRect().height);
-                    this.bodyHeight = this.dlg.height - headerHeight;
-                }else this.bodyHeight = this.dlg.height;
-
-                if(this.dlg.type === 'toast'){
-                    this.dialogSize = {
-                        width: this.dlg.width + 'px',
-                        height: this.dlg.height + 'px'
-                    }
-                }else {
-                    if(this.dialogClass.maximize) this.dialogTop = 0;
-                    else{
-                        let browserHeight = window.innerHeight || document.documentElement.clientHeight;
-                        //console.log('browserHeight:',browserHeight);
-                        this.dialogTop = (browserHeight - this.dlg.height) / 2;
-                        //console.log('dialogTop:',this.dlg.height);
-                    }
-                }
-            }
-        },
-        mounted(){
-            var that = this, dlg = this.dlg;
-            this.adjust();
-
-            //z-index step number
-            let step = 50;
-            this.dialogZIndex = commonConstants.baseZIndex + (step * this.dialogIndex);
-            this.backdropZIndex = this.dialogZIndex - 10;
-
-            if(dlg.type === 'alert') {
-                switch (dlg.messageType){
-                    case messageTypes.error:
-                        this.dialogContentClass.vDialogErrorBg = true;
-                        break;
-                    case messageTypes.warning:
-                        this.dialogContentClass.vDialogWarnBg = true;
-                        break;
-                    case messageTypes.success:
-                        this.dialogContentClass.vDialogSuccessBg = true;
-                        break;
-                }
-            }
-
-            //auto close dialog
-            if(dlg.type !== 'modal' && dlg.closeTime){
-                setTimeout(function(){
-                    that.closeDialog(false);
-                }, dlg.closeTime * 1000);
-            }
-
-            //dialog open animate
-            if(dlg.type !== 'toast') {
-                this.$nextTick(()=>{
-                    that.dialogClass.vDialogOpen = true;
-                    setTimeout(function(){
-                        that.dialogClass.vDialogOpen = false;
-                    }, 500);
-                });
-            }
         }
-    }
+    };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     $borderRadius: 2px;
-    div.vDialog {
+    div.v-dialog {
         position: fixed;
         top: 0;right: 0;bottom: 0;left: 0;
         z-index: 1050;
-        /*display: none;*/
         overflow: hidden;
         -webkit-overflow-scrolling: touch;
         outline: 0;
 
-        /*border: none;*/
-        -webkit-border-radius: $borderRadius;
-        -moz-border-radius: $borderRadius;
-        border-radius: $borderRadius;
-
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        -webkit-transform-origin: 50% 50%;
-        transform-origin: 50% 50%;
-        transition: opacity .2s,-webkit-transform .3s;
-        transition: transform .3s,opacity .2s;
-        transition: transform .3s,opacity .2s,-webkit-transform .3s;
-
-        &.vDialog-open { overflow: hidden; }
+        &.v-dialog-open { overflow: hidden; }
         /* Window maximize */
-        &.maximize {
+        &.v-dialog--maximize {
             -webkit-border-radius: 0;
             -moz-border-radius: 0;
             border-radius: 0;
             padding-right: 0 !important;
-            div.modal-dialog {
-                width: 100% !important;
-                height: 100% !important;
-            }
-            div.modal-content {
+            div.v-dialog-dialog { width: 100% !important;height: 100% !important; }
+            div.v-dialog-content {
                 height: 100% !important;
                 -webkit-border-radius: 0;
                 -moz-border-radius: 0;
                 border-radius: 0;
             }
+            div.v-dialog-header { background-color: #eee; }
         }
-        div.modal-dialog {
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-        }
-        div.modal-content {
-            -webkit-background-clip: padding-box;
-            background-clip: padding-box;
+        div.v-dialog-dialog { position: relative;margin: 0 auto;width: 100%; }
+        div.v-dialog-content {
             outline: 0;
             position: relative;
-            /*	-webkit-box-shadow: 0 5px 30px rgba(0,0,0,0.9);
-                box-shadow: 0 5px 30px rgba(0,0,0,0.9);*/
-
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-
             background-color: white;
+
+            -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 
             -webkit-border-radius: $borderRadius;
             -moz-border-radius: $borderRadius;
             border-radius: $borderRadius;
             border: 0;
+            overflow: hidden;
         }
-        div.modal-header {
-            -webkit-border-top-left-radius: $borderRadius;
-            -moz-border-top-left-radius: $borderRadius;
-            border-top-left-radius: $borderRadius;
-            -webkit-border-top-right-radius: $borderRadius;
-            -moz-border-top-right-radius: $borderRadius;
-            border-top-right-radius: $borderRadius;
-            padding: 0;
-            background-color: #EEEEEE;
-            border-bottom: 0;
-            h3 {
-                -webkit-border-top-left-radius: $borderRadius;
-                -moz-border-top-left-radius: $borderRadius;
-                border-top-left-radius: $borderRadius;
-                -webkit-border-top-right-radius: $borderRadius;
-                -moz-border-top-right-radius: $borderRadius;
-                border-top-right-radius: $borderRadius;
-                margin: 0;
-                line-height: 42px;
-                font-size: 18px;
-                padding-left: 16px;
-            }
+        div.v-dialog-header {
+            padding: 0;border-bottom: 0;
+            /*background-color: #EEEEEE;*/
+            h3 { margin: 0;line-height: 42px;height: 42px;font-size: 18px;padding-left: 15px; }
             button{
                 -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
                 transition: all .5s cubic-bezier(.175,.885,.32,1);
@@ -280,10 +102,9 @@
                 border: 0;
                 background-color: transparent;
                 &:hover { opacity: 1; }
-                &.vDialogCloseButton { font-weight: normal; }
-                &.vDialogCloseButton:hover { background-color: #E81123; }
-                &.vDialogCloseButton:hover i { color: white; }
-                &.maximize {
+                &.v-dialog-btn__close { font-weight: normal; }
+                &.v-dialog-btn__close:hover { background-color: #E81123;color: white; }
+                &.v-dialog-btn__maximize {
                     /*margin-right: 7px;*/
                     /*margin-top: 2px;*/
                     &:hover { background-color: #E0E0E0; }
@@ -291,21 +112,13 @@
                 i { font-weight: 600;font-size: 22px; }
             }
         }
-        div.modal-body {
+        div.v-dialog-body {
             position: relative;
             width: 100%;
             padding: 0;
             overflow: auto;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
-
-            -webkit-border-bottom-left-radius: $borderRadius;
-            -moz-border-bottom-left-radius: $borderRadius;
-            border-bottom-left-radius: $borderRadius;
-            -webkit-border-bottom-right-radius: $borderRadius;
-            -moz-border-bottom-right-radius: $borderRadius;
-            border-bottom-right-radius: $borderRadius;
-            iframe { position: relative;display: block; }
         }
         &.fullWidth {
             width: 100%;
@@ -313,7 +126,7 @@
             -moz-border-radius: 0;
             border-radius: 0;
             padding-right: 0;
-            div.modal-header {
+            div.v-dialog-header {
                 -webkit-border-radius: 0;
                 -moz-border-radius: 0;
                 border-radius: 0;
@@ -321,25 +134,18 @@
                 border-bottom: 0;
                 h3 { text-align: center; }
             }
-            div.modal-content {
-                -webkit-border-radius: 0;
-                -moz-border-radius: 0;
-                border-radius: 0;
-            }
+            div.v-dialog-content { -webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0; }
         }
     }
-    div.vDialog-backdrop {
-        position: fixed;
-        top: 0;right: 0;bottom: 0;left: 0;
-        z-index: 1040;
-        opacity: 0.5;
-        background-color: black;
+
+    /* max window animated */
+    .v-dialog-default-animated{
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
     }
 
-
-
     /* Alert mode style sheet */
-    .vDialogAlert{
+    .v-dialog-alert{
         background-repeat: no-repeat;
         background-position: 20px 20px;
         min-height: 100%;
@@ -360,7 +166,7 @@
         &.alertConfirm{
             background-image: url("data:image/png;base64,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");
         }
-        .messageContent{
+        .v-dialog-alert__content{
             padding-left: 104px;
             padding-top: 23px;
             padding-right: 10px;
@@ -387,7 +193,7 @@
                 &.inputRequire{ border:1px solid red; }
             }
         }
-        .vDialogButtons{
+        .v-dialog-alert__buttons{
             text-align: right;
             padding: 10px;
             position: absolute;
@@ -412,29 +218,22 @@
                     box-shadow: 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.23);
                 }
             }
-            .vDialogOk{
-                border: 1px solid #516270;
-                background-color: #516270;
-                color: white;
-            }
-            .vDialogCancel{
-                border: 1px solid #F0F0F0;
-                background-color: #F0F0F0;
-            }
+            .v-dialog-btn__ok{ border: 1px solid #516270;background-color: #516270;color: white; }
+            .v-dialog-btn__cancel{ border: 1px solid #F0F0F0;background-color: #F0F0F0; }
         }
     }
 
-    .vDialogErrorBg{
+    .v-dialog__shadow--error{
         box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
         -moz-box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
         -webkit-box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
     }
-    .vDialogWarnBg{
+    .v-dialog__shadow--warning{
         box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
         -moz-box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
         -webkit-box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
     }
-    .vDialogSuccessBg{
+    .v-dialog__shadow--success{
         box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
         -moz-box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
         -webkit-box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
@@ -444,19 +243,14 @@
 
 
     /* Mask mode style sheet */
-    .vDialogMaskContent{
+    .v-dialog-mask__container{
         background-repeat: no-repeat;
         background-position: 5px 5px;
         min-height: 100%;
         overflow: hidden;
         padding: 7px 5px;
-        .messageContent{
-            padding-left: 40px;
-            padding-top: 0;
-            padding-right: 0;
-            font-size: 14px;
-            overflow-y: auto;
-            color: black;
+        .v-dialog-mask__content{
+            padding: 15px 0 0 60px;font-size: 18px;overflow-y: auto;color: black;
         }
     }
     /* Mask mode style sheet */
@@ -464,36 +258,41 @@
 
 
     /* Toast mode style sheet */
-    div.vDialogToast{
+    div.v-dialog-toast{
         padding: 0 !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        div.modal-content { box-shadow: none;-moz-box-shadow: none;-webkit-box-shadow: none; }
-        div.vDialogBody{ padding: 0; }
-        div.modal-dialog{ position: absolute;margin: 0; }
-        &.bottomLeft{ bottom: 12px;left: 12px;top: unset;right: unset; }
+        -webkit-box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+        box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+        border-radius: 3px;overflow: hidden;
+        div.v-dialog-content {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+        }
+        div.v-dialog-body{ padding: 0; }
+        div.v-dialog-dialog{ position: absolute;margin: 0; }
+        &.bottomLeft{ bottom: 12px;left: 12px;top: auto;right: auto; }
         &.bottomCenter{ margin-top: 20px;margin-left: 20px; }
-        &.bottomRight{ bottom: 12px;right: 12px;top: unset;left: unset; }
-        &.topLeft{ top: 12px;left: 12px;right: unset;bottom: unset; }
+        &.bottomRight{ bottom: 12px;right: 12px;top: auto;left: auto; }
+        &.topLeft{ top: 12px;left: 12px;right: auto;bottom: auto; }
         &.topCenter{ margin-left: 20px;margin-top: 12px; }
-        &.topRight{ top: 12px;right: 12px;left: unset;bottom: unset; }
+        &.topRight{ top: 12px;right: 12px;left: auto;bottom: auto; }
     }
 
-    div.vDialogToastContent{
-        background-repeat: no-repeat;
-        background-position: 20px 20px;
-        min-height: 100%;
+    div.v-dialog-toast__container{
         overflow: hidden;
         position: relative;
         color: #333333;
-        &.toastWarning{ background-color: #F5CF87; }
-        &.toastError{ background-color: red;color: white;}
-        &.toastSuccess{ background-color: #2CBE4E;color: white;}
-        &.toastError .vDialogToastClose,
-        &.toastSuccess .vDialogToastClose,
-        &.toastError h3, &.toastSuccess h3{ color: white !important; }
-        .vDialogToastClose{
+        &.toast-warning{ background-color: #F5CF87; }
+        &.toast-error{ background-color: #FF5252;color: white;}
+        &.toast-success{ background-color: #2CBE4E;color: white;}
+        &.toast-error .v-dialog-toast__close,
+        &.toast-success .v-dialog-toast__close,
+        &.toast-error h3, &.toast-success h3{ color: white !important; }
+        .v-dialog-toast__close{
             position: absolute;
             right: 5px;
             top: 0;
@@ -505,14 +304,14 @@
             outline: none;
             font-size: 20px;
             line-height: 100%;
-            color: #999999;
+            color: #999;
             &:hover{ color: black; }
         }
-        .vDialogToastIcon{
+        .v-dialog-toast__icon{
             position: absolute;top:12px;left:15px;
             i{ font-size: 40px; }
         }
-        .messageContent{
+        .v-dialog-toast__content{
             padding-left: 70px;
             padding-top: 12px;
             padding-right: 10px;
@@ -520,81 +319,139 @@
             overflow-y: auto;
             min-height: 80px;
             h3{ margin: 0 0 3px 0;font-size: 16px;font-weight: bold;color: black; }
-            p{ font-size: 14px;line-height: 1 }
+            p{ font-size: 14px;line-height: 1.4; }
         }
     }
     /* Toast mode style sheet */
 
-
-
-
-
     /* The timer animate icon */
-    .vDialogTimer{
-        position: absolute;left: 10px;top:10px;width: 24px;height: 24px;border: 2px solid #000;
+    .v-dialog-timer{
+        position: absolute;left: 12px;top:20px;width: 36px;height: 36px;border: 2px solid #000;
         border-radius: 50%;background-color: transparent;box-sizing: content-box;
-        &:after, &:before{ position: absolute;content: '';background-color: #000; }
+        &:after, &:before{ position: absolute;content: ''; }
         &:after{
-            top: 11px;left: 11px;width: 10px;height: 2px;
+            top: 17px;left: 17px;width: 17px;height: 2px;
+            will-change: transform;
             -webkit-transform-origin: 1px 1px;
             -moz-transform-origin: 1px 1px;
             transform-origin: 1px 1px;
             -webkit-animation: timerhand 2s linear infinite;
             -moz-animation: timerhand 2s linear infinite;
             animation: timerhand 2s linear infinite;
+            background-color: #666;
         }
         &:before{
-            top: 11px;left: 11px;width: 8px;height: 2px;
+            top: 17px;left: 17px;width: 12px;height: 3px;
+            will-change: transform;
             -webkit-transform-origin: 1px 1px;
             -moz-transform-origin: 1px 1px;
             transform-origin: 1px 1px;
             -webkit-animation: timerhand 8s linear infinite;
             -moz-animation: timerhand 8s linear infinite;
             animation: timerhand 8s linear infinite;
+            background-color: #333;
         }
     }
 
+    div.v-dialog-overlay {
+        position: fixed;
+        top: 0;right: 0;bottom: 0;left: 0;
+        z-index: 1040;
+        opacity: 0.5;
+        background-color: black;
+    }
 
     /* css animate */
     @-webkit-keyframes timerhand{
-        0%{ -webkit-transform: rotate(0deg); }
-        100%{ -webkit-transform: rotate(360deg); }
+        0%{ transform: rotate(0deg);-webkit-transform: rotate(0deg); }
+        100%{ transform: rotate(360deg);-webkit-transform: rotate(360deg); }
     }
     @-moz-keyframes timerhand{
-        0%{ -webkit-transform: rotate(0deg); }
-        100%{ -webkit-transform: rotate(360deg); }
+        0%{ transform: rotate(0deg);-webkit-transform: rotate(0deg); }
+        100%{ transform: rotate(360deg);-webkit-transform: rotate(360deg); }
     }
     @-o-keyframes timerhand{
-        0%{ -webkit-transform: rotate(0deg); }
-        100%{ -webkit-transform: rotate(360deg); }
+        0%{ transform: rotate(0deg);-webkit-transform: rotate(0deg); }
+        100%{ transform: rotate(360deg);-webkit-transform: rotate(360deg); }
     }
     @keyframes timerhand{
-        0%{ -webkit-transform: rotate(0deg); }
-        100%{ -webkit-transform: rotate(360deg); }
+        0%{ transform: rotate(0deg);-webkit-transform: rotate(0deg); }
+        100%{ transform: rotate(360deg);-webkit-transform: rotate(360deg); }
     }
 
-    @-webkit-keyframes vDialogOpen {
-        0% { transform: scale(0.7);-webkit-transform: scale(0.7); }
-        45% { transform: scale(1.05);-webkit-transform: scale(1.05); }
-        80% { transform: scale(0.95);-webkit-transform: scale(0.95); }
+    @-webkit-keyframes animated-dialog-open {
+        0%   { transform: scale(0.7);-webkit-transform: scale(0.7); }
+        45%  { transform: scale(1.05);-webkit-transform: scale(1.05); }
+        80%  { transform: scale(0.95);-webkit-transform: scale(0.95); }
         100% { transform: scale(1);-webkit-transform: scale(1); } }
 
-    @keyframes vDialogOpen {
-        0% { transform: scale(0.7);-webkit-transform: scale(0.7); }
-        45% { transform: scale(1.05);-webkit-transform: scale(1.05); }
-        80% { transform: scale(0.95);-webkit-transform: scale(0.95); }
+    @keyframes animated-dialog-open {
+        0%   { transform: scale(0.7);-webkit-transform: scale(0.7); }
+        45%  { transform: scale(1.05);-webkit-transform: scale(1.05); }
+        80%  { transform: scale(0.95);-webkit-transform: scale(0.95); }
         100% { transform: scale(1);-webkit-transform: scale(1); } }
-
-    /* .vDialogOpen div.modal-content */
-    .vDialogOpen div.modal-content {
-        -webkit-animation: vDialogOpen .3s;
-        animation: vDialogOpen .3s;
+    /* model, alert, mask show up animated */
+    .v-dialog--candy-enter-active {
         will-change: transform;
+        -webkit-animation-duration: 300ms;
+        animation-duration: 300ms;
+        -webkit-animation-timing-function: ease-in-out;
         animation-timing-function: ease-in-out;
+        -webkit-animation-name: animated-dialog-open;
+        animation-name: animated-dialog-open;
+    }
+    .v-dialog--candy-leave-active{
+        /*
+        will-change: transform;
+        animation-duration: 300ms;
+        animation-timing-function: ease-in-out;
+        animation-name: animated-dialog-open;
+        animation-direction: reverse;
+        */
+        will-change: transform, opacity;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        -ms-transform: scale(0.5);
+        transform: scale(0.5);
+        -webkit-transition: transform 200ms ease, opacity 200ms ease;
+        -moz-transition: transform 200ms ease, opacity 200ms ease;
+        transition: transform 200ms ease, opacity 200ms ease;
+        opacity: 0;
+    }
+
+    .v-dialog--smooth-enter,
+    .v-dialog--smooth-leave-to {
+        will-change: transform, opacity;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        opacity: 0;
+        -webkit-transition: transform 200ms ease, opacity 200ms ease;
+        transition: transform 200ms ease, opacity 200ms ease;
+    }
+
+    .v-dialog--smooth-enter-to,
+    .v-dialog--smooth-leave {
+        will-change: transform, opacity;
+        opacity: 1;
+        -webkit-transition: transform 250ms ease, opacity 250ms ease;
+        transition: transform 250ms ease, opacity 250ms ease;
+    }
+
+    /* overlay fade in and out */
+    .v-dialog--fade-enter-active,
+    .v-dialog--fade-leave-active {
+        will-change: opacity;
+        -webkit-transition: opacity 200ms;
+        transition: opacity 200ms;
+    }
+    .v-dialog--fade-enter,
+    .v-dialog--fade-leave-to {
+        will-change: opacity;
+        opacity: 0 !important;
     }
 
     /* Buzz Out */
-    @-webkit-keyframes vDialogBuzzOut {
+    @-webkit-keyframes animated-buzz-out {
         10% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg); }
         20% { -webkit-transform: translateX(-3px) rotate(-2deg);transform: translateX(-3px) rotate(-2deg); }
         30% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg); }
@@ -606,7 +463,7 @@
         90% { -webkit-transform: translateX(1px) rotate(0);transform: translateX(1px) rotate(0); }
         100% { -webkit-transform: translateX(-1px) rotate(0);transform: translateX(-1px) rotate(0); }
     }
-    @keyframes vDialogBuzzOut {
+    @keyframes animated-buzz-out {
         10% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg);}
         20% { -webkit-transform: translateX(-3px) rotate(-2deg);transform: translateX(-3px) rotate(-2deg); }
         30% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg); }
@@ -618,22 +475,21 @@
         90% { -webkit-transform: translateX(1px) rotate(0);transform: translateX(1px) rotate(0); }
         100% { -webkit-transform: translateX(-1px) rotate(0);transform: translateX(-1px) rotate(0); }
     }
-    /*.vDialog.vDialogBuzzOut div.modal-content {*/
-    /*.vDialogBuzzOut {*/
-    .vDialogBuzzOut div.modal-content {
+    /*.vDialog.vDialogBuzzOut div.v-dialog-content {*/
+    .v-dialog--buzz-out div.v-dialog-content {
         /*    display: inline-block;
             vertical-align: middle;*/
         /*-webkit-transform: perspective(1px) translateZ(0);
         transform: perspective(1px) translateZ(0);*/
 
-        -webkit-animation-name: vDialogBuzzOut;
-        animation-name: vDialogBuzzOut;
-        -webkit-animation-duration: 0.75s;
-        animation-duration: 0.75s;/*规定完成动画所花费的时间，以秒或毫秒计*/
+        -webkit-animation-name: animated-buzz-out;
+                 animation-name: animated-buzz-out;
+        -webkit-animation-duration: 750ms;
+                 animation-duration: 750ms;/*规定完成动画所花费的时间，以秒或毫秒计*/
         -webkit-animation-timing-function: linear;
-        animation-timing-function: linear;/*动画从头到尾的速度是相同的*/
+                 animation-timing-function: linear;/*动画从头到尾的速度是相同的*/
         -webkit-animation-iteration-count: 1;
-        animation-iteration-count: 1;/*执行次数*/
+                 animation-iteration-count: 1;/*执行次数*/
     }
 
     @keyframes popIn {
@@ -660,7 +516,7 @@
             -webkit-transform: scale3d(1, 1, 1);
             transform: scale3d(1, 1, 1); }
     }
-    .popIn div.modal-content {
+    .popIn div.v-dialog-content {
         -webkit-animation-duration: .4s;
         -webkit-animation-fill-mode: both;
         animation-duration: .4s;
@@ -671,7 +527,7 @@
     }
 
     /* icons */
-    @font-face {font-family: "iconfont";
+    @font-face {font-family: "dlg-iconfont";
         src: url('data:image/eot;base64,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AB4AKwAsADUAAAUhIi4BNjcBPgEyFhcBHgEOAQEGBwEGFhchPgEnASYDIiY1ETQ2MhYVERQGByM+ATIWFAYiJgNR/V4iNBsDEAFUES81LxEBVRADGzT+jRIR/qwQFCICoiIUEP6rEBIOEhIcEhIOMAEbKBsbKBshGi46HgJhHiEhHv2fHjouGgMAAR39nh0iAQEiHQJiHf4iEg4BIA4SEg7+4A4ScBQbGykbGwAFAAD/wQO/Az8ACwAXABgAIQAuAAAFLgEnPgE3HgEXDgEDDgEHHgEXPgE3LgEHIz4BMhYUBiImEyImNRE0NjIWFREUBgIAvfwFBfy9vfwFBfy9otgEBNiiotgEBNiiMAEbKBsbKBsvDhISHBISPgX8vb38BQX8vb38AzcE2KKi2AQE2KKi2KoUGxsoGxv+RBIOASAOEhIO/uAOEgABAAAAAAMrAlcACwAAAScHJwcXBxc3FzcnAys87+887+887+887wIbPO/vPO/vPO/vPO8AAgAAAAADPwJrAA8AGwAAASEOAQcRHgEXIT4BNxEuAQMGByEmJxE2NyEWFwMS/d0TGQEBGRMCIxMZAQEZMgEJ/i8JAQEJAdEJAQJrARkT/oMTGQEBGRMBfRMZ/oAIAQEIASsIAQEIAAADAAAAAAOAAsAABwAMABIAAAEVIxEhNTMRAxUhESETIxEhNSEBGpoCZpra/hoB5ppa/nQB5gLAgP4AgAIA/kCAAYD/AAFAQAAAABIA3gABAAAAAAAAABUAAAABAAAAAAABAAgAFQABAAAAAAACAAcAHQABAAAAAAADAAgAJAABAAAAAAAEAAgALAABAAAAAAAFAAsANAABAAAAAAAGAAgAPwABAAAAAAAKACsARwABAAAAAAALABMAcgADAAEECQAAACoAhQADAAEECQABABAArwADAAEECQACAA4AvwADAAEECQADABAAzQADAAEECQAEABAA3QADAAEECQAFABYA7QADAAEECQAGABABAwADAAEECQAKAFYBEwADAAEECQALACYBaQpDcmVhdGVkIGJ5IGljb25mb250Cmljb25mb250UmVndWxhcmljb25mb250aWNvbmZvbnRWZXJzaW9uIDEuMGljb25mb250R2VuZXJhdGVkIGJ5IHN2ZzJ0dGYgZnJvbSBGb250ZWxsbyBwcm9qZWN0Lmh0dHA6Ly9mb250ZWxsby5jb20ACgBDAHIAZQBhAHQAZQBkACAAYgB5ACAAaQBjAG8AbgBmAG8AbgB0AAoAaQBjAG8AbgBmAG8AbgB0AFIAZQBnAHUAbABhAHIAaQBjAG8AbgBmAG8AbgB0AGkAYwBvAG4AZgBvAG4AdABWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbgBmAG8AbgB0AEcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAAcwB2AGcAMgB0AHQAZgAgAGYAcgBvAG0AIABGAG8AbgB0AGUAbABsAG8AIABwAHIAbwBqAGUAYwB0AC4AaAB0AHQAcAA6AC8ALwBmAG8AbgB0AGUAbABsAG8ALgBjAG8AbQAAAAACAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkBAgEDAQQBBQEGAQcBCAEJAQoAAXgKcm91bmRjaGVjawpyb3VuZGNsb3NlBHdhcm4EaW5mbwdjbG9zZTQ3CnNjcmVlbi1tYXgUc29mdHdhcmVfbG93ZXJ3aW5kb3cAAAAAAA=='); /* IE9*/
         src: url('data:image/eot;base64,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AB4AKwAsADUAAAUhIi4BNjcBPgEyFhcBHgEOAQEGBwEGFhchPgEnASYDIiY1ETQ2MhYVERQGByM+ATIWFAYiJgNR/V4iNBsDEAFUES81LxEBVRADGzT+jRIR/qwQFCICoiIUEP6rEBIOEhIcEhIOMAEbKBsbKBshGi46HgJhHiEhHv2fHjouGgMAAR39nh0iAQEiHQJiHf4iEg4BIA4SEg7+4A4ScBQbGykbGwAFAAD/wQO/Az8ACwAXABgAIQAuAAAFLgEnPgE3HgEXDgEDDgEHHgEXPgE3LgEHIz4BMhYUBiImEyImNRE0NjIWFREUBgIAvfwFBfy9vfwFBfy9otgEBNiiotgEBNiiMAEbKBsbKBsvDhISHBISPgX8vb38BQX8vb38AzcE2KKi2AQE2KKi2KoUGxsoGxv+RBIOASAOEhIO/uAOEgABAAAAAAMrAlcACwAAAScHJwcXBxc3FzcnAys87+887+887+887wIbPO/vPO/vPO/vPO8AAgAAAAADPwJrAA8AGwAAASEOAQcRHgEXIT4BNxEuAQMGByEmJxE2NyEWFwMS/d0TGQEBGRMCIxMZAQEZMgEJ/i8JAQEJAdEJAQJrARkT/oMTGQEBGRMBfRMZ/oAIAQEIASsIAQEIAAADAAAAAAOAAsAABwAMABIAAAEVIxEhNTMRAxUhESETIxEhNSEBGpoCZpra/hoB5ppa/nQB5gLAgP4AgAIA/kCAAYD/AAFAQAAAABIA3gABAAAAAAAAABUAAAABAAAAAAABAAgAFQABAAAAAAACAAcAHQABAAAAAAADAAgAJAABAAAAAAAEAAgALAABAAAAAAAFAAsANAABAAAAAAAGAAgAPwABAAAAAAAKACsARwABAAAAAAALABMAcgADAAEECQAAACoAhQADAAEECQABABAArwADAAEECQACAA4AvwADAAEECQADABAAzQADAAEECQAEABAA3QADAAEECQAFABYA7QADAAEECQAGABABAwADAAEECQAKAFYBEwADAAEECQALACYBaQpDcmVhdGVkIGJ5IGljb25mb250Cmljb25mb250UmVndWxhcmljb25mb250aWNvbmZvbnRWZXJzaW9uIDEuMGljb25mb250R2VuZXJhdGVkIGJ5IHN2ZzJ0dGYgZnJvbSBGb250ZWxsbyBwcm9qZWN0Lmh0dHA6Ly9mb250ZWxsby5jb20ACgBDAHIAZQBhAHQAZQBkACAAYgB5ACAAaQBjAG8AbgBmAG8AbgB0AAoAaQBjAG8AbgBmAG8AbgB0AFIAZQBnAHUAbABhAHIAaQBjAG8AbgBmAG8AbgB0AGkAYwBvAG4AZgBvAG4AdABWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbgBmAG8AbgB0AEcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAAcwB2AGcAMgB0AHQAZgAgAGYAcgBvAG0AIABGAG8AbgB0AGUAbABsAG8AIABwAHIAbwBqAGUAYwB0AC4AaAB0AHQAcAA6AC8ALwBmAG8AbgB0AGUAbABsAG8ALgBjAG8AbQAAAAACAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkBAgEDAQQBBQEGAQcBCAEJAQoAAXgKcm91bmRjaGVjawpyb3VuZGNsb3NlBHdhcm4EaW5mbwdjbG9zZTQ3CnNjcmVlbi1tYXgUc29mdHdhcmVfbG93ZXJ3aW5kb3cAAAAAAA==') format('embedded-opentype'), /* IE6-IE8 */
         url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
@@ -679,19 +535,19 @@
         url('data:image/svg;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiID4KPCEtLQoyMDEzLTktMzA6IENyZWF0ZWQuCi0tPgo8c3ZnPgo8bWV0YWRhdGE+CkNyZWF0ZWQgYnkgaWNvbmZvbnQKPC9tZXRhZGF0YT4KPGRlZnM+Cgo8Zm9udCBpZD0iaWNvbmZvbnQiIGhvcml6LWFkdi14PSIxMDI0IiA+CiAgPGZvbnQtZmFjZQogICAgZm9udC1mYW1pbHk9Imljb25mb250IgogICAgZm9udC13ZWlnaHQ9IjUwMCIKICAgIGZvbnQtc3RyZXRjaD0ibm9ybWFsIgogICAgdW5pdHMtcGVyLWVtPSIxMDI0IgogICAgYXNjZW50PSI4OTYiCiAgICBkZXNjZW50PSItMTI4IgogIC8+CiAgICA8bWlzc2luZy1nbHlwaCAvPgogICAgCiAgICA8Z2x5cGggZ2x5cGgtbmFtZT0ieCIgdW5pY29kZT0ieCIgaG9yaXotYWR2LXg9IjEwMDEiCmQ9Ik0yODEgNTQzcS0yNyAtMSAtNTMgLTFoLTgzcS0xOCAwIC0zNi41IC02dC0zMi41IC0xOC41dC0yMyAtMzJ0LTkgLTQ1LjV2LTc2aDkxMnY0MXEwIDE2IC0wLjUgMzB0LTAuNSAxOHEwIDEzIC01IDI5dC0xNyAyOS41dC0zMS41IDIyLjV0LTQ5LjUgOWgtMTMzdi05N2gtNDM4djk3ek05NTUgMzEwdi01MnEwIC0yMyAwLjUgLTUydDAuNSAtNTh0LTEwLjUgLTQ3LjV0LTI2IC0zMHQtMzMgLTE2dC0zMS41IC00LjVxLTE0IC0xIC0yOS41IC0wLjUKdC0yOS41IDAuNWgtMzJsLTQ1IDEyOGgtNDM5bC00NCAtMTI4aC0yOWgtMzRxLTIwIDAgLTQ1IDFxLTI1IDAgLTQxIDkuNXQtMjUuNSAyM3QtMTMuNSAyOS41dC00IDMwdjE2N2g5MTF6TTE2MyAyNDdxLTEyIDAgLTIxIC04LjV0LTkgLTIxLjV0OSAtMjEuNXQyMSAtOC41cTEzIDAgMjIgOC41dDkgMjEuNXQtOSAyMS41dC0yMiA4LjV6TTMxNiAxMjNxLTggLTI2IC0xNCAtNDhxLTUgLTE5IC0xMC41IC0zN3QtNy41IC0yNXQtMyAtMTV0MSAtMTQuNQp0OS41IC0xMC41dDIxLjUgLTRoMzdoNjdoODFoODBoNjRoMzZxMjMgMCAzNCAxMnQyIDM4cS01IDEzIC05LjUgMzAuNXQtOS41IDM0LjVxLTUgMTkgLTExIDM5aC0zNjh6TTMzNiA0OTh2MjI4cTAgMTEgMi41IDIzdDEwIDIxLjV0MjAuNSAxNS41dDM0IDZoMTg4cTMxIDAgNTEuNSAtMTQuNXQyMC41IC01Mi41di0yMjdoLTMyN3oiIC8+CiAgICAKCiAgICAKICAgIDxnbHlwaCBnbHlwaC1uYW1lPSJyb3VuZGNoZWNrIiB1bmljb2RlPSImIzU4OTY3OyIgZD0iTTUxMi02NEMyNjQuOTYtNjQgNjQgMTM2Ljk2IDY0IDM4NFMyNjQuOTYgODMyIDUxMiA4MzJzNDQ4LTIwMC45NiA0NDgtNDQ4Uzc1OS4wNC02NCA1MTItNjR6TTUxMiA3NjcuNzEyQzMwMC40MTYgNzY3LjcxMiAxMjguMjg4IDU5NS41ODQgMTI4LjI4OCAzODRjMC0yMTEuNTUyIDE3Mi4xMjgtMzgzLjcxMiAzODMuNzEyLTM4My43MTIgMjExLjU1MiAwIDM4My43MTIgMTcyLjE2IDM4My43MTIgMzgzLjcxMkM4OTUuNzEyIDU5NS41ODQgNzIzLjU1MiA3NjcuNzEyIDUxMiA3NjcuNzEyek03MjYuOTc2IDUwMi44MTZjLTEyLjU0NCAxMi40NDgtMzIuODMyIDEyLjMyLTQ1LjI0OC0wLjI1NmwtMjMzLjI4LTIzNS44NC0xMDMuMjY0IDEwNi4xMTJjLTEyLjM1MiAxMi43MDQtMzIuNjA4IDEyLjkyOC00NS4yNDggMC42NC0xMi42NzItMTIuMzItMTIuOTYtMzIuNjA4LTAuNjQtNDUuMjQ4bDEyNi4wMTYtMTI5LjUwNGMwLjA2NC0wLjA5NiAwLjE5Mi0wLjA5NiAwLjI1Ni0wLjE5MiAwLjA2NC0wLjA2NCAwLjA5Ni0wLjE5MiAwLjE2LTAuMjU2IDIuMDE2LTEuOTg0IDQuNTEyLTMuMiA2Ljg4LTQuNTQ0IDEuMjQ4LTAuNjcyIDIuMjQtMS43OTIgMy41Mi0yLjMwNCAzLjg3Mi0xLjYgOC0yLjQgMTIuMDk2LTIuNCA0LjA2NCAwIDguMTI4IDAuOCAxMS45NjggMi4zMzYgMS4yNDggMC41MTIgMi4yMDggMS41MzYgMy4zOTIgMi4xNzYgMi40IDEuMzQ0IDQuODk2IDIuNTI4IDYuOTQ0IDQuNTQ0IDAuMDY0IDAuMDY0IDAuMDk2IDAuMTkyIDAuMTkyIDAuMjU2IDAuMDY0IDAuMDk2IDAuMTYgMC4xMjggMC4yNTYgMC4xOTJsMjU2LjIyNCAyNTkuMDA4QzczOS42NDggNDcwLjE0NCA3MzkuNTIgNDkwLjQgNzI2Ljk3NiA1MDIuODE2eiIgIGhvcml6LWFkdi14PSIxMDI0IiAvPgoKICAgIAogICAgPGdseXBoIGdseXBoLW5hbWU9InJvdW5kY2xvc2UiIHVuaWNvZGU9IiYjNTg5Njk7IiBkPSJNNTEyLTY0QzI2NC45Ni02NCA2NCAxMzYuOTYgNjQgMzg0UzI2NC45NiA4MzIgNTEyIDgzMnM0NDgtMjAwLjk2IDQ0OC00NDhTNzU5LjA0LTY0IDUxMi02NHpNNTEyIDc2Ny43MTJDMzAwLjQxNiA3NjcuNzEyIDEyOC4yODggNTk1LjU4NCAxMjguMjg4IDM4NGMwLTIxMS41NTIgMTcyLjEyOC0zODMuNzEyIDM4My43MTItMzgzLjcxMiAyMTEuNTUyIDAgMzgzLjcxMiAxNzIuMTYgMzgzLjcxMiAzODMuNzEyQzg5NS43MTIgNTk1LjU4NCA3MjMuNTUyIDc2Ny43MTIgNTEyIDc2Ny43MTJ6TTU1Ny4wNTYgMzgyLjYyNGwxMzguMzY4IDEzNi44NjRjMTIuNTc2IDEyLjQxNiAxMi42NzIgMzIuNjcyIDAuMjU2IDQ1LjI0OC0xMi40MTYgMTIuNTc2LTMyLjcwNCAxMi42NzItNDUuMjQ4IDAuMjU2bC0xMzguNTYtMTM3LjAyNC0xMzYuNDQ4IDEzNi44NjRjLTEyLjUxMiAxMi41MTItMzIuNzM2IDEyLjU3Ni00NS4yNDggMC4wNjQtMTIuNTEyLTEyLjQ4LTEyLjU0NC0zMi43MzYtMC4wNjQtNDUuMjQ4bDEzNi4yNTYtMTM2LjY3Mi0xMzcuMzc2LTEzNS45MDRjLTEyLjU3Ni0xMi40NDgtMTIuNjcyLTMyLjY3Mi0wLjI1Ni00NS4yNDggNi4yNzItNi4zMzYgMTQuNDk2LTkuNTA0IDIyLjc1Mi05LjUwNCA4LjEyOCAwIDE2LjI1NiAzLjEwNCAyMi40OTYgOS4yNDhsMTM3LjU2OCAxMzYuMDY0IDEzOC42ODgtMTM5LjEzNmM2LjI0LTYuMjcyIDE0LjQzMi05LjQwOCAyMi42NTYtOS40MDggOC4xOTIgMCAxNi4zNTIgMy4xMzYgMjIuNTkyIDkuMzQ0IDEyLjUxMiAxMi40OCAxMi41NDQgMzIuNzA0IDAuMDY0IDQ1LjI0OEw1NTcuMDU2IDM4Mi42MjR6IiAgaG9yaXotYWR2LXg9IjEwMjQiIC8+CgogICAgCiAgICA8Z2x5cGggZ2x5cGgtbmFtZT0id2FybiIgdW5pY29kZT0iJiM1ODk3OTsiIGQ9Ik04NDkuMTItMzIuNzA0IDE3NC44OC0zMi43MDRjLTQ1LjIxNiAwLTgxLjUzNiAxNy43MjgtOTkuNjggNDguNjQtMTguMTQ0IDMwLjkxMi0xNS45MzYgNzEuMjk2IDYuMDggMTEwLjc1Mkw0MjEuNDcyIDczNi4zNTJjMjIuMTQ0IDM5Ljc0NCA1NS4wNzIgNjIuNTI4IDkwLjMwNCA2Mi41MjhzNjguMTI4LTIyLjc1MiA5MC4zMzYtNjIuNDY0bDM0MC41NDQtNjA5Ljc5MmMyMi4wMTYtMzkuNDU2IDI0LjI4OC03OS44MDggNi4xMTItMTEwLjcyQzkzMC42NTYtMTUuMDA4IDg5NC4zMDQtMzIuNzA0IDg0OS4xMi0zMi43MDR6TTUxMS44MDggNzM0Ljg4Yy0xMS4yIDAtMjQuMDMyLTExLjEwNC0zNC40MzItMjkuNjk2TDEzNy4xODQgOTUuNDU2Yy0xMC42NTYtMTkuMTM2LTEzLjE1Mi0zNi4zMi02Ljc4NC00Ny4xNjggNi4zNjgtMTAuODE2IDIyLjU5Mi0xNy4wMjQgNDQuNDgtMTcuMDI0bDY3NC4yNCAwYzIxLjkyIDAgMzguMTEyIDYuMTc2IDQ0LjQ4IDE3LjAyNCA2LjMzNiAxMC44MTYgMy44NzIgMjgtNi44MTYgNDcuMTM2TDU0Ni4yNCA3MDUuMTg0QzUzNS44NzIgNzIzLjc3NiA1MjIuOTc2IDczNC44OCA1MTEuODA4IDczNC44OHpNNTEyIDI1NmMtMTcuNjY0IDAtMzIgMTQuMzA0LTMyIDMybDAgMjg4YzAgMTcuNjY0IDE0LjMzNiAzMiAzMiAzMnMzMi0xNC4zMzYgMzItMzJsMC0yODhDNTQ0IDI3MC4zMDQgNTI5LjY2NCAyNTYgNTEyIDI1NnpNNTEyIDE0My44NzJtLTQ4IDBhMS41IDEuNSAwIDEgMCA5NiAwIDEuNSAxLjUgMCAxIDAtOTYgMFoiICBob3Jpei1hZHYteD0iMTAyNCIgLz4KCiAgICAKICAgIDxnbHlwaCBnbHlwaC1uYW1lPSJpbmZvIiB1bmljb2RlPSImIzU5MTA5OyIgZD0iTTUxMi02Mi4wMTZDMjY2LjA4LTYyLjAxNiA2NS45ODQgMTM4LjA0OCA2NS45ODQgMzg0IDY1Ljk4NCA2MjkuOTIgMjY2LjA4IDgzMC4wMTYgNTEyIDgzMC4wMTZjMjQ1Ljk1MiAwIDQ0Ni4wMTYtMjAwLjA2NCA0NDYuMDE2LTQ0Ni4wMTZDOTU4LjAxNiAxMzguMDQ4IDc1Ny45NTItNjIuMDE2IDUxMi02Mi4wMTZ6TTUxMiA3NjYuMDE2QzMwMS4zNDQgNzY2LjAxNiAxMjkuOTg0IDU5NC42NTYgMTI5Ljk4NCAzODRjMC0yMTAuNjI0IDE3MS4zNi0zODIuMDE2IDM4Mi4wMTYtMzgyLjAxNiAyMTAuNjI0IDAgMzgyLjAxNiAxNzEuMzYgMzgyLjAxNiAzODIuMDE2Qzg5NC4wMTYgNTk0LjY1NiA3MjIuNjI0IDc2Ni4wMTYgNTEyIDc2Ni4wMTZ6TTUxMiA1OTJtLTQ4IDBhMS41IDEuNSAwIDEgMCA5NiAwIDEuNSAxLjUgMCAxIDAtOTYgMFpNNTEyIDEyOGMtMTcuNjY0IDAtMzIgMTQuMzA0LTMyIDMybDAgMjg4YzAgMTcuNjY0IDE0LjMzNiAzMiAzMiAzMnMzMi0xNC4zMzYgMzItMzJsMC0yODhDNTQ0IDE0Mi4zMDQgNTI5LjY2NCAxMjggNTEyIDEyOHoiICBob3Jpei1hZHYteD0iMTAyNCIgLz4KCiAgICAKICAgIDxnbHlwaCBnbHlwaC1uYW1lPSJjbG9zZTQ3IiB1bmljb2RlPSImIzU4ODg0OyIgZD0iTTgxMC42NjY2NjcgNTM4LjkzMzMzMyA3NTAuOTMzMzMzIDU5OC42NjY2NjcgNTEyIDM1OS43MzMzMzMgMjczLjA2NjY2NyA1OTguNjY2NjY3IDIxMy4zMzMzMzMgNTM4LjkzMzMzMyA0NTIuMjY2NjY3IDMwMCAyMTMuMzMzMzMzIDYxLjA2NjY2NyAyNzMuMDY2NjY3IDEuMzMzMzMzIDUxMiAyNDAuMjY2NjY3IDc1MC45MzMzMzMgMS4zMzMzMzMgODEwLjY2NjY2NyA2MS4wNjY2NjcgNTcxLjczMzMzMyAzMDBaIiAgaG9yaXotYWR2LXg9IjEwMjQiIC8+CgogICAgCiAgICA8Z2x5cGggZ2x5cGgtbmFtZT0ic2NyZWVuLW1heCIgdW5pY29kZT0iJiM1OTAwNTsiIGQ9Ik03ODUuNjM2IDYxOC43NDhIMjM5LjI1MmMtMjQuNzIgMC00NC45NDYtMjAuMjI2LTQ0Ljk0Ni00NC45NDh2LTM4MC42NGMwLTI0LjcyIDIwLjIyNi00NC45NDggNDQuOTQ2LTQ0Ljk0OGg1NDYuMzg0YzI0LjcyIDAgNDQuOTQ2IDIwLjIyNiA0NC45NDYgNDQuOTQ4VjU3My44YzAgMjQuNzItMjAuMjI2IDQ0Ljk0OC00NC45NDYgNDQuOTQ4eiBtLTMwLjktMzg0LjQzNGE5LjQxMiA5LjQxMiAwIDAgMC05LjQxMi05LjQxaC00NjUuNzZhOS40MTIgOS40MTIgMCAwIDAtOS40MSA5LjQxVjUzMi42NDhhOS40MTIgOS40MTIgMCAwIDAgOS40MTIgOS40MWg0NjUuNzZhOS40MTIgOS40MTIgMCAwIDAgOS40MS05LjQxdi0yOTguMzM0eiIgIGhvcml6LWFkdi14PSIxMDI0IiAvPgoKICAgIAogICAgPGdseXBoIGdseXBoLW5hbWU9InNvZnR3YXJlX2xvd2Vyd2luZG93IiB1bmljb2RlPSImIzU4OTk2OyIgZD0iTTI4MS42IDcwNHYtMTI4SDEyOHYtNTEyaDYxNC40djEyOEg4OTZWNzA0eiBtMzk2LjgtNDQ4di0xMjhIMTkyVjUxMmg0ODYuNHogbTE1My42IDBoLTg5LjZWNTc2SDM0NS42VjY0MEg4MzJ6IiAgaG9yaXotYWR2LXg9IjEwMjQiIC8+CgogICAgCgoKICA8L2ZvbnQ+CjwvZGVmcz48L3N2Zz4K') format('svg'); /* iOS 4.1- */
     }
 
-    .vDialogFont {
-        font-family:"iconfont" !important;
+    .dlg-icon-font {
+        font-family:"dlg-iconfont" !important;
         font-size:16px;
         font-style:normal;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
 
-    .vDialog-toast-success:before { content: "\e657"; }
-    .vDialog-toast-error:before { content: "\e659"; }
-    .vDialog-toast-warn:before { content: "\e663"; }
-    .vDialog-toast-info:before { content: "\e6e5"; }
-    .vDialog-close:before { content: "\e604"; }
-    .vDialog-max:before { content: "\e67d"; }
-    .vDialog-restore:before { content: "\e674"; }
+    .dlg-icon-toast--success:before { content: "\e657"; }
+    .dlg-icon-toast--error:before { content: "\e659"; }
+    .dlg-icon-toast--warn:before { content: "\e663"; }
+    .dlg-icon-toast--info:before { content: "\e6e5"; }
+    .dlg-icon-close:before { content: "\e604"; }
+    .dlg-icon-max:before { content: "\e67d"; }
+    .dlg-icon-restore:before { content: "\e674"; }
 </style>

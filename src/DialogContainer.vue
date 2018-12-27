@@ -1,27 +1,40 @@
 <template>
-    <div class="vDialogContainer" v-show="dialogs.length">
-        <!--<transition-group name="animated" enter-class="bounce" enter-active-class="bounce">-->
-        <!--<transition enter-class="vDialogOpen">-->
-        <vDialog v-for="(dlg,index) in dialogs"
-                 is="vDialog"
-                 :setting="dlg"
-                 :dialogIndex="index"
-                 :key="dlg.dialogKey"
-                 :dialogKey="dlg.dialogKey"
-                 @close="closeDialog"></vDialog>
-        <!--</transition>-->
-        <!--</transition-group>-->
+    <div class="v-dialog-container" v-show="dialogs.length">
+        <v-dialog v-for="(dlg,index) in dialogs" :key="dlg.dialogKey" is="v-dialog"
+                  :dialogIndex="index"
+                  :dialogKey="dlg.dialogKey"
+                  :type="dlg.type"
+                  :component="dlg.component"
+                  :message="dlg.message"
+                  :messageType="dlg.messageType"
+                  :backdrop="dlg.backdrop"
+                  :titleBar="dlg.title"
+                  :contentClass="dlg.contentClass"
+                  :width="dlg.width"
+                  :height="dlg.height"
+                  :params="dlg.params"
+                  :dialogCloseButton="dlg.dialogCloseButton"
+                  :dialogMaxButton="dlg.dialogMaxButton"
+                  :fullWidth="dlg.fullWidth"
+                  :position="dlg.position"
+                  :singletonKey="dlg.singletonKey"
+                  :customClass="dlg.customClass"
+                  :iconClassName="dlg.iconClassName"
+                  :i18n="dlg.i18n"
+                  :closeTime="dlg.closeTime"
+                  :cancel="dlg.cancel"
+                  :cancelCallback="dlg.cancelCallback"
+                  @close="closeDialog"></v-dialog>
     </div>
 </template>
 
 <script>
-    import vDialog from './vDialog';
-    import constant from './vDialogConstants';
-    let {dialogDefaults, messageTypes, alertIconClass, toastConstants,languages} = constant;
+    import Dialog from './Dialog';
+    import { messageTypes, alertIconClass, toastConstants, languages } from './constants';
     export default {
         name: "v-dialogs",
         components: {
-            vDialog
+            'v-dialog': Dialog
         },
         data(){
             return {
@@ -37,8 +50,10 @@
              * @return merged options
              */
             buildDialogConfig(config){
-                let merged = Object.assign({}, dialogDefaults, config);
-                return merged;
+                //let merged = Object.assign({}, dialogDefaults, config);
+                //return merged;
+                config.i18n = languages[config.language];
+                return config;
             },
             /**
              * String cut
@@ -48,9 +63,11 @@
              */
             stringSub(str,n){
                 if(typeof(str) !== 'string') return;
-                let r=/[^\x00-\xff]/g;
+				/* eslint-disable */
+                const r=/[^\x00-\xff]/g;
+				/* eslint-enable */
                 if(str.replace(r,"mm").length<=n){ return str; }
-                let m=Math.floor(n / 2);
+                const m = Math.floor(n / 2);
                 for(let i = m; i < str.length; i++){
                     if(str.substr(0,i).replace(r,"mm").length >= n){
                         return str.substr(0,i) + "...";
@@ -62,10 +79,10 @@
              * Init default options
              */
             buildDialog(config){
-                let idx = this.dialogs.findIndex(val => config.singletonKey && val.singletonKey === config.singletonKey );
+                const idx = this.dialogs.findIndex(val => config.singletonKey && val.singletonKey === config.singletonKey );
                 if(idx === -1){
                     this.keyNum++;
-                    let key = this.keyPrefix + this.keyNum;
+                    const key = this.keyPrefix + this.keyNum;
                     config.dialogKey = key;
                     this.dialogs.push(config);
                     return key;
@@ -76,7 +93,7 @@
              * @param p - options
              */
             addModal(p){
-                let config = this.buildDialogConfig(p);
+                const config = this.buildDialogConfig(p);
                 config.type = 'modal';
                 return this.buildDialog(config);
             },
@@ -85,12 +102,9 @@
              * @param p - options
              */
             addAlert(p){
-                let config = this.buildDialogConfig(p);
-                //console.log('Alert');
-                //console.table(config);
+                const config = this.buildDialogConfig(p);
                 config.type = 'alert';
-                config.iconClassName = alertIconClass[config.messageType];
-                config.i18n = languages[config.language];
+
                 let title = config.i18n.titleInfo;
                 switch(config.messageType){
                     case messageTypes.warning:
@@ -105,12 +119,14 @@
                     case messageTypes.confirm:
                         title = config.i18n.titleConfirm;
                         break;
+                    default:
+                        title = config.i18n.titleInfo;
+                        if(!config.messageType) config.messageType = messageTypes.info;
                 }
+                config.iconClassName = alertIconClass[config.messageType];
                 config.title = title;
-                config.dialogCloseButton = false;
-                config.dialogMaxButton = false;
                 config.width = config.message.length > 70 ? 700 : 450;
-                config.height = config.message.length > 70 ? 400 :  typeof(config.title)==='undefined'||typeof(config.title)==='string' ? 210 : 180;
+                config.height = config.message.length > 70 ? 400 :  typeof config.title==='undefined'||typeof config.title==='string' ? 210 : 180;
 
                 return this.buildDialog(config);
             },
@@ -119,22 +135,18 @@
              * @param p - options
              */
             addMask(p){
-                let config = this.buildDialogConfig(p);
+                const config = this.buildDialogConfig(p);
                 config.type = 'mask';
-                config.i18n = languages[config.language];
                 config.message = config.message || config.i18n.maskText;
                 config.message = this.stringSub(config.message, 65);
-                config.title = false;
                 config.width = 300;
-                config.height = 50;
+                config.height = 80;
 
                 return this.buildDialog(config);
             },
             /**
              * Open a Toast dialog (corner dialog)
-             *
              * @param p - options
-             *
              * @enum position
              * 'topLeft'
              * 'topCenter'
@@ -144,75 +156,66 @@
              * 'bottomRight'
              */
             addToast(p){
-                let config = this.buildDialogConfig(p);
+                const config = this.buildDialogConfig(p);
                 config.type = 'toast';
                 config.iconClassName = toastConstants.iconClass[config.messageType];
-                config.i18n = languages[config.language];
                 config.message = this.stringSub(config.message, 56);
-                config.title = false;
+                config.title = config.i18n.titleInfo;
                 config.width = 300;
                 config.height = 80;
-                let titleStr = config.i18n.titleInfo, contentClass = '';
                 switch(config.messageType){
                     case messageTypes.warning:
-                        titleStr = config.i18n.titleWarning;
-                        contentClass = toastConstants.contentClass.warning;
+						config.title = config.i18n.titleWarning;
+						config.contentClass = toastConstants.contentClass.warning;
                         break;
                     case messageTypes.error:
-                        titleStr = config.i18n.titleError;
-                        contentClass = toastConstants.contentClass.error;
+						config.title = config.i18n.titleError;
+						config.contentClass = toastConstants.contentClass.error;
                         break;
                     case messageTypes.success:
-                        titleStr = config.i18n.titleSuccess;
-                        contentClass = toastConstants.contentClass.success;
+						config.title = config.i18n.titleSuccess;
+						config.contentClass = toastConstants.contentClass.success;
                         break;
                 }
-                config.titleStr = titleStr;
-                config.contentClass = contentClass;
 
                 return this.buildDialog(config);
             },
             /**
              * Close dialog, last one or specified key dialog (Modal, Alert, Mask, Toast)
-             * @param data - the data return to caller
              * @param key - the dialog key, you can get it like this: let key = this.$vDialog.alert('your msg');
              */
-            close(data, key){
-                if(this.dialogs.length === 0) return;
-                let idx = -1, dKey = key, dlg;
-
-                if(!key){
-                    dKey = this.dialogs[this.dialogs.length -1].dialogKey;
-                }
-
-                if(typeof(data) !== 'undefined'){
-                    this.dialogs.find(val=>val.dialogKey === dKey).returnData = data;
-                }
+            close(key){
+                if(!this.dialogs.length) return;
+                const dKey = key ? key : this.dialogs[this.dialogs.length -1].dialogKey;
                 this.closeDialog(dKey);
             },
             /**
              * Close dialog (remove dialogs array item) and call user callback function
-             * @param key - dialog key
+             * @private
+             * @param key[string] - dialog key
+             * @param cancel[boolean] - trigger cancelCallback or not
+             * @param data[object] - return data when close dialog(Modal)
              */
-            closeDialog(key){
+            closeDialog(key, cancel, data){
                 if(!key) return;
-                let dlg = this.dialogs.find(val => val.dialogKey === key);
+                const dlg = this.dialogs.find(val => val.dialogKey === key);
                 if(dlg){
                     this.dialogs = this.dialogs.filter(val => val.dialogKey !== key);
                     this.$nextTick(()=>{
-                        if(dlg.callback && typeof(dlg.callback) === 'function' && !dlg.cancel) dlg.callback(dlg.returnData);
-                        if(dlg.cancel && dlg.cancelCallback && typeof(dlg.cancelCallback) === 'function') dlg.cancelCallback();
+                        if(dlg.callback && typeof dlg.callback === 'function' && !cancel) dlg.callback(data);
+                        if(cancel && dlg.cancelCallback && typeof dlg.cancelCallback === 'function') dlg.cancelCallback();
                     });
                 }
             },
             /**
              * Close all dialog
+             * @param callback[function] the callback when all dialogs closed
              */
             closeAll(callback){
                 if(this.dialogs.length){
-                    this.dialogs.splice(0, this.dialogs.length);
+                    this.dialogs = [];
                     this.$nextTick(()=>{
-                        if(callback && typeof(callback)==='function') callback();
+                        if(callback && typeof callback ==='function') callback();
                     });
                 }
             }
@@ -220,14 +223,14 @@
     }
 </script>
 
-<style scoped>
-    div.vDialogContainer{
+<style>
+    div.v-dialog-container{
         /*width: 100%;
         height: 100%;*/
         width: 0;
         height: 0;
         position: fixed;
         /*left: 0;top: 0;*/
-        z-index: 1030;
+        z-index: 2000;
     }
 </style>
