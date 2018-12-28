@@ -104,6 +104,7 @@
             addAlert(p){
                 const config = this.buildDialogConfig(p);
                 config.type = 'alert';
+				if(!config.messageType) config.messageType = messageTypes.info;
 
                 let title = config.i18n.titleInfo;
                 switch(config.messageType){
@@ -121,7 +122,6 @@
                         break;
                     default:
                         title = config.i18n.titleInfo;
-                        if(!config.messageType) config.messageType = messageTypes.info;
                 }
                 config.iconClassName = alertIconClass[config.messageType];
                 config.title = title;
@@ -158,11 +158,12 @@
             addToast(p){
                 const config = this.buildDialogConfig(p);
                 config.type = 'toast';
-                config.iconClassName = toastConstants.iconClass[config.messageType];
                 config.message = this.stringSub(config.message, 56);
                 config.title = config.i18n.titleInfo;
                 config.width = 300;
                 config.height = 80;
+                if(!config.messageType) config.messageType = messageTypes.info;
+                config.iconClassName = toastConstants.iconClass[config.messageType];
                 switch(config.messageType){
                     case messageTypes.warning:
 						config.title = config.i18n.titleWarning;
