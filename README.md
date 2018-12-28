@@ -24,6 +24,22 @@ and control icon, toast icon used are come from [IconFont](http://www.iconfont.c
 
 <br><br>
 
+## Install
+
+``` nodejs
+npm i v-dialogs --save
+```
+
+Include plugin in your `main.js` file.
+
+```js
+import Vue from 'vue'
+import vDialog from 'v-dialogs';
+Vue.use(vDialog, { global config options... });
+```
+
+<br><br>
+
 ## Vue plugin series
 
 | Plugin | Status | Description |
@@ -41,20 +57,3 @@ and control icon, toast icon used are come from [IconFont](http://www.iconfont.c
 | [v-selectmenu](https://github.com/TerryZ/v-selectmenu) | [![npm version](https://img.shields.io/npm/v/v-selectmenu.svg)](https://www.npmjs.com/package/v-selectmenu) | A simple, easier and highly customized menu solution |
 
 <br><br>
-
-## Install
-
-``` nodejs
-npm i v-dialogs --save
-```
-
-Include plugin in your `main.js` file.
-
-```js
-import Vue from 'vue'
-import vDialog from 'v-dialogs';
-Vue.use(vDialog, { global config options... });
-```
-
-<br><br>
-
