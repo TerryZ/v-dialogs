@@ -74,7 +74,7 @@ new Vue({
   methods: {
     click(){
       //open component in Modal, and passing params to component
-      this.$vDialog.modal(myComponent, {
+      this.$dlg.modal(myComponent, {
         params: {
           a: 1,
           b: 2
@@ -115,7 +115,7 @@ export default {
         b: 4
       };
       //close current Modal dialog and return data to caller
-      this.$vDialog.close(data);
+      this.$dlg.close(data);
     }
   }
 }
@@ -127,15 +127,15 @@ export default {
 
 ```js
 //call a message alert dialog
-this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!');
+this.$dlg.alert('This is a <b>Vue</b> dialog plugin: vDialog!');
 
 //call a message alert dialog with dialog close callback
-this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
+this.$dlg.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
   //your callback code
 });
 
 //call a custom type message alert dialog with dialog close callback
-this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
+this.$dlg.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
   //your callback code
 },{
   messageType: 'error',
@@ -150,13 +150,13 @@ this.$vDialog.alert('This is a <b>Vue</b> dialog plugin: vDialog!',function(){
 
 ```js
 //open a full screen mask
-this.$vDialog.mask();
+this.$dlg.mask();
 
 //use custom message
-this.$vDialog.mask('my data loading...');
+this.$dlg.mask('my data loading...');
 
 //use mask with callback
-this.$vDialog.mask('my data loading...', function(){
+this.$dlg.mask('my data loading...', function(){
   // do something when mask close
 });
 ```
@@ -164,11 +164,11 @@ this.$vDialog.mask('my data loading...', function(){
 some time, you can use mask like this:
 ```js
 let that = this;
-let dialogKey = this.$vDialog.mask();
+let dialogKey = this.$dlg.mask();
 // do some http request
 axios.post(...).then(resp){
   // do your business
-  that.$vDialog.close(null, dialogKey);
+  that.$dlg.close(null, dialogKey);
 };
 ```
 
@@ -180,15 +180,15 @@ axios.post(...).then(resp){
 open a Toast dialog in a corner
 ```js
 //open a Toast dialog with message, default show to right bottom position
-this.$vDialog.toast('This is a Vue <b>vDialog</b> Toast!');
+this.$dlg.toast('This is a Vue <b>vDialog</b> Toast!');
 
 //open a Toast dialog with a close callback
-this.$vDialog.toast('This is a Vue <b>vDialog</b> Toast!', function(){
+this.$dlg.toast('This is a Vue <b>vDialog</b> Toast!', function(){
   // do something...
 });
 
 //open a Toast with some options
-this.$vDialog.toast('This is a Vue <b>vDialog</b> Toast!',null, {
+this.$dlg.toast('This is a Vue <b>vDialog</b> Toast!',null, {
   messageType: 'warning',//theme set
   position: 'topLeft',// show position
   dialogCloseButton: false, // show dialog without close button
