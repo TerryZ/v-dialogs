@@ -312,14 +312,12 @@
             i{ font-size: 40px; }
         }
         .v-dialog-toast__content{
-            padding-left: 70px;
-            padding-top: 12px;
-            padding-right: 10px;
+            padding: 12px 10px 0 70px;
             font-size: 14px;
-            overflow-y: auto;
+            overflow: hidden;
             min-height: 80px;
             h3{ margin: 0 0 3px 0;font-size: 16px;font-weight: bold;color: black; }
-            p{ font-size: 14px;line-height: 1.4; }
+            p{ font-size: 14px;line-height: 1.4;margin: 0; }
         }
     }
     /* Toast mode style sheet */

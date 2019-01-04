@@ -15,14 +15,14 @@ const Plugin = {
             if(typeof(options.dialogMaxButton) === 'boolean') params.dialogMaxButton = options.dialogMaxButton;
             return Object.assign({}, params, p);
         }, paramSet = args => {
-			const msg = args[0];
 			let params = {};
-			if(args.length === 3) params = args[2];
-			else if(args.length === 2 && typeof args[1] === 'object') params = args[1];
-			params = mergeParams(params);
-			params.message = msg;
 
-			if(args.length === 2 && typeof args[1] === 'function') params.callback = args[1];
+			if(args.length === 3 && typeof args[2] === 'object') params = args[2];
+            if(args.length === 2 && typeof args[1] === 'object') params = args[1];
+			if(typeof args[1] === 'function') params.callback = args[1];
+
+			params = mergeParams(params);
+			params.message = typeof args[0] === 'string' ? args[0] : '';
 			return params;
 		}, instanceName = options.instanceName ? options.instanceName : '$dlg';
 
