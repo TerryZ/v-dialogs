@@ -21,7 +21,7 @@
                         </div>
 
                         <div class="v-dialog-body" :style="{height:bodyHeight+'px'}" >
-                            <component :is="component" :params="params" @close="modalClose"></component>
+                            <component :is="component" v-bind="params" @close="modalClose"></component>
                         </div>
 
                     </div>

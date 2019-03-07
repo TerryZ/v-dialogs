@@ -213,12 +213,10 @@
              * @param callback[function] the callback when all dialogs closed
              */
             closeAll(callback){
-                if(this.dialogs.length){
-                    this.dialogs = [];
-                    this.$nextTick(()=>{
-                        if(callback && typeof callback ==='function') callback();
-                    });
-                }
+                if(this.dialogs.length) this.dialogs = [];
+				this.$nextTick(()=>{
+					if(callback && typeof callback === 'function') callback();
+				});
             }
         }
     }
