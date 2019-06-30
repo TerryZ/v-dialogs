@@ -177,7 +177,7 @@ div.v-dialog {
                 box-shadow: 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.23);
             }
         }
-        .v-dialog-btn__ok{ border: 1px solid #516270;background-color: #516270;color: white; }
+        .v-dialog-btn__ok{ border: 1px solid #516270;background-color: #516270;color: white; cursor: pointer;}
         .v-dialog-btn__cancel{ border: 1px solid #F0F0F0;background-color: #F0F0F0; }
     }
 }
@@ -331,16 +331,15 @@ div.v-dialog-overlay {
 }
 
 @-webkit-keyframes animated-dialog-open {
-    0%   { transform: scale(0.7);-webkit-transform: scale(0.7); }
-    45%  { transform: scale(1.05);-webkit-transform: scale(1.05); }
-    80%  { transform: scale(0.95);-webkit-transform: scale(0.95); }
-    100% { transform: scale(1);-webkit-transform: scale(1); } }
-
+    0%   { transform: scale(0.95);-webkit-transform: scale(0.95); }
+    50%  { transform: scale(1.05);-webkit-transform: scale(1.05); }
+    100% { transform: scale(1);-webkit-transform: scale(1); }
+}
 @keyframes animated-dialog-open {
-    0%   { transform: scale(0.7);-webkit-transform: scale(0.7); }
-    45%  { transform: scale(1.05);-webkit-transform: scale(1.05); }
-    80%  { transform: scale(0.95);-webkit-transform: scale(0.95); }
-    100% { transform: scale(1);-webkit-transform: scale(1); } }
+    0%   { transform: scale(0.95);-webkit-transform: scale(0.95); }
+    50%  { transform: scale(1.05);-webkit-transform: scale(1.05); }
+    100% { transform: scale(1);-webkit-transform: scale(1); }
+}
 /* model, alert, mask show up animated */
 .v-dialog--candy-enter-active {
     will-change: transform;
@@ -403,28 +402,14 @@ div.v-dialog-overlay {
 
 /* Buzz Out */
 @-webkit-keyframes animated-buzz-out {
-    10% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg); }
-    20% { -webkit-transform: translateX(-3px) rotate(-2deg);transform: translateX(-3px) rotate(-2deg); }
-    30% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg); }
-    40% { -webkit-transform: translateX(-3px) rotate(-2deg);transform: translateX(-3px) rotate(-2deg); }
-    50% { -webkit-transform: translateX(2px) rotate(1deg);transform: translateX(2px) rotate(1deg); }
-    60% { -webkit-transform: translateX(-2px) rotate(-1deg);transform: translateX(-2px) rotate(-1deg); }
-    70% { -webkit-transform: translateX(2px) rotate(1deg);transform: translateX(2px) rotate(1deg); }
-    80% { -webkit-transform: translateX(-2px) rotate(-1deg);transform: translateX(-2px) rotate(-1deg); }
-    90% { -webkit-transform: translateX(1px) rotate(0);transform: translateX(1px) rotate(0); }
-    100% { -webkit-transform: translateX(-1px) rotate(0);transform: translateX(-1px) rotate(0); }
+    10% { -webkit-transform: scale(1.05); transform: scale(1.05);}
+    20% { -webkit-transform: scale(1.0); transform: scale(1.0);}
+    100% { -webkit-transform: scale(1.0); transform: scale(1.0);}
 }
 @keyframes animated-buzz-out {
-    10% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg);}
-    20% { -webkit-transform: translateX(-3px) rotate(-2deg);transform: translateX(-3px) rotate(-2deg); }
-    30% { -webkit-transform: translateX(3px) rotate(2deg);transform: translateX(3px) rotate(2deg); }
-    40% { -webkit-transform: translateX(-3px) rotate(-2deg);transform: translateX(-3px) rotate(-2deg); }
-    50% { -webkit-transform: translateX(2px) rotate(1deg);transform: translateX(2px) rotate(1deg); }
-    60% { -webkit-transform: translateX(-2px) rotate(-1deg);transform: translateX(-2px) rotate(-1deg); }
-    70% { -webkit-transform: translateX(2px) rotate(1deg);transform: translateX(2px) rotate(1deg); }
-    80% { -webkit-transform: translateX(-2px) rotate(-1deg);transform: translateX(-2px) rotate(-1deg); }
-    90% { -webkit-transform: translateX(1px) rotate(0);transform: translateX(1px) rotate(0); }
-    100% { -webkit-transform: translateX(-1px) rotate(0);transform: translateX(-1px) rotate(0); }
+    10% { -webkit-transform: scale(1.05); transform: scale(1.05);}
+    20% { -webkit-transform: scale(1.0); transform: scale(1.0);}
+    100% { -webkit-transform: scale(1.0); transform: scale(1.0);}
 }
 /*.vDialog.vDialogBuzzOut div.v-dialog-content {*/
 .v-dialog--buzz-out div.v-dialog-content {
