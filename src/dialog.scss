@@ -27,7 +27,6 @@ div.v-dialog {
     div.v-dialog-content {
         outline: 0;
         position: relative;
-        background-color: white;
 
         -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -183,20 +182,14 @@ div.v-dialog {
     }
 }
 
-.v-dialog__shadow--error{
-    box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
-    -moz-box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
-    -webkit-box-shadow: 0 0 30px rgba(255,0,0,0.5) !important;
+.v-dialog__background--error{
+    background: rgb(255,224,224);
 }
-.v-dialog__shadow--warning{
-    box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
-    -moz-box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
-    -webkit-box-shadow: 0 0 30px rgba(255,165,0,0.5) !important;
+.v-dialog__background--warning{
+    background: rgb(255,255,224);
 }
-.v-dialog__shadow--success{
-    box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
-    -moz-box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
-    -webkit-box-shadow: 0 0 30px rgba(0,255,0,0.5) !important;
+.v-dialog__background--success{
+    background: rgb(224,255,224);
 }
 /* Alert mode style sheet */
 

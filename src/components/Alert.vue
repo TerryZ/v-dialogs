@@ -5,7 +5,7 @@
 
             <div class="v-dialog-dialog" :style="{width:width+'px',height:height+'px',top:dialogTop+'px'}">
                 <transition name="v-dialog--candy" :appear="true"  >
-                    <div :class="['v-dialog-content', alertShadow]" v-show="show">
+                    <div :class="['v-dialog-content', alertBackground]" v-show="show">
 
                         <div class="v-dialog-header" ref="header" v-if="titleBar !== false">
                             <h3 v-text="titleBar"></h3>
@@ -70,11 +70,11 @@
             singletonKey: String,
         },
         computed: {
-            alertShadow(){
+            alertBackground(){
                 switch (this.messageType) {
-                    case messageTypes.warning: return 'v-dialog__shadow--warning';
-                    case messageTypes.error: return 'v-dialog__shadow--error';
-                    case messageTypes.success: return 'v-dialog__shadow--success';
+                    case messageTypes.warning: return 'v-dialog__background--warning';
+                    case messageTypes.error: return 'v-dialog__background--error';
+                    case messageTypes.success: return 'v-dialog__background--success';
                     default: return '';
                 }
             }
