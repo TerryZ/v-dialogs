@@ -2,11 +2,8 @@
 
 A simple and powerful dialog for **Vue2**, dialog type including **Modal**, **Alert**, **Mask** and **Toast**
 
+## Examples and Documentation
 
-
-<br><br>
-
-## Demos and Documents
 Explorer on
 
 - [English site](https://terryz.github.io/vue/#/dialog)
@@ -14,17 +11,13 @@ Explorer on
 
 The jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
 
-<br><br>
-
 ### The Dialog Icon
 
 the icons in alert dialog used are made by [Elegant Themes](http://www.elegantthemes.com/blog/freebie-of-the-week/beautiful-flat-icons-for-free)
 
 and control icon, toast icon used are come from [IconFont](http://www.iconfont.cn)
 
-<br><br>
-
-## Install
+## Installation
 
 ``` nodejs
 npm i v-dialogs --save
@@ -37,8 +30,6 @@ import Vue from 'vue'
 import vDialog from 'v-dialogs';
 Vue.use(vDialog, { global config options... });
 ```
-
-<br><br>
 
 ## Vue plugin series
 
@@ -55,5 +46,3 @@ Vue.use(vDialog, { global config options... });
 | [v-suggest](https://github.com/TerryZ/v-suggest) | [![npm version](https://img.shields.io/npm/v/v-suggest.svg)](https://www.npmjs.com/package/v-suggest) | A Vue2 plugin for input suggestions by autocomplete |
 | [v-playback](https://github.com/TerryZ/v-playback) | [![npm version](https://img.shields.io/npm/v/v-playback.svg)](https://www.npmjs.com/package/v-playback) | A Vue2 plugin to make video play easier |
 | [v-selectmenu](https://github.com/TerryZ/v-selectmenu) | [![npm version](https://img.shields.io/npm/v/v-selectmenu.svg)](https://www.npmjs.com/package/v-selectmenu) | A simple, easier and highly customized menu solution |
-
-<br><br>
