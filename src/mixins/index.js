@@ -66,6 +66,13 @@ export default {
      * click 'cancel' button in Alert mode ('confirm' message type)
      */
     cancelCallback: Function,
+    /**
+     * dialog outside click with shaking animation
+     */
+    shaking: {
+      type: Boolean,
+      default: true
+    },
     dialogIndex: {
       type: Number,
       required: true
@@ -91,6 +98,7 @@ export default {
       if (this.backdropClose) {
         this.closeDialog(true)
       } else {
+        if (!this.shaking) return
         this.shake = true
         setTimeout(() => {
           this.shake = false

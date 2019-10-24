@@ -45,6 +45,7 @@ export default {
           closeTime: val.closeTime,
           backdrop: val.backdrop,
           backdropClose: val.backdropClose,
+          shaking: val.shaking,
           titleBar: val.title
         },
         on: {
