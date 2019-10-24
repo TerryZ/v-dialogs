@@ -1,0 +1,140 @@
+$borderRadius: 2px
+
+@import 'icon.sass'
+@import 'animated.sass'
+
+div.v-dialog-container
+  //width: 100%
+  //height: 100%
+  width: 0
+  height: 0
+  position: fixed
+  /* left: 0
+   * top: 0 */
+  z-index: 2000
+
+div.v-dialog
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 1050
+  overflow: hidden
+  -webkit-overflow-scrolling: touch
+  outline: 0
+
+  &.v-dialog-open
+    overflow: hidden
+  /* Window maximize */
+  &.v-dialog--maximize
+    -webkit-border-radius: 0
+    -moz-border-radius: 0
+    border-radius: 0
+    padding-right: 0 !important
+    div.v-dialog-dialog
+      width: 100% !important
+      height: 100% !important
+    div.v-dialog-content
+      height: 100% !important
+      -webkit-border-radius: 0
+      -moz-border-radius: 0
+      border-radius: 0
+    div.v-dialog-header
+      background-color: #eee
+  &.fullWidth
+    width: 100%
+    -webkit-border-radius: 0
+    -moz-border-radius: 0
+    border-radius: 0
+    padding-right: 0
+    div.v-dialog-header
+      -webkit-border-radius: 0
+      -moz-border-radius: 0
+      border-radius: 0
+      background-color: white
+      border-bottom: 0
+      h3
+        text-align: center
+    div.v-dialog-content
+      -webkit-border-radius: 0
+      -moz-border-radius: 0
+      border-radius: 0
+  div.v-dialog-dialog
+    position: relative
+    margin: 0 auto
+    width: 100%
+  div.v-dialog-content
+    outline: 0
+    position: relative
+    background-color: white
+
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5)
+    -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.5)
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5)
+
+    -webkit-border-radius: $borderRadius
+    -moz-border-radius: $borderRadius
+    border-radius: $borderRadius
+    border: 0
+    overflow: hidden
+  div.v-dialog-header
+    padding: 0
+    border-bottom: 0
+    /*background-color: #eee*/
+    h3
+      margin: 0
+      line-height: 42px
+      height: 42px
+      font-size: 18px
+      padding-left: 15px
+    button
+      -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1)
+      transition: all .5s cubic-bezier(.175,.885,.32,1)
+      height: 42px
+      width: 60px
+      text-shadow: none
+      outline: none !important
+      margin: 0
+      opacity: 0.3
+      font-size: 22px !important
+      float: right
+      border: 0
+      background-color: transparent
+      &:hover
+        opacity: 1
+      &.v-dialog-btn__close
+        font-weight: normal
+      &.v-dialog-btn__close:hover
+        background-color: #E81123
+        color: white
+      &.v-dialog-btn__maximize
+        /*margin-right: 7px*/
+        /*margin-top: 2px*/
+        &:hover
+          background-color: #E0E0E0
+      i
+        font-weight: 600
+        font-size: 22px
+  div.v-dialog-body
+    position: relative
+    width: 100%
+    padding: 0
+    overflow: auto
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+
+div.v-dialog-overlay
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 1040
+  opacity: 0.5
+  background-color: black
+
+@import 'alert.sass'
+@import 'modal.sass'
+@import 'mask.sass'
+@import 'toast.sass'

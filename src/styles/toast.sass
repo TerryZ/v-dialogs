@@ -1,0 +1,105 @@
+/* Toast mode style sheet */
+
+div.v-dialog-toast
+  padding: 0 !important
+  -webkit-box-shadow: 0 1px 8px rgba(0,0,0,0.5)
+  -moz-box-shadow: 0 1px 8px rgba(0,0,0,0.5)
+  box-shadow: 0 1px 8px rgba(0,0,0,0.5)
+  border-radius: 3px
+  overflow: hidden
+  div.v-dialog-content
+    -webkit-box-shadow: none
+    -moz-box-shadow: none
+    box-shadow: none
+    -webkit-border-radius: 0
+    -moz-border-radius: 0
+    border-radius: 0
+  div.v-dialog-body
+    padding: 0
+  div.v-dialog-dialog
+    position: absolute
+    margin: 0
+  &.bottomLeft
+    bottom: 12px
+    left: 12px
+    top: auto
+    right: auto
+  &.bottomCenter
+    margin-top: 20px
+    margin-left: 20px
+  &.bottomRight
+    bottom: 12px
+    right: 12px
+    top: auto
+    left: auto
+  &.topLeft
+    top: 12px
+    left: 12px
+    right: auto
+    bottom: auto
+  &.topCenter
+    margin-left: 20px
+    margin-top: 12px
+  &.topRight
+    top: 12px
+    right: 12px
+    left: auto
+    bottom: auto
+
+div.v-dialog-toast__container
+  overflow: hidden
+  position: relative
+  color: #333
+  &.no-icon
+    .v-dialog-toast__content
+      padding-left: 15px
+  &.toast-warning
+    background-color: #F5CF87
+  &.toast-error
+    background-color: #FF5252
+    color: white
+  &.toast-success
+    background-color: #2CBE4E
+    color: white
+
+  &.toast-error .v-dialog-toast__close,
+  &.toast-success .v-dialog-toast__close,
+  &.toast-error h3,
+  &.toast-success h3
+    color: white !important
+
+  .v-dialog-toast__close
+    position: absolute
+    right: 5px
+    top: 0
+    -webkit-appearance: none
+    padding: 0
+    cursor: pointer
+    background: 0 0
+    border: 0
+    outline: none
+    font-size: 20px
+    line-height: 100%
+    color: #999
+    &:hover
+      color: black
+  .v-dialog-toast__icon
+    position: absolute
+    top: 12px
+    left: 15px
+    i
+      font-size: 40px
+  .v-dialog-toast__content
+    padding: 12px 10px 0 70px
+    font-size: 14px
+    overflow: hidden
+    min-height: 80px
+    h3
+      margin: 0 0 3px 0
+      font-size: 16px
+      font-weight: bold
+      color: black
+    p
+      font-size: 14px
+      line-height: 1.4
+      margin: 0

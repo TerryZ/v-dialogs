@@ -1,0 +1,57 @@
+/* Mask mode style sheet */
+
+.v-dialog-mask__container
+  background-repeat: no-repeat
+  background-position: 5px 5px
+  min-height: 100%
+  overflow: hidden
+  padding: 7px 5px
+  .v-dialog-mask__content
+    padding: 15px 0 0 60px
+    font-size: 18px
+    overflow-y: auto
+    color: black
+
+/* The timer animate icon */
+
+.v-dialog-timer
+  position: absolute
+  left: 12px
+  top: 20px
+  width: 36px
+  height: 36px
+  border: 2px solid #000
+  border-radius: 50%
+  background-color: transparent
+  box-sizing: content-box
+  &:after,
+  &:before
+    position: absolute
+    content: ''
+  &:after
+    top: 17px
+    left: 17px
+    width: 17px
+    height: 2px
+    will-change: transform
+    -webkit-transform-origin: 1px 1px
+    -moz-transform-origin: 1px 1px
+    transform-origin: 1px 1px
+    -webkit-animation: timerhand 2s linear infinite
+    -moz-animation: timerhand 2s linear infinite
+    animation: timerhand 2s linear infinite
+    background-color: #666
+  
+  &:before
+    top: 17px
+    left: 17px
+    width: 12px
+    height: 3px
+    will-change: transform
+    -webkit-transform-origin: 1px 1px
+    -moz-transform-origin: 1px 1px
+    transform-origin: 1px 1px
+    -webkit-animation: timerhand 8s linear infinite
+    -moz-animation: timerhand 8s linear infinite
+    animation: timerhand 8s linear infinite
+    background-color: #333

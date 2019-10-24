@@ -1,0 +1,166 @@
+/* css animate */
+
+=timerhand()
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+@-webkit-keyframes timerhand
+  +timerhand()
+@-moz-keyframes timerhand
+  +timerhand()
+@keyframes timerhand
+  +timerhand()
+
+=animated-dialog-open()
+  0%
+    transform: scale(0.7)
+    -webkit-transform: scale(0.7)
+  45%
+    transform: scale(1.05)
+    -webkit-transform: scale(1.05)
+  80%
+    transform: scale(0.95)
+    -webkit-transform: scale(0.95)
+  100%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+@-webkit-keyframes animated-dialog-open
+  +animated-dialog-open()
+
+@keyframes animated-dialog-open
+  +animated-dialog-open()
+
+/* model, alert, mask show up animated */
+.v-dialog--candy-enter-active
+  will-change: transform
+  -webkit-animation-duration: 300ms
+  animation-duration: 300ms
+  -webkit-animation-timing-function: ease-in-out
+  animation-timing-function: ease-in-out
+  -webkit-animation-name: animated-dialog-open
+  animation-name: animated-dialog-open
+.v-dialog--candy-leave-active
+  will-change: transform, opacity
+  -webkit-transform: scale(0.5)
+  -moz-transform: scale(0.5)
+  -ms-transform: scale(0.5)
+  transform: scale(0.5)
+  -webkit-transition: transform 200ms ease, opacity 200ms ease
+  -moz-transition: transform 200ms ease, opacity 200ms ease
+  transition: transform 200ms ease, opacity 200ms ease
+  opacity: 0
+
+.v-dialog--smooth-enter,
+.v-dialog--smooth-leave-to
+  will-change: transform, opacity
+  -webkit-transform: scale(0.5)
+  transform: scale(0.5)
+  opacity: 0
+  -webkit-transition: transform 200ms ease, opacity 200ms ease
+  transition: transform 200ms ease, opacity 200ms ease
+
+.v-dialog--smooth-enter-to,
+.v-dialog--smooth-leave
+  will-change: transform, opacity
+  opacity: 1
+  -webkit-transition: transform 250ms ease, opacity 250ms ease
+  transition: transform 250ms ease, opacity 250ms ease
+
+/* overlay fade in and out */
+.v-dialog--fade-enter-active,
+.v-dialog--fade-leave-active
+  will-change: opacity
+  -webkit-transition: opacity 200ms
+  transition: opacity 200ms
+.v-dialog--fade-enter,
+.v-dialog--fade-leave-to
+  will-change: opacity
+  opacity: 0 !important
+
+=transform($tx: 3px, $rt: 2deg)
+  -webkit-transform: translateX($tx) rotate($rt)
+  transform: translateX($tx) rotate($rt)
+
+=buzz-out()
+  10%
+    +transform()
+  20%
+    +transform(-3px, -2deg)
+  30%
+    +transform()
+  40%
+    +transform(-3px, -2deg)
+  50%
+    +transform(2px, 1deg)
+  60%
+    +transform(-2px, -1deg)
+  70%
+    +transform(2px, 1deg)
+  80%
+    +transform(-2px, -1deg)
+  90%
+    +transform(1px, 0)
+  100%
+    +transform(-1px, 0)
+
+/* Buzz Out */
+@-webkit-keyframes animated-buzz-out
+  +buzz-out
+@keyframes animated-buzz-out
+  +buzz-out
+
+/*.vDialog.vDialogBuzzOut div.v-dialog-content */
+.v-dialog--buzz-out div.v-dialog-content
+  -webkit-animation-name: animated-buzz-out
+  animation-name: animated-buzz-out
+  -webkit-animation-duration: 750ms
+  /*规定完成动画所花费的时间，以秒或毫秒计*/
+  animation-duration: 750ms
+  -webkit-animation-timing-function: linear
+  /*动画从头到尾的速度是相同的*/
+  animation-timing-function: linear
+  -webkit-animation-iteration-count: 1
+  /*执行次数*/
+  animation-iteration-count: 1
+
+@keyframes popIn
+  0%
+    -webkit-transform: scale3d(0, 0, 0)
+    transform: scale3d(0, 0, 0)
+    opacity: 0
+  20%
+    opacity: 1
+  40%
+    -webkit-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715)
+    animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715)
+    -webkit-transform: scale3d(1.08, 1.08, 1.08)
+    transform: scale3d(1.08, 1.08, 1.08)
+  60%
+    -webkit-animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+    -webkit-transform: scale3d(1, 1, 1)
+    transform: scale3d(1, 1, 1)
+  80%
+    -webkit-animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+    -webkit-transform: scale3d(1.03, 1.03, 1.03)
+    transform: scale3d(1.03, 1.03, 1.03)
+  100%
+    -webkit-animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    -webkit-transform: scale3d(1, 1, 1)
+    transform: scale3d(1, 1, 1)
+
+.popIn div.v-dialog-content
+  -webkit-animation-duration: .4s
+  -webkit-animation-fill-mode: both
+  animation-duration: .4s
+  animation-fill-mode: both
+  animation-timing-function: linear
+  -webkit-animation-name: popIn
+  animation-name: popIn
