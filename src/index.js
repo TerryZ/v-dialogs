@@ -1,7 +1,12 @@
-import { getContainer } from './Dialog'
+import Container from './Container'
 
 export default {
   install (Vue, options = {}) {
+    const DialogContainer = Vue.extend(Container)
+    const dlg = new DialogContainer()
+    // document.body.appendChild(dlg.$mount().$el)
+    dlg.$mount(document.body.appendChild(document.createElement('div')))
+
     /**
      * Merge options
      * @param {object} p
@@ -47,7 +52,7 @@ export default {
           if (!component) return
           params = merge(params)
           params.component = component
-          return getContainer().addModal(params)
+          return dlg.addModal(params)
         },
         /**
          * Open a Alert dialog
@@ -72,20 +77,20 @@ export default {
          */
         alert () {
           if (!arguments.length || !arguments[0]) return
-          return getContainer().addAlert(paramSet(arguments))
+          return dlg.addAlert(paramSet(arguments))
         },
         mask () {
-          return getContainer().addMask(paramSet(arguments))
+          return dlg.addMask(paramSet(arguments))
         },
         toast () {
           if (!arguments.length || !arguments[0]) return
-          return getContainer().addToast(paramSet(arguments))
+          return dlg.addToast(paramSet(arguments))
         },
         close (key) {
-          getContainer().close(key)
+          dlg.close(key)
         },
         closeAll (callback) {
-          getContainer().closeAll(callback)
+          dlg.closeAll(callback)
         }
       }
     })

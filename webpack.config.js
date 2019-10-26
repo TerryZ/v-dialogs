@@ -5,13 +5,13 @@ module.exports = {
   //entry: './src/main.js',
   entry: './src/index.js',
   output: {
-  path: path.resolve(__dirname, './dist'),
-  publicPath: '/dist/',
-  //filename: 'build.js'
-	filename: 'v-dialogs.js',
-	library: 'vDialog',
-	libraryTarget: 'umd',
-	umdNamedDefine: true
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/dist/',
+    //filename: 'build.js'
+    filename: 'v-dialogs.js',
+    library: 'vDialog',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     rules: [
