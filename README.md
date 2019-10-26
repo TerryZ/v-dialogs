@@ -1,4 +1,4 @@
-# v-dialogs &middot; [![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs) [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/) [![npm](https://img.shields.io/npm/dy/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
+# [v-dialogs](https://terryz.github.io/vue/#/dialog) &middot; [![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs) [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/) [![npm](https://img.shields.io/npm/dy/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
 
 A simple and powerful dialog for **Vue2**, dialog type including **Modal**, **Alert**, **Mask** and **Toast**
 
@@ -29,6 +29,65 @@ Include plugin in your `main.js` file.
 import Vue from 'vue'
 import vDialog from 'v-dialogs';
 Vue.use(vDialog, { global config options... });
+```
+
+## Usage
+
+### Modal
+
+```js
+import Profile from './Profile.vue'
+
+this.$dlg.modal(Profile, {
+  width: 400,
+  height: 300,
+  title: 'User Profile',
+  params: {
+    userId: 1,
+    userName: 'Terry Zeng'
+  },
+  callback: data => {
+    this.$dlg.alert(`Received message: ${data}`)
+  }
+})
+```
+
+### Alert
+
+```js
+// alert message
+this.$dlg.alert('message')
+// alert message with callback
+this.$dlg.alert('message', () => { // do somthing })
+// alert message with options
+this.$dlg.alert('message', { ...options })
+// alert message with callaback and options
+this.$dlg.alert('message', callback, options)
+```
+
+### Mask
+
+```js
+const key = this.$dlg.mask('Data loading, please hold on a moment...')
+
+// do some stuff
+job().then(resp => {
+  // close mark layer when job done
+  this.$dlg.close(key)
+})
+```
+
+### Toast
+
+```js
+// show message in corner
+this.$dlg.taost('message')
+// show message with callback
+this.$dlg.taost('message', () => { // do somthing })
+// show message with options
+this.$dlg.taost('message', { ...options })
+// show message with callaback and options
+this.$dlg.taost('message', callback, options)
 ```
 
 ## Vue plugin series
