@@ -19,16 +19,16 @@ and control icon, toast icon used are come from [IconFont](http://www.iconfont.c
 
 ## Installation
 
-``` nodejs
-npm i v-dialogs --save
+```
+npm i -S v-dialogs
 ```
 
 Include plugin in your `main.js` file.
 
 ```js
 import Vue from 'vue'
-import vDialog from 'v-dialogs';
-Vue.use(vDialog, { global config options... });
+import Dialog from 'v-dialogs'
+Vue.use(Dialog, { global config options... })
 ```
 
 ## Usage
