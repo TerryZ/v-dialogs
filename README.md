@@ -1,6 +1,6 @@
 # [v-dialogs](https://terryz.github.io/vue/#/dialog) &middot; [![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs) [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/) [![npm](https://img.shields.io/npm/dy/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
 
-A simple and powerful dialog for **Vue2**, dialog type including **Modal**, **Alert**, **Mask** and **Toast**
+A simple and clean instructional dialog plugin for **Vue2**, dialog type including **Modal**, **Alert**, **Mask** and **Toast**
 
 ## Examples and Documentation
 
