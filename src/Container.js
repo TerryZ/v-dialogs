@@ -1,7 +1,7 @@
 import './styles/dialog.sass'
 
 import language from './language'
-import { types, messageTypes, alertIconClass, toastConstants } from './constants'
+import { types, messageTypes, alertIconClass, toastConstants, commonConstants } from './constants'
 import { getTitle, toastTheme, stringSub } from './helper'
 
 const { info } = messageTypes
@@ -134,19 +134,28 @@ export default {
     addAlert (p) {
       p.type = ALERT
       const config = this.buildConfig(p)
-      const MAX_CONTENT_LENGTH = 70
+      
 
       if ('title' in config === false || config.title !== false) {
         config.title = getTitle(config.messageType, config.language)
       }
-      config.iconClassName = alertIconClass[config.messageType]
-      config.width = config.message.length > MAX_CONTENT_LENGTH ? 700 : 450
-      config.height = config.message.length > MAX_CONTENT_LENGTH
-        ? 400
-        : typeof config.title === 'string' || typeof config.title === 'undefined'
-          ? 210
-          : 180
 
+      config.iconClassName = alertIconClass[config.messageType]
+      console.log('<<<<<',config)
+      if (config.width == commonConstants.DEFAULT_DLG_WIDTH) {
+        config.width =  config.message.length > commonConstants.MAX_CONTENT_LENGTH ? 700 : 450
+      }
+
+      if (config.height == commonConstants.DEFAULT_DLG_HEIGHT) {
+        config.height =
+          config.message.length > commonConstants.MAX_CONTENT_LENGTH
+            ? 400
+            : typeof config.title === "string" ||
+              typeof config.title === "undefined"
+            ? 210
+            : 180;
+      }
+      console.log(">>>", config);
       return this.buildDialog(config)
     },
     /**

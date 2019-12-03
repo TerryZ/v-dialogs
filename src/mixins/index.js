@@ -29,7 +29,7 @@ export default {
      */
     titleBar: {
       type: [String, Boolean],
-      default: 'Dialog'
+      default: "Dialog"
     },
     contentClass: String,
     /**
@@ -37,14 +37,14 @@ export default {
      */
     width: {
       type: Number,
-      default: 700
+      default: commonConstants.DEFAULT_DLG_WIDTH
     },
     /**
      * Dialog height
      */
     height: {
       type: Number,
-      default: 400
+      default: commonConstants.DEFAULT_DLG_HEIGHT
     },
     i18n: Object,
     /**
@@ -78,7 +78,7 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       bodyHeight: 50,
       dialogTop: 0,
@@ -87,30 +87,31 @@ export default {
       resizeTimeout: null,
       shake: false,
       show: false
-    }
+    };
   },
   methods: {
     /**
      * backdrop click animate
      */
-    outsideClick () {
-      if (!this.backdrop) return
+    outsideClick() {
+      if (!this.backdrop) return;
       if (this.backdropClose) {
-        this.closeDialog(true)
+        this.closeDialog(true);
       } else {
-        if (!this.shaking) return
-        this.shake = true
+        if (!this.shaking) return;
+        this.shake = true;
         setTimeout(() => {
-          this.shake = false
-        }, 750)
+          this.shake = false;
+        }, 750);
       }
     },
     /**
      * adjust position and size
      */
-    adjust () {
-      const browserHeight = window.innerHeight || document.documentElement.clientHeight
-      this.dialogTop = (browserHeight - this.height) / 2
+    adjust() {
+      const browserHeight =
+        window.innerHeight || document.documentElement.clientHeight;
+      this.dialogTop = (browserHeight - this.height) / 2;
     },
     /**
      * Close current dialog
@@ -118,49 +119,49 @@ export default {
      * @param trigger [boolean] whether close dialog and trigger callback function
      * @param data [object] return data when dialog close(only for modal)
      */
-    closeDialog (trigger, data) {
-      this.show = false
+    closeDialog(trigger, data) {
+      this.show = false;
       setTimeout(() => {
-        this.$emit('close', this.dialogKey, trigger, data)
-      }, 200)
+        this.$emit("close", this.dialogKey, trigger, data);
+      }, 200);
     },
-    calcLayerLevel () {
+    calcLayerLevel() {
       // z-index step number
-      const step = 50
-      this.dialogZIndex = commonConstants.baseZIndex + (step * this.dialogIndex)
-      this.backdropZIndex = this.dialogZIndex - 10
+      const step = 50;
+      this.dialogZIndex = commonConstants.baseZIndex + step * this.dialogIndex;
+      this.backdropZIndex = this.dialogZIndex - 10;
     },
-    autoClose () {
+    autoClose() {
       // auto close dialog
       if (this.closeTime) {
         setTimeout(() => {
-          this.closeDialog(false)
-        }, this.closeTime * 1000)
+          this.closeDialog(false);
+        }, this.closeTime * 1000);
       }
     },
-    resizeThrottler () {
+    resizeThrottler() {
       // ignore resize events as long as an actualResizeHandler execution is in the queue
       if (!this.resizeTimeout) {
         this.resizeTimeout = setTimeout(() => {
-          this.resizeTimeout = null
-          this.adjust()
+          this.resizeTimeout = null;
+          this.adjust();
           // The actualResizeHandler will execute at a rate of 15fps
-        }, 100)
+        }, 100);
       }
     }
   },
-  mounted () {
-    this.show = true
-    this.calcLayerLevel()
-    this.autoClose()
+  mounted() {
+    this.show = true;
+    this.calcLayerLevel();
+    this.autoClose();
 
-    if (this.type !== 'toast') {
-      window.addEventListener('resize', this.resizeThrottler, false)
+    if (this.type !== "toast") {
+      window.addEventListener("resize", this.resizeThrottler, false);
     }
   },
-  destroyed () {
-    if (this.type !== 'toast') {
-      window.removeEventListener('resize', this.resizeThrottler, false)
+  destroyed() {
+    if (this.type !== "toast") {
+      window.removeEventListener("resize", this.resizeThrottler, false);
     }
   }
-}
+};
