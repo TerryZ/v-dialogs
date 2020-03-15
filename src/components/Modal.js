@@ -5,7 +5,7 @@ export default {
   name: 'DialogModal',
   mixins: [mixins, render],
   props: {
-    component: Object,
+    component: [Object, Function],
     /**
      * Send parameters to Component
      * you need use props to receive this params in component
