@@ -27,7 +27,9 @@ Include plugin in your `main.js` file.
 ```js
 import Vue from 'vue'
 import Dialog from 'v-dialogs'
-Vue.use(Dialog, { global config options... })
+Vue.use(Dialog, {
+  // global config options...
+})
 ```
 
 ## Usage
