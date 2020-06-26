@@ -82,13 +82,13 @@ job().then(resp => {
 
 ```js
 // show message in corner
-this.$dlg.taost('message')
+this.$dlg.toast('message')
 // show message with callback
-this.$dlg.taost('message', () => { // do somthing })
+this.$dlg.toast('message', () => { // do somthing })
 // show message with options
-this.$dlg.taost('message', { ...options })
+this.$dlg.toast('message', { ...options })
 // show message with callaback and options
-this.$dlg.taost('message', callback, options)
+this.$dlg.toast('message', callback, options)
 ```
 
 ## Vue plugin series
