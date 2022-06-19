@@ -75,9 +75,7 @@ this.$dlg.modal(Profile, {
 // Functional open modal dialog
 import { DialogModal } from 'v-dialogs'
 
-DialogModal(Profile, {
-  ...options
-})
+DialogModal(page, [options])
 ```
 
 ### Toast
@@ -102,13 +100,16 @@ DialogToast(message, [callback], [option])
 ### Mask
 
 ```js
-const key = this.$dlg.mask('Data loading, please hold on a moment...')
+// Globally instance open mask dialog
+// show default message
+this.$dlg.mask()
+// show specify message
+this.$dlg.mask('Data loading, please hold on a moment...')
 
-// do some stuff
-job().then(() => {
-  // close mask layer when job finish
-  this.$dlg.close(key)
-})
+// Functional open mask dialog
+import { DialogMask } from 'v-dialogs'
+
+DialogMask([message], [callback])
 ```
 
 ### DialogHelper
