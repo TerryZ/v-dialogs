@@ -1,61 +1,65 @@
 export default {
   methods: {
     /**
-     * Building backdrop layer
-     *
-     * @param {*} h
-     * @returns
+     * Generate backdrop layer
      */
-    buildBackdrop (h) {
+    generateBackdrop () {
+      if (!this.backdrop) return
+
+      const h = this.$createElement
       const child = []
-      if (this.backdrop && this.show) {
-        child.push(h('div', {
+      if (this.show) {
+        const backdropOption = {
           class: 'v-dialog-overlay',
           style: {
             'z-index': this.backdropZIndex
           }
-        }))
+        }
+        child.push(h('div', backdropOption))
       }
-      return h('transition', {
+
+      const transitionOption = {
         props: {
           name: 'v-dialog--fade',
           appear: true
         }
-      }, child)
+      }
+      return h('transition', transitionOption, child)
     },
     /**
-     * Build dialog content
+     * Generate dialog content
      *
-     * @param {function} h - createElement
      * @param {object} options
      * @returns
      */
-    buildDlgContent (h, options) {
+    generateDialogContent (options) {
+      const h = this.$createElement
       const { className, transitionName, child } = options
 
-      const content = h('div', {
+      const option = {
         class: className,
         directives: [{
           name: 'show',
           value: this.show
         }]
-      }, child)
-      return h('transition', {
+      }
+      const content = h('div', option, child)
+      const transitionOption = {
         props: {
           name: transitionName,
           appear: true
         }
-      }, [content])
+      }
+      return h('transition', transitionOption, [content])
     },
     /**
-     * Build dialog major screen
+     * Generate dialog major screen
      *
-     * @param {*} h
-     * @param {*} dialog
-     * @returns
+     * @param {VNode} dialog
+     * @returns {VNode}
      */
-    buildDlgScreen (h, dialog) {
-      return h('div', {
+    generateDialogScreen (dialog) {
+      const option = {
         class: this.classes,
         style: {
           'z-index': this.dialogZIndex
@@ -66,7 +70,8 @@ export default {
             this.outsideClick()
           }
         }
-      }, [dialog])
+      }
+      return this.$createElement('div', option, [dialog])
     }
   }
 }

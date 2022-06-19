@@ -1,79 +1,64 @@
-/* Toast mode style sheet */
+$gap: 15px
 
 div.v-dialog-toast
   padding: 0 !important
-  -webkit-box-shadow: 0 1px 8px rgba(0,0,0,0.5)
-  -moz-box-shadow: 0 1px 8px rgba(0,0,0,0.5)
-  box-shadow: 0 1px 8px rgba(0,0,0,0.5)
-  border-radius: 3px
   overflow: hidden
-  div.v-dialog-content
-    -webkit-box-shadow: none
-    -moz-box-shadow: none
-    box-shadow: none
-    -webkit-border-radius: 0
-    -moz-border-radius: 0
-    border-radius: 0
-  div.v-dialog-body
-    padding: 0
-  div.v-dialog-dialog
-    position: absolute
-    margin: 0
+  box-shadow: 0 1px 8px rgba(0,0,0,0.5)
+  border-radius: 5px
+  border-width: 2px
+  border-style: solid
+  border-color: #999
+  color: #333
+  background-color: white
   &.bottomLeft
-    bottom: 12px
-    left: 12px
+    bottom: $gap
+    left: $gap
     top: auto
     right: auto
   &.bottomCenter
-    // margin-top: 20px
-    // margin-left: 20px
-    bottom: 12px
+    bottom: $gap
     top: auto
     margin: 0 auto
   &.bottomRight
-    bottom: 12px
-    right: 12px
+    bottom: $gap
+    right: $gap
     top: auto
     left: auto
   &.topLeft
-    top: 12px
-    left: 12px
+    top: $gap
+    left: $gap
     right: auto
     bottom: auto
   &.topCenter
-    // margin-left: 20px
-    // margin-top: 12px
-    top: 12px
+    top: $gap
     bottom: auto
     margin: 0 auto
   &.topRight
-    top: 12px
-    right: 12px
+    top: $gap
+    right: $gap
     left: auto
     bottom: auto
-
-div.v-dialog-toast__container
-  overflow: hidden
-  position: relative
-  color: #333
-  &.no-icon
-    .v-dialog-toast__content
-      padding-left: 15px
   &.toast-warning
+    border-color: #333
     background-color: #F5CF87
   &.toast-error
     background-color: #FF5252
-    color: white
+    border-color: #bf2a2a
   &.toast-success
     background-color: #2CBE4E
-    color: white
-
+    border-color: #0a8427
+  &.toast-error,
+  &.toast-success,
   &.toast-error .v-dialog-toast__close,
   &.toast-success .v-dialog-toast__close,
   &.toast-error h3,
   &.toast-success h3
     color: white !important
-
+  &.no-icon
+    .v-dialog-toast__content
+      padding-left: 15px
+  .v-dialog-toast__container
+    display: flex
   .v-dialog-toast__close
     position: absolute
     right: 5px
@@ -90,13 +75,15 @@ div.v-dialog-toast__container
     &:hover
       color: black
   .v-dialog-toast__icon
-    position: absolute
-    top: 12px
-    left: 15px
+    display: inline-flex
+    align-items: center
+    padding-left: 15px
+    padding-right: 15px
     i
       font-size: 40px
   .v-dialog-toast__content
-    padding: 12px 10px 0 70px
+    flex-grow: 1
+    padding: 12px 10px 0 0
     font-size: 14px
     overflow: hidden
     min-height: 80px
@@ -105,7 +92,7 @@ div.v-dialog-toast__container
       font-size: 16px
       font-weight: bold
       color: black
-    p
+    div
       font-size: 14px
       line-height: 1.4
       margin: 0

@@ -1,234 +1,116 @@
+import './styles/icon.scss'
+import './styles/animated.sass'
 import './styles/dialog.sass'
 
-import language from './language'
-import { types, messageTypes, alertIconClass, toastConstants } from './constants'
-import { getTitle, toastTheme, stringSub } from './helper'
+import { DIALOG_KEY_PREFIX } from './constants'
+import { generateDialogRenderOption } from './utils/options'
+import { restoreDocumentBodyOverflow } from './utils/instance'
 
-const { info } = messageTypes
-const { MODAL, ALERT, MASK, TOAST } = types
+import DialogModal from './components/Modal'
+import DialogAlert from './components/Alert'
+import DialogToast from './components/Toast'
+import DialogMask from './components/Mask'
 
-const KEY_PREFIX = 'v-dialogs-'
-
-let keyNum = 0
+let serialNumber = 0
 
 export default {
-  name: 'v-dialogs',
+  name: 'v-dialogs-container',
   components: {
-    'dlg-modal': () => import('./components/Modal'),
-    'dlg-alert': () => import('./components/Alert'),
-    'dlg-mask': () => import('./components/Mask'),
-    'dlg-toast': () => import('./components/Toast')
+    DialogModal,
+    DialogAlert,
+    DialogToast,
+    DialogMask
   },
   data () {
     return {
       dialogs: []
     }
   },
-  // The render functions is fired twice when the component(async) is first time used
   render (h) {
-    return h('div', {
-      class: 'v-dialog-container'
-      // directives: [{
-      //   name: 'show',
-      //   value: this.dialogs.length
-      // }]
-    },
-    this.dialogs.map((val, index) => {
-      const options = {
-        key: val.dialogKey,
-        props: {
-          type: val.type,
-          dialogIndex: index,
-          dialogKey: val.dialogKey,
-          width: val.width,
-          height: val.height,
-          closeTime: val.closeTime,
-          backdrop: val.backdrop,
-          backdropClose: val.backdropClose,
-          shaking: val.shaking,
-          titleBar: val.title
-        },
-        on: {
-          close: this.closeDialog
-        }
-      }
-      if (val.customClass) options.class = val.customClass
-      if (val.singletonKey) options.props.singletonKey = val.singletonKey
-      if (val.type !== MODAL) {
-        options.props.message = val.message
-        options.props.icon = val.icon
-      }
-      if (val.type !== MASK) {
-        options.props.cancelCallback = val.cancelCallback
-      }
-      switch (val.type) {
-        case MODAL:
-          options.props = {
-            ...options.props,
-            component: val.component,
-            params: val.params,
-            fullWidth: val.fullWidth,
-            closeButton: val.closeButton,
-            maxButton: val.maxButton
-          }
-          break
-        case MASK:
-          options.props.backdrop = true
-          break
-        case ALERT:
-          options.props.i18n = val.i18n
-        // eslint-disable-next-line no-fallthrough
-        case TOAST:
-          options.props.iconClassName = val.iconClassName
-          options.props.messageType = val.messageType
-          if (val.type === TOAST) {
-            options.props.position = val.position
-            options.props.contentClass = val.contentClass
-          }
-          break
-      }
-      return h(`dlg-${val.type}`, options)
-    }))
+    const { dialogs, closeDialog } = this
+    const dialogList = dialogs.map((val, index) => {
+      const option = generateDialogRenderOption(val, index, closeDialog)
+      return h(`dialog-${val.type}`, option)
+    })
+    return h('div', { class: 'v-dialogs-container' }, dialogList)
   },
   methods: {
-    /**
-     * Merge user options and default options
-     * @param config - user options
-     * @return merged options
-     */
-    buildConfig (config) {
-      // let merged = Object.assign({}, dialogDefaults, config);
-      // return merged;
-      config.i18n = language[config.language]
-      if (!config.messageType) config.messageType = info
-      return config
-    },
-    /**
-     * Initialize default options
-     */
-    buildDialog (config) {
-      const idx = this.dialogs.findIndex(val => {
-        return config.singletonKey && val.singletonKey === config.singletonKey
-      })
-      if (idx === -1) {
-        keyNum++
-        const key = KEY_PREFIX + keyNum
-        config.dialogKey = key
-        this.dialogs.push(config)
-        return key
-      } else return null
-    },
-    /**
-     * Open a Modal dialog
-     * @param p - options
-     */
-    addModal (p) {
-      p.type = MODAL
-      const config = this.buildConfig(p)
-      return this.buildDialog(config)
-    },
-    /**
-     * Open a message alert dialog, types including info, warning, error, success, confirm
-     * @param p - options
-     */
-    addAlert (p) {
-      p.type = ALERT
-      const config = this.buildConfig(p)
-      const MAX_CONTENT_LENGTH = 70
-
-      if ('title' in config === false || config.title !== false) {
-        config.title = getTitle(config.messageType, config.language)
+    addDialog (option) {
+      const { singletonKey } = option
+      if (singletonKey) {
+        if (this.dialogs.some(val => val.singletonKey === singletonKey)) {
+          return
+        }
       }
-      config.iconClassName = alertIconClass[config.messageType]
-      config.width = config.message.length > MAX_CONTENT_LENGTH ? 700 : 450
-      config.height = config.message.length > MAX_CONTENT_LENGTH
-        ? 400
-        : typeof config.title === 'string' || typeof config.title === 'undefined'
-          ? 210
-          : 180
 
-      return this.buildDialog(config)
+      serialNumber++
+      const key = DIALOG_KEY_PREFIX + serialNumber
+      option.dialogKey = key
+      // console.dir(option)
+      this.dialogs.push(option)
+      return key
     },
     /**
-     * Open a full screen mask
-     * @param p - options
-     */
-    addMask (p) {
-      p.type = MASK
-      const config = this.buildConfig(p)
-      const MAX_CONTENT_LENGTH = 65
-      config.message = config.message || config.i18n.maskText
-      if (config.message.length > MAX_CONTENT_LENGTH) config.message = stringSub(config.message, 65)
-      config.width = 300
-      config.height = 80
-      config.backdrop = true
-
-      return this.buildDialog(config)
-    },
-    /**
-     * Open a Toast dialog (corner dialog)
+     * Close dialog, the last one or specified key dialog (Modal, Alert, Mask, Toast)
      *
-     * @param p - options
+     * @param {string} key - the dialog key
      *
-     * @enum p.position
-     * 'topLeft'
-     * 'topCenter'
-     * 'topRight'
-     * 'bottomLeft'
-     * 'bottomCenter'
-     * 'bottomRight'
-     */
-    addToast (p) {
-      p.type = TOAST
-      const config = this.buildConfig(p)
-      config.message = stringSub(config.message, 56)
-      config.width = 300
-      config.height = 80
-      config.iconClassName = toastConstants.iconClass[config.messageType]
-      config.title = getTitle(config.messageType, config.language)
-      config.contentClass = toastTheme(config.messageType)
-
-      return this.buildDialog(config)
-    },
-    /**
-     * Close dialog, last one or specified key dialog (Modal, Alert, Mask, Toast)
-     *
-     * @param {string} key - the dialog key, you can get it like below
-     *
-     * const key = this.$dlg.alert('your msg')
+     * @example
+     * const key = this.$dlg.mask('your msg')
+     * this.$dlg.close(key)
      */
     close (key) {
-      if (!this.dialogs.length) return
-      const dKey = key || this.dialogs[this.dialogs.length - 1].dialogKey
-      this.closeDialog(dKey)
+      const { dialogs } = this
+      if (!dialogs.length) return
+      this.closeDialog(key || dialogs[dialogs.length - 1].dialogKey)
     },
     /**
      * Close dialog (remove dialogs array item) and call user callback function
      * @private
      *
-     * @param key[string] - dialog key
-     * @param cancel[boolean] - trigger cancelCallback or not
-     * @param data[object] - return data when close dialog(Modal)
+     * @param {string} key - dialog key
+     * @param {boolean} cancel - trigger cancelCallback or not
+     * @param {object} data - return data when close dialog(Modal)
      */
     closeDialog (key, cancel, data) {
       if (!key) return
       const dlg = this.dialogs.find(val => val.dialogKey === key)
-      if (dlg) {
+      if (!dlg) return
+
+      if (this.$refs[dlg.dialogKey]) {
+        this.$refs[dlg.dialogKey].show = false
+      }
+      // waiting for dialog close animation finish
+      window.setTimeout(() => {
+        // remove current dialog from list
         this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
         this.$nextTick(() => {
-          if (dlg.callback && typeof dlg.callback === 'function' && !cancel) dlg.callback(data)
-          if (cancel && dlg.cancelCallback && typeof dlg.cancelCallback === 'function') {
-            dlg.cancelCallback()
+          const { callback, cancelCallback } = dlg
+
+          if (cancel) {
+            if (cancelCallback && typeof cancelCallback === 'function') {
+              cancelCallback()
+            }
+          } else {
+            if (callback && typeof callback === 'function') {
+              callback(data)
+            }
           }
+          restoreDocumentBodyOverflow()
         })
-      }
+      }, 200)
     },
     /**
-     * Close all dialog
-     * @param callback[function] the callback fired when all dialogs closed
+     * Close all dialogs
+     * @param {function} callback - the callback fired when all of dialogs closed
      */
     closeAll (callback) {
-      if (this.dialogs.length) this.dialogs = []
+      if (this.dialogs.length) {
+        this.dialogs = []
+      }
+
+      restoreDocumentBodyOverflow()
+
       this.$nextTick(() => {
         if (callback && typeof callback === 'function') callback()
       })

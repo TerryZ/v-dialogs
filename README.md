@@ -13,32 +13,52 @@ The jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
 
 ## The Dialog Icon
 
-The icons in alert dialog used are made by [Elegant Themes](http://www.elegantthemes.com/blog/freebie-of-the-week/beautiful-flat-icons-for-free)  
+The icons in alert dialog used are made by [Elegant Themes](http://www.elegantthemes.com/blog/freebie-of-the-week/beautiful-flat-icons-for-free)
 The control icon, toast icon used are come from [IconFont](http://www.iconfont.cn)
 
 ## Installation
 
-```
+```sh
 npm i -S v-dialogs
 ```
 
-Include plugin in your `main.js` file.
+Include plugin in your project
 
 ```js
 import Vue from 'vue'
-import Dialog from 'v-dialogs'
-Vue.use(Dialog, {
+import Dialogs from 'v-dialogs'
+Vue.use(Dialogs, {
   // global config options...
 })
 ```
 
 ## Usage
 
+### Alert
+
+```js
+// Globally instance open alert dialog
+// alert message
+this.$dlg.alert(message)
+// alert message with callback
+this.$dlg.alert(message, callback)
+// alert message with options
+this.$dlg.alert(message, options)
+// alert message with callaback and options
+this.$dlg.alert(message, callback, options)
+
+// Functional open alert dialog
+import { DialogAlert } from 'v-dialogs'
+
+DialogAlert(message, [callback], [option])
+```
+
 ### Modal
 
 ```js
 import Profile from './Profile.vue'
 
+// Globally instance open modal dialog
 this.$dlg.modal(Profile, {
   width: 400,
   height: 300,
@@ -51,19 +71,32 @@ this.$dlg.modal(Profile, {
     this.$dlg.alert(`Received message: ${data}`)
   }
 })
+
+// Functional open modal dialog
+import { DialogModal } from 'v-dialogs'
+
+DialogModal(Profile, {
+  ...options
+})
 ```
 
-### Alert
+### Toast
 
 ```js
-// alert message
-this.$dlg.alert('message')
-// alert message with callback
-this.$dlg.alert('message', () => { // do somthing })
-// alert message with options
-this.$dlg.alert('message', { ...options })
-// alert message with callaback and options
-this.$dlg.alert('message', callback, options)
+// Globally instance open toast dialog
+// show message in corner
+this.$dlg.toast(message)
+// show message with callback
+this.$dlg.toast(message, callback)
+// show message with options
+this.$dlg.toast(message, options)
+// show message with callaback and options
+this.$dlg.toast(message, callback, options)
+
+// Functional open toast dialog
+import { DialogToast } from 'v-dialogs'
+
+DialogToast(message, [callback], [option])
 ```
 
 ### Mask
@@ -72,21 +105,44 @@ this.$dlg.alert('message', callback, options)
 const key = this.$dlg.mask('Data loading, please hold on a moment...')
 
 // do some stuff
-job().then(resp => {
-  // close mark layer when job done
+job().then(() => {
+  // close mask layer when job finish
   this.$dlg.close(key)
 })
 ```
 
-### Toast
+### DialogHelper
+
+#### close
 
 ```js
-// show message in corner
-this.$dlg.toast('message')
-// show message with callback
-this.$dlg.toast('message', () => { // do somthing })
-// show message with options
-this.$dlg.toast('message', { ...options })
-// show message with callaback and options
-this.$dlg.toast('message', callback, options)
+import { DialogMask, DialogHelper } from 'v-dialogs'
+
+const key = DialogMask()
+// do your job stuff
+job().then(() => {
+  // close mask with key
+  DialogHelper.close(key)
+})
+```
+
+#### closeAll
+
+```js
+import { DialogHelper } from 'v-dialogs'
+
+fetchData()
+  .then(() => {
+    // do fetch data success work
+    ...
+  })
+  .catch(error => {
+    // login state timeout for example
+    if (error.isLoginTimeout) {
+      // close all opened dialogs
+      DialogHelper.closeAll()
+      // redirect to login page
+      router.push({ path: '/login' })
+    }
+  })
 ```

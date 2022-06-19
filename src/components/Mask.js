@@ -1,5 +1,9 @@
+import '../styles/mask.sass'
+
 import mixins from '../mixins'
 import render from '../mixins/render'
+import { calculateDialogTop, textTruncate } from '../utils/helper'
+import { MASK_MAX_CONTENT_LENGTH } from '../constants'
 
 export default {
   name: 'DialogMask',
@@ -10,35 +14,40 @@ export default {
         'v-dialog': true,
         'v-dialog--buzz-out': this.shake
       }
+    },
+    messageText () {
+      const { message } = this
+      if (message.length > MASK_MAX_CONTENT_LENGTH) {
+        return textTruncate(message, MASK_MAX_CONTENT_LENGTH)
+      }
+      return message
     }
   },
   render (h) {
-    const body = h('div', {
+    const contentOption = {
+      class: 'v-dialog-mask__content',
+      domProps: {
+        innerHTML: this.messageText
+      }
+    }
+    const bodyOption = {
       class: 'v-dialog-body',
       style: {
         height: this.bodyHeight + 'px'
       }
-    }, [
+    }
+    const body = h('div', bodyOption, [
       h('div', { class: 'v-dialog-mask__container' }, [
         h('div', { class: 'v-dialog-timer' }),
-        h('div', {
-          class: 'v-dialog-mask__content',
-          domProps: {
-            innerHTML: this.message
-          }
-        })
+        h('div', contentOption)
       ])
     ])
 
     const dialog = h('div', {
       class: 'v-dialog-dialog',
-      style: {
-        width: this.width + 'px',
-        height: this.height + 'px',
-        top: this.dialogTop + 'px'
-      }
+      style: this.dialogStyles
     }, [
-      this.buildDlgContent(h, {
+      this.generateDialogContent({
         className: 'v-dialog-content',
         transitionName: 'v-dialog--candy',
         child: [body]
@@ -46,12 +55,13 @@ export default {
     ])
 
     return h('div', [
-      this.buildDlgScreen(h, dialog),
-      this.buildBackdrop(h)
+      this.generateDialogScreen(dialog),
+      this.generateBackdrop()
     ])
   },
   mounted () {
-    this.bodyHeight = this.height
-    this.adjust()
+    const { height } = this
+    this.bodyHeight = height
+    this.dialogTop = calculateDialogTop(height)
   }
 }

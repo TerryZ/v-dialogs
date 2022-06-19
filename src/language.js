@@ -1,5 +1,7 @@
-export default {
-  cn: {
+export const [CN, EN, PT, JP] = ['cn', 'en', 'pt', 'jp']
+
+const language = {
+  [CN]: {
     titleInfo: '提示',
     titleWarning: '警告',
     titleError: '错误',
@@ -9,7 +11,7 @@ export default {
     btnCancel: '取消',
     maskText: '数据加载中……'
   },
-  en: {
+  [EN]: {
     titleInfo: 'Information',
     titleWarning: 'Warning',
     titleError: 'Error',
@@ -19,7 +21,7 @@ export default {
     btnCancel: 'Cancel',
     maskText: 'Loading……'
   },
-  pt: {
+  [PT]: {
     titleInfo: 'Aviso',
     titleWarning: 'Alerta',
     titleError: 'Erro',
@@ -29,7 +31,7 @@ export default {
     btnCancel: 'Cancelar',
     maskText: 'Carregando……'
   },
-  jp: {
+  [JP]: {
     titleInfo: 'ヒント',
     titleWarning: '警告',
     titleError: '間違った',
@@ -40,3 +42,14 @@ export default {
     maskText: 'データロード……'
   }
 }
+
+/**
+ * Get language resource by language code
+ * @param {string} code - language code
+ * @returns {object} language resource
+ */
+export function getLanguage (code = CN) {
+  return language[code]
+}
+
+export default language
