@@ -1,5 +1,12 @@
 import { DialogBaseOption } from './helper'
 
+declare type ToastPosition = 'topLeft'
+  | 'topCenter'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomCenter'
+  | 'bottomRight'
+
 declare interface ToastOption extends DialogBaseOption {
   /**
    * The title text displayed in header
@@ -13,7 +20,7 @@ declare interface ToastOption extends DialogBaseOption {
    * - `error`
    * - `success`
    */
-  messageType?: string
+  messageType?: 'info' | 'warning' | 'error' | 'success'
   /** Message type icon */
   icon?: boolean
   /**
@@ -32,7 +39,7 @@ declare interface ToastOption extends DialogBaseOption {
    * - `bottomCenter`
    * - `bottomRight` default
    */
-  position?: string
+  position?: ToastPosition
 }
 
 /**
@@ -40,9 +47,10 @@ declare interface ToastOption extends DialogBaseOption {
  * @param message - The message to display
  * @param callback - respond the dialog close
  * @param options - custom options
+ * @returns the dialog key
  */
 export function DialogToast (
   message: string,
   callback?: Function,
   options?: ToastOption
-)
+): string

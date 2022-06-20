@@ -14,9 +14,10 @@ declare interface MaskOption extends DialogBaseOption {
  * @param message - The message to display
  * @param callback - respond the dialog close
  * @param options - custom options
+ * @returns the dialog key
  */
 export function DialogMask (
   message?: string,
   callback?: Function,
   options?: MaskOption
-)
+): string

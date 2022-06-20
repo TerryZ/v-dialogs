@@ -1,8 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
+const { VueLoaderPlugin } = require('vue-loader')
+
+var isCoverage = process.env.NODE_ENV === 'coverage'
 
 module.exports = {
-  //entry: './src/main.js',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -15,6 +17,14 @@ module.exports = {
   },
   module: {
     rules: [
+      isCoverage
+        ? {
+            test: /\.(js|ts)$/,
+            // instrument only testing sources with Istanbul, after ts-loader runs
+            include: path.resolve('src'),
+            loader: 'istanbul-instrumenter-loader'
+          }
+        : {},
       {
         test: /\.css$/,
         use: [
@@ -74,9 +84,14 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, 'src/'),
+      '@test': path.resolve(__dirname, 'tests/')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },

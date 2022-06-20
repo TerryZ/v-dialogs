@@ -14,7 +14,7 @@ declare interface AlertOption extends DialogBaseOption {
    * - `success`
    * - `confirm`
    */
-  messageType?: string
+  messageType?: 'info' | 'warning' | 'error' | 'success' | 'confirm'
   /** Message type icon */
   icon?: boolean
   /** Shake the dialog when operating outside the dialog */
@@ -40,9 +40,10 @@ declare interface AlertOption extends DialogBaseOption {
  * @param message - The message to display
  * @param callback - respond the dialog close
  * @param options - custom options
+ * @returns the dialog key
  */
 export function DialogAlert (
   message: string,
   callback?: Function,
   options?: AlertOption
-)
+): string

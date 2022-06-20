@@ -11,7 +11,9 @@
   ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "test:unit": "mocha-webpack --webpack-config webpack.config.js --require tests/unit/setup.js tests/unit/**/*.spec.js",
+    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test:unit"
   },
   "typings": "types/index.d.ts",
   "keywords": [
@@ -29,7 +31,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/TerryZ/v-dialog.git"
+    "url": "https://github.com/TerryZ/v-dialogs.git"
   },
   "dependencies": {
   },
@@ -49,31 +51,40 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "chai": "^4.3.4",
+    "codecov": "^3.5.0",
+    "jsdom": "^15.1.1",
+    "jsdom-global": "^3.0.2",
     "mocha": "^6.2.1",
     "mocha-webpack": "^1.1.0",
     "nyc": "^14.1.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "typescript": "^4.3.5",
     "cross-env": "^5.0.5",
     "css-loader": "^3.2.0",
     "file-loader": "^5.1.0",
-    "sass": "^1.52.3",
-    "sass-loader": "^10.2.1",
-    "vue-loader": "^15.9.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^7.3.1",
     "vue": "^2.6.14",
+    "vue-loader": "^15.9.0",
+    "vue-style-loader": "^4.1.3",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "webpack-node-externals": "^1.7.2"
   },
   "peerDependencies": {
     "vue": ">2.6.11"
   },
   "nyc": {
     "include": [
-      "src/RegionCityPicker.js",
-      "src/RegionColumns.js",
-      "src/RegionGroup.js",
-      "src/RegionText.js",
-      "src/RegionSelects.js"
+      "src/Container.js",
+      "src/components/Alert.js",
+      "src/components/Modal.js",
+      "src/components/Toast.js",
+      "src/components/Mask.js",
+      "src/utils/helper.js",
+      "src/utils/instance.js",
+      "src/utils/options.js"
     ],
     "instrument": false,
     "sourceMap": false
