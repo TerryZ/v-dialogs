@@ -1,6 +1,6 @@
 {
   "name": "v-dialogs",
-  "description": "A simple and powful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2.x",
+  "description": "A simple and powerful dialog, dialog type including Modal, Alert, Mask and Toast, based on Vue2",
   "version": "2.2.0",
   "author": "TerryZ <terry5@foxmail.com>",
   "license": "MIT",
@@ -77,13 +77,10 @@
   },
   "nyc": {
     "include": [
-      "src/Container.js",
       "src/components/Alert.js",
       "src/components/Modal.js",
       "src/components/Toast.js",
       "src/components/Mask.js",
-      "src/utils/helper.js",
-      "src/utils/instance.js",
       "src/utils/options.js"
     ],
     "instrument": false,
