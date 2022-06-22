@@ -129,7 +129,9 @@ DialogMask([message], [callback])
 
 ### DialogHelper
 
-#### close
+#### close (key?: string): void
+
+Close a dialog, when no specified `key` parameter, will close the last on opened dialog
 
 ```js
 import { DialogMask, DialogHelper } from 'v-dialogs'
@@ -142,7 +144,9 @@ job().then(() => {
 })
 ```
 
-#### closeAll
+#### closeAll (): void
+
+Close all dialogs at once
 
 ```js
 import { DialogHelper } from 'v-dialogs'
