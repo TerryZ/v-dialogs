@@ -44,20 +44,19 @@ Vue.use(Dialogs, {
 ### Alert
 
 ```js
-// Globally instance open alert dialog
-// alert message
-this.$dlg.alert(message)
-// alert message with callback
-this.$dlg.alert(message, callback)
-// alert message with options
-this.$dlg.alert(message, options)
-// alert message with callaback and options
-this.$dlg.alert(message, callback, options)
-
 // Functional open alert dialog
 import { DialogAlert } from 'v-dialogs'
+// alert message
+DialogAlert(message)
+// alert message with callback
+DialogAlert(message, callback)
+// alert message with options
+DialogAlert(message, option)
+// alert message with callaback and options
+DialogAlert(message, callback, option)
 
-DialogAlert(message, [callback], [option])
+// Globally instance open alert dialog
+this.$dlg.alert(message, [callback], [options])
 ```
 
 ### Modal
