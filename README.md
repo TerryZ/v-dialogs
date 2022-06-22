@@ -62,10 +62,16 @@ this.$dlg.alert(message, [callback], [options])
 ### Modal
 
 ```js
-import Profile from './Profile.vue'
-
+// Functional open modal dialog
+DialogModal(Page, [options])
 // Globally instance open modal dialog
-this.$dlg.modal(Profile, {
+this.$dlg.modal(component, [options])
+
+// Functional example
+import { DialogModal, DialogAlert } from 'v-dialogs'
+import Page from './Page.vue'
+
+DialogModal(Page, {
   width: 400,
   height: 300,
   title: 'User Profile',
@@ -74,14 +80,17 @@ this.$dlg.modal(Profile, {
     userName: 'Terry Zeng'
   },
   callback: data => {
-    this.$dlg.alert(`Received message: ${data}`)
+    DialogAlert(`Received message: ${data}`)
   }
 })
 
-// Functional open modal dialog
-import { DialogModal } from 'v-dialogs'
-
-DialogModal(page, [options])
+// Globally instance example
+this.$dlg.modal(Page, {
+  ...
+  callback: data => {
+    this.$dlg.alert(`Received message: ${data}`)
+  }
+})
 ```
 
 ### Toast
