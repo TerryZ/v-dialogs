@@ -51,14 +51,13 @@ this.$dlg.alert(message, [callback], [options])
 
 // Examples
 import { DialogAlert } from 'v-dialogs'
-// alert message
-DialogAlert(message)
-// alert message with callback
-DialogAlert(message, callback)
-// alert message with options
-DialogAlert(message, option)
-// alert message with callaback and options
-DialogAlert(message, callback, option)
+function deleteUser (userId) {
+  DialogAlert('Deleted data cannot be recovered, are you sure?', () => {
+    executeDeleteUser(userId).then(() => {
+      DialogAlert('Delete complete.', { messageType: 'success' })
+    })
+  }, { messageType: 'confirm' })
+}
 ```
 
 ### Modal
@@ -118,16 +117,16 @@ DialogToast(message, callback, options)
 ### Mask
 
 ```js
-// Globally instance open mask dialog
-// show default message
-this.$dlg.mask()
-// show specify message
-this.$dlg.mask('Data loading, please hold on a moment...')
-
 // Functional open mask dialog
-import { DialogMask } from 'v-dialogs'
+DialogMask([message], [callback], [options])
+// Globally instance open mask dialog
+this.$dlg.mask([message], [callback], [options])
 
-DialogMask([message], [callback])
+import { DialogMask } from 'v-dialogs'
+// Display default message
+DialogMask()
+// Display specify message
+DialogMask('Data loading, please hold on a moment...')
 ```
 
 ### DialogHelper
