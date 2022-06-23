@@ -131,22 +131,24 @@ DialogMask('Data loading, please hold on a moment...')
 
 ### DialogHelper
 
-#### close (key?: string): void
+Dialog helper collection
 
-Close a dialog, when no specified `key` parameter, will close the last on opened dialog
+#### close(key?: string): void
+
+Close a dialog, when no specified `key` parameter, will close the last one opened dialog
 
 ```js
 import { DialogMask, DialogHelper } from 'v-dialogs'
 
 const key = DialogMask()
 // do your job stuff
-job().then(() => {
+doSomeJobStuff().then(() => {
   // close mask with key
   DialogHelper.close(key)
 })
 ```
 
-#### closeAll (): void
+#### closeAll(): void
 
 Close all dialogs at once
 
@@ -155,15 +157,15 @@ import { DialogHelper } from 'v-dialogs'
 
 fetchData()
   .then(() => {
-    // do fetch data success work
+    // Do fetch data success work
     ...
   })
   .catch(error => {
-    // login state timeout for example
+    // Login state timeout for example
     if (error.isLoginTimeout) {
-      // close all opened dialogs
+      // Close all opened dialogs
       DialogHelper.closeAll()
-      // redirect to login page
+      // Redirect to login page
       router.push({ path: '/login' })
     }
   })
