@@ -45,6 +45,11 @@ Vue.use(Dialogs, {
 
 ```js
 // Functional open alert dialog
+DialogAlert(message, [callback], [option])
+// Globally instance open alert dialog
+this.$dlg.alert(message, [callback], [options])
+
+// Examples
 import { DialogAlert } from 'v-dialogs'
 // alert message
 DialogAlert(message)
@@ -54,20 +59,17 @@ DialogAlert(message, callback)
 DialogAlert(message, option)
 // alert message with callaback and options
 DialogAlert(message, callback, option)
-
-// Globally instance open alert dialog
-this.$dlg.alert(message, [callback], [options])
 ```
 
 ### Modal
 
 ```js
 // Functional open modal dialog
-DialogModal(Page, [options])
+DialogModal(component, [options])
 // Globally instance open modal dialog
 this.$dlg.modal(component, [options])
 
-// Functional example
+// Examples
 import { DialogModal, DialogAlert } from 'v-dialogs'
 import Page from './Page.vue'
 
@@ -96,20 +98,21 @@ this.$dlg.modal(Page, {
 ### Toast
 
 ```js
-// Globally instance open toast dialog
-// show message in corner
-this.$dlg.toast(message)
-// show message with callback
-this.$dlg.toast(message, callback)
-// show message with options
-this.$dlg.toast(message, options)
-// show message with callaback and options
-this.$dlg.toast(message, callback, options)
-
 // Functional open toast dialog
-import { DialogToast } from 'v-dialogs'
-
 DialogToast(message, [callback], [option])
+// Globally instance open toast dialog
+this.$dlg.toast(message, [callback], [options])
+
+// Examples
+import { DialogToast } from 'v-dialogs'
+// Display message in toast
+DialogToast(message)
+// Display message with callback
+DialogToast(message, callback)
+// Display message with options
+DialogToast(message, options)
+// Display message with callaback and options
+DialogToast(message, callback, options)
 ```
 
 ### Mask
