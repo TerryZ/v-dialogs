@@ -10,7 +10,7 @@ A simple and clean instructional dialog plugin for **Vue2**, dialog type includi
 
 ## Examples and Documentation
 
-Explorer on
+Live Examples on [CodePen](https://codepen.io/terry05/pen/JjLoxMN), more examples and documentation please visit below
 
 - [English site](https://terryz.github.io/vue/#/dialog)
 - [国内站点](https://terryz.gitee.io/vue/#/dialog)
