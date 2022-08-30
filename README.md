@@ -46,7 +46,7 @@ Vue.use(Dialogs, {
 ```js
 // Functional open alert dialog
 DialogAlert(message, [callback], [option])
-// Globally instance open alert dialog
+// Open alert dialog with globally v-dialogs instance
 this.$dlg.alert(message, [callback], [options])
 
 // Examples
@@ -65,7 +65,7 @@ function deleteUser (userId) {
 ```js
 // Functional open modal dialog
 DialogModal(component, [options])
-// Globally instance open modal dialog
+// Open modal dialog with globally v-dialogs instance
 this.$dlg.modal(component, [options])
 
 // Examples
@@ -99,7 +99,7 @@ this.$dlg.modal(Page, {
 ```js
 // Functional open toast dialog
 DialogToast(message, [callback], [option])
-// Globally instance open toast dialog
+// Open toast dialog with globally v-dialogs instance
 this.$dlg.toast(message, [callback], [options])
 
 // Examples
@@ -119,7 +119,7 @@ DialogToast(message, callback, options)
 ```js
 // Functional open mask dialog
 DialogMask([message], [callback], [options])
-// Globally instance open mask dialog
+// Open mask dialog with globally v-dialogs instance
 this.$dlg.mask([message], [callback], [options])
 
 import { DialogMask } from 'v-dialogs'
