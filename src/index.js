@@ -10,9 +10,8 @@ export {
 } from './utils/instance'
 
 export default {
-  install (Vue, options = {}) {
-    Object.defineProperty(Vue.prototype, options.instanceName || DEFAULT_INSTANCE_NAME, {
-      value: instanceApi
-    })
+  install (app, options = {}) {
+    const instanceName = options?.instanceName || DEFAULT_INSTANCE_NAME
+    app.config.globalProperties[instanceName] = instanceApi
   }
 }
