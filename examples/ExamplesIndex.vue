@@ -4,11 +4,16 @@
       class="bg-light fw-bold"
       style="width: 18rem;"
     >
-      <div class="fs-4 py-4 px-3">
-        v-dialogs examples
+      <div class="py-4 px-3 d-flex align-items-center font-monospace">
+        <div class="fs-3 me-2">
+          v-dialogs
+        </div>
+        <div class="fs-5 text-muted fw-normal">
+          examples
+        </div>
       </div>
       <div
-        class="px-3 pt-4"
+        class="px-3 pb-4"
         v-for="item in modules"
         :key="item.key"
       >

@@ -1,3 +1,5 @@
+import { h, vShow, withDirectives, Transition } from 'vue'
+
 export default {
   methods: {
     /**
@@ -6,7 +8,6 @@ export default {
     generateBackdrop () {
       if (!this.backdrop) return
 
-      const h = this.$createElement
       const child = []
       if (this.show) {
         const backdropOption = {
@@ -24,7 +25,7 @@ export default {
           appear: true
         }
       }
-      return h('transition', transitionOption, child)
+      return h(Transition, transitionOption, () => child)
     },
     /**
      * Generate dialog content
@@ -33,7 +34,6 @@ export default {
      * @returns
      */
     generateDialogContent (options) {
-      const h = this.$createElement
       const { className, transitionName, child } = options
 
       const option = {
@@ -43,14 +43,18 @@ export default {
           value: this.show
         }]
       }
-      const content = h('div', option, child)
+      const content = withDirectives(
+        h('div', option, child),
+        [[vShow, this.show]]
+      )
+
       const transitionOption = {
         props: {
           name: transitionName,
           appear: true
         }
       }
-      return h('transition', transitionOption, [content])
+      return h(Transition, transitionOption, () => [content])
     },
     /**
      * Generate dialog major screen
@@ -64,14 +68,12 @@ export default {
         style: {
           'z-index': this.dialogZIndex
         },
-        on: {
-          click: e => {
-            if (e.target !== e.currentTarget) return
-            this.outsideClick()
-          }
+        onClick: e => {
+          if (e.target !== e.currentTarget) return
+          this.outsideClick()
         }
       }
-      return this.$createElement('div', option, [dialog])
+      return h('div', option, [dialog])
     }
   }
 }

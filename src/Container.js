@@ -1,3 +1,5 @@
+import { ref, h, nextTick } from 'vue'
+
 import './styles/icon.scss'
 import './styles/animated.sass'
 import './styles/dialog.sass'
@@ -11,34 +13,22 @@ import DialogAlert from './components/Alert'
 import DialogToast from './components/Toast'
 import DialogMask from './components/Mask'
 
-let serialNumber = 0
-
 export default {
-  name: 'v-dialogs-container',
+  name: 'VDialogsContainer',
   components: {
     DialogModal,
     DialogAlert,
     DialogToast,
     DialogMask
   },
-  data () {
-    return {
-      dialogs: []
-    }
-  },
-  render (h) {
-    const { dialogs, closeDialog } = this
-    const dialogList = dialogs.map((val, index) => {
-      const option = generateDialogRenderOption(val, index, closeDialog)
-      return h(`dialog-${val.type}`, option)
-    })
-    return h('div', { class: 'v-dialogs-container' }, dialogList)
-  },
-  methods: {
-    addDialog (option) {
+  setup (props, { expose }) {
+    const dialogs = ref([])
+    let serialNumber = 0
+
+    function addDialog (option) {
       const { singletonKey } = option
       if (singletonKey) {
-        if (this.dialogs.some(val => val.singletonKey === singletonKey)) {
+        if (dialogs.value.some(val => val.singletonKey === singletonKey)) {
           return
         }
       }
@@ -47,9 +37,9 @@ export default {
       const key = DIALOG_KEY_PREFIX + serialNumber
       option.dialogKey = key
       // console.dir(option)
-      this.dialogs.push(option)
+      dialogs.value.push(option)
       return key
-    },
+    }
     /**
      * Close dialog, the last one or specified key dialog (Modal, Alert, Mask, Toast)
      *
@@ -59,11 +49,10 @@ export default {
      * const key = this.$dlg.mask('your msg')
      * this.$dlg.close(key)
      */
-    close (key) {
-      const { dialogs } = this
-      if (!dialogs.length) return
-      this.closeDialog(key || dialogs[dialogs.length - 1].dialogKey)
-    },
+    function close (key) {
+      if (!dialogs.value.length) return
+      closeDialog(key || dialogs.value[dialogs.value.length - 1].dialogKey)
+    }
     /**
      * Close dialog (remove dialogs array item) and call user callback function
      * @private
@@ -72,48 +61,54 @@ export default {
      * @param {boolean} cancel - trigger cancelCallback or not
      * @param {object} data - return data when close dialog(Modal)
      */
-    closeDialog (key, cancel, data) {
+    function closeDialog (key, cancel, data) {
       if (!key) return
-      const dlg = this.dialogs.find(val => val.dialogKey === key)
+      const dlg = dialogs.value.find(val => val.dialogKey === key)
       if (!dlg) return
 
-      if (this.$refs[dlg.dialogKey]) {
-        this.$refs[dlg.dialogKey].show = false
-      }
+      // if (this.$refs[dlg.dialogKey]) {
+      //   this.$refs[dlg.dialogKey].show = false
+      // }
       // waiting for dialog close animation finish
       window.setTimeout(() => {
         // remove current dialog from list
-        this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
-        this.$nextTick(() => {
+        dialogs.value = dialogs.value.filter(val => val.dialogKey !== key)
+        nextTick(() => {
           const { callback, cancelCallback } = dlg
 
           if (cancel) {
-            if (cancelCallback && typeof cancelCallback === 'function') {
-              cancelCallback()
-            }
+            if (typeof cancelCallback === 'function') cancelCallback()
           } else {
-            if (callback && typeof callback === 'function') {
-              callback(data)
-            }
+            if (typeof callback === 'function') callback(data)
           }
           restoreDocumentBodyOverflow()
         })
       }, 200)
-    },
+    }
     /**
      * Close all dialogs
      * @param {function} callback - the callback fired when all of dialogs closed
      */
-    closeAll (callback) {
-      if (this.dialogs.length) {
-        this.dialogs = []
+    function closeAll (callback) {
+      if (dialogs.value.length) {
+        dialogs.value = []
       }
 
       restoreDocumentBodyOverflow()
 
-      this.$nextTick(() => {
-        if (callback && typeof callback === 'function') callback()
+      nextTick(() => {
+        if (typeof callback === 'function') callback()
       })
+    }
+
+    expose({ addDialog, close, closeAll })
+
+    return () => {
+      const dialogList = dialogs.value.map((val, index) => {
+        const option = generateDialogRenderOption(val, index, closeDialog)
+        return h(`dialog-${val.type}`, option)
+      })
+      return h('div', { class: 'v-dialogs-container' }, dialogList)
     }
   }
 }

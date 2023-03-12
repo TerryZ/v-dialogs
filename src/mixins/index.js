@@ -27,11 +27,6 @@ export default {
     height: { type: Number, default: 400 },
     language: { type: String, default: CN },
     /**
-     * Dialog inner key
-     * @private
-     */
-    dialogKey: { type: String, default: '' },
-    /**
      * auto close dialog seconds
      */
     closeTime: { type: [Boolean, Number], default: false },
@@ -46,6 +41,11 @@ export default {
      * dialog outside click with shaking animation
      */
     shaking: { type: Boolean, default: true },
+    /**
+     * Dialog inner key
+     * @private
+     */
+    dialogKey: { type: String, default: '' },
     dialogIndex: { type: Number, required: true }
   },
   data () {
@@ -69,9 +69,7 @@ export default {
     }
   },
   methods: {
-    /**
-     * backdrop click animate
-     */
+    // backdrop click animate
     outsideClick () {
       if (!this.backdrop) return
 

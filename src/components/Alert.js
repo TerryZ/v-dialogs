@@ -22,11 +22,11 @@ export default {
     /**
      * Dialog message type (work on alert, toast mode)
      *
-     * -'info' - default
-     * -'warning'
-     * -'error'
-     * -'success'
-     * -'confirm'
+     * - `info` - default
+     * - `warning`
+     * - `error`
+     * - `success`
+     * - `confirm`
      */
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
     icon: { type: Boolean, default: true },
