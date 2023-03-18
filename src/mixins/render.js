@@ -20,10 +20,8 @@ export default {
       }
 
       const transitionOption = {
-        props: {
-          name: 'v-dialog--fade',
-          appear: true
-        }
+        name: 'v-dialog--fade',
+        appear: true
       }
       return h(Transition, transitionOption, () => child)
     },
@@ -49,10 +47,8 @@ export default {
       )
 
       const transitionOption = {
-        props: {
-          name: transitionName,
-          appear: true
-        }
+        name: transitionName,
+        appear: true
       }
       return h(Transition, transitionOption, () => [content])
     },
