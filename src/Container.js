@@ -1,4 +1,4 @@
-import { ref, h, nextTick } from 'vue'
+import { ref, h, nextTick, defineComponent } from 'vue'
 
 import './styles/icon.scss'
 import './styles/animated.sass'
@@ -13,7 +13,7 @@ import DialogAlert from './components/Alert'
 import DialogToast from './components/Toast'
 import DialogMask from './components/Mask'
 
-export default {
+export default defineComponent({
   name: 'VDialogsContainer',
   components: {
     DialogModal,
@@ -111,4 +111,4 @@ export default {
       return h('div', { class: 'v-dialogs-container' }, dialogList)
     }
   }
-}
+})

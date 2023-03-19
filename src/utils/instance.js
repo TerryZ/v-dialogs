@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import Container from '../Container'
 
 import {
@@ -15,14 +15,15 @@ import { isDocumentBodyOverflowing } from './helper'
  * @returns {object} the v-dialogs container instance
  */
 export function getInstance () {
-  const container = document.querySelector('.v-dialogs-container')
-  if (container && container.__vue__) {
-    return container.__vue__
-  }
+  // const container = document.querySelector('.v-dialogs-container')
+  // if (container && container.__vue__) {
+  //   return container.__vue__
+  // }
 
-  const DialogContainer = Vue.extend(Container)
-  const div = document.body.appendChild(document.createElement('div'))
-  return new DialogContainer().$mount(div)
+  // const DialogContainer = Vue.extend(Container)
+  // const div = document.body.appendChild(document.createElement('div'))
+  // return new DialogContainer().$mount(div)
+  return createApp(Container).mount('body')
 }
 
 /**

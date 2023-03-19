@@ -1,6 +1,6 @@
 import '../styles/alert.sass'
 
-import { ref, h, nextTick, onMounted } from 'vue'
+import { ref, computed, h, nextTick, onMounted } from 'vue'
 import {
   TITLE_TEXT_MAX_LENGTH,
   MESSAGE_TYPE_INFO,
@@ -33,58 +33,51 @@ export default {
     icon: { type: Boolean, default: true },
     iconClassName: { type: String, default: '' }
   },
-  computed: {
-    shadow () {
-      const { messageType } = this
-      if (messageType === MESSAGE_TYPE_WARNING || messageType === MESSAGE_TYPE_ERROR || messageType === MESSAGE_TYPE_SUCCESS) {
-        return `v-dialog__shadow--${messageType.toLowerCase()}`
+  setup (props) {
+    const btnOk = ref()
+
+    const shadow = computed(() => {
+      if (
+        props.messageType === MESSAGE_TYPE_WARNING ||
+        props.messageType === MESSAGE_TYPE_ERROR ||
+        props.messageType === MESSAGE_TYPE_SUCCESS
+      ) {
+        return `v-dialog__shadow--${props.messageType.toLowerCase()}`
       }
       return ''
-    },
-    classes () {
+    })
+    const classes = computed(() => {
       return {
         'v-dialog': true,
         'v-dialog--buzz-out': this.shake
       }
-    },
-    iconClass () {
-      return this.icon ? this.iconClassName : 'no-icon'
-    }
-  },
-  setup () {
+    })
+    const iconClass = computed(() => props.icon ? props.iconClassName : 'no-icon')
+
     function generateHeader () {
       const { titleContent } = this
       if (titleContent === false) return
 
       const text = textTruncate(titleContent, TITLE_TEXT_MAX_LENGTH)
-      const headerText = h('h3', text)
-      return h('div', { class: DIALOG_HEADER_CLASS }, [headerText])
+      return h('div', { class: DIALOG_HEADER_CLASS }, h('h3', text))
     }
     function generateButtons () {
       const i18n = getLanguage(this.language)
       const buttons = []
       // Okay button
       const okButtonOption = {
-        attrs: {
-          type: 'button'
-        },
+        type: 'button',
         class: 'v-dialog-btn__ok',
-        ref: 'btnOk',
-        on: {
-          click: () => { this.closeDialog(false) }
-        }
+        ref: btnOk,
+        onClick: () => { this.closeDialog(false) }
       }
       buttons.push(h('button', okButtonOption, i18n.btnOk))
       // Cancel button
-      if (this.messageType === MESSAGE_TYPE_CONFIRM) {
+      if (props.messageType === MESSAGE_TYPE_CONFIRM) {
         const cancelButtonOption = {
-          attrs: {
-            type: 'button'
-          },
+          type: 'button',
           class: 'v-dialog-btn__cancel',
-          on: {
-            click: () => { this.closeDialog(true) }
-          }
+          onClick: () => { this.closeDialog(true) }
         }
         buttons.push(h('button', cancelButtonOption, i18n.btnCancel))
       }
@@ -95,9 +88,7 @@ export default {
       // dialog body
       const contentOption = {
         class: 'v-dialog-alert__content',
-        domProps: {
-          innerHTML: this.message
-        }
+        innerHTML: this.message
       }
       const bodyOption = {
         class: 'v-dialog-body',
@@ -106,7 +97,7 @@ export default {
         }
       }
       return h('div', bodyOption, [
-        h('div', { class: ['v-dialog-alert', this.iconClass] }, [
+        h('div', { class: ['v-dialog-alert', iconClass.value] }, [
           h('div', contentOption),
           generateButtons()
         ])
@@ -121,7 +112,7 @@ export default {
         this.bodyHeight = height - headerHeight
 
         this.dialogTop = calculateDialogTop(height)
-        this.$refs.btnOk.focus()
+        btnOk.value.focus()
       })
     })
 
@@ -136,7 +127,7 @@ export default {
         style: this.dialogStyles
       }, [
         this.generateDialogContent({
-          className: ['v-dialog-content', this.shadow],
+          className: ['v-dialog-content', shadow.value],
           transitionName: 'v-dialog--candy',
           child: contents
         })
