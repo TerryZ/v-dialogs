@@ -23,7 +23,9 @@ export function getInstance () {
   // const DialogContainer = Vue.extend(Container)
   // const div = document.body.appendChild(document.createElement('div'))
   // return new DialogContainer().$mount(div)
-  return createApp(Container).mount('body')
+  const div = document.createElement('div')
+  // const div = document.body.appendChild(document.createElement('div'))
+  return createApp(Container).mount(div)
 }
 
 /**

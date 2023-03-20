@@ -1,4 +1,4 @@
-import { ref, h, nextTick, defineComponent } from 'vue'
+import { ref, h, nextTick, defineComponent, Teleport } from 'vue'
 
 import './styles/icon.scss'
 import './styles/animated.sass'
@@ -108,7 +108,9 @@ export default defineComponent({
         const option = generateDialogRenderOption(val, index, closeDialog)
         return h(`dialog-${val.type}`, option)
       })
-      return h('div', { class: 'v-dialogs-container' }, dialogList)
+      return h(Teleport, { to: 'body' }, [
+        h('div', { class: 'v-dialogs-container' }, dialogList)
+      ])
     }
   }
 })
