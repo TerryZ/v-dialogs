@@ -69,20 +69,21 @@ export default {
     }
   },
   methods: {
-    // backdrop click animate
-    outsideClick () {
-      if (!this.backdrop) return
+    // // backdrop click animate
+    // outsideClick () {
+    //   if (!this.backdrop) return
 
-      if (this.backdropClose) {
-        this.closeDialog(true)
-        return
-      }
+    //   if (this.backdropClose) {
+    //     this.closeDialog(true)
+    //     return
+    //   }
 
-      if (!this.shaking) return
+    //   if (!this.shaking) return
 
-      this.shake = true
-      setTimeout(() => { this.shake = false }, 750)
-    },
+    //   // play shake animation
+    //   this.shake = true
+    //   setTimeout(() => { this.shake = false }, 750)
+    // },
     /**
      * Close current dialog
      *
@@ -91,45 +92,44 @@ export default {
      */
     closeDialog (trigger, data) {
       this.$emit('close', this.dialogKey, trigger, data)
-    },
-    calculateLayerLevel () {
-      // setup dialog and backdrop z-index
-      const step = 50
-      this.dialogZIndex = START_Z_INDEX + (step * this.dialogIndex)
-      this.backdropZIndex = this.dialogZIndex - 10
-    },
-    // auto close dialog in specify times
-    autoClose () {
-      const { closeTime } = this
-      if (!closeTime) return
-
-      const time = closeTime * 1000
-      setTimeout(() => { this.closeDialog(false) }, time)
-    },
-    resizeHandler () {
-      // ignore resize events as long as an actualResizeHandler execution is in the queue
-      if (this.resizeTimeout) return
-
-      this.resizeTimeout = setTimeout(() => {
-        this.resizeTimeout = null
-        this.dialogTop = calculateDialogTop(this.height)
-        // The actualResizeHandler will execute at a rate of 15fps
-      }, 100)
     }
+    // calculateLayerLevel () {
+    //   // setup dialog and backdrop z-index
+    //   const step = 50
+    //   this.dialogZIndex = START_Z_INDEX + (step * this.dialogIndex)
+    //   this.backdropZIndex = this.dialogZIndex - 10
+    // },
+    // auto close dialog in specify times
+    // autoClose () {
+    //   const { closeTime } = this
+    //   if (!closeTime) return
+
+    //   const time = closeTime * 1000
+    //   setTimeout(() => { this.closeDialog(false) }, time)
+    // },
+    // resizeHandler () {
+    //   // ignore resize events as long as an actualResizeHandler execution is in the queue
+    //   if (this.resizeTimeout) return
+
+    //   this.resizeTimeout = setTimeout(() => {
+    //     this.resizeTimeout = null
+    //     this.dialogTop = calculateDialogTop(this.height)
+    //   }, 100)
+    // }
   },
   mounted () {
-    this.calculateLayerLevel()
+    // this.calculateLayerLevel()
     this.show = true
 
-    this.autoClose()
+    // this.autoClose()
 
-    if (this.type === TOAST) return
+    // if (this.type === TOAST) return
 
-    window.addEventListener('resize', this.resizeHandler, false)
+    // window.addEventListener('resize', this.resizeHandler, false)
   },
   destroyed () {
-    if (this.type === TOAST) return
+    // if (this.type === TOAST) return
 
-    window.removeEventListener('resize', this.resizeHandler, false)
+    // window.removeEventListener('resize', this.resizeHandler, false)
   }
 }

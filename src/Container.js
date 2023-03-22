@@ -1,4 +1,4 @@
-import { ref, h, nextTick, defineComponent, Teleport } from 'vue'
+import { ref, h, nextTick, defineComponent } from 'vue'
 
 import './styles/icon.scss'
 import './styles/animated.sass'
@@ -8,19 +8,8 @@ import { DIALOG_KEY_PREFIX } from './constants'
 import { generateDialogRenderOption } from './utils/options'
 import { restoreDocumentBodyOverflow } from './utils/instance'
 
-import DialogModal from './components/Modal'
-import DialogAlert from './components/Alert'
-import DialogToast from './components/Toast'
-import DialogMask from './components/Mask'
-
 export default defineComponent({
   name: 'VDialogsContainer',
-  components: {
-    DialogModal,
-    DialogAlert,
-    DialogToast,
-    DialogMask
-  },
   setup (props, { expose }) {
     const dialogs = ref([])
     let serialNumber = 0
@@ -101,16 +90,17 @@ export default defineComponent({
       })
     }
 
-    expose({ addDialog, close, closeAll })
+    expose({ dialogs, addDialog, close, closeAll })
 
     return () => {
       const dialogList = dialogs.value.map((val, index) => {
         const option = generateDialogRenderOption(val, index, closeDialog)
         return h(`dialog-${val.type}`, option)
       })
-      return h(Teleport, { to: 'body' }, [
-        h('div', { class: 'v-dialogs-container' }, dialogList)
-      ])
+      // return h(Teleport, { to: 'body' }, [
+      //   h('div', { class: 'v-dialogs-container' }, dialogList)
+      // ])
+      return h('div', { class: 'v-dialogs-container' }, dialogList)
     }
   }
 })

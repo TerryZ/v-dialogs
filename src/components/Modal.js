@@ -132,11 +132,7 @@ export default {
       this.setBodyHeight()
     },
     modalAdjust () {
-      if (this.maximize) {
-        this.dialogTop = 0
-        return
-      }
-      this.dialogTop = calculateDialogTop(this.height)
+      this.dialogTop = this.maximize ? 0 : calculateDialogTop(this.height)
     },
     closeModal (data) {
       this.closeDialog(false, data)

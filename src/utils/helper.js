@@ -22,7 +22,9 @@ import {
   TOAST_ICON_INFO,
   TOAST_ICON_WARNING,
   TOAST_ICON_ERROR,
-  TOAST_ICON_SUCCESS
+  TOAST_ICON_SUCCESS,
+  START_Z_INDEX,
+  Z_INDEX_INCREMENT
 } from '../constants'
 
 /**
@@ -127,6 +129,13 @@ export function textTruncate (text, keepLength) {
 export function calculateDialogTop (height) {
   const browserHeight = window.innerHeight || document.documentElement.clientHeight
   return (browserHeight - height) / 2
+}
+
+export function calculateDialogZIndex (index) {
+  // setup dialog and backdrop z-index
+  const dialogZIndex = START_Z_INDEX + (Z_INDEX_INCREMENT * index)
+  const backdropZIndex = dialogZIndex - 10
+  return { dialogZIndex, backdropZIndex }
 }
 
 export function isDocumentBodyOverflowing () {
