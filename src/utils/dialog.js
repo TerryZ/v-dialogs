@@ -8,6 +8,10 @@ export const commonProps = {
   backdrop: { type: Boolean, default: true },
   /** Click backdrop to close dialog */
   backdropClose: { type: Boolean, default: false },
+  title: { type: String, default: '' },
+  /** whether to display header */
+  header: { type: Boolean, default: true },
+  message: { type: String, default: '' },
   /**
    * auto close dialog seconds
    * - 0: no automatic close

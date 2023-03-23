@@ -80,7 +80,7 @@ export default {
       // dialog body
       const contentOption = {
         class: 'v-dialog-alert__content',
-        innerHTML: this.message
+        innerHTML: props.message
       }
       const bodyOption = {
         class: 'v-dialog-body',
