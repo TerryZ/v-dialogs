@@ -1,4 +1,4 @@
-import { h, vShow, withDirectives, Transition } from 'vue'
+import { h, computed, vShow, withDirectives, Transition } from 'vue'
 
 export function useRenderPopup (props) {
   /**
@@ -52,14 +52,15 @@ export function useRenderPopup (props) {
     return h(Transition, transitionOption, () => [content])
   }
   /**
-   * Generate dialog major screen
+   * Generate dialog container
    *
    * @param {VNode} dialog
    * @returns {VNode}
    */
-  function generateDialogScreen (dialog) {
+  function generateDialogContainer (dialog) {
+    // TODO: shaking
     const option = {
-      class: this.classes,
+      class: ['v-dialog', { 'v-dialog--buzz-out': true }],
       style: {
         'z-index': this.dialogZIndex
       },
@@ -74,6 +75,6 @@ export function useRenderPopup (props) {
   return {
     generateBackdrop,
     generateDialogContent,
-    generateDialogScreen
+    generateDialogContainer
   }
 }

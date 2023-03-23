@@ -1,6 +1,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { calculateDialogTop } from './helper'
 import { closeDialog } from '../dialogs'
+import { EN } from '../language'
 
 export const commonProps = {
   /** Display dialog backdrop */
@@ -13,6 +14,7 @@ export const commonProps = {
    * - number of seconds: specify seconds to automatic close dialog
    */
   closeTime: { type: Number, default: 0 },
+  language: { type: String, default: EN },
   /** Dialog key */
   dialogKey: { type: String, default: '' },
   dialogIndex: { type: Number, required: true }
@@ -36,10 +38,11 @@ export function useDialog (props) {
 
   useResizeAdjust(setDialogTop)
   useOutsideClick(props, () => closeDialog(props.dialogKey))
-  useAutomaticClose(props, () => closeDialog(props.dialogKey))
 
   onMounted(() => {
     show.value = true
+
+    useAutomaticClose(props, () => closeDialog(props.dialogKey))
   })
 
   return {

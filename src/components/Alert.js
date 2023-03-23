@@ -12,16 +12,14 @@ import {
 } from '../constants'
 import { getLanguage } from '../language'
 import { calculateDialogTop, textTruncate } from '../utils/helper'
-
-import mixins from '../mixins'
-import render from '../mixins/render'
+import { commonProps } from '../utils/dialog'
 
 export default {
   name: 'DialogAlert',
-  mixins: [mixins, render],
   props: {
+    ...commonProps,
     /**
-     * Dialog message type (work on alert, toast mode)
+     * Message type
      *
      * - `info` - default
      * - `warning`
@@ -45,12 +43,6 @@ export default {
         return `v-dialog__shadow--${props.messageType.toLowerCase()}`
       }
       return ''
-    })
-    const classes = computed(() => {
-      return {
-        'v-dialog': true,
-        'v-dialog--buzz-out': this.shake
-      }
     })
     const iconClass = computed(() => props.icon ? props.iconClassName : 'no-icon')
 
@@ -106,12 +98,11 @@ export default {
 
     onMounted(() => {
       nextTick(() => {
-        const { height } = this
         const header = this.$el.querySelector(`.${DIALOG_HEADER_CLASS}`)
         const headerHeight = this.titleContent ? header.offsetHeight : 0
-        this.bodyHeight = height - headerHeight
+        this.bodyHeight = props.height - headerHeight
 
-        this.dialogTop = calculateDialogTop(height)
+        this.dialogTop = calculateDialogTop(props.height)
         btnOk.value.focus()
       })
     })

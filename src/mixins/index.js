@@ -1,6 +1,6 @@
 import { CN } from '../language'
 import { ALERT, TOAST, START_Z_INDEX } from '../constants'
-import { calculateDialogTop } from '../utils/helper'
+// import { calculateDialogTop } from '../utils/helper'
 
 export default {
   props: {
@@ -59,15 +59,15 @@ export default {
       show: false
     }
   },
-  computed: {
-    dialogStyles () {
-      return {
-        width: this.width + 'px',
-        height: this.height + 'px',
-        top: this.dialogTop + 'px'
-      }
-    }
-  },
+  // computed: {
+  //   dialogStyles () {
+  //     return {
+  //       width: this.width + 'px',
+  //       height: this.height + 'px',
+  //       top: this.dialogTop + 'px'
+  //     }
+  //   }
+  // },
   methods: {
     // // backdrop click animate
     // outsideClick () {
