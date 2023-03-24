@@ -1,4 +1,4 @@
-import languages from '../language'
+import languages, { EN } from '../language'
 import {
   ALERT_HEIGHT,
   ALERT_HEIGHT_LARGE,
@@ -129,6 +129,21 @@ export function textTruncate (text, keepLength) {
 export function calculateDialogTop (height) {
   const browserHeight = window.innerHeight || document.documentElement.clientHeight
   return (browserHeight - height) / 2
+}
+
+/**
+ * Get language resource by language code
+ * @param {string} code - language code
+ * @returns {object} language resource
+ */
+export function getLanguage (lang) {
+  if (!lang) return languages[EN]
+
+  const key = String(lang).toLowerCase()
+
+  if (key in languages) return languages[key]
+
+  return languages[EN]
 }
 
 export function calculateDialogZIndex (index) {

@@ -24,8 +24,22 @@ export const commonProps = {
   dialogIndex: { type: Number, required: true }
 }
 
+export function outsideClick (props, close, shaking) {
+  if (!props.backdrop) return
+
+  if (props.backdropClose) {
+    close()
+    return
+  }
+
+  if (!props.shaking) return
+
+  // play shake animation
+  shaking.value = true
+  setTimeout(() => { shaking.value = false }, 750)
+}
+
 export function useDialog (props) {
-  const show = ref(false)
   const dialogTop = ref(0)
 
   const dialogStyles = computed(() => {
@@ -41,10 +55,11 @@ export function useDialog (props) {
   }
 
   useResizeAdjust(setDialogTop)
-  useOutsideClick(props, () => closeDialog(props.dialogKey))
 
   onMounted(() => {
-    show.value = true
+    console.log('mounted-dialog')
+
+    setDialogTop()
 
     useAutomaticClose(props, () => closeDialog(props.dialogKey))
   })
@@ -52,25 +67,6 @@ export function useDialog (props) {
   return {
     dialogStyles
   }
-}
-
-export function useOutsideClick (props, close) {
-  const shaking = ref(false)
-
-  if (!props.backdrop) return
-
-  if (props.backdropClose) {
-    close()
-    return
-  }
-
-  if (!props.shaking) return
-
-  // play shake animation
-  shaking.value = true
-  setTimeout(() => { shaking.value = false }, 750)
-
-  return { shaking }
 }
 
 export function useAutomaticClose (props, close) {

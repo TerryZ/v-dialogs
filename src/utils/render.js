@@ -1,18 +1,21 @@
-import { h, computed, vShow, withDirectives, Transition } from 'vue'
+import { ref, h, vShow, withDirectives, Transition } from 'vue'
+
+import { outsideClick } from './dialog'
 
 export function useRenderPopup (props) {
+  const show = ref(false)
   /**
    * Generate backdrop layer
    */
-  function generateBackdrop () {
-    if (!this.backdrop) return
+  function generateBackdrop (options) {
+    if (!props.backdrop) return
 
     const child = []
-    if (this.show) {
+    if (show.value) {
       const backdropOption = {
         class: 'v-dialog-overlay',
         style: {
-          'z-index': this.backdropZIndex
+          'z-index': options.backdropZIndex
         }
       }
       child.push(h('div', backdropOption))
@@ -31,22 +34,16 @@ export function useRenderPopup (props) {
    * @returns
    */
   function generateDialogContent (options) {
-    const { className, transitionName, child } = options
-
     const option = {
-      class: className,
-      directives: [{
-        name: 'show',
-        value: this.show
-      }]
+      class: options.className
     }
     const content = withDirectives(
-      h('div', option, child),
-      [[vShow, this.show]]
+      h('div', option, options.child),
+      [[vShow, show.value]]
     )
 
     const transitionOption = {
-      name: transitionName,
+      name: options.transitionName,
       appear: true
     }
     return h(Transition, transitionOption, () => [content])
@@ -57,22 +54,23 @@ export function useRenderPopup (props) {
    * @param {VNode} dialog
    * @returns {VNode}
    */
-  function generateDialogContainer (dialog) {
-    // TODO: shaking
+  function generateDialogContainer (dialog, options, close) {
+    const shaking = ref(false)
     const option = {
-      class: ['v-dialog', { 'v-dialog--buzz-out': true }],
+      class: ['v-dialog', { 'v-dialog--buzz-out': shaking.value }],
       style: {
-        'z-index': this.dialogZIndex
+        'z-index': options.dialogZIndex
       },
       onClick: e => {
         if (e.target !== e.currentTarget) return
-        this.outsideClick()
+        outsideClick(props, close, shaking)
       }
     }
     return h('div', option, [dialog])
   }
 
   return {
+    show,
     generateBackdrop,
     generateDialogContent,
     generateDialogContainer

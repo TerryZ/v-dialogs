@@ -10,9 +10,11 @@ import {
   MESSAGE_TYPE_CONFIRM,
   DIALOG_HEADER_CLASS
 } from '../constants'
-import { getLanguage } from '../language'
-import { calculateDialogTop, textTruncate } from '../utils/helper'
-import { commonProps } from '../utils/dialog'
+// import { getLanguage } from '../language'
+import { textTruncate, getLanguage, calculateDialogZIndex } from '../utils/helper'
+import { commonProps, useDialog } from '../utils/dialog'
+import { useRenderPopup } from '../utils/render'
+import { closeDialog } from '../dialogs'
 
 export default {
   name: 'DialogAlert',
@@ -32,7 +34,19 @@ export default {
     iconClassName: { type: String, default: '' }
   },
   setup (props) {
+    const { dialogStyles } = useDialog(props)
+    const {
+      show,
+      generateBackdrop,
+      generateDialogContainer,
+      generateDialogContent
+    } = useRenderPopup(props)
+    const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
+    const lang = getLanguage(props.language)
+
     const btnOk = ref()
+    const header = ref()
+    const bodyHeight = ref(0)
 
     const shadow = computed(() => {
       if (
@@ -47,31 +61,29 @@ export default {
     const iconClass = computed(() => props.icon ? props.iconClassName : 'no-icon')
 
     function generateHeader () {
-      const { titleContent } = this
-      if (titleContent === false) return
+      if (!props.header) return
 
-      const text = textTruncate(titleContent, TITLE_TEXT_MAX_LENGTH)
-      return h('div', { class: DIALOG_HEADER_CLASS }, h('h3', text))
+      const text = textTruncate(props.title, TITLE_TEXT_MAX_LENGTH)
+      return h('div', { class: DIALOG_HEADER_CLASS, ref: header }, h('h3', text))
     }
     function generateButtons () {
-      const i18n = getLanguage(this.language)
       const buttons = []
       // Okay button
       const okButtonOption = {
         type: 'button',
         class: 'v-dialog-btn__ok',
         ref: btnOk,
-        onClick: () => { this.closeDialog(false) }
+        onClick: () => { closeDialog(false) }
       }
-      buttons.push(h('button', okButtonOption, i18n.btnOk))
+      buttons.push(h('button', okButtonOption, lang.btnOk))
       // Cancel button
       if (props.messageType === MESSAGE_TYPE_CONFIRM) {
         const cancelButtonOption = {
           type: 'button',
           class: 'v-dialog-btn__cancel',
-          onClick: () => { this.closeDialog(true) }
+          onClick: () => { closeDialog(true) }
         }
-        buttons.push(h('button', cancelButtonOption, i18n.btnCancel))
+        buttons.push(h('button', cancelButtonOption, lang.btnCancel))
       }
 
       return h('div', { class: 'v-dialog-alert__buttons' }, buttons)
@@ -85,7 +97,7 @@ export default {
       const bodyOption = {
         class: 'v-dialog-body',
         style: {
-          height: this.bodyHeight + 'px'
+          height: bodyHeight.value + 'px'
         }
       }
       return h('div', bodyOption, [
@@ -97,12 +109,14 @@ export default {
     }
 
     onMounted(() => {
-      nextTick(() => {
-        const header = this.$el.querySelector(`.${DIALOG_HEADER_CLASS}`)
-        const headerHeight = this.titleContent ? header.offsetHeight : 0
-        this.bodyHeight = props.height - headerHeight
+      console.log('mounted-main')
+      show.value = true
 
-        this.dialogTop = calculateDialogTop(props.height)
+      nextTick(() => {
+        const headerHeight = header.value?.offsetHeight || 0
+        bodyHeight.value = props.height - headerHeight
+
+        // this.dialogTop = calculateDialogTop(props.height)
         btnOk.value.focus()
       })
     })
@@ -113,20 +127,22 @@ export default {
       contents.push(generateHeader())
       contents.push(generateBody())
 
-      const dialog = h('div', {
-        class: 'v-dialog-dialog',
-        style: this.dialogStyles
-      }, [
-        this.generateDialogContent({
+      const dialog = h(
+        'div',
+        {
+          class: 'v-dialog-dialog',
+          style: dialogStyles.value
+        },
+        generateDialogContent({
           className: ['v-dialog-content', shadow.value],
           transitionName: 'v-dialog--candy',
           child: contents
         })
-      ])
+      )
 
       return h('div', [
-        this.generateDialogScreen(dialog),
-        this.generateBackdrop()
+        generateDialogContainer(dialog, { dialogZIndex }, closeDialog),
+        generateBackdrop({ backdropZIndex })
       ])
     }
   }

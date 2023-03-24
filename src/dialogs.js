@@ -16,7 +16,8 @@ export function addDialog () {
 
 export function closeDialog (key) {
   if (!dialogs.value.length) return
-  closeDialog(key || dialogs.value[dialogs.value.length - 1].key)
+  // closeDialog(key || dialogs.value[dialogs.value.length - 1].key)
+  console.log(key)
 }
 
 export function closeAll (callback) {
