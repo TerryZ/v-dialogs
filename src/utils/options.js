@@ -1,4 +1,3 @@
-import { getLanguage } from '../language'
 import {
   MODAL,
   ALERT,
@@ -14,7 +13,8 @@ import {
   getAlertSize,
   getAlertIcon,
   getToastTheme,
-  getToastIcon
+  getToastIcon,
+  getLanguage
 } from './helper'
 
 /**

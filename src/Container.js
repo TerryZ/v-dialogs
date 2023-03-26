@@ -72,7 +72,7 @@ export default defineComponent({
           }
           restoreDocumentBodyOverflow()
         })
-      }, 200)
+      }, 300)
     }
     /**
      * Close all dialogs

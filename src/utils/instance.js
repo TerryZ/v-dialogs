@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, createVNode, render } from 'vue'
 import Container from '../Container'
 
 import {
@@ -9,27 +9,26 @@ import {
 } from './options'
 import { MODAL, DRAWER } from '../constants'
 import { isDocumentBodyOverflowing } from './helper'
+import Alert from '../components/Alert'
 
+let index = 0
 /**
  * Get v-dialogs container instance, if not exist, create a new one
  * @returns {object} the v-dialogs container instance
  */
 export function getInstance () {
-  const container = document.querySelector('.v-dialogs-container')
+  const container = document.getElementById('v-dialogs-container')
   if (container && container._instance) {
     return container._instance
   }
 
-  // const DialogContainer = Vue.extend(Container)
-  // const div = document.body.appendChild(document.createElement('div'))
-  // return new DialogContainer().$mount(div)
-  // const div = document.createElement('div')
   const div = document.body.appendChild(document.createElement('div'))
   div.id = 'v-dialogs-container'
   const instance = createApp(Container).mount(div)
+  div._instance = instance
 
-  console.dir(instance.$el)
-  document.querySelector('.v-dialogs-container')._instance = instance
+  // console.dir(instance.$el)
+  // document.querySelector('.v-dialogs-container')._instance = instance
   return instance
 }
 
@@ -59,7 +58,35 @@ export function DialogModal (component, params) {
  * @returns {string} new dialog key
  */
 export function DialogAlert () {
-  return getInstance().addDialog(generateAlertOption(...arguments))
+  // return getInstance().addDialog(generateAlertOption(...arguments))
+  index++
+  let el = document.body.appendChild(document.createElement('div'))
+  const option = {
+    dialogKey: `v-dialog-${index}`,
+    dialogIndex: index,
+    width: 450,
+    height: 210,
+    title: 'Alert',
+    message: 'Hello!',
+    shaking: true
+  }
+  let dialog = createVNode(Alert, option)
+
+  function remove () {
+    // render(null, document.body)
+    render(null, el)
+    // el = null
+    // el.remove()
+    document.body.removeChild(el)
+    el = null
+    dialog = null
+  }
+
+  // render(dialog, document.body)
+  render(dialog, el)
+  console.dir(dialog)
+
+  setTimeout(remove, 3000)
 }
 
 /**

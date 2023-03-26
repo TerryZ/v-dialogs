@@ -4,58 +4,89 @@
   </h3>
   <div class="">
     <div class="mb-3">
-      asdf
+      <h5>Message alert</h5>
       <div>
         <button
           type="button"
+          class="btn btn-outline-secondary me-3"
           @click="test"
         >
-          test
+          Info
         </button>
-
         <button
           type="button"
+          class="btn btn-outline-warning me-3"
+        >
+          Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger me-3"
+        >
+          Error
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success me-3"
+        >
+          Success
+        </button>
+
+        <!-- <button
+          type="button"
+          class="btn btn-outline-secondary"
           @click="callMethod"
         >
           call
-        </button>
+        </button> -->
       </div>
     </div>
+
     <div class="">
-      asdf
+      <h5>Confirm alert</h5>
+      <div class="">
+        <button
+          type="button"
+          class="btn btn-outline-primary me-3"
+        >
+          Confirm
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getInstance } from '@/utils/instance'
+// import { getInstance } from '@/utils/instance'
+import { DialogAlert } from '@/'
 
 function test () {
   // const body = ref(document.body)
 
-  const app = getInstance()
-  console.log(app)
+  // const app = getInstance()
+  // console.log(app)
 
   // console.dir(body.value)
   // app.closeAll(() => {
   //   console.log('close all')
   // })
+  DialogAlert()
 }
 function callMethod () {
   // const dialogs = ref(document.querySelector('.v-dialogs-container'))
   // console.dir(dialogs.value)
   // const root = document.querySelector('#v-dialogs-container')
-  const root = ref(document.querySelector('#v-dialogs-container'))
-  console.dir(root.value)
-  root.value.closeAll(() => {
-    console.log('close all')
-  })
+  // const root = ref(document.querySelector('#v-dialogs-container'))
+  // console.dir(root.value)
+  // root.value.closeAll(() => {
+  //   console.log('close all')
+  // })
 
-  const instance = document.querySelector('.v-dialogs-container')._instance
-  instance.closeAll(() => {
-    console.log('close all')
-  })
+  // const instance = document.querySelector('.v-dialogs-container')._instance
+  // instance.closeAll(() => {
+  //   console.log('close all')
+  // })
 }
 
 onMounted(() => {

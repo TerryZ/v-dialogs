@@ -1,6 +1,6 @@
 import '../styles/alert.sass'
 
-import { ref, computed, h, nextTick, onMounted } from 'vue'
+import { ref, computed, h, nextTick, onMounted, defineComponent } from 'vue'
 import {
   TITLE_TEXT_MAX_LENGTH,
   MESSAGE_TYPE_INFO,
@@ -10,13 +10,12 @@ import {
   MESSAGE_TYPE_CONFIRM,
   DIALOG_HEADER_CLASS
 } from '../constants'
-// import { getLanguage } from '../language'
 import { textTruncate, getLanguage, calculateDialogZIndex } from '../utils/helper'
 import { commonProps, useDialog } from '../utils/dialog'
 import { useRenderPopup } from '../utils/render'
-import { closeDialog } from '../dialogs'
+// import { closeDialog } from '../dialogs'
 
-export default {
+export default defineComponent({
   name: 'DialogAlert',
   props: {
     ...commonProps,
@@ -30,17 +29,17 @@ export default {
      * - `confirm`
      */
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
+    shaking: { type: Boolean, default: true },
     icon: { type: Boolean, default: true },
     iconClassName: { type: String, default: '' }
   },
   setup (props) {
-    const { dialogStyles } = useDialog(props)
+    const { show, dialogStyles, closeDialog } = useDialog(props)
     const {
-      show,
       generateBackdrop,
       generateDialogContainer,
       generateDialogContent
-    } = useRenderPopup(props)
+    } = useRenderPopup(props, show)
     const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
     const lang = getLanguage(props.language)
 
@@ -109,7 +108,6 @@ export default {
     }
 
     onMounted(() => {
-      console.log('mounted-main')
       show.value = true
 
       nextTick(() => {
@@ -122,11 +120,6 @@ export default {
     })
 
     return () => {
-      const contents = []
-
-      contents.push(generateHeader())
-      contents.push(generateBody())
-
       const dialog = h(
         'div',
         {
@@ -136,14 +129,14 @@ export default {
         generateDialogContent({
           className: ['v-dialog-content', shadow.value],
           transitionName: 'v-dialog--candy',
-          child: contents
+          child: [generateHeader(), generateBody()]
         })
       )
 
-      return h('div', [
+      return [
         generateDialogContainer(dialog, { dialogZIndex }, closeDialog),
         generateBackdrop({ backdropZIndex })
-      ])
+      ]
     }
   }
-}
+})

@@ -1,6 +1,6 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { calculateDialogTop } from './helper'
-import { closeDialog } from '../dialogs'
+// import { closeDialog } from '../dialogs'
 import { EN } from '../language'
 
 export const commonProps = {
@@ -12,6 +12,10 @@ export const commonProps = {
   /** whether to display header */
   header: { type: Boolean, default: true },
   message: { type: String, default: '' },
+  /** Dialog width */
+  width: { type: Number, default: 0 },
+  /** Dialog height */
+  height: { type: Number, default: 0 },
   /**
    * auto close dialog seconds
    * - 0: no automatic close
@@ -28,7 +32,7 @@ export function outsideClick (props, close, shaking) {
   if (!props.backdrop) return
 
   if (props.backdropClose) {
-    close()
+    close && close()
     return
   }
 
@@ -36,35 +40,38 @@ export function outsideClick (props, close, shaking) {
 
   // play shake animation
   shaking.value = true
+
   setTimeout(() => { shaking.value = false }, 750)
 }
 
 export function useDialog (props) {
+  const show = ref(false)
   const dialogTop = ref(0)
 
-  const dialogStyles = computed(() => {
-    return {
-      width: props.width + 'px',
-      height: props.height + 'px',
-      top: dialogTop.value + 'px'
-    }
-  })
+  const dialogStyles = computed(() => ({
+    width: props.width + 'px',
+    height: props.height + 'px',
+    top: dialogTop.value + 'px'
+  }))
 
   function setDialogTop () {
     dialogTop.value = calculateDialogTop(props.height)
+  }
+  function closeDialog () {
+    show.value = false
   }
 
   useResizeAdjust(setDialogTop)
 
   onMounted(() => {
-    console.log('mounted-dialog')
-
     setDialogTop()
 
     useAutomaticClose(props, () => closeDialog(props.dialogKey))
   })
 
   return {
+    show,
+    closeDialog,
     dialogStyles
   }
 }

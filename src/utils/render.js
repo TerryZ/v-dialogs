@@ -2,8 +2,8 @@ import { ref, h, vShow, withDirectives, Transition } from 'vue'
 
 import { outsideClick } from './dialog'
 
-export function useRenderPopup (props) {
-  const show = ref(false)
+export function useRenderPopup (props, show) {
+  const shaking = ref(false)
   /**
    * Generate backdrop layer
    */
@@ -55,7 +55,6 @@ export function useRenderPopup (props) {
    * @returns {VNode}
    */
   function generateDialogContainer (dialog, options, close) {
-    const shaking = ref(false)
     const option = {
       class: ['v-dialog', { 'v-dialog--buzz-out': shaking.value }],
       style: {
@@ -66,7 +65,7 @@ export function useRenderPopup (props) {
         outsideClick(props, close, shaking)
       }
     }
-    return h('div', option, [dialog])
+    return h('div', option, dialog)
   }
 
   return {
