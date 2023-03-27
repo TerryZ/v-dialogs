@@ -69,7 +69,6 @@ export function useRenderPopup (props, show) {
   }
 
   return {
-    show,
     generateBackdrop,
     generateDialogContent,
     generateDialogContainer

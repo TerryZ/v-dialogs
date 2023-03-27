@@ -48,6 +48,7 @@
         <button
           type="button"
           class="btn btn-outline-primary me-3"
+          @click="callMethod"
         >
           Confirm
         </button>
@@ -59,7 +60,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 // import { getInstance } from '@/utils/instance'
-import { DialogAlert } from '@/'
+import { DialogAlert, DialogHelper } from '@/'
 
 function test () {
   // const body = ref(document.body)
@@ -87,6 +88,7 @@ function callMethod () {
   // instance.closeAll(() => {
   //   console.log('close all')
   // })
+  console.dir(DialogHelper)
 }
 
 onMounted(() => {
