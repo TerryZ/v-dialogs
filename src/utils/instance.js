@@ -68,7 +68,10 @@ export function DialogAlert () {
     height: 210,
     title: 'Alert',
     message: 'Hello!',
-    shaking: true
+    shaking: true,
+    onClose () {
+      remove()
+    }
   }
   let dialog = createVNode(Alert, option)
 
@@ -82,11 +85,10 @@ export function DialogAlert () {
     dialog = null
   }
 
-  // render(dialog, document.body)
   render(dialog, el)
-  console.dir(dialog)
+  // console.dir(dialog)
 
-  setTimeout(remove, 3000)
+  // setTimeout(remove, 3000)
 }
 
 /**

@@ -11,7 +11,7 @@ import {
   DIALOG_HEADER_CLASS
 } from '../constants'
 import { textTruncate, getLanguage, calculateDialogZIndex } from '../utils/helper'
-import { commonProps, useDialog } from '../utils/dialog'
+import { commonProps, commonEmits, useDialog } from '../utils/dialog'
 import { useRenderPopup } from '../utils/render'
 // import { closeDialog } from '../dialogs'
 
@@ -33,8 +33,9 @@ export default defineComponent({
     icon: { type: Boolean, default: true },
     iconClassName: { type: String, default: '' }
   },
-  setup (props) {
-    const { show, dialogStyles, closeDialog } = useDialog(props)
+  emits: commonEmits,
+  setup (props, { emit }) {
+    const { show, dialogStyles, closeDialog } = useDialog(props, emit)
     const {
       generateBackdrop,
       generateDialogContainer,

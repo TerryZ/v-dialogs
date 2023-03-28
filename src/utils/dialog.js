@@ -28,6 +28,8 @@ export const commonProps = {
   dialogIndex: { type: Number, required: true }
 }
 
+export const commonEmits = ['close']
+
 export function outsideClick (props, close, shaking) {
   if (!props.backdrop) return
 
@@ -37,14 +39,15 @@ export function outsideClick (props, close, shaking) {
   }
 
   if (!props.shaking) return
+  // shake animation playing
+  if (shaking.value) return
 
   // play shake animation
   shaking.value = true
-
   setTimeout(() => { shaking.value = false }, 750)
 }
 
-export function useDialog (props) {
+export function useDialog (props, emit) {
   const show = ref(false)
   const dialogTop = ref(0)
 
@@ -59,6 +62,8 @@ export function useDialog (props) {
   }
   function closeDialog () {
     show.value = false
+
+    setTimeout(() => emit('close'), 300)
   }
 
   useResizeAdjust(setDialogTop)
