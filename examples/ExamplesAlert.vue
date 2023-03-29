@@ -51,7 +51,7 @@
         <button
           type="button"
           class="btn btn-outline-primary me-3"
-          @click="callMethod"
+          @click="openConfirmAlert"
         >
           Confirm
         </button>
@@ -79,6 +79,17 @@ function openAlert (type) {
     // console.log('callback')
     DialogAlert('Dialog closed.')
   }, { messageType: typeof type === 'string' ? type : undefined })
+}
+function openConfirmAlert () {
+  DialogAlert('Are you sure?', () => {
+    // console.log('callback')
+    DialogAlert('Dialog closed.')
+  }, {
+    messageType: 'confirm',
+    cancelCallback () {
+      DialogAlert('Confirm dialog canceled.')
+    }
+  })
 }
 function callMethod () {
   // const dialogs = ref(document.querySelector('.v-dialogs-container'))

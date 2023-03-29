@@ -5,7 +5,7 @@ export const DIALOG_KEY_PREFIX = 'v-dialogs-'
 export const DIALOG_HEADER_CLASS = 'v-dialog-header'
 export const START_Z_INDEX = 5100
 export const Z_INDEX_INCREMENT = 50
-export const TITLE_TEXT_MAX_LENGTH = 10
+export const TITLE_TEXT_MAX_LENGTH = 30
 
 export const ALERT_WIDTH = 450
 export const ALERT_WIDTH_LARGE = 700

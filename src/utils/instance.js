@@ -84,8 +84,7 @@ export function DialogAlert () {
   // }
 
   // render(dialog, el)
-  const options = generateAlertOption(...arguments)
-  return mountDialog(Alert, options)
+  return mountDialog(Alert, generateAlertOption(...arguments))
 }
 
 /**
