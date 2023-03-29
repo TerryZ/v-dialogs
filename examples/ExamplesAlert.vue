@@ -9,25 +9,28 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="test"
+          @click="openAlert"
         >
           Info
         </button>
         <button
           type="button"
           class="btn btn-outline-warning me-3"
+          @click="openAlert('warning')"
         >
           Warning
         </button>
         <button
           type="button"
           class="btn btn-outline-danger me-3"
+          @click="openAlert('error')"
         >
           Error
         </button>
         <button
           type="button"
           class="btn btn-outline-success me-3"
+          @click="openAlert('success')"
         >
           Success
         </button>
@@ -62,7 +65,7 @@ import { ref, onMounted } from 'vue'
 // import { getInstance } from '@/utils/instance'
 import { DialogAlert, DialogHelper } from '@/'
 
-function test () {
+function openAlert (type) {
   // const body = ref(document.body)
 
   // const app = getInstance()
@@ -72,7 +75,10 @@ function test () {
   // app.closeAll(() => {
   //   console.log('close all')
   // })
-  DialogAlert()
+  DialogAlert('Hello, world!', () => {
+    // console.log('callback')
+    DialogAlert('Dialog closed.')
+  }, { messageType: typeof type === 'string' ? type : undefined })
 }
 function callMethod () {
   // const dialogs = ref(document.querySelector('.v-dialogs-container'))

@@ -6,7 +6,8 @@ import {
   defaultModalOptions,
   defaultAlertOptions,
   defaultMaskOptions,
-  defaultToastOptions
+  defaultToastOptions,
+  MESSAGE_TYPE_INFO
 } from '../constants'
 import {
   getTitle,
@@ -47,8 +48,8 @@ export function argumentsParse (args) {
 
 export function generateAlertOption () {
   const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
-  option.type = ALERT
-  const { messageType, icon } = option
+  // option.type = ALERT
+  const { messageType = MESSAGE_TYPE_INFO, icon } = option
 
   if ('title' in option === false) {
     option.title = getTitle(messageType, option.language)

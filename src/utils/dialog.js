@@ -4,6 +4,11 @@ import { calculateDialogTop } from './helper'
 import { EN } from '../language'
 
 export const commonProps = {
+  /** Dialog key */
+  dialogKey: { type: String, default: '' },
+  dialogIndex: { type: Number, required: true },
+  singletonKey: { type: String, default: '' },
+  customClass: { type: String, default: '' },
   /** Display dialog backdrop */
   backdrop: { type: Boolean, default: true },
   /** Click backdrop to close dialog */
@@ -23,9 +28,7 @@ export const commonProps = {
    */
   closeTime: { type: Number, default: 0 },
   language: { type: String, default: EN },
-  /** Dialog key */
-  dialogKey: { type: String, default: '' },
-  dialogIndex: { type: Number, required: true }
+  callback: { type: Function, default: undefined }
 }
 
 export const commonEmits = ['close']
@@ -60,10 +63,10 @@ export function useDialog (props, emit) {
   function setDialogTop () {
     dialogTop.value = calculateDialogTop(props.height)
   }
-  function closeDialog () {
+  function closeDialog (callback) {
     show.value = false
 
-    setTimeout(() => emit('close'), 300)
+    setTimeout(() => emit('close', callback), 300)
   }
 
   useResizeAdjust(setDialogTop)

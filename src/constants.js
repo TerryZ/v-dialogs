@@ -1,4 +1,4 @@
-import { CN } from './language'
+import { EN } from './language'
 
 export const DEFAULT_INSTANCE_NAME = '$dlg'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
@@ -48,7 +48,7 @@ export const [
 ] = ['modal', 'alert', 'toast', 'drawer', 'mask']
 
 const defaultOptionsCore = {
-  language: CN,
+  language: EN,
   customClass: undefined,
   singletonKey: undefined
 }
@@ -71,8 +71,8 @@ export const defaultAlertOptions = {
   messageType: MESSAGE_TYPE_INFO,
   icon: true,
   shaking: true,
-  closeTime: false,
-  cancelCallback: false
+  closeTime: 0,
+  cancelCallback: undefined
 }
 
 export const defaultMaskOptions = {

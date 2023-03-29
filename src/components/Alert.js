@@ -31,7 +31,8 @@ export default defineComponent({
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
     shaking: { type: Boolean, default: true },
     icon: { type: Boolean, default: true },
-    iconClassName: { type: String, default: '' }
+    iconClassName: { type: String, default: '' },
+    cancelCallback: { type: Function, default: undefined }
   },
   emits: commonEmits,
   setup (props, { emit }) {
@@ -73,7 +74,7 @@ export default defineComponent({
         type: 'button',
         class: 'v-dialog-btn__ok',
         ref: btnOk,
-        onClick: () => { closeDialog(false) }
+        onClick: () => { closeDialog(props.callback) }
       }
       buttons.push(h('button', okButtonOption, lang.btnOk))
       // Cancel button
@@ -81,7 +82,7 @@ export default defineComponent({
         const cancelButtonOption = {
           type: 'button',
           class: 'v-dialog-btn__cancel',
-          onClick: () => { closeDialog(true) }
+          onClick: () => { closeDialog(props.cancelCallback) }
         }
         buttons.push(h('button', cancelButtonOption, lang.btnCancel))
       }

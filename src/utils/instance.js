@@ -1,4 +1,4 @@
-import { createApp, createVNode, render } from 'vue'
+import { createApp } from 'vue'
 import Container from '../Container'
 
 import {
@@ -10,8 +10,8 @@ import {
 import { MODAL, DRAWER } from '../constants'
 import { isDocumentBodyOverflowing } from './helper'
 import Alert from '../components/Alert'
+import { mountDialog } from '../dialogs'
 
-let index = 0
 /**
  * Get v-dialogs container instance, if not exist, create a new one
  * @returns {object} the v-dialogs container instance
@@ -44,7 +44,7 @@ export function DialogModal (component, params) {
 }
 
 /**
- * Open a message alert dialog, types including
+ * Open a message alert dialog, including below types
  *
  * - info(default)
  * - warning
@@ -59,36 +59,33 @@ export function DialogModal (component, params) {
  */
 export function DialogAlert () {
   // return getInstance().addDialog(generateAlertOption(...arguments))
-  index++
-  let el = document.body.appendChild(document.createElement('div'))
-  const option = {
-    dialogKey: `v-dialog-${index}`,
-    dialogIndex: index,
-    width: 450,
-    height: 210,
-    title: 'Alert',
-    message: 'Hello!',
-    shaking: true,
-    onClose () {
-      remove()
-    }
-  }
-  let dialog = createVNode(Alert, option)
+  // index++
+  // let el = document.body.appendChild(document.createElement('div'))
+  // const option = {
+  //   dialogKey: `v-dialog-${index}`,
+  //   dialogIndex: index,
+  //   width: 450,
+  //   height: 210,
+  //   title: 'Alert',
+  //   message: 'Hello!',
+  //   shaking: true,
+  //   backdropClose: true,
+  //   onClose () {
+  //     remove()
+  //   }
+  // }
+  // let dialog = createVNode(Alert, option)
 
-  function remove () {
-    // render(null, document.body)
-    render(null, el)
-    // el = null
-    // el.remove()
-    document.body.removeChild(el)
-    el = null
-    dialog = null
-  }
+  // function remove () {
+  //   render(null, el)
+  //   document.body.removeChild(el)
+  //   el = null
+  //   dialog = null
+  // }
 
-  render(dialog, el)
-  // console.dir(dialog)
-
-  // setTimeout(remove, 3000)
+  // render(dialog, el)
+  const options = generateAlertOption(...arguments)
+  return mountDialog(Alert, options)
 }
 
 /**
