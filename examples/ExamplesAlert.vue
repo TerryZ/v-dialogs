@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="">
+    <div class="mb-3">
       <h5>Confirm alert</h5>
       <div class="">
         <button
@@ -61,9 +61,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 // import { getInstance } from '@/utils/instance'
-import { DialogAlert, DialogHelper } from '@/'
+import { DialogAlert } from '@/'
 
 function openAlert (type) {
   // const body = ref(document.body)
@@ -91,22 +91,22 @@ function openConfirmAlert () {
     }
   })
 }
-function callMethod () {
-  // const dialogs = ref(document.querySelector('.v-dialogs-container'))
-  // console.dir(dialogs.value)
-  // const root = document.querySelector('#v-dialogs-container')
-  // const root = ref(document.querySelector('#v-dialogs-container'))
-  // console.dir(root.value)
-  // root.value.closeAll(() => {
-  //   console.log('close all')
-  // })
+// function callMethod () {
+// const dialogs = ref(document.querySelector('.v-dialogs-container'))
+// console.dir(dialogs.value)
+// const root = document.querySelector('#v-dialogs-container')
+// const root = ref(document.querySelector('#v-dialogs-container'))
+// console.dir(root.value)
+// root.value.closeAll(() => {
+//   console.log('close all')
+// })
 
-  // const instance = document.querySelector('.v-dialogs-container')._instance
-  // instance.closeAll(() => {
-  //   console.log('close all')
-  // })
-  console.dir(DialogHelper)
-}
+// const instance = document.querySelector('.v-dialogs-container')._instance
+// instance.closeAll(() => {
+//   console.log('close all')
+// })
+// console.dir(DialogHelper)
+// }
 
 onMounted(() => {
   // const app = getInstance()

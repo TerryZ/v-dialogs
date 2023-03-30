@@ -1,9 +1,9 @@
 $borderRadius: .5rem
 
-div.v-dialogs-container
+.v-dialogs-container
   width: 0
   height: 0
-div.v-dialog
+.v-dialog
   position: fixed
   top: 0
   right: 0
@@ -20,20 +20,20 @@ div.v-dialog
   &.v-dialog--maximize
     border-radius: 0
     padding-right: 0 !important
-    div.v-dialog-dialog
+    .v-dialog-dialog
       width: 100% !important
       height: 100% !important
-    div.v-dialog-content
+    .v-dialog-content
       height: 100% !important
       border-radius: 0
-    div.v-dialog-header
+    .v-dialog-header
       background-color: #eee
-  div.v-dialog-dialog
+  .v-dialog-dialog
     position: relative
     margin: 0 auto
     width: 100%
     transition: all .3s ease-out
-  div.v-dialog-content
+  .v-dialog-content
     outline: 0
     position: relative
     background-color: white
@@ -43,7 +43,7 @@ div.v-dialog
     border-radius: $borderRadius
     border: 0
     overflow: hidden
-  div.v-dialog-header
+  .v-dialog-header
     padding: 0
     border-bottom: 0
     /*background-color: #eee*/
@@ -81,14 +81,14 @@ div.v-dialog
       i
         font-weight: 600
         font-size: 22px
-  div.v-dialog-body
+  .v-dialog-body
     position: relative
     width: 100%
     padding: 0
     overflow: auto
     box-sizing: border-box
 
-div.v-dialog-overlay
+.v-dialog-overlay
   position: fixed
   top: 0
   right: 0

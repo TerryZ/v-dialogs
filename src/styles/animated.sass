@@ -38,18 +38,15 @@
 /* modal, alert, mask show up animated */
 .v-dialog--candy-enter-active
   will-change: transform
-  -webkit-animation-duration: 300ms
-  animation-duration: 300ms
-  -webkit-animation-timing-function: ease-in-out
-  animation-timing-function: ease-in-out
-  -webkit-animation-name: animated-dialog-open
-  animation-name: animated-dialog-open
+  -webkit-animation: animated-dialog-open 300ms ease-in-out
+  animation: animated-dialog-open 300ms ease-in-out
+  transform: translate3d(0, 0, 0)
 .v-dialog--candy-leave-active
   will-change: transform, opacity
-  -webkit-transform: scale(0.5)
-  -moz-transform: scale(0.5)
-  -ms-transform: scale(0.5)
-  transform: scale(0.5)
+  -webkit-transform: scale(0.5) translate3d(0, 0, 0)
+  -moz-transform: scale(0.5) translate3d(0, 0, 0)
+  -ms-transform: scale(0.5) translate3d(0, 0, 0)
+  transform: scale(0.5) translate3d(0, 0, 0)
   -webkit-transition: transform 200ms ease, opacity 200ms ease
   -moz-transition: transform 200ms ease, opacity 200ms ease
   transition: transform 200ms ease, opacity 200ms ease

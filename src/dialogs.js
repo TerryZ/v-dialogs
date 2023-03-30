@@ -8,19 +8,7 @@ const dialogs = ref([])
 export function mountDialog (component, options = {}) {
   const { index, key } = addDialog()
   let el = document.body.appendChild(document.createElement('div'))
-  // const option = {
-  //   dialogKey: key,
-  //   dialogIndex: index,
-  //   width: 450,
-  //   height: 210,
-  //   title: 'Alert',
-  //   message: 'Hello!',
-  //   shaking: true,
-  //   backdropClose: true,
-  //   onClose () {
-  //     remove()
-  //   }
-  // }
+
   options.dialogKey = key
   options.dialogIndex = index
   options.onClose = callback => {
@@ -28,21 +16,18 @@ export function mountDialog (component, options = {}) {
     destroy()
     closeDialog(key)
   }
+
   let dialog = createVNode(component, options)
+  render(dialog, el)
 
   function destroy () {
-    // render(null, document.body)
     render(null, el)
-    // el = null
-    // el.remove()
     document.body.removeChild(el)
+
     el = null
     dialog = null
   }
 
-  render(dialog, el)
-
-  // return { remove }
   return key
 }
 
