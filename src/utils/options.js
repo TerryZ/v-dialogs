@@ -49,14 +49,15 @@ export function argumentsParse (args) {
 export function generateAlertOption () {
   const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
   // option.type = ALERT
-  const { messageType = MESSAGE_TYPE_INFO, icon } = option
+  // const { messageType = MESSAGE_TYPE_INFO, icon } = option
+  const { messageType = MESSAGE_TYPE_INFO } = option
 
   if ('title' in option === false) {
     option.title = getTitle(messageType, option.language)
   }
-  if (icon) {
-    option.iconClassName = getAlertIcon(messageType)
-  }
+  // if (icon) {
+  //   option.iconClassName = getAlertIcon(messageType)
+  // }
   const { width, height } = getAlertSize(option)
   option.width = width
   option.height = height

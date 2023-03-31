@@ -6,11 +6,6 @@ import {
   ALERT_WIDTH,
   ALERT_WIDTH_LARGE,
   ALERT_MAX_CONTENT_LENGTH,
-  ALERT_ICON_INFO,
-  ALERT_ICON_WARNING,
-  ALERT_ICON_SUCCESS,
-  ALERT_ICON_ERROR,
-  ALERT_ICON_CONFIRM,
   MESSAGE_TYPE_INFO,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
@@ -26,6 +21,11 @@ import {
   START_Z_INDEX,
   Z_INDEX_INCREMENT
 } from '../constants'
+import IconInfo from '../icons/IconInfo.vue'
+import IconWarning from '../icons/IconWarning.vue'
+import IconError from '../icons/IconError.vue'
+import IconSuccess from '../icons/IconSuccess.vue'
+import IconConfirm from '../icons/IconConfirm.vue'
 
 /**
  * Get message type text in i18n resources
@@ -71,11 +71,11 @@ export function getAlertSize (option) {
  */
 export function getAlertIcon (type) {
   switch (type) {
-    case MESSAGE_TYPE_INFO: return ALERT_ICON_INFO
-    case MESSAGE_TYPE_WARNING: return ALERT_ICON_WARNING
-    case MESSAGE_TYPE_ERROR: return ALERT_ICON_ERROR
-    case MESSAGE_TYPE_SUCCESS: return ALERT_ICON_SUCCESS
-    case MESSAGE_TYPE_CONFIRM: return ALERT_ICON_CONFIRM
+    case MESSAGE_TYPE_INFO: return IconInfo
+    case MESSAGE_TYPE_WARNING: return IconWarning
+    case MESSAGE_TYPE_ERROR: return IconError
+    case MESSAGE_TYPE_SUCCESS: return IconSuccess
+    case MESSAGE_TYPE_CONFIRM: return IconConfirm
     default: return ''
   }
 }

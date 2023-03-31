@@ -13,11 +13,6 @@ export const ALERT_HEIGHT = 210
 export const ALERT_HEIGHT_NO_HEADER = 180
 export const ALERT_HEIGHT_LARGE = 400
 export const ALERT_MAX_CONTENT_LENGTH = 70
-export const ALERT_ICON_INFO = 'alertInfo'
-export const ALERT_ICON_WARNING = 'alertWarning'
-export const ALERT_ICON_SUCCESS = 'alertSuccess'
-export const ALERT_ICON_ERROR = 'alertError'
-export const ALERT_ICON_CONFIRM = 'alertConfirm'
 
 export const MASK_MAX_CONTENT_LENGTH = 65
 

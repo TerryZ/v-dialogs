@@ -3,7 +3,28 @@
     Alert
   </h3>
   <div class="">
-    <div class="mb-3">
+    <div class="mb-5">
+      <h5>Display icon</h5>
+      <div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="icon"
+            :true-value="true"
+            :false-value="false"
+            id="dialog-use-icon"
+          >
+          <label
+            class="form-check-label"
+            for="dialog-use-icon"
+          >
+            Use icon
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="mb-5">
       <h5>Message alert</h5>
       <div>
         <button
@@ -61,9 +82,11 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 // import { getInstance } from '@/utils/instance'
 import { DialogAlert } from '@/'
+
+const icon = ref(true)
 
 function openAlert (type) {
   // const body = ref(document.body)
@@ -78,7 +101,10 @@ function openAlert (type) {
   DialogAlert('Hello, world!', () => {
     // console.log('callback')
     DialogAlert('Dialog closed.')
-  }, { messageType: typeof type === 'string' ? type : undefined })
+  }, {
+    icon: icon.value,
+    messageType: typeof type === 'string' ? type : undefined
+  })
 }
 function openConfirmAlert () {
   DialogAlert('Are you sure?', () => {
@@ -86,6 +112,8 @@ function openConfirmAlert () {
     DialogAlert('Dialog closed.')
   }, {
     messageType: 'confirm',
+    language: 'cn',
+    icon: icon.value,
     cancelCallback () {
       DialogAlert('Confirm dialog canceled.')
     }

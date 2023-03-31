@@ -10,7 +10,7 @@ import {
   MESSAGE_TYPE_CONFIRM,
   DIALOG_HEADER_CLASS
 } from '../constants'
-import { textTruncate, getLanguage, calculateDialogZIndex } from '../utils/helper'
+import { textTruncate, getLanguage, calculateDialogZIndex, getAlertIcon } from '../utils/helper'
 import { commonProps, commonEmits, useDialog } from '../utils/dialog'
 import { useRenderPopup } from '../utils/render'
 // import { closeDialog } from '../dialogs'
@@ -90,11 +90,20 @@ export default defineComponent({
       return h('div', { class: 'v-dialog-alert__buttons' }, buttons)
     }
     function generateBody () {
-      // dialog body
-      const contentOption = {
-        class: 'v-dialog-alert__content',
-        innerHTML: props.message
+      const contents = []
+
+      if (props.icon) {
+        contents.push(
+          h('div', { class: 'v-dialog-alert__icon' }, h(getAlertIcon(props.messageType)))
+        )
       }
+      contents.push(
+        h('div', {
+          class: 'v-dialog-alert__message',
+          innerHTML: props.message
+        })
+      )
+
       const bodyOption = {
         class: 'v-dialog-body',
         style: {
@@ -103,7 +112,7 @@ export default defineComponent({
       }
       return h('div', bodyOption, [
         h('div', { class: ['v-dialog-alert', iconClass.value] }, [
-          h('div', contentOption),
+          h('div', { class: 'v-dialog-alert__content' }, contents),
           generateButtons()
         ])
       ])

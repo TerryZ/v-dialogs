@@ -1,4 +1,4 @@
-$borderRadius: .5rem
+$borderRadius: .8rem
 
 .v-dialogs-container
   width: 0
@@ -11,7 +11,7 @@ $borderRadius: .5rem
   left: 0
   z-index: 1050
   overflow: hidden
-  -webkit-overflow-scrolling: touch
+  // -webkit-overflow-scrolling: touch
   outline: 0
 
   &.v-dialog-open
@@ -37,8 +37,6 @@ $borderRadius: .5rem
     outline: 0
     position: relative
     background-color: white
-    -webkit-box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
-    -moz-box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
     box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
     border-radius: $borderRadius
     border: 0
@@ -46,15 +44,14 @@ $borderRadius: .5rem
   .v-dialog-header
     padding: 0
     border-bottom: 0
-    /*background-color: #eee*/
     h3
       margin: 0
       line-height: 42px
       height: 42px
       font-size: 18px
       padding-left: 15px
+      font-weight: 500
     button
-      -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1)
       transition: all .5s cubic-bezier(.175,.885,.32,1)
       height: 42px
       width: 60px
@@ -96,3 +93,8 @@ $borderRadius: .5rem
   left: 0
   z-index: 1040
   background-color: rgba(0, 0, 0, .5)
+
+.v-dialog-icon
+  display: inline-flex
+  width: 1em
+  height: 1em
