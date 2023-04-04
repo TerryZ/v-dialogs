@@ -12,7 +12,6 @@ import {
 import {
   getTitle,
   getAlertSize,
-  getAlertIcon,
   getToastTheme,
   getToastIcon,
   getLanguage

@@ -31,7 +31,6 @@ export default defineComponent({
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
     shaking: { type: Boolean, default: true },
     icon: { type: Boolean, default: true },
-    iconClassName: { type: String, default: '' },
     cancelCallback: { type: Function, default: undefined }
   },
   emits: commonEmits,
@@ -59,7 +58,6 @@ export default defineComponent({
       }
       return ''
     })
-    const iconClass = computed(() => props.icon ? props.iconClassName : 'no-icon')
 
     function generateHeader () {
       if (!props.header) return
@@ -111,7 +109,7 @@ export default defineComponent({
         }
       }
       return h('div', bodyOption, [
-        h('div', { class: ['v-dialog-alert', iconClass.value] }, [
+        h('div', { class: ['v-dialog-alert', { 'no-icon': !props.icon }] }, [
           h('div', { class: 'v-dialog-alert__content' }, contents),
           generateButtons()
         ])
@@ -125,7 +123,6 @@ export default defineComponent({
         const headerHeight = header.value?.offsetHeight || 0
         bodyHeight.value = props.height - headerHeight
 
-        // this.dialogTop = calculateDialogTop(props.height)
         btnOk.value.focus()
       })
     })

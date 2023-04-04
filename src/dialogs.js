@@ -2,21 +2,24 @@ import { ref, nextTick, createVNode, render } from 'vue'
 
 import { DIALOG_KEY_PREFIX } from './constants'
 
-let serialNumber = 0
+let serialNumber = 1
 const dialogs = ref([])
 
 export function mountDialog (component, options = {}) {
   const { index, key } = addDialog()
 
-  options.dialogKey = key
-  options.dialogIndex = index
-  options.onClose = callback => {
+  const onClose = callback => {
     callback && callback()
     destroy()
     closeDialog(key)
   }
 
-  let dialog = createVNode(component, options)
+  let dialog = createVNode(component, {
+    ...options,
+    dialogKey: key,
+    dialogIndex: index,
+    onClose
+  })
   let el = document.body.appendChild(document.createElement('div'))
   render(dialog, el)
 
@@ -31,7 +34,7 @@ export function mountDialog (component, options = {}) {
 }
 
 export function addDialog () {
-  const key = DIALOG_KEY_PREFIX + ++serialNumber
+  const key = DIALOG_KEY_PREFIX + serialNumber++
   dialogs.value.push({
     key,
     singletonKey: ''
