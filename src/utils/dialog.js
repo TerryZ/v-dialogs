@@ -50,7 +50,7 @@ export function outsideClick (props, close, shaking) {
   setTimeout(() => { shaking.value = false }, 750)
 }
 
-export function useDialog (props, emit, options) {
+export function useDialog (props, emit) {
   const show = ref(false)
   const dialogTop = ref(0)
 
@@ -60,9 +60,9 @@ export function useDialog (props, emit, options) {
     top: dialogTop.value + 'px'
   }))
 
-  function setDialogTop () {
-    dialogTop.value = options?.setDialogTop
-      ? options.setDialogTop()
+  function setDialogTop (customSetDialogTop) {
+    dialogTop.value = customSetDialogTop
+      ? customSetDialogTop()
       : calculateDialogTop(props.height)
   }
   function closeDialog (callback, data) {
@@ -82,7 +82,8 @@ export function useDialog (props, emit, options) {
   return {
     show,
     closeDialog,
-    dialogStyles
+    dialogStyles,
+    setDialogTop
   }
 }
 

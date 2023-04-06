@@ -28,7 +28,7 @@ export default {
   },
   emits: commonEmits,
   setup (props, { emit }) {
-    const { show, dialogStyles, closeDialog } = useDialog(props, emit, { setDialogTop })
+    const { show, dialogStyles, closeDialog, setDialogTop } = useDialog(props, emit)
     const {
       generateBackdrop,
       generateDialogContainer,
@@ -91,8 +91,11 @@ export default {
       maximize.value = !maximize.value
       setBodyHeight()
     }
-    function setDialogTop () {
+    function getDialogTop () {
       return maximize.value ? 0 : calculateDialogTop(props.height)
+    }
+    function setModalDialogTop () {
+      setDialogTop(getDialogTop)
     }
     function setBodyHeight () {
       const headerHeight = header.value?.offsetHeight || 0
@@ -100,7 +103,7 @@ export default {
 
       bodyHeight.value = dialogHeight - headerHeight
       nextTick(() => {
-        setDialogTop()
+        setModalDialogTop()
       })
     }
 

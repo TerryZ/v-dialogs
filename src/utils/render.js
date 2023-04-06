@@ -56,7 +56,7 @@ export function useRenderPopup (props, show) {
    */
   function generateDialogContainer (dialog, options, close) {
     const option = {
-      class: ['v-dialog', { 'v-dialog--buzz-out': shaking.value }],
+      class: ['v-dialog', { 'v-dialog--buzz-out': shaking.value, ...options?.class }],
       style: {
         'z-index': options.dialogZIndex
       },
