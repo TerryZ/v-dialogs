@@ -13,9 +13,9 @@ export const commonProps = {
   backdrop: { type: Boolean, default: true },
   /** Click backdrop to close dialog */
   backdropClose: { type: Boolean, default: false },
-  title: { type: String, default: '' },
   /** whether to display header */
   header: { type: Boolean, default: true },
+  title: { type: String, default: '' },
   message: { type: String, default: '' },
   /** Dialog width */
   width: { type: Number, default: 0 },
@@ -50,7 +50,7 @@ export function outsideClick (props, close, shaking) {
   setTimeout(() => { shaking.value = false }, 750)
 }
 
-export function useDialog (props, emit) {
+export function useDialog (props, emit, options) {
   const show = ref(false)
   const dialogTop = ref(0)
 
@@ -61,12 +61,14 @@ export function useDialog (props, emit) {
   }))
 
   function setDialogTop () {
-    dialogTop.value = calculateDialogTop(props.height)
+    dialogTop.value = options?.setDialogTop
+      ? options.setDialogTop()
+      : calculateDialogTop(props.height)
   }
-  function closeDialog (callback) {
+  function closeDialog (callback, data) {
     show.value = false
 
-    setTimeout(() => emit('close', callback), 300)
+    setTimeout(() => emit('close', callback, data), 300)
   }
 
   useResizeAdjust(setDialogTop)

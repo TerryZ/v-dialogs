@@ -57,50 +57,44 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // import mixins from './mixins'
-import Company from './Company'
+import { ref, computed } from 'vue'
+import { DialogModal, DialogAlert } from '@/'
+import UserCompany from './UserCompany.vue'
 
-export default {
-  // mixins: [mixins],
-  props: {
-    name: { type: String, default: '' }
-  },
-  data () {
-    return {
-      userName: this.name,
-      company: '',
-      age: 20
+const emit = defineEmits(['close'])
+
+const props = defineProps({
+  name: { type: String, default: '' }
+})
+
+const userName = ref(props.name)
+const company = ref('')
+const age = ref(20)
+
+const upperCasedName = computed(() => {
+  return userName.value.toUpperCase()
+})
+
+function ok () {
+  // const key = this.$dlg.mask('Data saving...(sleep 3 sec)')
+  // setTimeout(() => {
+  //   this.$dlg.close(key)
+  //   this.$emit('close', { companyName: this.company })
+  // }, 3000)
+  emit('close', { companyName: company.value })
+}
+function chooseCompany () {
+  // console.log(this)
+  DialogModal(UserCompany, {
+    width: 500,
+    height: 500,
+    title: 'Company list',
+    callback: data => {
+      DialogAlert(`Your selected <b>${data.name}</b> company.`, { closeTime: 2 })
+      company.value = data && data.name
     }
-  },
-  computed: {
-    upperCasedName () {
-      return this.upperCase(this.userName)
-    }
-  },
-  methods: {
-    ok () {
-      const key = this.$dlg.mask('Data saving...(sleep 3 sec)')
-      setTimeout(() => {
-        this.$dlg.close(key)
-        this.$emit('close', { companyName: this.company })
-      }, 3000)
-    },
-    chooseCompany () {
-      console.log(this)
-      this.$dlg.modal(Company, {
-        width: 500,
-        height: 500,
-        title: 'Company list',
-        callback: data => {
-          this.$dlg.toast(`Your selected <b>${data.name}</b> company.`, { closeTime: 2 })
-          this.company = data && data.name
-        }
-      })
-    }
-  },
-  mounted () {
-    // console.dir(this)
-  }
+  })
 }
 </script>

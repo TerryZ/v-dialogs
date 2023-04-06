@@ -8,8 +8,8 @@ const dialogs = ref([])
 export function mountDialog (component, options = {}) {
   const { index, key } = addDialog()
 
-  const onClose = callback => {
-    callback && callback()
+  const onClose = (callback, data) => {
+    callback && callback(data)
     destroy()
     closeDialog(key)
   }

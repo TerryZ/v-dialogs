@@ -10,6 +10,7 @@ import {
 import { MODAL, DRAWER } from '../constants'
 import { isDocumentBodyOverflowing } from './helper'
 import Alert from '../components/Alert'
+import Modal from '../components/Modal'
 import { mountDialog } from '../dialogs'
 
 /**
@@ -40,7 +41,7 @@ export function getInstance () {
  */
 export function DialogModal (component, params) {
   if (!component) return
-  return getInstance().addDialog(generateModalOption(component, params))
+  return mountDialog(Modal, generateModalOption(component, params))
 }
 
 /**

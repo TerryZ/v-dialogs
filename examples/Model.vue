@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import profile from './Profile.vue'
+import profile from './UserProfile.vue'
 import { DialogModal } from '@/components/v-dialogs'
 
 export default {
@@ -68,7 +68,7 @@ export default {
       const options = {
         width: 500,
         height: 620,
-        title: title,
+        title,
         customClass: 'aabbcc',
         backdrop: true,
         backdropClose: true,

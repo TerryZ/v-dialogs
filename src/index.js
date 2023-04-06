@@ -8,7 +8,7 @@ import { instanceApi, DialogHelper } from './utils/instance'
 //   DialogToast,
 //   DialogHelper
 // } from './utils/instance'
-export { DialogAlert } from './utils/instance'
+export { DialogAlert, DialogModal } from './utils/instance'
 export { DialogHelper }
 
 export default {

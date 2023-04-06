@@ -103,16 +103,14 @@ export default defineComponent({
       )
 
       const bodyOption = {
-        class: 'v-dialog-body',
+        class: ['v-dialog-body v-dialog-alert', { 'no-icon': !props.icon }],
         style: {
           height: bodyHeight.value + 'px'
         }
       }
       return h('div', bodyOption, [
-        h('div', { class: ['v-dialog-alert', { 'no-icon': !props.icon }] }, [
-          h('div', { class: 'v-dialog-alert__content' }, contents),
-          generateButtons()
-        ])
+        h('div', { class: 'v-dialog-alert__content' }, contents),
+        generateButtons()
       ])
     }
 
