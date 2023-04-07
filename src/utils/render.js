@@ -35,7 +35,7 @@ export function useRenderPopup (props, show) {
    */
   function generateDialogContent (options) {
     const option = {
-      class: options.className
+      class: [options.className, props.customClass]
     }
     const content = withDirectives(
       h('div', option, options.child),

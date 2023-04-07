@@ -5,7 +5,7 @@
       <div class="my-2">
         UpperCased Name:
         <span
-          class="bg-primary bg-opacity-50 text-white px-2 py-1 rounded-3"
+          class="border bg-light text-muted px-2 py-1 rounded-3 shadow-sm"
           v-text="upperCasedName"
         />
       </div>
@@ -86,7 +86,9 @@ function ok () {
   //   this.$dlg.close(key)
   //   this.$emit('close', { companyName: this.company })
   // }, 3000)
-  emit('close', { companyName: company.value })
+  emit('close', {
+    companyName: company.value
+  })
 }
 function chooseCompany () {
   // console.log(this)
