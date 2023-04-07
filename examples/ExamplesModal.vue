@@ -30,7 +30,7 @@ function openModal () {
     title: 'User Profile',
     customClass: 'aabbcc',
     backdrop: true,
-    backdropClose: true,
+    backdropClose: false,
     params: { name: 'Terry Zeng' },
     callback: data => {
       console.log(data)

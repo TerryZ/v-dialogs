@@ -40,17 +40,16 @@
   transition: transform 200ms ease, opacity 200ms ease
   opacity: 0
 
-.v-dialog--smooth-enter,
+.v-dialog--smooth-enter-from,
 .v-dialog--smooth-leave-to
   will-change: transform, opacity
-  transform: scale(0.5)
+  transform: scale(0.5) translate3d(0, 0, 0)
   opacity: 0
   transition: transform 200ms ease, opacity 200ms ease
 
-.v-dialog--smooth-enter-to,
-.v-dialog--smooth-leave
+.v-dialog--smooth-enter-active,
+.v-dialog--smooth-leave-active
   will-change: transform, opacity
-  opacity: 1
   transition: transform 250ms ease, opacity 250ms ease
 
 /* overlay fade in and out */
@@ -58,7 +57,7 @@
 .v-dialog--fade-leave-active
   will-change: opacity
   transition: opacity 200ms
-.v-dialog--fade-enter,
+.v-dialog--fade-enter-from,
 .v-dialog--fade-leave-to
   will-change: opacity
   opacity: 0 !important

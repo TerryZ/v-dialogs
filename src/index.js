@@ -1,3 +1,6 @@
+import './styles/dialog.sass'
+import './styles/animated.sass'
+
 import { DEFAULT_INSTANCE_NAME } from './constants'
 import { instanceApi, DialogHelper } from './utils/instance'
 

@@ -21,6 +21,7 @@ export default {
      * you need use props to receive this params in component
      */
     params: Object,
+    shaking: { type: Boolean, default: true },
     /** Open maximized dialog */
     fullscreen: { type: Boolean, default: false },
     maxButton: { type: Boolean, default: true },
@@ -91,34 +92,34 @@ export default {
       maximize.value = !maximize.value
       setBodyHeight()
     }
-    function getDialogTop () {
-      return maximize.value ? 0 : calculateDialogTop(props.height)
-    }
     function setModalDialogTop () {
-      setDialogTop(getDialogTop)
+      setDialogTop(() => maximize.value ? 0 : calculateDialogTop(props.height))
     }
     function setBodyHeight () {
       const headerHeight = header.value?.offsetHeight || 0
       const dialogHeight = maximize.value ? window.innerHeight : props.height
 
       bodyHeight.value = dialogHeight - headerHeight
-      nextTick(() => {
-        setModalDialogTop()
-      })
+      // nextTick(() => {
+      setModalDialogTop()
+      // })
     }
 
     onMounted(() => {
-      if (props.fullscreen) {
-        // do maximize after `show` data property set to true in `mixins/index.js`
-        nextTick(() => {
-          maximizeModal()
-        })
-      } else {
-        setBodyHeight()
-      }
-      hideDocumentBodyOverflow()
-
       show.value = true
+
+      nextTick(() => {
+        if (props.fullscreen) {
+          // do maximize after `show` data property set to true in `mixins/index.js`
+          // nextTick(() => {
+          //   maximizeModal()
+          // })
+          maximizeModal()
+        } else {
+          setBodyHeight()
+        }
+        hideDocumentBodyOverflow()
+      })
     })
 
     return () => {

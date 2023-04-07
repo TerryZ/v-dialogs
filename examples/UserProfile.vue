@@ -33,13 +33,13 @@
           v-model="company"
           placeholder="Please choose a company"
         >
-        <span class="input-group-append">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="chooseCompany"
-          >Choose</button>
-        </span>
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          @click="chooseCompany"
+        >
+          Choose
+        </button>
       </div>
     </div>
     <div style="height: 500px">

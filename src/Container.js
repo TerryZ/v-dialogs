@@ -1,8 +1,8 @@
 import { ref, h, nextTick, defineComponent } from 'vue'
 
-import './styles/icon.scss'
-import './styles/animated.sass'
-import './styles/dialog.sass'
+// import './styles/icon.scss'
+// import './styles/animated.sass'
+// import './styles/dialog.sass'
 
 import { DIALOG_KEY_PREFIX } from './constants'
 import { generateDialogRenderOption } from './utils/options'

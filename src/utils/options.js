@@ -65,7 +65,6 @@ export function generateAlertOption () {
 
 export function generateModalOption (component, params) {
   const option = { ...defaultModalOptions, ...params }
-  option.type = MODAL
   option.component = component
   return option
 }
