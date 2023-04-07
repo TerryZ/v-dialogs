@@ -9,9 +9,43 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="openModal"
+          @click="base"
         >
           Modal
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="backdropClose"
+        >
+          Backdrop close
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <h5>Buttons</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noMaxButton"
+        >
+          No maximize button
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noCloseButton"
+        >
+          No close button
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noButtons"
+        >
+          No buttons
         </button>
       </div>
     </div>
@@ -36,17 +70,18 @@
 import { DialogModal, DialogAlert } from '@/'
 import UserProfile from './UserProfile.vue'
 
-function generateOption () {
-  return {
+function openModal (params) {
+  const options = {
     title: 'User Profile',
     backdrop: true,
     backdropClose: false,
-    params: { name: 'Terry Zeng' }
+    params: { name: 'Terry Zeng' },
+    ...params
   }
+  DialogModal(UserProfile, options)
 }
-function openModal () {
-  const options = {
-    ...generateOption(),
+function base () {
+  openModal({
     width: 500,
     height: 620,
     customClass: 'rounded-0',
@@ -56,15 +91,33 @@ function openModal () {
         DialogAlert(`Received user name: ${data?.companyName}`)
       }
     }
-  }
-  DialogModal(UserProfile, options)
+  })
+}
+function backdropClose () {
+  openModal({
+    backdropClose: true
+  })
+}
+function noMaxButton () {
+  openModal({
+    maxButton: false
+  })
+}
+function noCloseButton () {
+  openModal({
+    closeButton: false
+  })
+}
+function noButtons () {
+  openModal({
+    maxButton: false,
+    closeButton: false
+  })
 }
 function fullscreen () {
-  const options = {
-    ...generateOption(),
+  openModal({
     customClass: 'bg-light',
     fullscreen: true
-  }
-  DialogModal(UserProfile, options)
+  })
 }
 </script>
