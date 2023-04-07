@@ -42,42 +42,41 @@ $borderRadius: .8rem
     border: 0
     overflow: hidden
   .v-dialog-header
-    padding: 0
-    border-bottom: 0
+    display: flex
+    height: 42px
     h3
       margin: 0
-      line-height: 42px
-      height: 42px
+      height: 100%
       font-size: 18px
       padding-left: 15px
       font-weight: 500
+      flex-grow: 1
+      display: flex
+      align-items: center
     button
-      transition: all .5s cubic-bezier(.175,.885,.32,1)
-      height: 42px
+      transition: all .3s ease-out
+      height: 100%
       width: 60px
       text-shadow: none
       outline: none !important
       margin: 0
       opacity: 0.3
-      font-size: 22px !important
-      float: right
+      font-size: 18px !important
       border: 0
       background-color: transparent
+      display: inline-flex
+      justify-content: center
+      align-items: center
       &:hover
         opacity: 1
       &.v-dialog-btn__close
         font-weight: normal
-      &.v-dialog-btn__close:hover
-        background-color: #E81123
-        color: white
+        &:hover
+          background-color: #E81123
+          color: white
       &.v-dialog-btn__maximize
-        /*margin-right: 7px*/
-        /*margin-top: 2px*/
         &:hover
           background-color: #E0E0E0
-      i
-        font-weight: 600
-        font-size: 22px
   .v-dialog-body
     position: relative
     width: 100%

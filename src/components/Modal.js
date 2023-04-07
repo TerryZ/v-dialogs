@@ -46,14 +46,6 @@ export default {
       if (!props.header) return
 
       const buttons = []
-      if (props.closeButton) {
-        const closeButtonOption = {
-          class: 'v-dialog-btn__close',
-          type: 'button',
-          onClick: () => { closeDialog(props.callback) }
-        }
-        buttons.push(h('button', closeButtonOption, h(IconClose)))
-      }
       if (props.maxButton) {
         const maxButtonOption = {
           class: 'v-dialog-btn__maximize',
@@ -64,9 +56,17 @@ export default {
           h('button', maxButtonOption, h(maximize.value ? IconRestore : IconMaximize))
         )
       }
+      if (props.closeButton) {
+        const closeButtonOption = {
+          class: 'v-dialog-btn__close',
+          type: 'button',
+          onClick: () => { closeDialog(props.callback) }
+        }
+        buttons.push(h('button', closeButtonOption, h(IconClose)))
+      }
       return h('div', { class: DIALOG_HEADER_CLASS, ref: header }, [
-        ...buttons,
-        h('h3', props.title)
+        h('h3', props.title),
+        ...buttons
       ])
     }
     function generateBody () {

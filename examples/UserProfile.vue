@@ -1,6 +1,6 @@
 <template>
   <div class="p-3">
-    <div>
+    <div class="mb-3">
       <div>Name (received by params option):</div>
       <div class="my-2">
         UpperCased Name:
@@ -15,15 +15,15 @@
         v-model="userName"
       >
     </div>
-    <p>
+    <div class="mb-3">
       Age:
       <input
         type="text"
         class="form-control"
         v-model="age"
       >
-    </p>
-    <div>
+    </div>
+    <div class="mb-3">
       Company:
       <div class="input-group">
         <input
@@ -42,10 +42,13 @@
         </button>
       </div>
     </div>
-    <div style="height: 500px">
+    <div
+      style="height: 500px;"
+      class="bg-light p-3 rounded-3"
+    >
       space
     </div>
-    <p class="mt-3">
+    <div class="mt-3">
       <button
         type="button"
         class="btn btn-primary me-3"
@@ -53,7 +56,7 @@
       >
         OK
       </button>
-    </p>
+    </div>
   </div>
 </template>
 
