@@ -1,47 +1,49 @@
 /* Mask */
-
 .v-dialog-mask__container
-  background-repeat: no-repeat
-  background-position: 5px 5px
-  min-height: 100%
-  overflow: hidden
-  padding: 7px 5px
+  // background-repeat: no-repeat
+  // background-position: 5px 5px
+  // min-height: 100%
+  overflow: hidden !important
+  padding: 1rem !important
+  display: flex
   .v-dialog-mask__content
-    padding: 15px 0 0 60px
+    margin-left: 1rem
     font-size: 18px
     overflow-y: auto
     color: black
-
-/* The timer animate icon */
-.v-dialog-timer
-  position: absolute
-  left: 12px
-  top: 20px
-  width: 36px
-  height: 36px
-  border: 2px solid #000
-  border-radius: 50%
-  background-color: transparent
-  box-sizing: content-box
-  &:after,
-  &:before
-    position: absolute
-    content: ''
-  &:after
-    top: 17px
-    left: 17px
-    width: 17px
-    height: 1px
-    will-change: transform
-    transform-origin: 1px 1px
-    animation: timerhand 2s linear infinite
-    background-color: #666
-  &:before
-    top: 17px
-    left: 17px
-    width: 12px
-    height: 2px
-    will-change: transform
-    transform-origin: 1px 1px
-    animation: timerhand 8s linear infinite
-    background-color: #333
+    flex-flow: 1
+  .v-dialog-mask__content,
+  .v-dialog-mask__icon
+    display: flex
+    align-items: center
+  /* The timer animate icon */
+  .v-dialog-timer
+    position: relative
+    width: 36px
+    height: 36px
+    border: 2px solid black
+    border-radius: 50%
+    background-color: transparent
+    box-sizing: content-box
+    &:after,
+    &:before
+      position: absolute
+      content: ''
+    &:after
+      top: 17px
+      left: 17px
+      width: 17px
+      height: 1px
+      will-change: transform
+      transform-origin: 1px 1px
+      animation: timerhand 2s linear infinite
+      background-color: #666
+    &:before
+      top: 17px
+      left: 17px
+      width: 12px
+      height: 2px
+      will-change: transform
+      transform-origin: 1px 1px
+      animation: timerhand 8s linear infinite
+      background-color: #333

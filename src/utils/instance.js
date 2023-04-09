@@ -9,9 +9,11 @@ import {
 } from './options'
 import { MODAL, DRAWER } from '../constants'
 import { isDocumentBodyOverflowing } from './helper'
+import { mountDialog } from '../dialogs'
+
 import Alert from '../components/Alert'
 import Modal from '../components/Modal'
-import { mountDialog } from '../dialogs'
+import Mask from '../components/Mask'
 
 /**
  * Get v-dialogs container instance, if not exist, create a new one
@@ -112,7 +114,7 @@ export function DialogToast () {
  * @see DialogAlert
  */
 export function DialogMask () {
-  return getInstance().addDialog(generateMaskOption(...arguments))
+  return mountDialog(Mask, generateMaskOption(...arguments))
 }
 
 export function DialogDrawer () {

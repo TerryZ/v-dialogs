@@ -20,6 +20,13 @@
         >
           Backdrop close
         </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noHeader"
+        >
+          No header
+        </button>
       </div>
     </div>
 
@@ -96,6 +103,11 @@ function base () {
 function backdropClose () {
   openModal({
     backdropClose: true
+  })
+}
+function noHeader () {
+  openModal({
+    header: false
   })
 }
 function noMaxButton () {

@@ -73,7 +73,7 @@ export const defaultAlertOptions = {
 export const defaultMaskOptions = {
   ...defaultOptionsCore,
   shaking: true,
-  closeTime: false
+  closeTime: 0
 }
 
 export const defaultToastOptions = {
@@ -81,7 +81,7 @@ export const defaultToastOptions = {
   messageType: MESSAGE_TYPE_INFO,
   icon: true,
   closeButton: true,
-  closeTime: false,
+  closeTime: 0,
   position: 'bottomRight'
 }
 

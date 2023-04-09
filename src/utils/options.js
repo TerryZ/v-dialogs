@@ -89,7 +89,6 @@ export function generateToastOption () {
 export function generateMaskOption () {
   const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
 
-  option.type = MASK
   option.message = option.message || getLanguage(option.language).maskText
   option.width = 300
   option.height = 80

@@ -1,67 +1,78 @@
 import '../styles/mask.sass'
 
-import mixins from '../mixins'
-import render from '../mixins/render'
-import { calculateDialogTop, textTruncate } from '../utils/helper'
+import { ref, computed, onMounted, h } from 'vue'
+import { textTruncate, calculateDialogZIndex } from '../utils/helper'
 import { MASK_MAX_CONTENT_LENGTH } from '../constants'
+import { commonEmits, commonProps, useDialog } from '../utils/dialog'
+import { useRenderPopup } from '../utils/render'
 
 export default {
   name: 'DialogMask',
-  mixins: [mixins, render],
-  computed: {
-    classes () {
-      return {
-        'v-dialog': true,
-        'v-dialog--buzz-out': this.shake
-      }
-    },
-    messageText () {
-      const { message } = this
-      if (message.length > MASK_MAX_CONTENT_LENGTH) {
-        return textTruncate(message, MASK_MAX_CONTENT_LENGTH)
-      }
-      return message
-    }
+  props: {
+    ...commonProps,
+    shaking: { type: Boolean, default: true }
   },
-  render (h) {
-    const contentOption = {
-      class: 'v-dialog-mask__content',
-      domProps: {
-        innerHTML: this.messageText
+  emits: commonEmits,
+  setup (props, { emit }) {
+    const { show, dialogStyles, closeDialog } = useDialog(props, emit)
+    const {
+      generateBackdrop,
+      generateDialogContainer,
+      generateDialogContent
+    } = useRenderPopup(props, show)
+    const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
+
+    const bodyHeight = ref(0)
+
+    const messageText = computed(() => {
+      if (props.message.length > MASK_MAX_CONTENT_LENGTH) {
+        return textTruncate(props.message, MASK_MAX_CONTENT_LENGTH)
       }
-    }
-    const bodyOption = {
-      class: 'v-dialog-body',
-      style: {
-        height: this.bodyHeight + 'px'
+      return props.message
+    })
+
+    onMounted(() => {
+      show.value = true
+      bodyHeight.value = props.height
+    })
+
+    return () => {
+      const contentOption = {
+        class: 'v-dialog-mask__content',
+        innerHTML: messageText.value
       }
-    }
-    const body = h('div', bodyOption, [
-      h('div', { class: 'v-dialog-mask__container' }, [
-        h('div', { class: 'v-dialog-timer' }),
+      const bodyOption = {
+        class: 'v-dialog-body v-dialog-mask__container',
+        style: {
+          height: bodyHeight.value + 'px'
+        }
+      }
+      const body = h('div', bodyOption, [
+        h(
+          'div',
+          { class: 'v-dialog-mask__icon' },
+          h('div', { class: 'v-dialog-timer' })
+        ),
         h('div', contentOption)
       ])
-    ])
 
-    const dialog = h('div', {
-      class: 'v-dialog-dialog',
-      style: this.dialogStyles
-    }, [
-      this.generateDialogContent({
-        className: 'v-dialog-content',
-        transitionName: 'v-dialog--candy',
-        child: [body]
-      })
-    ])
+      const dialog = h(
+        'div',
+        {
+          class: 'v-dialog-dialog',
+          style: dialogStyles.value
+        },
+        generateDialogContent({
+          className: 'v-dialog-content',
+          transitionName: 'v-dialog--candy',
+          child: [body]
+        })
+      )
 
-    return h('div', [
-      this.generateDialogScreen(dialog),
-      this.generateBackdrop()
-    ])
-  },
-  mounted () {
-    const { height } = this
-    this.bodyHeight = height
-    this.dialogTop = calculateDialogTop(height)
+      return [
+        generateDialogContainer(dialog, { dialogZIndex }, closeDialog),
+        generateBackdrop({ backdropZIndex })
+      ]
+    }
   }
 }
