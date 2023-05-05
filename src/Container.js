@@ -40,7 +40,7 @@ export default defineComponent({
      */
     function close (key) {
       if (!dialogs.value.length) return
-      closeDialog(key || dialogs.value[dialogs.value.length - 1].dialogKey)
+      closeDialog(key || dialogs.value.at(-1).dialogKey)
     }
     /**
      * Close dialog (remove dialogs array item) and call user callback function

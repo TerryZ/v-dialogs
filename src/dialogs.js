@@ -10,7 +10,7 @@ export function mountDialog (component, options = {}) {
 
   console.dir(options)
 
-  const onClose = (callback, data) => {
+  const close = (callback, data) => {
     callback && callback(data)
     destroy()
     closeDialog(key)
@@ -20,7 +20,7 @@ export function mountDialog (component, options = {}) {
     ...options,
     dialogKey: key,
     dialogIndex: index,
-    onClose
+    onClose: close
   })
   let el = document.body.appendChild(document.createElement('div'))
   render(dialog, el)
