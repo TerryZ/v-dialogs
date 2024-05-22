@@ -103,7 +103,8 @@ function openAlert (type) {
     DialogAlert('Dialog closed.')
   }, {
     icon: icon.value,
-    messageType: typeof type === 'string' ? type : undefined
+    messageType: typeof type === 'string' ? type : undefined,
+    colorfulShadow: type !== 'warning'
   })
 }
 function openConfirmAlert () {

@@ -29,6 +29,7 @@ export default defineComponent({
      * - `confirm`
      */
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
+    colorfulShadow: { type: Boolean, default: true },
     shaking: { type: Boolean, default: true },
     icon: { type: Boolean, default: true },
     cancelCallback: { type: Function, default: undefined }
@@ -49,6 +50,7 @@ export default defineComponent({
     const bodyHeight = ref(0)
 
     const shadow = computed(() => {
+      if (!props.colorfulShadow) return ''
       if (
         props.messageType === MESSAGE_TYPE_WARNING ||
         props.messageType === MESSAGE_TYPE_ERROR ||

@@ -70,12 +70,30 @@
       </div>
     </div>
   </div>
+
+  <h4>使用标签</h4>
+  <div>
+    <div class="mb-3">
+      <h5>Base</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="openTagModal"
+        >
+          Open
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-// import { ref } from 'vue'
+import { ref } from 'vue'
 import { DialogModal, DialogAlert } from '@/'
 import UserProfile from './UserProfile.vue'
+
+const visible = ref(false)
 
 function openModal (params) {
   const options = {
@@ -131,5 +149,9 @@ function fullscreen () {
     customClass: 'bg-light',
     fullscreen: true
   })
+}
+
+function openTagModal () {
+  visible.value = true
 }
 </script>

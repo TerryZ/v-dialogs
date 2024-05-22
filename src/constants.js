@@ -66,6 +66,7 @@ export const defaultAlertOptions = {
   messageType: MESSAGE_TYPE_INFO,
   icon: true,
   shaking: true,
+  colorfulShadow: true,
   closeTime: 0,
   cancelCallback: undefined
 }
