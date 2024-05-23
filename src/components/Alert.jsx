@@ -13,7 +13,6 @@ import {
 import { textTruncate, getLanguage, calculateDialogZIndex, getAlertIcon } from '../utils/helper'
 import { commonProps, commonEmits, useDialog } from '../utils/dialog'
 import { useRenderPopup } from '../utils/render'
-// import { closeDialog } from '../dialogs'
 
 export default defineComponent({
   name: 'DialogAlert',
@@ -65,55 +64,61 @@ export default defineComponent({
       if (!props.header) return
 
       const text = textTruncate(props.title, TITLE_TEXT_MAX_LENGTH)
-      return h('div', { class: DIALOG_HEADER_CLASS, ref: header }, h('h3', text))
+
+      return (
+        <div class={DIALOG_HEADER_CLASS} ref={header}>
+          <h3>{text}</h3>
+        </div>
+      )
     }
     function generateButtons () {
       const buttons = []
       // Okay button
-      const okButtonOption = {
-        type: 'button',
-        class: 'v-dialog-btn__ok',
-        ref: btnOk,
-        onClick: () => { closeDialog(props.callback) }
-      }
-      buttons.push(h('button', okButtonOption, lang.btnOk))
+      buttons.push(
+        <button
+          type='button'
+          class='v-dialog-btn__ok'
+          ref={btnOk}
+          onClick={() => closeDialog(props.callback)}
+        >{lang.btnOk}</button>
+      )
       // Cancel button
       if (props.messageType === MESSAGE_TYPE_CONFIRM) {
-        const cancelButtonOption = {
-          type: 'button',
-          class: 'v-dialog-btn__cancel',
-          onClick: () => { closeDialog(props.cancelCallback) }
-        }
-        buttons.push(h('button', cancelButtonOption, lang.btnCancel))
+        buttons.push(
+          <button
+            type='button'
+            class='v-dialog-btn__cancel'
+            onClick={() => closeDialog(props.cancelCallback)}
+          >{lang.btnCancel}</button>
+        )
       }
-
-      return h('div', { class: 'v-dialog-alert__buttons' }, buttons)
+      return (
+        <div class='v-dialog-alert__buttons'>{buttons}</div>
+      )
     }
     function generateBody () {
       const contents = []
 
       if (props.icon) {
         contents.push(
-          h('div', { class: 'v-dialog-alert__icon' }, h(getAlertIcon(props.messageType)))
+          <div class='v-dialog-alert__icon'>
+            { h(getAlertIcon(props.messageType)) }
+          </div>
         )
       }
       contents.push(
-        h('div', {
-          class: 'v-dialog-alert__message',
-          innerHTML: props.message
-        })
+        <div class='v-dialog-alert__message' v-html={props.message} />
       )
 
-      const bodyOption = {
-        class: ['v-dialog-body v-dialog-alert', { 'no-icon': !props.icon }],
-        style: {
-          height: bodyHeight.value + 'px'
-        }
-      }
-      return h('div', bodyOption, [
-        h('div', { class: 'v-dialog-alert__content' }, contents),
-        generateButtons()
-      ])
+      return (
+        <div
+          class={['v-dialog-body v-dialog-alert', { 'no-icon': !props.icon }]}
+          style={{ height: bodyHeight.value + 'px' }}
+        >
+          <div class='v-dialog-alert__content'>{contents}</div>
+          {generateButtons()}
+        </div>
+      )
     }
 
     onMounted(() => {
@@ -128,23 +133,22 @@ export default defineComponent({
     })
 
     return () => {
-      const dialog = h(
-        'div',
-        {
-          class: 'v-dialog-dialog',
-          style: dialogStyles.value
-        },
-        generateDialogContent({
-          className: ['v-dialog-content', shadow.value],
-          transitionName: 'v-dialog--candy',
-          child: [generateHeader(), generateBody()]
-        })
+      const body = (
+        <div class='v-dialog-dialog' style={dialogStyles.value}>
+          {
+            generateDialogContent({
+              className: ['v-dialog-content', shadow.value],
+              transitionName: 'v-dialog--candy',
+              child: [generateHeader(), generateBody()]
+            })
+          }
+        </div>
       )
 
-      return [
-        generateDialogContainer(dialog, { dialogZIndex }, closeDialog),
-        generateBackdrop({ backdropZIndex })
-      ]
+      const container = generateDialogContainer(body, { dialogZIndex }, closeDialog)
+      const backdrop = generateBackdrop({ backdropZIndex })
+
+      return [backdrop, container]
     }
   }
 })

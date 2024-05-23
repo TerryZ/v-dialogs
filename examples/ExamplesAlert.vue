@@ -4,9 +4,9 @@
   </h3>
   <div class="">
     <div class="mb-5">
-      <h5>Display icon</h5>
-      <div>
-        <div class="form-check">
+      <h5>Options</h5>
+      <div class="d-flex">
+        <div class="form-check me-3">
           <input
             class="form-check-input"
             type="checkbox"
@@ -20,6 +20,23 @@
             for="dialog-use-icon"
           >
             Use icon
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="colorfulShadow"
+            :true-value="true"
+            :false-value="false"
+            id="dialog-colorful-shadow"
+          >
+          <label
+            class="form-check-label"
+            for="dialog-colorful-shadow"
+          >
+            Colorful Shadow
           </label>
         </div>
       </div>
@@ -87,6 +104,7 @@ import { ref, onMounted } from 'vue'
 import { DialogAlert } from '@/'
 
 const icon = ref(true)
+const colorfulShadow = ref(true)
 
 function openAlert (type) {
   // const body = ref(document.body)
@@ -98,13 +116,13 @@ function openAlert (type) {
   // app.closeAll(() => {
   //   console.log('close all')
   // })
-  DialogAlert('Hello, world!', () => {
+  DialogAlert('Hello, <b>world!</b>', () => {
     // console.log('callback')
     DialogAlert('Dialog closed.')
   }, {
     icon: icon.value,
     messageType: typeof type === 'string' ? type : undefined,
-    colorfulShadow: type !== 'warning'
+    colorfulShadow: colorfulShadow.value
   })
 }
 function openConfirmAlert () {
