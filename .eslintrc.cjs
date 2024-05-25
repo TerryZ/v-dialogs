@@ -8,10 +8,14 @@ module.exports = {
   root: true,
   extends: [
     'plugin:vue/vue3-strongly-recommended',
-    '@vue/eslint-config-standard'
+    '@vue/eslint-config-standard',
+    '@vue/eslint-config-prettier/skip-formatting'
   ],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   settings: {
     ...createAliasSetting({
