@@ -19,7 +19,8 @@ import {
   TOAST_ICON_ERROR,
   TOAST_ICON_SUCCESS,
   START_Z_INDEX,
-  Z_INDEX_INCREMENT
+  Z_INDEX_INCREMENT,
+  TITLE_TEXT_MAX_LENGTH
 } from '../constants'
 import IconInfo from '../icons/IconInfo.vue'
 import IconWarning from '../icons/IconWarning.vue'
@@ -116,7 +117,7 @@ export function getToastIcon (type) {
  * @param {number} keepLength - save string length
  * @returns {string} truncated string
  */
-export function textTruncate (text, keepLength) {
+export function textTruncate (text, keepLength = TITLE_TEXT_MAX_LENGTH) {
   if (typeof text !== 'string') return ''
   if (text.length <= keepLength) return text
   return text.substring(0, keepLength) + '...'

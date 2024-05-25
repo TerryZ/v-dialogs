@@ -6,16 +6,7 @@
     </h3>
     <div class="p-3 shadow-sm rounded-3 border">
       <div class="mb-3">
-        <RegionColumns
-          :city="true"
-          :area="true"
-          :town="true"
-          language="en"
-          v-model="modelColumn"
-          ref="columnSelector"
-          @change="cbColumn"
-          @complete="columnGroupCoreDone"
-        />
+        asdf
       </div>
       <div class="mb-3">
         <button
@@ -84,16 +75,7 @@
       </div>
 
       <div class="d-flex mb-3">
-        <RegionColumnsCore
-          :city="enabledCity"
-          :area="enabledArea"
-          :town="enabledTown"
-          ref="columnCore"
-          class="border rounded-3"
-          language="en"
-          v-model="modelCore"
-          @complete="columnGroupCoreDone"
-        />
+        aaa
       </div>
 
       <div>
@@ -135,7 +117,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { RegionColumnsCore, RegionColumns } from '@/'
+// import { RegionColumnsCore, RegionColumns } from '@/'
 
 const model = {
   province: '410000',

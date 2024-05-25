@@ -11,7 +11,8 @@ import { MODAL, DRAWER } from '../constants'
 import { isDocumentBodyOverflowing } from './helper'
 import { mountDialog } from '../dialogs'
 
-import Alert from '../components/Alert'
+// import Alert from '../components/Alert'
+import TheDialogAlert from '../modules/alert/DialogAlert'
 import Modal from '../components/Modal'
 import Mask from '../components/Mask'
 
@@ -87,7 +88,7 @@ export function DialogAlert () {
   // }
 
   // render(dialog, el)
-  return mountDialog(Alert, generateAlertOption(...arguments))
+  return mountDialog(TheDialogAlert, generateAlertOption(...arguments))
 }
 
 /**

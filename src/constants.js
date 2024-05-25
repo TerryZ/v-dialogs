@@ -34,6 +34,12 @@ export const MESSAGE_TYPE_ERROR = 'error'
 export const MESSAGE_TYPE_SUCCESS = 'success'
 export const MESSAGE_TYPE_CONFIRM = 'confirm'
 
+export const colorfulShadowTypes = [
+  MESSAGE_TYPE_WARNING,
+  MESSAGE_TYPE_ERROR,
+  MESSAGE_TYPE_SUCCESS
+]
+
 export const [
   MODAL,
   ALERT,
