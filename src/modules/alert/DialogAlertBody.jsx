@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { getAlertIcon } from '../../utils/helper'
+import { getAlertIcon, getAlertClass } from '../../utils/helper'
 
 export default {
   name: 'DialogAlertBody',
@@ -10,9 +10,17 @@ export default {
     messageType: { type: String, default: '' }
   },
   setup (props) {
+    const classes = ['v-dialog-body', 'v-dialog-alert']
+
+    classes.push(getAlertClass(props.messageType))
+
+    if (!props.icon) {
+      classes.push('no-icon')
+    }
+
     return () => (
       <div
-        class={['v-dialog-body v-dialog-alert', { 'no-icon': !props.icon }]}
+        class={classes}
         style={{ height: props.height + 'px' }}
       >
         <div class='v-dialog-alert__content'>

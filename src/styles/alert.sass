@@ -1,5 +1,9 @@
 $borderRadius: .3rem
 
+@mixin icon-color-and-shadow($color, $shadow-color)
+  color: $color
+  filter: drop-shadow(4px 5px 5px $shadow-color)
+
 .v-dialog-alert
   min-height: 100%
   overflow: hidden
@@ -18,13 +22,22 @@ $borderRadius: .3rem
     display: flex
     padding: 0 2rem 0 1rem
     font-size: 3rem
-    color: #333
-    filter: drop-shadow(4px 3px 6px rgba(0, 0, 0, .6))
+    // color: #333
+    // filter: drop-shadow(4px 3px 6px rgba(0, 0, 0, .6))
+    @include icon-color-and-shadow(#333, rgb(0,0,0,.6))
   .v-dialog-alert__message
     flex-grow: 1
     font-size: 14px
     line-height: 1.5
     padding-top: 5px
+  &.alert-warning .v-dialog-alert__icon
+    @include icon-color-and-shadow(#FF9800, rgb(255,152,0,.8))
+  &.alert-error .v-dialog-alert__icon
+    @include icon-color-and-shadow(#F44336, rgb(244,67,54,.8))
+  &.alert-success .v-dialog-alert__icon
+    @include icon-color-and-shadow(#198754, rgb(25,135,84,.8))
+  &.alert-confirm .v-dialog-alert__icon
+    @include icon-color-and-shadow(#3F51B5, rgb(63,81,181,.9))
 
 =dialog-shadow($color)
   box-shadow: 0 1rem 5rem $color !important

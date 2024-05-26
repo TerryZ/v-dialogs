@@ -71,14 +71,14 @@ export function useDialog (props, emit) {
     setTimeout(() => emit('close', callback, data), 300)
   }
 
+  useResizeAdjust(setDialogTop)
+
   onBeforeMount(() => {
     setDialogTop()
   })
 
   onMounted(() => {
     useAutomaticClose(props, () => closeDialog(props.dialogKey))
-
-    useResizeAdjust(setDialogTop)
   })
 
   return {
