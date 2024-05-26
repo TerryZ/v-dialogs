@@ -6,12 +6,10 @@ export default {
     content: { type: String, default: '' }
   },
   setup (props) {
-    return () => {
-      return (
-        <div class='v-dialog-header'>
-          <h3>{textTruncate(props.content)}</h3>
-        </div>
-      )
-    }
+    return () => (
+      <div class='v-dialog-header'>
+        <h3>{textTruncate(props.content)}</h3>
+      </div>
+    )
   }
 }

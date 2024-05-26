@@ -10,25 +10,23 @@ export default {
     messageType: { type: String, default: '' }
   },
   setup (props) {
-    return () => {
-      return (
-        <div
-          class={['v-dialog-body', { 'no-icon': !props.icon }]}
-          style={{ height: props.height + 'px' }}
-        >
-          <div class='v-dialog-alert__content'>
-            {props.icon && (
-              <div class='v-dialog-alert__icon'>
-                { h(getAlertIcon(props.messageType)) }
-              </div>
-            )}
-            <div
-              class='v-dialog-alert__message'
-              v-html={props.message}
-            />
-          </div>
+    return () => (
+      <div
+        class={['v-dialog-body v-dialog-alert', { 'no-icon': !props.icon }]}
+        style={{ height: props.height + 'px' }}
+      >
+        <div class='v-dialog-alert__content'>
+          {props.icon && (
+            <div class='v-dialog-alert__icon'>
+              { h(getAlertIcon(props.messageType)) }
+            </div>
+          )}
+          <div
+            class='v-dialog-alert__message'
+            v-html={props.message}
+          />
         </div>
-      )
-    }
+      </div>
+    )
   }
 }

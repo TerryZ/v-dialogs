@@ -23,7 +23,9 @@ export function useAlert (props, emit) {
   }
 
   return {
-    show, dialogStyles, closeDialog,
+    show,
+    dialogStyles,
+    closeDialog,
     getShadowClass,
     isConfirmType,
     closeAlert,

@@ -1,10 +1,7 @@
 import { ref, inject, onMounted } from 'vue'
 
-
 export default {
   name: 'DialogAlertFooter',
-  props: {
-  },
   setup (props) {
     const btnOk = ref()
 
@@ -18,29 +15,27 @@ export default {
       btnOk.value && btnOk.value.focus()
     })
 
-    return () => {
-      return (
-        <div
-          class='v-dialog-footer'
-        >
-          <div class='v-dialog-alert__buttons'>
+    return () => (
+      <div
+        class='v-dialog-footer'
+      >
+        <div class='v-dialog-alert__buttons'>
+          <button
+            type='button'
+            class='v-dialog-btn__ok'
+            ref={btnOk}
+            onClick={closeAlert}
+          >{lang.btnOk}</button>
+
+          {isConfirmType && (
             <button
               type='button'
-              class='v-dialog-btn__ok'
-              ref={btnOk}
-              onClick={closeAlert}
-            >{lang.btnOk}</button>
-
-            {isConfirmType && (
-              <button
-                type='button'
-                class='v-dialog-btn__cancel'
-                onClick={cancelAlert}
-              >{lang.btnCancel}</button>
-            )}
-          </div>
+              class='v-dialog-btn__cancel'
+              onClick={cancelAlert}
+            >{lang.btnCancel}</button>
+          )}
         </div>
-      )
-    }
+      </div>
+    )
   }
 }

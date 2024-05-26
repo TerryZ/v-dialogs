@@ -35,7 +35,7 @@ export default defineComponent({
   setup (props, { emit }) {
     const {
       show, dialogStyles, closeDialog,
-      getShadowClass ,isConfirmType, closeAlert, cancelAlert
+      getShadowClass, isConfirmType, closeAlert, cancelAlert
     } = useAlert(props, emit)
     const {
       generateBackdrop,
@@ -95,7 +95,7 @@ export default defineComponent({
         <div class='v-dialog-dialog' style={dialogStyles.value}>
           {
             generateDialogContent({
-              className: ['v-dialog-content v-dialog-alert', getShadowClass()],
+              className: ['v-dialog-content', getShadowClass()],
               transitionName: 'v-dialog--candy',
               child: [generateHeader(), generateBody(), generateFooter()]
             })

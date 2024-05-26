@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { calculateDialogTop } from './helper'
 // import { closeDialog } from '../dialogs'
 import { EN } from '../language'
@@ -71,12 +71,14 @@ export function useDialog (props, emit) {
     setTimeout(() => emit('close', callback, data), 300)
   }
 
-  useResizeAdjust(setDialogTop)
+  onBeforeMount(() => {
+    setDialogTop()
+  })
 
   onMounted(() => {
-    setDialogTop()
-
     useAutomaticClose(props, () => closeDialog(props.dialogKey))
+
+    useResizeAdjust(setDialogTop)
   })
 
   return {

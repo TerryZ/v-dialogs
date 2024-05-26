@@ -12,22 +12,15 @@
 
       <h5>带分隔符</h5>
       <div class="text-muted rounded-3 bg-light p-3">
-        <region-text
-          v-model="region"
-          separator="-"
-        />
+        asf
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import { RegionText } from '@/'
 
 export default {
-  components: {
-    RegionText
-  },
   data () {
     return {
       region: {
