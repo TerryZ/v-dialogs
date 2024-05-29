@@ -9,9 +9,8 @@ $borderRadius: .3rem
   overflow: hidden
   display: flex
   flex-direction: column
-  &.no-icon
-    .v-dialog-alert__content
-      padding-left: 15px
+  &.no-icon .v-dialog-alert__content
+    padding-left: 15px
   .v-dialog-alert__content
     overflow-y: auto
     min-height: 100px
@@ -22,8 +21,6 @@ $borderRadius: .3rem
     display: flex
     padding: 0 2rem 0 1rem
     font-size: 3rem
-    // color: #333
-    // filter: drop-shadow(4px 3px 6px rgba(0, 0, 0, .6))
     @include icon-color-and-shadow(#333, rgb(0,0,0,.6))
   .v-dialog-alert__message
     flex-grow: 1

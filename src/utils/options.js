@@ -51,7 +51,7 @@ export function generateAlertOption () {
   // const { messageType = MESSAGE_TYPE_INFO, icon } = option
   const { messageType = MESSAGE_TYPE_INFO } = option
 
-  if ('title' in option === false) {
+  if (!Object.hasOwn(option, 'title')) {
     option.title = getTitle(messageType, option.language)
   }
   // if (icon) {

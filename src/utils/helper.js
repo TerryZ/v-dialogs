@@ -82,7 +82,12 @@ export function getAlertIcon (type) {
 }
 
 export function getAlertClass (type) {
-  const types = [MESSAGE_TYPE_WARNING, MESSAGE_TYPE_ERROR, MESSAGE_TYPE_SUCCESS, MESSAGE_TYPE_CONFIRM]
+  const types = [
+    MESSAGE_TYPE_WARNING,
+    MESSAGE_TYPE_ERROR,
+    MESSAGE_TYPE_SUCCESS,
+    MESSAGE_TYPE_CONFIRM
+  ]
   if (!types.includes(type)) return ''
   return `alert-${type}`
 }

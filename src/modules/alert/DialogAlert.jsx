@@ -34,14 +34,20 @@ export default defineComponent({
   emits: commonEmits,
   setup (props, { emit }) {
     const {
-      show, dialogStyles, closeDialog,
-      getShadowClass, isConfirmType, closeAlert, cancelAlert
+      show,
+      closeAlert,
+      cancelAlert,
+      dialogStyles,
+      isConfirmType,
+      getShadowClass
     } = useAlert(props, emit)
+
     const {
       generateBackdrop,
       generateDialogContainer,
       generateDialogContent
     } = useRenderPopup(props, show)
+
     const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
     const lang = getLanguage(props.language)
 
@@ -103,7 +109,7 @@ export default defineComponent({
         </div>
       )
 
-      const container = generateDialogContainer(body, { dialogZIndex }, closeDialog)
+      const container = generateDialogContainer(body, { dialogZIndex }, closeAlert)
       const backdrop = generateBackdrop({ backdropZIndex })
 
       return [backdrop, container]

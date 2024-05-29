@@ -1,4 +1,4 @@
-import { ref, nextTick, createVNode, render } from 'vue'
+import { ref, nextTick, createVNode, render, getCurrentInstance } from 'vue'
 
 import { DIALOG_KEY_PREFIX } from './constants'
 
@@ -8,27 +8,33 @@ const dialogs = ref([])
 export function mountDialog (component, options = {}) {
   const { index, key } = addDialog()
 
-  console.dir(options)
+  // console.dir(options)
 
-  const close = (callback, data) => {
-    callback && callback(data)
-    destroy()
-    closeDialog(key)
-  }
-
-  let dialog = createVNode(component, {
+  const props = {
     ...options,
     dialogKey: key,
     dialogIndex: index,
-    onClose: close
-  })
-  let el = document.body.appendChild(document.createElement('div'))
-  render(dialog, el)
+    onClose: (callback, data) => {
+      callback && callback(data)
+      destroy()
+      closeDialog(key)
+    }
+  }
+
+  // createVNode is the same as h
+  let dialog = createVNode(component, props)
+
+  const globalAppContext = getCurrentInstance()?.appContext ?? null
+  dialog.appContext = globalAppContext
+
+  // let root = document.body.appendChild(document.createElement('div'))
+  let root = document.createElement('div')
+  render(dialog, root)
 
   function destroy () {
-    render(null, el)
-    document.body.removeChild(el)
-    el = null
+    render(null, root)
+    // document.body.removeChild(root)
+    root = null
     dialog = null
   }
 
@@ -54,7 +60,7 @@ export function closeDialog (key) {
   // remove dialog by key
   dialogs.value = dialogs.value.filter(val => val.key !== key)
 
-  console.log(key)
+  // console.log(key)
 }
 
 export function closeAll (callback) {

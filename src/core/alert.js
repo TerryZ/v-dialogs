@@ -9,10 +9,12 @@ export function useAlert (props, emit) {
   const { show, dialogStyles, closeDialog } = useDialog(props, emit)
 
   const isConfirmType = props.messageType === MESSAGE_TYPE_CONFIRM
+
   function getShadowClass () {
-    if (!colorfulShadow || !colorfulShadowTypes.includes(messageType)) {
-      return ''
-    }
+    if (
+      !colorfulShadow ||
+      !colorfulShadowTypes.includes(messageType)
+    ) return ''
     return `v-dialog__shadow--${messageType?.toLowerCase()}`
   }
   function closeAlert () {

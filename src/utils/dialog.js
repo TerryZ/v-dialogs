@@ -68,7 +68,7 @@ export function useDialog (props, emit) {
   function closeDialog (callback, data) {
     show.value = false
 
-    setTimeout(() => emit('close', callback, data), 300)
+    setTimeout(() => emit('close', callback, data), 250)
   }
 
   useResizeAdjust(setDialogTop)

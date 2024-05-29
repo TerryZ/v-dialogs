@@ -1,4 +1,4 @@
-import { ref, h, vShow, withDirectives, Transition } from 'vue'
+import { ref, h, vShow, withDirectives, Transition, Teleport } from 'vue'
 
 import { outsideClick } from './dialog'
 
@@ -9,23 +9,25 @@ export function useRenderPopup (props, show) {
    */
   function generateBackdrop (options) {
     if (!props.backdrop) return
+    if (!show.value) return
 
-    const child = []
-    if (show.value) {
-      const backdropOption = {
-        class: 'v-dialog-overlay',
-        style: {
-          'z-index': options.backdropZIndex
-        }
+    const children = []
+    const backdropOption = {
+      class: 'v-dialog-overlay',
+      style: {
+        'z-index': options.backdropZIndex
       }
-      child.push(h('div', backdropOption))
     }
+    children.push(h('div', backdropOption))
 
     const transitionOption = {
       name: 'v-dialog--fade',
       appear: true
     }
-    return h(Transition, transitionOption, () => child)
+
+    return h(Teleport, { to: 'body' }, [
+      h(Transition, transitionOption, () => children)
+    ])
   }
   /**
    * Generate dialog content
@@ -65,7 +67,7 @@ export function useRenderPopup (props, show) {
         outsideClick(props, close, shaking)
       }
     }
-    return h('div', option, dialog)
+    return h(Teleport, { to: 'body' }, h('div', option, dialog))
   }
 
   return {
