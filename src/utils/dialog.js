@@ -33,35 +33,18 @@ export const commonProps = {
 
 export const commonEmits = ['close']
 
-export function outsideClick (props, close, shaking) {
-  if (!props.backdrop) return
-
-  if (props.backdropClose) {
-    close && close()
-    return
-  }
-
-  if (!props.shaking) return
-  // shake animation playing
-  if (shaking.value) return
-
-  // play shake animation
-  shaking.value = true
-  setTimeout(() => { shaking.value = false }, 750)
-}
-
 export function useDialog (props, emit) {
   const show = ref(false)
-  const dialogTop = ref(0)
+  const top = ref(0)
 
   const dialogStyles = computed(() => ({
     width: props.width + 'px',
     height: props.height + 'px',
-    top: dialogTop.value + 'px'
+    top: top.value + 'px'
   }))
 
   function setDialogTop (customSetDialogTop) {
-    dialogTop.value = customSetDialogTop
+    top.value = customSetDialogTop
       ? customSetDialogTop()
       : calculateDialogTop(props.height)
   }

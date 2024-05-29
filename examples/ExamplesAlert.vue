@@ -47,6 +47,13 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
+          @click="openOneAlert"
+        >
+          Open a Alert Dialog
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
           @click="openAlert"
         >
           Info
@@ -106,6 +113,9 @@ import { DialogAlert } from '@/'
 const icon = ref(true)
 const colorfulShadow = ref(true)
 
+function openOneAlert () {
+  DialogAlert('Hello, This is a <b>Alert Dialog</b>!')
+}
 function openAlert (type) {
   // const body = ref(document.body)
 

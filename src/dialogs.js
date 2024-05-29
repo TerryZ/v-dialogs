@@ -31,14 +31,14 @@ export function mountDialog (component, options = {}) {
   let root = document.createElement('div')
   render(dialog, root)
 
-  function destroy () {
+  const destroy = () => {
     render(null, root)
     // document.body.removeChild(root)
     root = null
     dialog = null
   }
 
-  return key
+  return { key, destroy }
 }
 
 export function addDialog () {

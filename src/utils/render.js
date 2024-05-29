@@ -1,24 +1,39 @@
-import { ref, h, vShow, withDirectives, Transition, Teleport } from 'vue'
-
-import { outsideClick } from './dialog'
+import { ref, h, Transition, Teleport } from 'vue'
 
 export function useRenderPopup (props, show) {
   const shaking = ref(false)
+
+  function outsideClick (close) {
+    if (!props.backdrop) return
+
+    if (props.backdropClose) return close && close()
+
+    if (!props.shaking) return
+    // shake animation playing
+    if (shaking.value) return
+
+    // play shake animation
+    shaking.value = true
+    setTimeout(() => { shaking.value = false }, 750)
+  }
+
   /**
    * Generate backdrop layer
    */
   function generateBackdrop (options) {
     if (!props.backdrop) return
-    if (!show.value) return
 
     const children = []
-    const backdropOption = {
-      class: 'v-dialog-overlay',
-      style: {
-        'z-index': options.backdropZIndex
+    // v-if by show
+    if (show.value) {
+      const backdropOption = {
+        class: 'v-dialog-overlay',
+        style: {
+          'z-index': options.backdropZIndex
+        }
       }
+      children.push(h('div', backdropOption))
     }
-    children.push(h('div', backdropOption))
 
     const transitionOption = {
       name: 'v-dialog--fade',
@@ -39,16 +54,14 @@ export function useRenderPopup (props, show) {
     const option = {
       class: [options.className, props.customClass]
     }
-    const content = withDirectives(
-      h('div', option, options.child),
-      [[vShow, show.value]]
-    )
 
     const transitionOption = {
       name: options.transitionName,
       appear: true
     }
-    return h(Transition, transitionOption, () => [content])
+    return h(Transition, transitionOption, () => {
+      return show.value && h('div', option, options.child)
+    })
   }
   /**
    * Generate dialog container
@@ -56,7 +69,7 @@ export function useRenderPopup (props, show) {
    * @param {VNode} dialog
    * @returns {VNode}
    */
-  function generateDialogContainer (dialog, options, close) {
+  function generateDialogContainer (dialog, options, closeDialog) {
     const option = {
       class: ['v-dialog', { 'v-dialog--buzz-out': shaking.value, ...options?.class }],
       style: {
@@ -64,7 +77,7 @@ export function useRenderPopup (props, show) {
       },
       onClick: e => {
         if (e.target !== e.currentTarget) return
-        outsideClick(props, close, shaking)
+        outsideClick(closeDialog)
       }
     }
     return h(Teleport, { to: 'body' }, h('div', option, dialog))
