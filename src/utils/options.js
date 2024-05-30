@@ -6,8 +6,7 @@ import {
   defaultModalOptions,
   defaultAlertOptions,
   defaultMaskOptions,
-  defaultToastOptions,
-  MESSAGE_TYPE_INFO
+  defaultToastOptions
 } from '../constants'
 import {
   getTitle,
@@ -46,21 +45,21 @@ export function argumentsParse (args) {
 }
 
 export function generateAlertOption () {
-  const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
+  const options = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
   // option.type = ALERT
   // const { messageType = MESSAGE_TYPE_INFO, icon } = option
-  const { messageType = MESSAGE_TYPE_INFO } = option
+  // const { messageType, language } = options
 
-  if (!Object.hasOwn(option, 'title')) {
-    option.title = getTitle(messageType, option.language)
-  }
+  // if (!Object.hasOwn(options, 'title')) {
+  //   options.title = getTitle(messageType, language)
+  // }
   // if (icon) {
   //   option.iconClassName = getAlertIcon(messageType)
   // }
-  const { width, height } = getAlertSize(option)
-  option.width = width
-  option.height = height
-  return option
+  const { width, height } = getAlertSize(options)
+  options.width = width
+  options.height = height
+  return options
 }
 
 export function generateModalOption (component, params) {

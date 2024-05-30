@@ -90,7 +90,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-5">
       <h5>Confirm alert</h5>
       <div class="">
         <button
@@ -99,6 +99,26 @@
           @click="openConfirmAlert"
         >
           Confirm
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <h5>Features</h5>
+      <div class="">
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="autoClose"
+        >
+          Auto close Alert dialog
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="customTitle"
+        >
+          Custom title
         </button>
       </div>
     </div>
@@ -117,17 +137,7 @@ function openOneAlert () {
   DialogAlert('Hello, This is a <b>Alert Dialog</b>!')
 }
 function openAlert (type) {
-  // const body = ref(document.body)
-
-  // const app = getInstance()
-  // console.log(app)
-
-  // console.dir(body.value)
-  // app.closeAll(() => {
-  //   console.log('close all')
-  // })
   DialogAlert('Hello, <b>world!</b>', () => {
-    // console.log('callback')
     DialogAlert('Dialog closed.')
   }, {
     icon: icon.value,
@@ -146,6 +156,16 @@ function openConfirmAlert () {
     cancelCallback () {
       DialogAlert('Confirm dialog canceled.')
     }
+  })
+}
+function autoClose () {
+  DialogAlert('Alert dialog will auto close in 3 second.', {
+    duration: 3000
+  })
+}
+function customTitle () {
+  DialogAlert('Hello', {
+    title: 'This is Alert Dialog'
   })
 }
 // function callMethod () {

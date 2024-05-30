@@ -5,11 +5,6 @@
     transform: rotate(0deg)
   100%
     transform: rotate(360deg)
-
-@-webkit-keyframes timerhand
-  +timerhand()
-@-moz-keyframes timerhand
-  +timerhand()
 @keyframes timerhand
   +timerhand()
 
@@ -22,10 +17,6 @@
     transform: scale(0.95)
   100%
     transform: scale(1)
-
-@-webkit-keyframes animated-dialog-open
-  +animated-dialog-open()
-
 @keyframes animated-dialog-open
   +animated-dialog-open()
 
@@ -46,7 +37,6 @@
   transform: scale(0.5) translate3d(0, 0, 0)
   opacity: 0
   transition: transform 200ms ease, opacity 200ms ease
-
 .v-dialog--smooth-enter-active,
 .v-dialog--smooth-leave-active
   will-change: transform, opacity
@@ -88,8 +78,6 @@
     +transform(-1px, 0)
 
 /* Buzz Out */
-@-webkit-keyframes animated-buzz-out
-  +buzz-out
 @keyframes animated-buzz-out
   +buzz-out
 
@@ -105,7 +93,6 @@
 
 @keyframes popIn
   0%
-    -webkit-transform: scale3d(0, 0, 0)
     transform: scale3d(0, 0, 0)
     opacity: 0
   20%

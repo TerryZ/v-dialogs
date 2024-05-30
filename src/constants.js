@@ -1,5 +1,7 @@
 import { EN } from './language'
 
+export const alertInjectionKey = Symbol('alert')
+
 export const DEFAULT_INSTANCE_NAME = '$dlg'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
 export const DIALOG_HEADER_CLASS = 'v-dialog-header'
@@ -51,7 +53,8 @@ export const [
 const defaultOptionsCore = {
   language: EN,
   customClass: undefined,
-  singletonKey: undefined
+  singletonKey: undefined,
+  duration: 0
 }
 
 export const defaultModalOptions = {
@@ -71,16 +74,14 @@ export const defaultAlertOptions = {
   ...defaultOptionsCore,
   messageType: MESSAGE_TYPE_INFO,
   icon: true,
-  shaking: true,
-  colorfulShadow: true,
-  closeTime: 0,
+  shaking: false,
+  colorfulShadow: false,
   cancelCallback: undefined
 }
 
 export const defaultMaskOptions = {
   ...defaultOptionsCore,
-  shaking: true,
-  closeTime: 0
+  shaking: true
 }
 
 export const defaultToastOptions = {
@@ -88,7 +89,6 @@ export const defaultToastOptions = {
   messageType: MESSAGE_TYPE_INFO,
   icon: true,
   closeButton: true,
-  closeTime: 0,
   position: 'bottomRight'
 }
 

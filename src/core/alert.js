@@ -1,14 +1,9 @@
-import {
-  MESSAGE_TYPE_CONFIRM,
-  colorfulShadowTypes
-} from '../constants'
+import { colorfulShadowTypes } from '../constants'
 import { useDialog } from '../utils/dialog'
 
 export function useAlert (props, emit) {
   const { messageType, colorfulShadow } = props
   const { show, dialogStyles, closeDialog } = useDialog(props, emit)
-
-  const isConfirmType = props.messageType === MESSAGE_TYPE_CONFIRM
 
   function getShadowClass () {
     if (
@@ -29,7 +24,6 @@ export function useAlert (props, emit) {
     dialogStyles,
     closeDialog,
     getShadowClass,
-    isConfirmType,
     closeAlert,
     cancelAlert
   }

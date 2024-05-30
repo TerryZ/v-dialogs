@@ -1,6 +1,6 @@
 import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
+
 import { calculateDialogTop } from './helper'
-// import { closeDialog } from '../dialogs'
 import { EN } from '../language'
 
 export const commonProps = {
@@ -22,11 +22,11 @@ export const commonProps = {
   /** Dialog height */
   height: { type: Number, default: 0 },
   /**
-   * auto close dialog seconds
-   * - 0: no automatic close
-   * - number of seconds: specify seconds to automatic close dialog
+   * Auto close dialog milliseconds
+   * - 0: disabled automatic close
+   * - number of milliseconds: specify times to automatic close dialog
    */
-  closeTime: { type: Number, default: 0 },
+  duration: { type: Number, default: 0 },
   language: { type: String, default: EN },
   callback: { type: Function, default: undefined }
 }
@@ -72,10 +72,15 @@ export function useDialog (props, emit) {
   }
 }
 
+/**
+ * Automatically close dialog at a specified time
+ * @param {object} props
+ * @param {function} close
+ */
 export function useAutomaticClose (props, close) {
-  if (!props.closeTime) return
+  if (!props.duration) return
 
-  setTimeout(close, props.closeTime * 1000)
+  setTimeout(close, props.duration)
 }
 
 export function useResizeAdjust (callback, wait = 500) {

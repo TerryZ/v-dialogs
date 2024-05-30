@@ -1,37 +1,40 @@
-import { h } from 'vue'
+import { h, inject } from 'vue'
+
+import { alertInjectionKey } from '../../constants'
 import { getAlertIcon, getAlertClass } from '../../utils/helper'
 
 export default {
   name: 'DialogAlertBody',
-  props: {
-    icon: { type: Boolean, default: true },
-    height: { type: Number, default: undefined },
-    message: { type: String, default: '' },
-    messageType: { type: String, default: '' }
-  },
-  setup (props) {
-    const classes = ['v-dialog-body', 'v-dialog-alert']
+  setup () {
+    const {
+      icon,
+      message,
+      messageType,
+      bodyHeight
+    } = inject(alertInjectionKey)
 
-    classes.push(getAlertClass(props.messageType))
+    const classes = [
+      'v-dialog-body',
+      'v-dialog-alert',
+      getAlertClass(messageType)
+    ]
 
-    if (!props.icon) {
-      classes.push('no-icon')
-    }
+    icon || classes.push('no-icon')
 
     return () => (
       <div
         class={classes}
-        style={{ height: props.height + 'px' }}
+        style={{ height: bodyHeight.value + 'px' }}
       >
         <div class='v-dialog-alert__content'>
-          {props.icon && (
+          {icon && (
             <div class='v-dialog-alert__icon'>
-              { h(getAlertIcon(props.messageType)) }
+              { h(getAlertIcon(messageType)) }
             </div>
           )}
           <div
             class='v-dialog-alert__message'
-            v-html={props.message}
+            v-html={message}
           />
         </div>
       </div>

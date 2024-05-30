@@ -1,14 +1,19 @@
 import { ref, inject, onMounted } from 'vue'
 
+import { alertInjectionKey } from '../../constants'
+import { isConfirmType } from '../../core/helper'
+
 export default {
   name: 'DialogAlertFooter',
-  setup (props) {
+  setup () {
     const btnOk = ref()
 
-    const lang = inject('lang')
-    const isConfirmType = inject('isConfirmType')
-    const closeAlert = inject('closeAlert')
-    const cancelAlert = inject('cancelAlert')
+    const {
+      messageType,
+      lang,
+      closeAlert,
+      cancelAlert
+    } = inject(alertInjectionKey)
 
     onMounted(() => {
       // set the default focus on the OK button
@@ -27,7 +32,7 @@ export default {
             onClick={closeAlert}
           >{lang.btnOk}</button>
 
-          {isConfirmType && (
+          {isConfirmType(messageType) && (
             <button
               type='button'
               class='v-dialog-btn__cancel'
