@@ -1,14 +1,12 @@
 /* css animate */
 
-=timerhand()
+@keyframes timerhand
   0%
     transform: rotate(0deg)
   100%
     transform: rotate(360deg)
-@keyframes timerhand
-  +timerhand()
 
-=animated-dialog-open()
+@keyframes animated-dialog-open
   0%
     transform: scale(0.7)
   45%
@@ -17,8 +15,6 @@
     transform: scale(0.95)
   100%
     transform: scale(1)
-@keyframes animated-dialog-open
-  +animated-dialog-open()
 
 /* modal, alert, mask show up animated */
 .v-dialog--candy-enter-active
@@ -55,7 +51,8 @@
 =transform($tx: 3px, $rt: 2deg)
   transform: translateX($tx) rotate($rt)
 
-=buzz-out()
+/* Buzz Out */
+@keyframes animated-buzz-out
   10%
     +transform()
   20%
@@ -76,10 +73,6 @@
     +transform(1px, 0)
   100%
     +transform(-1px, 0)
-
-/* Buzz Out */
-@keyframes animated-buzz-out
-  +buzz-out
 
 /*.vDialog.vDialogBuzzOut div.v-dialog-content */
 .v-dialog--buzz-out div.v-dialog-content

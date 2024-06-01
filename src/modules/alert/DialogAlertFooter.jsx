@@ -11,7 +11,7 @@ export default {
     const {
       messageType,
       lang,
-      closeAlert,
+      closeDialogWithCallback,
       cancelAlert
     } = inject(alertInjectionKey)
 
@@ -29,7 +29,7 @@ export default {
             type='button'
             class='v-dialog-btn__ok'
             ref={btnOk}
-            onClick={closeAlert}
+            onClick={closeDialogWithCallback}
           >{lang.btnOk}</button>
 
           {isConfirmType(messageType) && (

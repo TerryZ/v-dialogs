@@ -21,6 +21,7 @@ export const commonProps = {
   width: { type: Number, default: 0 },
   /** Dialog height */
   height: { type: Number, default: 0 },
+  shake: { type: Boolean, default: false },
   /**
    * Auto close dialog milliseconds
    * - 0: disabled automatic close
@@ -36,22 +37,31 @@ export const commonEmits = ['close']
 export function useDialog (props, emit) {
   const show = ref(false)
   const top = ref(0)
+  const width = ref(0)
+  const height = ref(0)
 
   const dialogStyles = computed(() => ({
-    width: props.width + 'px',
-    height: props.height + 'px',
+    width: width.value + 'px',
+    height: height.value + 'px',
     top: top.value + 'px'
   }))
 
+  function setDialogSize (theWidth, theHeight) {
+    width.value = theWidth
+    height.value = theHeight
+  }
   function setDialogTop (customSetDialogTop) {
     top.value = customSetDialogTop
       ? customSetDialogTop()
-      : calculateDialogTop(props.height)
+      : calculateDialogTop(height.value)
   }
   function closeDialog (callback, data) {
     show.value = false
 
     setTimeout(() => emit('close', callback, data), 250)
+  }
+  function closeDialogWithCallback () {
+    closeDialog(props.callback)
   }
 
   useResizeAdjust(setDialogTop)
@@ -61,12 +71,14 @@ export function useDialog (props, emit) {
   })
 
   onMounted(() => {
-    useAutomaticClose(props, () => closeDialog(props.dialogKey))
+    useAutomaticClose(props, closeDialogWithCallback)
   })
 
   return {
     show,
+    setDialogSize,
     closeDialog,
+    closeDialogWithCallback,
     dialogStyles,
     setDialogTop
   }

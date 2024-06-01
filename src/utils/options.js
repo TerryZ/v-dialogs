@@ -17,45 +17,40 @@ import {
 } from './helper'
 
 /**
- * Arguments identification and parse to dialog option
+ * Parse multiple parameters to one options
  * @param {any[]} args - arguments
  *
- * @example alert type dialog
+ * @example
  *
- * this.$dlg.alert(message)
- * this.$dlg.alert(message, callback)
- * this.$dlg.alert(message, options)
- * this.$dlg.alert(message, callback, options)
+ * DialogAlert(message)
+ * DialogAlert(message, callback)
+ * DialogAlert(message, options)
+ * DialogAlert(message, callback, options)
+ * DialogAlert(message, options, callback)
+ *
+ * @returns {object}
  */
-export function argumentsParse (args) {
-  let params = {}
-
-  if (args.length === 3 && typeof args[2] === 'object') {
-    params = args[2]
-  }
-  if (args.length === 2 && typeof args[1] === 'object') {
-    params = args[1]
-  }
-  if (typeof args[1] === 'function') {
-    params.callback = args[1]
+export function parseArguments (param1, param2, param3) {
+  if (
+    (typeof param2 === 'object' && typeof param3 === 'object') ||
+    (typeof param2 === 'function' && typeof param3 === 'function')
+  ) {
+    console.warn('Invalid parameters for v-dialogs')
+    return
   }
 
-  params.message = typeof args[0] === 'string' ? args[0] : ''
-  return params
+  const params = Array.from(arguments)
+
+  const options = params.find(val => typeof val === 'object') || {}
+  options.message = params.find(val => typeof val === 'string') || ''
+  options.callback = params.find(val => typeof val === 'function')
+
+  return options
 }
 
 export function generateAlertOption () {
-  const options = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
-  // option.type = ALERT
-  // const { messageType = MESSAGE_TYPE_INFO, icon } = option
-  // const { messageType, language } = options
+  const options = Object.assign({}, defaultAlertOptions, parseArguments(...arguments))
 
-  // if (!Object.hasOwn(options, 'title')) {
-  //   options.title = getTitle(messageType, language)
-  // }
-  // if (icon) {
-  //   option.iconClassName = getAlertIcon(messageType)
-  // }
   const { width, height } = getAlertSize(options)
   options.width = width
   options.height = height
@@ -70,7 +65,7 @@ export function generateModalOption (component, params) {
 }
 
 export function generateToastOption () {
-  const option = Object.assign({}, defaultToastOptions, argumentsParse(arguments))
+  const option = Object.assign({}, defaultToastOptions, parseArguments(arguments))
   const { messageType, icon } = option
   option.type = TOAST
   option.width = 300
@@ -86,7 +81,7 @@ export function generateToastOption () {
 }
 
 export function generateMaskOption () {
-  const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
+  const option = Object.assign({}, defaultMaskOptions, parseArguments(arguments))
 
   option.message = option.message || getLanguage(option.language).maskText
   option.width = 300

@@ -5,13 +5,12 @@ import { ref, nextTick, onMounted, defineComponent, provide } from 'vue'
 import DialogAlertHeader from './DialogAlertHeader'
 import DialogAlertBody from './DialogAlertBody'
 import DialogAlertFooter from './DialogAlertFooter'
+import DialogContainer from '../DialogContainer'
 
 import { MESSAGE_TYPE_INFO, alertInjectionKey } from '../../constants'
 import { getLanguage, calculateDialogZIndex } from '../../utils/helper'
-import { commonEmits } from '../../utils/dialog'
-import { useRenderPopup } from '../../utils/render'
 import { useAlert } from '../../core/alert'
-import { mergeDialogProps } from '../../core/helper'
+import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
 export default defineComponent({
   name: 'DialogAlert',
@@ -26,26 +25,20 @@ export default defineComponent({
      * - `confirm`
      */
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
-    colorfulShadow: { type: Boolean, default: true },
-    shaking: { type: Boolean, default: true },
+    colorfulShadow: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     cancelCallback: { type: Function, default: undefined }
   }),
-  emits: commonEmits,
+  emits: mergeDialogEmits(),
   setup (props, { emit }) {
     const {
       show,
-      closeAlert,
+      height,
+      closeDialogWithCallback,
       cancelAlert,
       dialogStyles,
       getShadowClass
     } = useAlert(props, emit)
-
-    const {
-      generateBackdrop,
-      generateDialogContainer,
-      generateDialogContent
-    } = useRenderPopup(props, show)
 
     const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
     const lang = getLanguage(props.language)
@@ -56,21 +49,15 @@ export default defineComponent({
 
     provide(alertInjectionKey, {
       ...props,
+      show,
       lang,
-      closeAlert,
+      closeDialogWithCallback,
       cancelAlert,
-      bodyHeight
+      dialogStyles,
+      bodyHeight,
+      dialogZIndex,
+      backdropZIndex
     })
-
-    function generateHeader () {
-      return props.header && <DialogAlertHeader ref={header} />
-    }
-    function generateFooter () {
-      return <DialogAlertFooter ref={footer} />
-    }
-    function generateBody () {
-      return <DialogAlertBody />
-    }
 
     onMounted(() => {
       show.value = true
@@ -79,25 +66,19 @@ export default defineComponent({
         const headerHeight = header.value?.$el.offsetHeight || 0
         const footerHeight = footer.value?.$el.offsetHeight || 0
 
-        bodyHeight.value = props.height - headerHeight - footerHeight
+        bodyHeight.value = height - headerHeight - footerHeight
       })
     })
 
-    return () => {
-      const body = (
-        <div class='v-dialog-dialog' style={dialogStyles.value}>
-          {generateDialogContent({
-            className: ['v-dialog-content', getShadowClass()],
-            transitionName: 'v-dialog--candy',
-            child: [generateHeader(), generateBody(), generateFooter()]
-          })}
-        </div>
-      )
-
-      const backdrop = generateBackdrop({ backdropZIndex })
-      const container = generateDialogContainer(body, { dialogZIndex }, closeAlert)
-
-      return [backdrop, container]
-    }
+    return () => (
+      <DialogContainer
+        className={['v-dialog-content', getShadowClass()]}
+        transitionName='v-dialog--candy'
+      >
+        {props.header && <DialogAlertHeader ref={header} />}
+        <DialogAlertBody />
+        <DialogAlertFooter ref={footer} />
+      </DialogContainer>
+    )
   }
 })
