@@ -54,12 +54,13 @@ const defaultOptionsCore = {
   language: EN,
   customClass: undefined,
   singletonKey: undefined,
-  duration: 0
+  duration: 0,
+  shake: false
 }
 
 export const defaultModalOptions = {
   ...defaultOptionsCore,
-  shaking: true,
+  shake: true,
   title: 'Dialog',
   width: MODAL_WIDTH,
   height: MODAL_HEIGHT,
@@ -74,14 +75,13 @@ export const defaultAlertOptions = {
   ...defaultOptionsCore,
   messageType: MESSAGE_TYPE_INFO,
   icon: true,
-  shaking: false,
   colorfulShadow: false,
   cancelCallback: undefined
 }
 
 export const defaultMaskOptions = {
   ...defaultOptionsCore,
-  shaking: true
+  shake: true
 }
 
 export const defaultToastOptions = {
