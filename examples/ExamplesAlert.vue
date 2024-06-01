@@ -120,14 +120,20 @@
         >
           Custom title
         </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="backdropClose"
+        >
+          Backdrop close
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-// import { getInstance } from '@/utils/instance'
+import { ref } from 'vue'
 import { DialogAlert } from '@/'
 
 const icon = ref(true)
@@ -168,37 +174,9 @@ function customTitle () {
     title: 'This is Alert Dialog'
   })
 }
-// function callMethod () {
-// const dialogs = ref(document.querySelector('.v-dialogs-container'))
-// console.dir(dialogs.value)
-// const root = document.querySelector('#v-dialogs-container')
-// const root = ref(document.querySelector('#v-dialogs-container'))
-// console.dir(root.value)
-// root.value.closeAll(() => {
-//   console.log('close all')
-// })
-
-// const instance = document.querySelector('.v-dialogs-container')._instance
-// instance.closeAll(() => {
-//   console.log('close all')
-// })
-// console.dir(DialogHelper)
-// }
-
-onMounted(() => {
-  // const app = getInstance()
-  // console.log(app)
-  // app.closeAll(() => {
-  //   console.log('close all')
-  // })
-
-  // console.dir(document.querySelector('.v-dialogs-container'))
-
-  // const instance = document.querySelector('.v-dialogs-container').__vueParentComponent
-  // // const instance = document.querySelector('.v-dialogs-container').__vnode
-  // console.dir(instance)
-  // instance.exposed.closeAll(() => {
-  //   console.log('close all')
-  // })
-})
+function backdropClose () {
+  DialogAlert('Hello', {
+    backdropClose: true
+  })
+}
 </script>

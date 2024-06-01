@@ -12,7 +12,7 @@ export function mergeDialogProps (props) {
   return { ...commonProps, ...props }
 }
 
-export function mergeDialogEmits (emits) {
+export function mergeDialogEmits (emits = []) {
   return [...commonEmits, ...emits]
 }
 

@@ -39,6 +39,8 @@ export function useDialog (props, emit) {
   const top = ref(0)
   const width = ref(0)
   const height = ref(0)
+  // Dialog displayed and the animation is complete
+  const dialogReady = ref(false)
 
   const dialogStyles = computed(() => ({
     width: width.value + 'px',
@@ -56,6 +58,8 @@ export function useDialog (props, emit) {
       : calculateDialogTop(height.value)
   }
   function closeDialog (callback, data) {
+    if (!dialogReady.value) return
+
     show.value = false
 
     setTimeout(() => emit('close', callback, data), 250)
@@ -71,6 +75,9 @@ export function useDialog (props, emit) {
   })
 
   onMounted(() => {
+    setTimeout(() => {
+      dialogReady.value = true
+    }, 300)
     useAutomaticClose(props, closeDialogWithCallback)
   })
 
