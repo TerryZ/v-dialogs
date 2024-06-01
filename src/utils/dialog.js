@@ -1,6 +1,7 @@
 import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 
-import { calculateDialogTop } from './helper'
+import { calculateDialogTop, calculateDialogZIndex } from './helper'
+import { EMIT_NAME_CLOSE } from '../constants'
 import { EN } from '../language'
 
 export const commonProps = {
@@ -32,7 +33,7 @@ export const commonProps = {
   callback: { type: Function, default: undefined }
 }
 
-export const commonEmits = ['close']
+export const commonEmits = [EMIT_NAME_CLOSE]
 
 export function useDialog (props, emit) {
   const show = ref(false)
@@ -41,6 +42,8 @@ export function useDialog (props, emit) {
   const height = ref(0)
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)
+
+  const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
 
   const dialogStyles = computed(() => ({
     width: width.value + 'px',
@@ -62,7 +65,7 @@ export function useDialog (props, emit) {
 
     show.value = false
 
-    setTimeout(() => emit('close', callback, data), 250)
+    setTimeout(() => emit(EMIT_NAME_CLOSE, callback, data), 250)
   }
   function closeDialogWithCallback () {
     closeDialog(props.callback)
@@ -75,14 +78,14 @@ export function useDialog (props, emit) {
   })
 
   onMounted(() => {
-    setTimeout(() => {
-      dialogReady.value = true
-    }, 300)
+    setTimeout(() => { dialogReady.value = true }, 300)
     useAutomaticClose(props, closeDialogWithCallback)
   })
 
   return {
     show,
+    dialogZIndex,
+    backdropZIndex,
     setDialogSize,
     closeDialog,
     closeDialogWithCallback,

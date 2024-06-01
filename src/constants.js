@@ -1,6 +1,7 @@
 import { EN } from './language'
 
 export const alertInjectionKey = Symbol('alert')
+export const modalInjectionKey = Symbol('modal')
 
 export const DEFAULT_INSTANCE_NAME = '$dlg'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
@@ -35,6 +36,8 @@ export const MESSAGE_TYPE_WARNING = 'warning'
 export const MESSAGE_TYPE_ERROR = 'error'
 export const MESSAGE_TYPE_SUCCESS = 'success'
 export const MESSAGE_TYPE_CONFIRM = 'confirm'
+
+export const EMIT_NAME_CLOSE = 'close'
 
 export const colorfulShadowTypes = [
   MESSAGE_TYPE_WARNING,

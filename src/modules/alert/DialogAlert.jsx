@@ -8,7 +8,7 @@ import DialogAlertFooter from './DialogAlertFooter'
 import DialogContainer from '../DialogContainer'
 
 import { MESSAGE_TYPE_INFO, alertInjectionKey } from '../../constants'
-import { getLanguage, calculateDialogZIndex } from '../../utils/helper'
+import { getLanguage } from '../../utils/helper'
 import { useAlert } from '../../core/alert'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
@@ -34,13 +34,10 @@ export default defineComponent({
     const {
       show,
       height,
-      closeDialogWithCallback,
-      cancelAlert,
-      dialogStyles,
-      getShadowClass
+      getShadowClass,
+      ...restItems
     } = useAlert(props, emit)
 
-    const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
     const lang = getLanguage(props.language)
 
     const header = ref()
@@ -49,14 +46,10 @@ export default defineComponent({
 
     provide(alertInjectionKey, {
       ...props,
+      ...restItems,
       show,
       lang,
-      closeDialogWithCallback,
-      cancelAlert,
-      dialogStyles,
-      bodyHeight,
-      dialogZIndex,
-      backdropZIndex
+      bodyHeight
     })
 
     onMounted(() => {

@@ -17,11 +17,9 @@ import TheDialogAlert from '../modules/alert/DialogAlert'
 export function useAlert (props, emit) {
   const { messageType, colorfulShadow } = props
   const {
-    show,
     setDialogSize,
-    dialogStyles,
     closeDialog,
-    closeDialogWithCallback
+    ...restItems
   } = useDialog(props, emit)
   const { width, height } = getAlertSize(props)
 
@@ -42,13 +40,11 @@ export function useAlert (props, emit) {
   }
 
   return {
-    show,
+    ...restItems,
     width,
     height,
-    dialogStyles,
     closeDialog,
     getShadowClass,
-    closeDialogWithCallback,
     cancelAlert
   }
 }
