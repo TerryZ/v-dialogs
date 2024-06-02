@@ -12,7 +12,8 @@ import { instanceApi, DialogHelper } from './utils/instance'
 //   DialogHelper
 // } from './utils/instance'
 export { DialogAlert } from './core/alert'
-export { DialogModal, DialogMask } from './utils/instance'
+export { DialogModal } from './core/modal'
+export { DialogMask } from './utils/instance'
 export { DialogHelper }
 
 export default {

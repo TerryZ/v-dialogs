@@ -23,7 +23,6 @@ export function createDialog (component, options = {}) {
     onClose: (callback, data) => {
       callback && callback(data)
       destroy()
-      closeDialog(key)
     }
   }
 
@@ -42,9 +41,10 @@ export function createDialog (component, options = {}) {
     // document.body.removeChild(root)
     root = null
     dialog = null
+    closeDialog(key)
   }
 
-  return { key, destroy }
+  return destroy
 }
 
 export function addDialog () {

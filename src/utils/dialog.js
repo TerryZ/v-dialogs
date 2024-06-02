@@ -40,6 +40,7 @@ export function useDialog (props, emit) {
   const top = ref(0)
   const width = ref(0)
   const height = ref(0)
+  const bodyHeight = ref(0)
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)
 
@@ -55,9 +56,9 @@ export function useDialog (props, emit) {
     width.value = theWidth
     height.value = theHeight
   }
-  function setDialogTop (customSetDialogTop) {
-    top.value = customSetDialogTop
-      ? customSetDialogTop()
+  function setDialogTop (topValue) {
+    top.value = typeof topValue === 'number'
+      ? topValue
       : calculateDialogTop(height.value)
   }
   function closeDialog (callback, data) {
@@ -67,8 +68,11 @@ export function useDialog (props, emit) {
 
     setTimeout(() => emit(EMIT_NAME_CLOSE, callback, data), 250)
   }
-  function closeDialogWithCallback () {
-    closeDialog(props.callback)
+  function closeDialogWithCallback (data) {
+    closeDialog(props.callback, data)
+  }
+  function closeDialogWithoutCallback () {
+    closeDialog()
   }
 
   useResizeAdjust(setDialogTop)
@@ -84,11 +88,13 @@ export function useDialog (props, emit) {
 
   return {
     show,
+    bodyHeight,
     dialogZIndex,
     backdropZIndex,
     setDialogSize,
     closeDialog,
     closeDialogWithCallback,
+    closeDialogWithoutCallback,
     dialogStyles,
     setDialogTop
   }

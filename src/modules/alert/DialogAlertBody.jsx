@@ -1,6 +1,6 @@
 import { h, inject } from 'vue'
 
-import { alertInjectionKey } from '../../constants'
+import { propsInjectionKey } from '../../constants'
 import { getAlertIcon, getAlertClass } from '../../utils/helper'
 
 export default {
@@ -11,7 +11,7 @@ export default {
       message,
       messageType,
       bodyHeight
-    } = inject(alertInjectionKey)
+    } = inject(propsInjectionKey)
 
     const classes = [
       'v-dialog-body',

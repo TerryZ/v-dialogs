@@ -1,7 +1,8 @@
 import { EN } from './language'
 
-export const alertInjectionKey = Symbol('alert')
-export const modalInjectionKey = Symbol('modal')
+// export const alertInjectionKey = Symbol('alert')
+// export const modalInjectionKey = Symbol('modal')
+export const propsInjectionKey = Symbol('props')
 
 export const DEFAULT_INSTANCE_NAME = '$dlg'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
@@ -30,6 +31,8 @@ export const TOAST_ICON_ERROR = 'dlg-icon-toast--error'
 
 export const MODAL_WIDTH = 700
 export const MODAL_HEIGHT = 400
+export const MODAL_MIN_WIDTH = 300
+export const MODAL_MIN_HEIGHT = 100
 
 export const MESSAGE_TYPE_INFO = 'info'
 export const MESSAGE_TYPE_WARNING = 'warning'

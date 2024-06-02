@@ -7,8 +7,7 @@ import DialogAlertBody from './DialogAlertBody'
 import DialogAlertFooter from './DialogAlertFooter'
 import DialogContainer from '../DialogContainer'
 
-import { MESSAGE_TYPE_INFO, alertInjectionKey } from '../../constants'
-import { getLanguage } from '../../utils/helper'
+import { MESSAGE_TYPE_INFO, propsInjectionKey } from '../../constants'
 import { useAlert } from '../../core/alert'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
@@ -33,33 +32,25 @@ export default defineComponent({
   setup (props, { emit }) {
     const {
       show,
-      height,
       getShadowClass,
+      setBodyHeight,
       ...restItems
     } = useAlert(props, emit)
 
-    const lang = getLanguage(props.language)
-
     const header = ref()
     const footer = ref()
-    const bodyHeight = ref(0)
 
-    provide(alertInjectionKey, {
+    provide(propsInjectionKey, {
       ...props,
       ...restItems,
-      show,
-      lang,
-      bodyHeight
+      show
     })
 
     onMounted(() => {
       show.value = true
 
       nextTick(() => {
-        const headerHeight = header.value?.$el.offsetHeight || 0
-        const footerHeight = footer.value?.$el.offsetHeight || 0
-
-        bodyHeight.value = height - headerHeight - footerHeight
+        setBodyHeight(header, footer)
       })
     })
 

@@ -1,13 +1,13 @@
 import { inject } from 'vue'
 
-import { alertInjectionKey } from '../../constants'
+import { propsInjectionKey } from '../../constants'
 import { textTruncate } from '../../utils/helper'
 import { getDefaultTitle } from '../../core/helper'
 
 export default {
   name: 'DialogAlertHeader',
   setup () {
-    const { title, lang } = inject(alertInjectionKey)
+    const { title, lang } = inject(propsInjectionKey)
 
     const text = title || getDefaultTitle(title, lang)
 

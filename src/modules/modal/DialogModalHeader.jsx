@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import { modalInjectionKey, DIALOG_HEADER_CLASS } from '../../constants'
+import { propsInjectionKey, DIALOG_HEADER_CLASS } from '../../constants'
 
 import IconClose from '../../icons/IconClose.vue'
 import IconMaximize from '../../icons/IconMaximize.vue'
@@ -12,8 +12,9 @@ export default {
       maximize,
       title,
       closeButton,
-      closeDialogWithCallback
-    } = inject(modalInjectionKey)
+      switchMaximize,
+      closeDialogWithoutCallback
+    } = inject(propsInjectionKey)
 
     return () => (
       <div class={DIALOG_HEADER_CLASS}>
@@ -22,7 +23,7 @@ export default {
           <button
             type='button'
             class='v-dialog-btn__maximize'
-            onClick={maximizeModal}
+            onClick={switchMaximize}
           >
             {maximize.value ? <IconRestore /> : <IconMaximize />}
           </button>
@@ -31,7 +32,7 @@ export default {
           <button
             type='button'
             class='v-dialog-btn__close'
-            onClick={closeDialogWithCallback}
+            onClick={closeDialogWithoutCallback}
           >
             <IconClose />
           </button>

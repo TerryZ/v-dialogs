@@ -108,7 +108,7 @@ function openModal (params) {
 function base () {
   openModal({
     width: 500,
-    height: 620,
+    height: 320,
     customClass: 'rounded-0',
     callback: data => {
       console.log(data)

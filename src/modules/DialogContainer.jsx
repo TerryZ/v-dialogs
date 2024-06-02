@@ -1,6 +1,6 @@
 import { ref, Transition, Teleport, inject } from 'vue'
 
-import { alertInjectionKey } from '../constants'
+import { propsInjectionKey } from '../constants'
 
 export default {
   name: 'DialogContainer',
@@ -20,7 +20,7 @@ export default {
       dialogStyles,
       dialogZIndex,
       backdropZIndex
-    } = inject(alertInjectionKey)
+    } = inject(propsInjectionKey)
 
     const shaking = ref(false)
 

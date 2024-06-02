@@ -1,6 +1,6 @@
 import { ref, inject, onMounted } from 'vue'
 
-import { alertInjectionKey } from '../../constants'
+import { propsInjectionKey } from '../../constants'
 import { isConfirmType } from '../../core/helper'
 
 export default {
@@ -13,7 +13,7 @@ export default {
       lang,
       closeDialogWithCallback,
       cancelAlert
-    } = inject(alertInjectionKey)
+    } = inject(propsInjectionKey)
 
     onMounted(() => {
       // set the default focus on the OK button
