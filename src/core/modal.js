@@ -12,9 +12,8 @@ import { useDialog } from '../utils/dialog'
 
 import TheDialogModal from '../modules/modal/DialogModal'
 
-export function useModal (props, emit, header) {
+export function useModal (props, emit) {
   const {
-    bodyHeight,
     setDialogTop,
     setDialogSize,
     ...restItems
@@ -32,22 +31,13 @@ export function useModal (props, emit, header) {
   function switchMaximize () {
     maximize.value = !maximize.value
 
-    setBodyHeight()
-  }
-  function setBodyHeight () {
-    const headerHeight = header.value?.$el.offsetHeight || 0
-    const dialogHeight = maximize.value ? window.innerHeight : height
-
-    bodyHeight.value = dialogHeight - headerHeight
     setModalTop()
   }
 
   return {
     ...restItems,
     maximize,
-    bodyHeight,
     setModalTop,
-    setBodyHeight,
     switchMaximize
   }
 }

@@ -1,6 +1,6 @@
 import '../../styles/alert.sass'
 
-import { ref, nextTick, onMounted, defineComponent, provide } from 'vue'
+import { onMounted, defineComponent, provide } from 'vue'
 
 import DialogAlertHeader from './DialogAlertHeader'
 import DialogAlertBody from './DialogAlertBody'
@@ -33,12 +33,8 @@ export default defineComponent({
     const {
       show,
       getShadowClass,
-      setBodyHeight,
       ...restItems
     } = useAlert(props, emit)
-
-    const header = ref()
-    const footer = ref()
 
     provide(propsInjectionKey, {
       ...props,
@@ -48,20 +44,16 @@ export default defineComponent({
 
     onMounted(() => {
       show.value = true
-
-      nextTick(() => {
-        setBodyHeight(header, footer)
-      })
     })
 
     return () => (
       <DialogContainer
-        className={['v-dialog-content', getShadowClass()]}
+        contentClass={['v-dialog-content', getShadowClass()]}
         transitionName='v-dialog--candy'
       >
-        {props.header && <DialogAlertHeader ref={header} />}
+        {props.header && <DialogAlertHeader />}
         <DialogAlertBody />
-        <DialogAlertFooter ref={footer} />
+        <DialogAlertFooter />
       </DialogContainer>
     )
   }

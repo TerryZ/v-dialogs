@@ -18,7 +18,6 @@ import TheDialogAlert from '../modules/alert/DialogAlert'
 export function useAlert (props, emit) {
   const { messageType, colorfulShadow } = props
   const {
-    bodyHeight,
     setDialogSize,
     closeDialog,
     ...restItems
@@ -39,23 +38,15 @@ export function useAlert (props, emit) {
   function cancelAlert () {
     closeDialog(props.cancelCallback)
   }
-  function setBodyHeight (header, footer) {
-    const headerHeight = header.value?.$el.offsetHeight || 0
-    const footerHeight = footer.value?.$el.offsetHeight || 0
-
-    bodyHeight.value = height - headerHeight - footerHeight
-  }
 
   return {
     ...restItems,
     lang,
     width,
     height,
-    bodyHeight,
     closeDialog,
     cancelAlert,
-    getShadowClass,
-    setBodyHeight
+    getShadowClass
   }
 }
 

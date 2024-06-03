@@ -6,32 +6,21 @@ export default {
     const {
       component,
       params,
-      closeDialogWithCallback,
-      bodyHeight
+      closeDialogWithCallback
     } = inject(propsInjectionKey)
 
     function getModalContent () {
       // use slot content first
-      if (slots.default) {
-        return slots.default()
-      }
-      if (!component) return
+      if (slots.default) return slots.default()
       // Dynamic component
+      if (!component) return
+
       const options = {
         onClose: data => closeDialogWithCallback(data)
       }
       return h(component, mergeProps(params, options))
     }
 
-    return () => (
-      <div
-        class='v-dialog-body'
-        style={{
-          height: bodyHeight.value + 'px'
-        }}
-      >
-        {getModalContent()}
-      </div>
-    )
+    return () => <div class='v-dialog-body'>{getModalContent()}</div>
   }
 }

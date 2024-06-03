@@ -9,8 +9,7 @@ export default {
     const {
       icon,
       message,
-      messageType,
-      bodyHeight
+      messageType
     } = inject(propsInjectionKey)
 
     const classes = [
@@ -22,10 +21,7 @@ export default {
     icon || classes.push('no-icon')
 
     return () => (
-      <div
-        class={classes}
-        style={{ height: bodyHeight.value + 'px' }}
-      >
+      <div class={classes} >
         <div class='v-dialog-alert__content'>
           {icon && (
             <div class='v-dialog-alert__icon'>

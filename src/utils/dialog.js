@@ -40,16 +40,20 @@ export function useDialog (props, emit) {
   const top = ref(0)
   const width = ref(0)
   const height = ref(0)
-  const bodyHeight = ref(0)
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)
 
   const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
 
+  // the style v-dialog-dialog used
   const dialogStyles = computed(() => ({
     width: width.value + 'px',
     height: height.value + 'px',
     top: top.value + 'px'
+  }))
+  // the style v-dialog-content used
+  const contentStyles = computed(() => ({
+    height: height.value + 'px'
   }))
 
   function setDialogSize (theWidth, theHeight) {
@@ -88,7 +92,6 @@ export function useDialog (props, emit) {
 
   return {
     show,
-    bodyHeight,
     dialogZIndex,
     backdropZIndex,
     setDialogSize,
@@ -96,6 +99,7 @@ export function useDialog (props, emit) {
     closeDialogWithCallback,
     closeDialogWithoutCallback,
     dialogStyles,
+    contentStyles,
     setDialogTop
   }
 }

@@ -49,7 +49,7 @@ export function createDialog (component, options = {}) {
 
 export function addDialog () {
   const key = generateDialogKey()
-  console.log(key)
+  // console.log(key)
   opening.value.push({
     key,
     singletonKey: ''

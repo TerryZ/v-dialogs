@@ -1,6 +1,6 @@
 import '../../styles/modal.sass'
 
-import { defineComponent, ref, provide, onMounted, nextTick } from 'vue'
+import { defineComponent, provide, onMounted } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useModal } from '../../core/modal'
@@ -14,10 +14,12 @@ import DialogModalBody from './DialogModalBody'
 export default defineComponent({
   name: 'DialogModal',
   props: mergeDialogProps({
+    /**
+     * The component to put in the Modal
+     */
     component: Object,
     /**
-     * Send parameters to Component
-     * you need use props to receive this params in component
+     * The parameters pass to Component as props
      */
     params: Object,
     /** Open maximized dialog */
@@ -27,42 +29,38 @@ export default defineComponent({
   }),
   emits: mergeDialogEmits(),
   setup (props, { emit }) {
-    const header = ref()
-
     const {
       show,
+      maximize,
       switchMaximize,
-      setBodyHeight,
       ...restItems
-    } = useModal(props, emit, header)
+    } = useModal(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
       show,
+      maximize,
       switchMaximize
     })
 
     onMounted(() => {
       show.value = true
 
-      nextTick(() => {
-        if (props.fullscreen) {
-          switchMaximize()
-        } else {
-          setBodyHeight()
-        }
-      })
+      if (props.fullscreen) {
+        switchMaximize()
+      }
 
       hideDocumentBodyOverflow()
     })
 
     return () => (
       <DialogContainer
-        className={['v-dialog-content']}
+        bodyClass={['v-dialog-modal', { 'v-dialog--maximize': maximize.value }]}
+        contentClass={['v-dialog-content']}
         transitionName='v-dialog--smooth'
       >
-        {props.header && <DialogModalHeader ref={header} />}
+        {props.header && <DialogModalHeader />}
         <DialogModalBody />
       </DialogContainer>
     )

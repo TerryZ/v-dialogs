@@ -5,7 +5,8 @@ import { propsInjectionKey } from '../constants'
 export default {
   name: 'DialogContainer',
   props: {
-    className: { type: [String, Array], default: '' },
+    contentClass: { type: [String, Array, Object], default: '' },
+    bodyClass: { type: [String, Array, Object], default: '' },
     /** Dialog transition name */
     transitionName: { type: String, default: '' }
   },
@@ -18,6 +19,7 @@ export default {
       shake,
       show,
       dialogStyles,
+      contentStyles,
       dialogZIndex,
       backdropZIndex
     } = inject(propsInjectionKey)
@@ -55,15 +57,18 @@ export default {
         </Teleport>
       )
     }
-    // ...options?.class
     function generateContainer () {
-      const classes = ['v-dialog', { 'v-dialog--buzz-out': shaking.value }]
-      const contentClasses = [props.className, customClass]
+      const bodyClasses = [
+        'v-dialog',
+        { 'v-dialog--buzz-out': shaking.value },
+        props.bodyClass
+      ]
+      const contentClasses = [props.contentClass, customClass]
 
       return (
         <Teleport to='body'>
           <div
-            class={classes}
+            class={bodyClasses}
             style={{ 'z-index': dialogZIndex }}
             onClick={e => {
               if (e.target !== e.currentTarget) return
@@ -76,7 +81,10 @@ export default {
                 appear={true}
               >
                 {() => show.value && (
-                  <div class={contentClasses} >{slots.default()}</div>
+                  <div
+                    class={contentClasses}
+                    style={contentStyles.value}
+                  >{slots.default()}</div>
                 )}
               </Transition>
             </div>
