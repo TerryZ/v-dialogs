@@ -2,7 +2,7 @@
   <h3 class="mb-3">
     Modal
   </h3>
-  <div class="">
+  <div class="d-flex flex-column">
     <div class="mb-3">
       <h5>Base</h5>
       <div class="">
@@ -69,20 +69,27 @@
         </button>
       </div>
     </div>
-  </div>
 
-  <h4>使用标签</h4>
-  <div>
-    <div class="mb-3">
-      <h5>Base</h5>
+    <div class="mb-5">
+      <h4>使用标签</h4>
       <div>
-        <button
-          type="button"
-          class="btn btn-outline-secondary me-3"
-          @click="openTagModal"
-        >
-          Open
-        </button>
+        <h5>Base</h5>
+        <div>
+          <DialogModalBox
+            v-model:visible="visible"
+            title="abcd"
+            @close="modalBoxClose"
+          >
+            <div>这是一个使用 DialogModalBox 打开的模态窗口</div>
+          </DialogModalBox>
+          <button
+            type="button"
+            class="btn btn-outline-secondary me-3"
+            @click="openModalBox"
+          >
+            Open
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -90,7 +97,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { DialogModal, DialogAlert } from '@/'
+import { DialogModal, DialogAlert, DialogModalBox } from '@/'
 import UserProfile from './UserProfile.vue'
 
 const visible = ref(false)
@@ -151,7 +158,10 @@ function fullscreen () {
   })
 }
 
-function openTagModal () {
+function openModalBox () {
   visible.value = true
+}
+function modalBoxClose () {
+  console.log(visible.value)
 }
 </script>

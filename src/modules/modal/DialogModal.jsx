@@ -5,7 +5,6 @@ import { defineComponent, provide, onMounted } from 'vue'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useModal } from '../../core/modal'
 import { propsInjectionKey } from '../../constants'
-import { hideDocumentBodyOverflow } from '../../utils/instance'
 
 import DialogContainer from '../DialogContainer'
 import DialogModalHeader from './DialogModalHeader'
@@ -25,13 +24,16 @@ export default defineComponent({
     /** Open maximized dialog */
     fullscreen: { type: Boolean, default: false },
     maxButton: { type: Boolean, default: true },
-    closeButton: { type: Boolean, default: true }
+    closeButton: { type: Boolean, default: true },
+    visible: { type: Boolean, default: false },
+    functional: { type: Boolean, default: true }
   }),
-  emits: mergeDialogEmits(),
-  setup (props, { emit }) {
+  emits: mergeDialogEmits(['update:visible']),
+  setup (props, { emit, slots }) {
     const {
       show,
       maximize,
+      openModal,
       switchMaximize,
       ...restItems
     } = useModal(props, emit)
@@ -45,13 +47,7 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      show.value = true
-
-      if (props.fullscreen) {
-        switchMaximize()
-      }
-
-      hideDocumentBodyOverflow()
+      if (props.functional) openModal()
     })
 
     return () => (
@@ -61,7 +57,7 @@ export default defineComponent({
         transitionName='v-dialog--smooth'
       >
         {props.header && <DialogModalHeader />}
-        <DialogModalBody />
+        <DialogModalBody>{slots.default && slots.default()}</DialogModalBody>
       </DialogContainer>
     )
   }

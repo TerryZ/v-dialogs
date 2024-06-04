@@ -6,7 +6,7 @@ export default {
     const {
       component,
       params,
-      closeDialogWithCallback
+      closeModalWithCallback
     } = inject(propsInjectionKey)
 
     function getModalContent () {
@@ -16,7 +16,7 @@ export default {
       if (!component) return
 
       const options = {
-        onClose: data => closeDialogWithCallback(data)
+        onClose: data => closeModalWithCallback(data)
       }
       return h(component, mergeProps(params, options))
     }

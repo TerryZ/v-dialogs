@@ -74,6 +74,7 @@ export default {
               if (e.target !== e.currentTarget) return
               outsideClick()
             }}
+            v-show={show.value}
           >
             <div class='v-dialog-dialog' style={dialogStyles.value}>
               <Transition

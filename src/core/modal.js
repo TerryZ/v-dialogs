@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import {
   defaultModalOptions,
@@ -9,13 +9,20 @@ import {
 } from '../constants'
 import { createDialog } from './manage'
 import { useDialog } from '../utils/dialog'
+import {
+  hideDocumentBodyOverflow,
+  restoreDocumentBodyOverflow
+} from '../utils/instance'
 
 import TheDialogModal from '../modules/modal/DialogModal'
 
 export function useModal (props, emit) {
   const {
+    show,
     setDialogTop,
     setDialogSize,
+    closeDialogWithCallback,
+    closeDialogWithoutCallback,
     ...restItems
   } = useDialog(props, emit)
 
@@ -25,6 +32,19 @@ export function useModal (props, emit) {
 
   const maximize = ref(false)
 
+  // using DialogModalBox component to render modal
+  if (!props.functional) {
+    watch(() => props.visible, val => {
+      if (val === show.value) return
+
+      if (val) {
+        openModal()
+      } else {
+        show.value = true
+      }
+    })
+  }
+
   function setModalTop () {
     setDialogTop(maximize.value ? 0 : undefined)
   }
@@ -33,12 +53,37 @@ export function useModal (props, emit) {
 
     setModalTop()
   }
+  function openModal () {
+    show.value = true
+
+    if (props.fullscreen) {
+      switchMaximize()
+    }
+
+    hideDocumentBodyOverflow()
+  }
+  const closeOptions = {
+    closing: () => {
+      emit('update:visible', false)
+    },
+    afterClose: restoreDocumentBodyOverflow
+  }
+  function closeModalWithCallback (data) {
+    closeDialogWithCallback(data, closeOptions)
+  }
+  function closeModalWithoutCallback () {
+    closeDialogWithoutCallback(closeOptions)
+  }
 
   return {
     ...restItems,
+    show,
     maximize,
+    openModal,
     setModalTop,
-    switchMaximize
+    switchMaximize,
+    closeModalWithCallback,
+    closeModalWithoutCallback
   }
 }
 

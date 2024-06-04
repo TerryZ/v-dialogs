@@ -65,18 +65,24 @@ export function useDialog (props, emit) {
       ? topValue
       : calculateDialogTop(height.value)
   }
-  function closeDialog (callback, data) {
+  function closeDialog (callback, data, options) {
     if (!dialogReady.value) return
 
     show.value = false
+    options?.closing()
 
-    setTimeout(() => emit(EMIT_NAME_CLOSE, callback, data), 250)
+    const closeWork = () => {
+      emit(EMIT_NAME_CLOSE, callback, data)
+      options?.afterClose()
+    }
+
+    setTimeout(closeWork, 250)
   }
-  function closeDialogWithCallback (data) {
-    closeDialog(props.callback, data)
+  function closeDialogWithCallback (data, options) {
+    closeDialog(props.callback, data, options)
   }
-  function closeDialogWithoutCallback () {
-    closeDialog()
+  function closeDialogWithoutCallback (options) {
+    closeDialog(undefined, undefined, options)
   }
 
   useResizeAdjust(setDialogTop)

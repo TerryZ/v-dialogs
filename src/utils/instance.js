@@ -174,8 +174,6 @@ export function hideDocumentBodyOverflow () {
 }
 
 export function restoreDocumentBodyOverflow () {
-  if (getContainerDialogCount()) return
-
   document.body.style.removeProperty('overflow-y')
   document.body.style.removeProperty('padding-right')
 }
