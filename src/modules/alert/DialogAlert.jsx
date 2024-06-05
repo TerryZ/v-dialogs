@@ -31,19 +31,18 @@ export default defineComponent({
   emits: mergeDialogEmits(),
   setup (props, { emit }) {
     const {
-      show,
       getShadowClass,
+      openDialog,
       ...restItems
     } = useAlert(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems,
-      show
+      ...restItems
     })
 
     onMounted(() => {
-      show.value = true
+      openDialog()
     })
 
     return () => (

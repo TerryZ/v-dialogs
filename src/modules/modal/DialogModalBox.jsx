@@ -1,4 +1,4 @@
-import { defineComponent, mergeProps } from 'vue'
+import { defineComponent, mergeProps, ref } from 'vue'
 
 import { addDialog } from '../../core/manage'
 
@@ -6,17 +6,26 @@ import DialogModal from './DialogModal'
 
 export default defineComponent({
   setup (props, { attrs, slots }) {
+    const renderDialog = ref(false)
+
     const { index, key } = addDialog()
-    const modalBoxProps = {
+    const baseProps = {
+      // functional: false
       dialogKey: key,
       dialogIndex: index,
-      functional: false
+      onRenderDialog: val => {
+        renderDialog.value = val
+      }
     }
 
-    return () => (
-      <DialogModal {...mergeProps(attrs, modalBoxProps)}>
-        {slots.default && slots.default()}
-      </DialogModal>
-    )
+    return () => {
+      if (!attrs.visible && !renderDialog.value) return
+
+      return (
+        <DialogModal {...mergeProps(attrs, baseProps)}>
+          {slots.default()}
+        </DialogModal>
+      )
+    }
   }
 })

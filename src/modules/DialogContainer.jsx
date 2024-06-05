@@ -64,17 +64,17 @@ export default {
         props.bodyClass
       ]
       const contentClasses = [props.contentClass, customClass]
+      const backdropClick = e => {
+        if (e.target !== e.currentTarget) return
+        outsideClick()
+      }
 
       return (
         <Teleport to='body'>
           <div
             class={bodyClasses}
             style={{ 'z-index': dialogZIndex }}
-            onClick={e => {
-              if (e.target !== e.currentTarget) return
-              outsideClick()
-            }}
-            v-show={show.value}
+            onClick={backdropClick}
           >
             <div class='v-dialog-dialog' style={dialogStyles.value}>
               <Transition
@@ -85,7 +85,9 @@ export default {
                   <div
                     class={contentClasses}
                     style={contentStyles.value}
-                  >{slots.default()}</div>
+                  >
+                    {slots.default && slots.default()}
+                  </div>
                 )}
               </Transition>
             </div>

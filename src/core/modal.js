@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 import {
   defaultModalOptions,
@@ -21,29 +21,16 @@ export function useModal (props, emit) {
     show,
     setDialogTop,
     setDialogSize,
+    openDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,
     ...restItems
   } = useDialog(props, emit)
 
+  const maximize = ref(false)
   const { width, height } = getModalSize(props)
 
   setDialogSize(width, height)
-
-  const maximize = ref(false)
-
-  // using DialogModalBox component to render modal
-  if (!props.functional) {
-    watch(() => props.visible, val => {
-      if (val === show.value) return
-
-      if (val) {
-        openModal()
-      } else {
-        show.value = true
-      }
-    })
-  }
 
   function setModalTop () {
     setDialogTop(maximize.value ? 0 : undefined)
@@ -54,7 +41,7 @@ export function useModal (props, emit) {
     setModalTop()
   }
   function openModal () {
-    show.value = true
+    openDialog()
 
     if (props.fullscreen) {
       switchMaximize()
@@ -108,7 +95,7 @@ function getModalSize (props) {
  * @param {object} [option] - options
  * @returns
  */
-export function DialogModal (component, options) {
+export function DialogModal (component, options = {}) {
   const props = { ...defaultModalOptions, ...options }
   props.component = component
 

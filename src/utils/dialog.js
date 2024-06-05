@@ -1,7 +1,7 @@
 import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 
 import { calculateDialogTop, calculateDialogZIndex } from './helper'
-import { EMIT_NAME_CLOSE } from '../constants'
+import { EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG } from '../constants'
 import { EN } from '../language'
 
 export const commonProps = {
@@ -33,7 +33,7 @@ export const commonProps = {
   callback: { type: Function, default: undefined }
 }
 
-export const commonEmits = [EMIT_NAME_CLOSE]
+export const commonEmits = [EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG]
 
 export function useDialog (props, emit) {
   const show = ref(false)
@@ -65,6 +65,10 @@ export function useDialog (props, emit) {
       ? topValue
       : calculateDialogTop(height.value)
   }
+  function openDialog () {
+    show.value = true
+    emit(EMIT_NAME_RENDER_DIALOG, true)
+  }
   function closeDialog (callback, data, options) {
     if (!dialogReady.value) return
 
@@ -74,6 +78,7 @@ export function useDialog (props, emit) {
     const closeWork = () => {
       emit(EMIT_NAME_CLOSE, callback, data)
       options?.afterClose()
+      emit(EMIT_NAME_RENDER_DIALOG, false)
     }
 
     setTimeout(closeWork, 250)
@@ -101,6 +106,7 @@ export function useDialog (props, emit) {
     dialogZIndex,
     backdropZIndex,
     setDialogSize,
+    openDialog,
     closeDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,

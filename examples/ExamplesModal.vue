@@ -87,7 +87,7 @@
             class="btn btn-outline-secondary me-3"
             @click="openModalBox"
           >
-            Open
+            Open Modal Box
           </button>
         </div>
       </div>

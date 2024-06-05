@@ -57,7 +57,11 @@ export default defineComponent({
         transitionName='v-dialog--smooth'
       >
         {props.header && <DialogModalHeader />}
-        <DialogModalBody>{slots.default && slots.default()}</DialogModalBody>
+        {
+          slots.default
+            ? <DialogModalBody>{slots.default()}</DialogModalBody>
+            : <DialogModalBody></DialogModalBody>
+        }
       </DialogContainer>
     )
   }

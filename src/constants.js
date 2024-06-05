@@ -41,6 +41,7 @@ export const MESSAGE_TYPE_SUCCESS = 'success'
 export const MESSAGE_TYPE_CONFIRM = 'confirm'
 
 export const EMIT_NAME_CLOSE = 'close'
+export const EMIT_NAME_RENDER_DIALOG = 'render-dialog'
 
 export const colorfulShadowTypes = [
   MESSAGE_TYPE_WARNING,

@@ -1,4 +1,11 @@
-import { ref, nextTick, createVNode, render, getCurrentInstance } from 'vue'
+import {
+  ref,
+  nextTick,
+  createVNode,
+  render,
+  getCurrentInstance,
+  mergeProps
+} from 'vue'
 
 import { DIALOG_KEY_PREFIX } from '../constants'
 
@@ -17,7 +24,6 @@ export function createDialog (component, options = {}) {
   // console.dir(options)
 
   const props = {
-    ...options,
     dialogKey: key,
     dialogIndex: index,
     onClose: (callback, data) => {
@@ -27,7 +33,7 @@ export function createDialog (component, options = {}) {
   }
 
   // createVNode is the same as h
-  let dialog = createVNode(component, props)
+  let dialog = createVNode(component, mergeProps(options, props))
 
   const globalAppContext = getCurrentInstance()?.appContext ?? null
   dialog.appContext = globalAppContext
