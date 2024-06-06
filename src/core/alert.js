@@ -6,12 +6,15 @@ import {
   ALERT_HEIGHT,
   ALERT_HEIGHT_NO_HEADER,
   ALERT_WIDTH,
+  MESSAGE_TYPE_WARNING,
+  MESSAGE_TYPE_ERROR,
+  MESSAGE_TYPE_SUCCESS,
+  MESSAGE_TYPE_CONFIRM,
   defaultAlertOptions
 } from '../constants'
-import { useDialog } from '../utils/dialog'
+import { useDialog } from './base'
 import { createDialog } from './manage'
-import { parseArgumentsToProps } from './helper'
-import { getLanguage } from '../utils/helper'
+import { parseArgumentsToProps, getLanguage } from './helper'
 
 import TheDialogAlert from '../modules/alert/DialogAlert'
 
@@ -65,6 +68,19 @@ export function getAlertSize (props) {
   const height = header ? ALERT_HEIGHT : ALERT_HEIGHT_NO_HEADER
   return { width: ALERT_WIDTH, height }
 }
+
+export function getAlertClass (type) {
+  const types = [
+    MESSAGE_TYPE_WARNING,
+    MESSAGE_TYPE_ERROR,
+    MESSAGE_TYPE_SUCCESS,
+    MESSAGE_TYPE_CONFIRM
+  ]
+  if (!types.includes(type)) return ''
+  return `alert-${type}`
+}
+
+export const isConfirmType = type => MESSAGE_TYPE_CONFIRM === type
 
 /**
  * Open a message alert dialog

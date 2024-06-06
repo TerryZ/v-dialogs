@@ -1,7 +1,7 @@
 import { ref, inject, onMounted } from 'vue'
 
 import { propsInjectionKey } from '../../constants'
-import { isConfirmType } from '../../core/helper'
+import { isConfirmType } from '../../core/alert'
 
 export default {
   name: 'DialogAlertFooter',

@@ -2,18 +2,20 @@ import {
   MESSAGE_TYPE_CONFIRM,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
-  MESSAGE_TYPE_SUCCESS
+  MESSAGE_TYPE_SUCCESS,
+  START_Z_INDEX,
+  Z_INDEX_INCREMENT,
+  TITLE_TEXT_MAX_LENGTH
 } from '../constants'
-import { commonProps, commonEmits } from '../utils/dialog'
-
-export const isConfirmType = type => MESSAGE_TYPE_CONFIRM === type
+import languages, { EN } from '../language'
+import { baseProps, baseEmits } from './base'
 
 export function mergeDialogProps (props) {
-  return { ...commonProps, ...props }
+  return { ...baseProps, ...props }
 }
 
 export function mergeDialogEmits (emits = []) {
-  return [...commonEmits, ...emits]
+  return [...baseEmits, ...emits]
 }
 
 /**
@@ -65,16 +67,61 @@ export function parseArgumentsToProps (param1, param2, param3) {
   return props
 }
 
-export function outsideClick (props, close, shaking) {
-  if (!props.backdrop) return
+/**
+ * Calculate the top of the dialog
+ * @param {number} height - dialog height
+ */
+export function calculateDialogTop (height) {
+  const browserHeight = window.innerHeight || document.documentElement.clientHeight
+  return (browserHeight - height) / 2
+}
 
-  if (props.backdropClose) return close && close()
+export function calculateDialogZIndex (index) {
+  // setup dialog and backdrop z-index
+  const dialogZIndex = START_Z_INDEX + (Z_INDEX_INCREMENT * index)
+  const backdropZIndex = dialogZIndex - 10
+  return { dialogZIndex, backdropZIndex }
+}
+/**
+ * Get language resource by language code
+ * @param {string} code - language code
+ * @returns {object} language resource
+ */
+export function getLanguage (lang = EN) {
+  const key = String(lang).toLowerCase()
 
-  if (!props.shaking) return
-  // shake animation playing
-  if (shaking.value) return
+  if (key in languages) return languages[key]
 
-  // play shake animation
-  shaking.value = true
-  setTimeout(() => { shaking.value = false }, 750)
+  return languages[EN]
+}
+
+/**
+ * Text truncation
+ * @param {string} text - source string
+ * @param {number} keepLength - save string length
+ * @returns {string} truncated string
+ */
+export function textTruncate (text, keepLength = TITLE_TEXT_MAX_LENGTH) {
+  if (typeof text !== 'string') return ''
+  if (text.length <= keepLength) return text
+  return text.substring(0, keepLength) + '...'
+}
+
+export function isDocumentBodyOverflowing () {
+  return document.body.scrollHeight > window.innerHeight
+}
+
+export function hideDocumentBodyOverflow () {
+  if (!isDocumentBodyOverflowing()) return
+  if (document.body.style.overflowY === 'hidden') return
+
+  const documentWidth = document.documentElement.clientWidth
+  const scrollBarWidth = window.innerWidth - documentWidth
+  document.body.style.paddingRight = `${scrollBarWidth}px`
+  document.body.style.overflowY = 'hidden'
+}
+
+export function restoreDocumentBodyOverflow () {
+  document.body.style.removeProperty('overflow-y')
+  document.body.style.removeProperty('padding-right')
 }
