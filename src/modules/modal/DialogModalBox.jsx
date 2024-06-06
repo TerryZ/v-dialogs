@@ -10,7 +10,6 @@ export default defineComponent({
 
     const { index, key } = addDialog()
     const baseProps = {
-      // functional: false
       dialogKey: key,
       dialogIndex: index,
       onRenderDialog: val => {

@@ -9,8 +9,7 @@ import {
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_TYPE_CONFIRM,
-  defaultAlertOptions
+  MESSAGE_TYPE_CONFIRM
 } from '../constants'
 import { useDialog } from './base'
 import { createDialog } from './manage'
@@ -23,6 +22,7 @@ export function useAlert (props, emit) {
   const {
     setDialogSize,
     closeDialog,
+    closeDialogWithCallback,
     ...restItems
   } = useDialog(props, emit)
   const { width, height } = getAlertSize(props)
@@ -49,6 +49,8 @@ export function useAlert (props, emit) {
     height,
     closeDialog,
     cancelAlert,
+    closeDialogWithCallback,
+    backdropCloseDialog: closeDialogWithCallback,
     getShadowClass
   }
 }
@@ -91,8 +93,5 @@ export const isConfirmType = type => MESSAGE_TYPE_CONFIRM === type
  * @returns {function} call the function to close dialog
  */
 export function DialogAlert () {
-  const userProps = parseArgumentsToProps(...arguments)
-  const props = Object.assign({}, defaultAlertOptions, userProps)
-
-  return createDialog(TheDialogAlert, props)
+  return createDialog(TheDialogAlert, parseArgumentsToProps(...arguments))
 }

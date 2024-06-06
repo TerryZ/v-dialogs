@@ -15,7 +15,7 @@ export default {
       backdrop,
       backdropClose,
       customClass,
-      closeDialogWithCallback,
+      backdropCloseDialog = undefined,
       shake,
       show,
       dialogStyles,
@@ -29,7 +29,7 @@ export default {
     function outsideClick () {
       if (!backdrop) return
 
-      if (backdropClose) return closeDialogWithCallback()
+      if (backdropClose) return backdropCloseDialog && backdropCloseDialog()
 
       if (!shake) return
       // shake animation playing

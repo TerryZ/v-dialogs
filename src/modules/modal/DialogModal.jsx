@@ -4,7 +4,7 @@ import { defineComponent, provide, onMounted } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useModal } from '../../core/modal'
-import { propsInjectionKey } from '../../constants'
+import { propsInjectionKey, MODAL_WIDTH, MODAL_HEIGHT } from '../../constants'
 
 import DialogContainer from '../DialogContainer'
 import DialogModalHeader from './DialogModalHeader'
@@ -17,6 +17,10 @@ export default defineComponent({
      * The component to put in the Modal
      */
     component: Object,
+    shake: { type: Boolean, default: true },
+    title: { type: String, default: 'Dialog' },
+    width: { type: Number, default: MODAL_WIDTH },
+    height: { type: Number, default: MODAL_HEIGHT },
     /**
      * The parameters pass to Component as props
      */
@@ -25,29 +29,24 @@ export default defineComponent({
     fullscreen: { type: Boolean, default: false },
     maxButton: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: true },
-    visible: { type: Boolean, default: false },
-    functional: { type: Boolean, default: true }
+    visible: { type: Boolean, default: false }
   }),
   emits: mergeDialogEmits(['update:visible']),
   setup (props, { emit, slots }) {
     const {
-      show,
       maximize,
       openModal,
-      switchMaximize,
       ...restItems
     } = useModal(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
-      show,
-      maximize,
-      switchMaximize
+      maximize
     })
 
     onMounted(() => {
-      if (props.functional) openModal()
+      openModal()
     })
 
     return () => (

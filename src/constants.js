@@ -1,7 +1,5 @@
 import { EN } from './language'
 
-// export const alertInjectionKey = Symbol('alert')
-// export const modalInjectionKey = Symbol('modal')
 export const propsInjectionKey = Symbol('props')
 
 export const DEFAULT_INSTANCE_NAME = '$dlg'

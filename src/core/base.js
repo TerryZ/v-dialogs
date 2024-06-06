@@ -84,8 +84,10 @@ export function useDialog (props, emit) {
     options?.closing?.()
 
     const closeWork = () => {
+      // close and destroy dialog
       emit(EMIT_NAME_CLOSE, callback, data)
       options?.afterClose?.()
+      // destroy DialogModalBox component
       emit(EMIT_NAME_RENDER_DIALOG, false)
 
       if (shouldControlOverflow.value) restoreDocumentBodyOverflow()

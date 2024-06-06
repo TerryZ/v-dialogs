@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 
 import {
-  defaultModalOptions,
   MODAL_WIDTH,
   MODAL_HEIGHT,
   MODAL_MIN_WIDTH,
@@ -63,7 +62,8 @@ export function useModal (props, emit) {
     setModalTop,
     switchMaximize,
     closeModalWithCallback,
-    closeModalWithoutCallback
+    closeModalWithoutCallback,
+    backdropCloseDialog: closeModalWithoutCallback
   }
 }
 
@@ -89,8 +89,6 @@ function getModalSize (props) {
  * @returns
  */
 export function DialogModal (component, options = {}) {
-  const props = { ...defaultModalOptions, ...options }
-  props.component = component
-
+  const props = { ...options, component }
   return createDialog(TheDialogModal, props)
 }
