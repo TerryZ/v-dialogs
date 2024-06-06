@@ -70,6 +70,19 @@
       </div>
     </div>
 
+    <div class="mb-3">
+      <h5>Card layout</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="openCardPanel"
+        >
+          Open a Card layout dialog
+        </button>
+      </div>
+    </div>
+
     <div class="mb-5">
       <h4>使用标签</h4>
       <div>
@@ -99,6 +112,7 @@
 import { ref } from 'vue'
 import { DialogModal, DialogAlert, DialogModalBox } from '@/'
 import UserProfile from './UserProfile.vue'
+import CardPanel from './CardPanel.vue'
 
 const visible = ref(false)
 
@@ -163,5 +177,13 @@ function openModalBox () {
 }
 function modalBoxClose () {
   console.log(visible.value)
+}
+
+function openCardPanel () {
+  DialogModal(CardPanel, {
+    width: 330,
+    height: 420,
+    header: false
+  })
 }
 </script>
