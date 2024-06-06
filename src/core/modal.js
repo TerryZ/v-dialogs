@@ -9,10 +9,6 @@ import {
 } from '../constants'
 import { createDialog } from './manage'
 import { useDialog } from '../utils/dialog'
-import {
-  hideDocumentBodyOverflow,
-  restoreDocumentBodyOverflow
-} from '../utils/instance'
 
 import TheDialogModal from '../modules/modal/DialogModal'
 
@@ -46,14 +42,11 @@ export function useModal (props, emit) {
     if (props.fullscreen) {
       switchMaximize()
     }
-
-    hideDocumentBodyOverflow()
   }
   const closeOptions = {
     closing: () => {
       emit('update:visible', false)
-    },
-    afterClose: restoreDocumentBodyOverflow
+    }
   }
   function closeModalWithCallback (data) {
     closeDialogWithCallback(data, closeOptions)

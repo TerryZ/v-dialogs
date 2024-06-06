@@ -1,6 +1,10 @@
 import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 
 import { calculateDialogTop, calculateDialogZIndex } from './helper'
+import {
+  hideDocumentBodyOverflow,
+  restoreDocumentBodyOverflow
+} from './instance'
 import { EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG } from '../constants'
 import { EN } from '../language'
 
@@ -42,6 +46,7 @@ export function useDialog (props, emit) {
   const height = ref(0)
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)
+  const shouldControlOverflow = ref(true)
 
   const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
 
@@ -68,17 +73,21 @@ export function useDialog (props, emit) {
   function openDialog () {
     show.value = true
     emit(EMIT_NAME_RENDER_DIALOG, true)
+
+    if (shouldControlOverflow.value) hideDocumentBodyOverflow()
   }
   function closeDialog (callback, data, options) {
     if (!dialogReady.value) return
 
     show.value = false
-    options?.closing()
+    options.closing?.()
 
     const closeWork = () => {
       emit(EMIT_NAME_CLOSE, callback, data)
-      options?.afterClose()
+      options.afterClose?.()
       emit(EMIT_NAME_RENDER_DIALOG, false)
+
+      if (shouldControlOverflow.value) restoreDocumentBodyOverflow()
     }
 
     setTimeout(closeWork, 250)
@@ -103,16 +112,16 @@ export function useDialog (props, emit) {
 
   return {
     show,
+    dialogStyles,
+    contentStyles,
     dialogZIndex,
     backdropZIndex,
-    setDialogSize,
     openDialog,
     closeDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,
-    dialogStyles,
-    contentStyles,
-    setDialogTop
+    setDialogTop,
+    setDialogSize
   }
 }
 
