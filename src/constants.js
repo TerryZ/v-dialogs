@@ -52,8 +52,9 @@ export const [
   ALERT,
   TOAST,
   DRAWER,
-  MASK
-] = ['modal', 'alert', 'toast', 'drawer', 'mask']
+  MASK,
+  MESSAGE
+] = ['modal', 'alert', 'toast', 'drawer', 'mask', 'message']
 
 const defaultOptionsCore = {
   language: EN,

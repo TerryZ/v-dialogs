@@ -1,0 +1,34 @@
+$borderRadius: .3rem
+
+@mixin icon-color-and-shadow($color, $shadow-color)
+  color: $color
+  filter: drop-shadow(4px 5px 5px $shadow-color)
+
+.v-dialog-message
+  overflow: hidden
+  display: flex
+  align-items: center
+  background-color: rgb(255,255,255,.5)
+  &__prepend,
+  &__append
+    width: 64px
+    heigth: 64px
+  &__body
+  &.message-warning .v-dialog-message__icon
+    @include icon-color-and-shadow(#FF9800, rgb(255,152,0,.8))
+  &.message-error .v-dialog-message__icon
+    @include icon-color-and-shadow(#F44336, rgb(244,67,54,.8))
+  &.message-success .v-dialog-message__icon
+    @include icon-color-and-shadow(#198754, rgb(25,135,84,.8))
+
+=dialog-shadow($color)
+  box-shadow: 0 1rem 5rem $color !important
+
+.v-dialog__shadow--error
+  +dialog-shadow(rgba(255,0,0,0.5))
+
+.v-dialog__shadow--warning
+  +dialog-shadow(rgba(255,165,0,0.5))
+
+.v-dialog__shadow--success
+  +dialog-shadow(rgba(0,255,0,0.5))

@@ -8,28 +8,22 @@ import {
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM
 } from '../../constants'
-import { getAlertClass } from '../../core/alert'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'
 import IconError from '../../icons/IconError.vue'
 import IconSuccess from '../../icons/IconSuccess.vue'
-import IconConfirm from '../../icons/IconConfirm.vue'
+import IconClose from '../../icons/IconClose.vue'
 
 export default {
-  name: 'DialogAlertBody',
+  name: 'DialogMessageBody',
   setup () {
     const {
       icon,
       message,
-      messageType
+      messageType,
+      closeButton
     } = inject(propsInjectionKey)
-
-    const classes = [
-      'v-dialog-body',
-      'v-dialog-alert',
-      getAlertClass(messageType)
-    ]
 
     function getIcon (type) {
       switch (type) {
@@ -41,22 +35,19 @@ export default {
         default: return undefined
       }
     }
-
-    icon || classes.push('no-icon')
-
     return () => (
-      <div class={classes} >
-        <div class='v-dialog-alert__content'>
-          {icon && (
-            <div class='v-dialog-alert__icon'>
-              { getIcon(messageType) }
-            </div>
-          )}
-          <div
-            class='v-dialog-alert__message'
-            v-html={message}
-          />
-        </div>
+      <div class='v-dialog-body v-dialog-message'>
+        {icon && (
+          <div class='v-dialog-message__prepend'>
+            {getIcon(messageType)}
+          </div>
+        )}
+        <div class='v-dialog-message__body'>{message}</div>
+        {closeButton && (
+          <div class='v-dialog-message__append'>
+            <IconClose />
+          </div>
+        )}
       </div>
     )
   }

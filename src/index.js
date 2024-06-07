@@ -15,6 +15,7 @@ export { DialogAlert } from './core/alert'
 export { DialogModal } from './core/modal'
 export { default as DialogModalBox } from './modules/modal/DialogModalBox'
 export { DialogMask } from './utils/instance'
+export { DialogMessage } from './core/message'
 export { DialogHelper }
 
 export default {

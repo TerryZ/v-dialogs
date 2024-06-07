@@ -41,6 +41,7 @@ import { useRoute } from 'vue-router'
 
 const modules = [
   { key: 'alert', name: 'Alert', url: '/alert' },
+  { key: 'message', name: 'Message', url: '/message' },
   { key: 'toast', name: 'Toast', url: '/toast' },
   { key: 'mask', name: 'Mask', url: '/mask' },
   { key: 'modal', name: 'Modal', url: '/modal' },

@@ -6,6 +6,7 @@ const routes = [
     component: () => import('./ExamplesIndex.vue'),
     children: [
       { path: '/alert', component: () => import('./ExamplesAlert.vue') },
+      { path: '/message', component: () => import('./ExamplesMessage.vue') },
       { path: '/toast', component: () => import('./ExamplesToast.vue') },
       { path: '/mask', component: () => import('./ExamplesMask.vue') },
       { path: '/modal', component: () => import('./ExamplesModal.vue') },

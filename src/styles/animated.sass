@@ -24,7 +24,7 @@
 .v-dialog--candy-leave-active
   will-change: transform, opacity
   transform: scale(0.5) translate3d(0, 0, 0)
-  transition: transform 200ms ease, opacity 200ms ease
+  transition: transform 200ms ease, opacity 200ms linear
   opacity: 0
 
 .v-dialog--smooth-enter-from,
@@ -32,11 +32,11 @@
   will-change: transform, opacity
   transform: scale(0.5) translate3d(0, 0, 0)
   opacity: 0
-  transition: transform 200ms ease, opacity 200ms ease
+  transition: transform 200ms linear, opacity 200ms linear
 .v-dialog--smooth-enter-active,
 .v-dialog--smooth-leave-active
   will-change: transform, opacity
-  transition: transform 250ms ease, opacity 250ms ease
+  transition: transform 250ms linear, opacity 250ms linear
 
 /* overlay fade in and out */
 .v-dialog--fade-enter-active,
