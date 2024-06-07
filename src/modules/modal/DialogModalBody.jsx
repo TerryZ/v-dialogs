@@ -15,10 +15,14 @@ export default {
       // Dynamic component
       if (!component) return
 
+      const VNode = typeof component === 'function'
+        ? component()
+        : component
+
       const options = {
         onClose: data => closeModalWithCallback(data)
       }
-      return h(component, mergeProps(params, options))
+      return h(VNode, mergeProps(params, options))
     }
 
     return () => <div class='v-dialog-body'>{getModalContent()}</div>

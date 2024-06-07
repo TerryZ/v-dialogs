@@ -193,7 +193,8 @@ function modalBoxClose () {
 }
 
 function openCardPanel () {
-  DialogModal(CardPanel, {
+  // 使用函数返回组件
+  DialogModal(() => CardPanel, {
     width: 330,
     height: 420,
     header: false
