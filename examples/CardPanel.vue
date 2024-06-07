@@ -11,9 +11,13 @@
     </div>
 
     <div class="p-3">
-      <h5>Modal dialog</h5>
+      <h5 class="mb-0">
+        Modal dialog
+      </h5>
       <div class="text-body-tertiary mb-3">
-        One of the dialog types of <strong>v-dialogs</strong>
+        <small>
+          One of the dialog types of <strong>v-dialogs</strong>
+        </small>
       </div>
       <div class="text-body mb-3">
         Add dialogs to your site for light boxes, user notifications, or completely custom content
@@ -37,7 +41,6 @@
 </template>
 
 <script setup>
-// import { ref } from 'vue'
 const emit = defineEmits(['close'])
 
 function close () {

@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import {
   MODAL_WIDTH,
@@ -24,6 +24,12 @@ export function useModal (props, emit) {
 
   const maximize = ref(false)
   const { width, height } = getModalSize(props)
+
+  watch(() => props.visible, val => {
+    if (val) return
+    // close modal when visible is set to false
+    closeModalWithoutCallback()
+  })
 
   setDialogSize(width, height)
 

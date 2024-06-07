@@ -93,14 +93,29 @@
             title="abcd"
             @close="modalBoxClose"
           >
-            <div>这是一个使用 DialogModalBox 打开的模态窗口</div>
+            <div class="p-3">
+              这是一个使用 DialogModalBox 打开的模态窗口
+            </div>
+          </DialogModalBox>
+          <DialogModalBox
+            v-model:visible="visibleUserControl"
+            :header="false"
+          >
+            <CardPanel @close="handleCloseModal" />
           </DialogModalBox>
           <button
             type="button"
             class="btn btn-outline-secondary me-3"
-            @click="openModalBox"
+            @click="() => { visible = true }"
           >
             Open Modal Box
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary me-3"
+            @click="() => { visibleUserControl = true }"
+          >
+            Open Modal Box with VNode content
           </button>
         </div>
       </div>
@@ -115,6 +130,7 @@ import UserProfile from './UserProfile.vue'
 import CardPanel from './CardPanel.vue'
 
 const visible = ref(false)
+const visibleUserControl = ref(false)
 
 function openModal (params) {
   const options = {
@@ -172,9 +188,6 @@ function fullscreen () {
   })
 }
 
-function openModalBox () {
-  visible.value = true
-}
 function modalBoxClose () {
   console.log(visible.value)
 }
@@ -185,5 +198,8 @@ function openCardPanel () {
     height: 420,
     header: false
   })
+}
+function handleCloseModal () {
+  visibleUserControl.value = false
 }
 </script>
