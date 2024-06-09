@@ -79,14 +79,6 @@
         >
           Success
         </button>
-
-        <!-- <button
-          type="button"
-          class="btn btn-outline-secondary"
-          @click="callMethod"
-        >
-          call
-        </button> -->
       </div>
     </div>
 
@@ -126,6 +118,13 @@
           @click="backdropClose"
         >
           Backdrop close
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="largeText"
+        >
+          Large Text
         </button>
       </div>
     </div>
@@ -178,5 +177,8 @@ function backdropClose () {
   DialogAlert('Hello', {
     backdropClose: true
   })
+}
+function largeText () {
+  DialogAlert('Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
 }
 </script>

@@ -42,11 +42,27 @@
 .v-dialog--fade-enter-active,
 .v-dialog--fade-leave-active
   will-change: opacity
-  transition: opacity 200ms
+  // transition: opacity 2000ms
+  // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+  transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
+  // transform: translateZ(0)
 .v-dialog--fade-enter-from,
 .v-dialog--fade-leave-to
   will-change: opacity
   opacity: 0 !important
+
+.v-dialog--fade-lite-enter-active,
+.v-dialog--fade-lite-leave-active
+  // will-change: opacity
+  // transition: opacity 2000ms
+  // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+  // transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
+  // transform: translateZ(0)
+  transition: opacity .3s
+.v-dialog--fade-lite-enter-from,
+.v-dialog--fade-lite-leave-to
+  // will-change: opacity
+  opacity: 0
 
 =transform($tx: 3px, $rt: 2deg)
   transform: translateX($tx) rotate($rt)
@@ -74,7 +90,7 @@
   100%
     +transform(-1px, 0)
 
-.v-dialog--buzz-out div.v-dialog-content
+.v-dialog--buzz-out .v-dialog-content
   animation-name: animated-buzz-out
   /*规定完成动画所花费的时间，以秒或毫秒计*/
   animation-duration: 750ms

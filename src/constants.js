@@ -18,6 +18,9 @@ export const ALERT_MAX_CONTENT_LENGTH = 70
 
 export const MASK_MAX_CONTENT_LENGTH = 65
 
+export const MESSAGE_WIDTH = 350
+export const MESSAGE_HEIGHT = 56
+
 export const TOAST_MAX_CONTENT_LENGTH = 56
 export const TOAST_CLASS_WARNING = 'toast-warning'
 export const TOAST_CLASS_SUCCESS = 'toast-success'

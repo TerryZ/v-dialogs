@@ -45,8 +45,6 @@ export function useAlert (props, emit) {
   return {
     ...restItems,
     lang,
-    width,
-    height,
     closeDialog,
     cancelAlert,
     closeDialogWithCallback,

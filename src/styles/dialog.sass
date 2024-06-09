@@ -1,9 +1,7 @@
 $borderRadius: .8rem
 
-.v-dialogs-container
-  width: 0
-  height: 0
-.v-dialog
+.v-dialog,
+.v-dialog-lite
   position: fixed
   top: 0
   right: 0
@@ -11,9 +9,8 @@ $borderRadius: .8rem
   left: 0
   z-index: 1050
   overflow: hidden
-  // -webkit-overflow-scrolling: touch
   outline: 0
-
+.v-dialog
   &.v-dialog-open
     overflow: hidden
   /* Window maximize */

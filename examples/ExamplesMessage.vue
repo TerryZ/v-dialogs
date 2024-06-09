@@ -47,9 +47,9 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="openOneAlert"
+          @click="openOneMessage"
         >
-          Open a Alert Dialog
+          Open a Message Dialog
         </button>
         <button
           type="button"
@@ -118,8 +118,8 @@ import { DialogMessage } from '@/'
 const icon = ref(true)
 const colorfulShadow = ref(true)
 
-function openOneAlert () {
-  openMessage('Hello, This is a <b>Alert Dialog</b>!')
+function openOneMessage () {
+  DialogMessage('Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages')
 }
 function openMessage (type) {
   DialogMessage('Hello, <b>world!</b>', () => {

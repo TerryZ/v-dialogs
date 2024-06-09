@@ -5,15 +5,32 @@ $borderRadius: .3rem
   filter: drop-shadow(4px 5px 5px $shadow-color)
 
 .v-dialog-message
-  overflow: hidden
-  display: flex
-  align-items: center
-  background-color: rgb(255,255,255,.5)
+  background-color: transparent
+  margin: 0 auto
+  overflow: unset
+  .v-dialog-body
+    border-radius: 1rem
+    box-shadow: 0 2.5rem 8rem rgba(0, 0, 0, .8)
+    overflow: hidden
+    display: flex
+    align-items: center
+    background-color: rgb(0,0,0,.3)
+    backdrop-filter: saturate(180%) blur(12px)
   &__prepend,
   &__append
-    width: 64px
-    heigth: 64px
+    width: 56px
+    flex-shrink: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 1.3rem
   &__body
+    display: flex
+    font-size: 14px
+    flex-grow: 1
+    padding: .5rem 0
+  &__close
+    cursor: pointer
   &.message-warning .v-dialog-message__icon
     @include icon-color-and-shadow(#FF9800, rgb(255,152,0,.8))
   &.message-error .v-dialog-message__icon

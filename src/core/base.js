@@ -1,6 +1,7 @@
 import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 
 import {
+  setCssValue,
   calculateDialogTop,
   calculateDialogZIndex,
   hideDocumentBodyOverflow,
@@ -53,21 +54,21 @@ export function useDialog (props, emit) {
 
   // the style v-dialog-dialog used
   const dialogStyles = computed(() => ({
-    width: width.value + 'px',
-    height: height.value + 'px',
-    top: top.value + 'px'
+    width: setCssValue(width.value),
+    height: setCssValue(height.value),
+    top: setCssValue(top.value)
   }))
   // the style v-dialog-content used
   const contentStyles = computed(() => ({
-    height: height.value + 'px'
+    height: setCssValue(height.value)
   }))
 
-  function setDialogSize (theWidth, theHeight) {
-    width.value = theWidth
-    height.value = theHeight
+  function setDialogSize (dialogWidth, dialogHeight) {
+    width.value = dialogWidth
+    height.value = dialogHeight
   }
   function setDialogTop (topValue) {
-    top.value = typeof topValue === 'number'
+    top.value = typeof topValue !== 'undefined'
       ? topValue
       : calculateDialogTop(height.value)
   }
@@ -114,6 +115,7 @@ export function useDialog (props, emit) {
 
   return {
     show,
+    shouldControlOverflow,
     dialogStyles,
     contentStyles,
     dialogZIndex,
