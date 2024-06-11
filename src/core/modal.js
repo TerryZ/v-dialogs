@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import {
   MODAL_WIDTH,
@@ -7,18 +7,19 @@ import {
   MODAL_MIN_HEIGHT
 } from '../constants'
 import { createDialog } from './manage'
-import { useDialog } from '../utils/dialog'
+import { useDialog } from './base'
 
 import TheDialogModal from '../modules/modal/DialogModal'
 
 export function useModal (props, emit) {
   const {
     show,
-    setDialogTop,
+    setPosition,
     setDialogSize,
     openDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,
+    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
 
@@ -31,10 +32,8 @@ export function useModal (props, emit) {
     closeModalWithoutCallback()
   })
 
-  setDialogSize(width, height)
-
   function setModalTop () {
-    setDialogTop(maximize.value ? 0 : undefined)
+    setPosition(maximize.value ? 0 : undefined)
   }
   function switchMaximize () {
     maximize.value = !maximize.value
@@ -59,6 +58,13 @@ export function useModal (props, emit) {
   function closeModalWithoutCallback () {
     closeDialogWithoutCallback(closeOptions)
   }
+
+  setDialogSize(width, height)
+  setupPositionAdjustBehavior(setModalTop)
+
+  onMounted(() => {
+    openModal()
+  })
 
   return {
     ...restItems,

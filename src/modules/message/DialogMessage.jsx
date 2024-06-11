@@ -1,11 +1,16 @@
 import '../../styles/message.sass'
 
-import { onMounted, defineComponent, provide } from 'vue'
+import { defineComponent, provide } from 'vue'
 
 import DialogMessageBody from './DialogMessageBody'
 import DialogLiteContainer from '../DialogLiteContainer'
 
-import { MESSAGE_TYPE_INFO, propsInjectionKey } from '../../constants'
+import {
+  MESSAGE_TYPE_INFO,
+  MESSAGE_OFFSET,
+  MESSAGE_PLACEMENT_TOP,
+  propsInjectionKey
+} from '../../constants'
 import { useMessage } from '../../core/message'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
@@ -25,12 +30,14 @@ export default defineComponent({
     colorfulShadow: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: false },
-    duration: { type: Number, default: 0 }
+    duration: { type: Number, default: 0 },
+    offset: { type: [String, Number], default: MESSAGE_OFFSET },
+    placement: { type: String, default: MESSAGE_PLACEMENT_TOP }
   }),
   emits: mergeDialogEmits(),
   setup (props, { emit }) {
     const {
-      openDialog,
+      customClass,
       ...restItems
     } = useMessage(props, emit)
 
@@ -39,14 +46,9 @@ export default defineComponent({
       ...restItems
     })
 
-    onMounted(() => {
-      openDialog()
-    })
-
     return () => (
-      // v-dialog--smooth
       <DialogLiteContainer
-        containerClass={['v-dialog-message']}
+        containerClass={['v-dialog-message', customClass]}
         transitionName='v-dialog--fade-lite'
       >
         <DialogMessageBody />

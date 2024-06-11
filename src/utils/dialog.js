@@ -5,7 +5,7 @@ import {
   hideDocumentBodyOverflow,
   restoreDocumentBodyOverflow
 } from './instance'
-import { EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG } from '../constants'
+import { EMIT_CLOSE, EMIT_RENDER_DIALOG } from '../constants'
 import { EN } from '../language'
 
 export const commonProps = {
@@ -37,7 +37,7 @@ export const commonProps = {
   callback: { type: Function, default: undefined }
 }
 
-export const commonEmits = [EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG]
+export const commonEmits = [EMIT_CLOSE, EMIT_RENDER_DIALOG]
 
 export function useDialog (props, emit) {
   const show = ref(false)
@@ -72,7 +72,7 @@ export function useDialog (props, emit) {
   }
   function openDialog () {
     show.value = true
-    emit(EMIT_NAME_RENDER_DIALOG, true)
+    emit(EMIT_RENDER_DIALOG, true)
 
     if (shouldControlOverflow.value) hideDocumentBodyOverflow()
   }
@@ -83,9 +83,9 @@ export function useDialog (props, emit) {
     options.closing?.()
 
     const closeWork = () => {
-      emit(EMIT_NAME_CLOSE, callback, data)
+      emit(EMIT_CLOSE, callback, data)
       options.afterClose?.()
-      emit(EMIT_NAME_RENDER_DIALOG, false)
+      emit(EMIT_RENDER_DIALOG, false)
 
       if (shouldControlOverflow.value) restoreDocumentBodyOverflow()
     }

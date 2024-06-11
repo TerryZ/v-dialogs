@@ -1,6 +1,6 @@
 import '../../styles/alert.sass'
 
-import { onMounted, defineComponent, provide } from 'vue'
+import { defineComponent, provide } from 'vue'
 
 import DialogAlertHeader from './DialogAlertHeader'
 import DialogAlertBody from './DialogAlertBody'
@@ -32,17 +32,12 @@ export default defineComponent({
   setup (props, { emit }) {
     const {
       getShadowClass,
-      openDialog,
       ...restItems
     } = useAlert(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems
-    })
-
-    onMounted(() => {
-      openDialog()
     })
 
     return () => (

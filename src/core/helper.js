@@ -126,7 +126,7 @@ export function restoreDocumentBodyOverflow () {
   document.body.style.removeProperty('padding-right')
 }
 
-export function setCssValue (value, unit = 'px') {
+export function cssValue (value, unit = 'px') {
   if (typeof value === 'number') {
     return `${value}${unit}`
   }

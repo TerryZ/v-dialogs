@@ -20,6 +20,10 @@ export const MASK_MAX_CONTENT_LENGTH = 65
 
 export const MESSAGE_WIDTH = 350
 export const MESSAGE_HEIGHT = 56
+export const MESSAGE_EXPAND_HEIGHT = 200
+export const MESSAGE_OFFSET = 40
+export const MESSAGE_PLACEMENT_TOP = 'top'
+export const MESSAGE_PLACEMENT_BOTTOM = 'bottom'
 
 export const TOAST_MAX_CONTENT_LENGTH = 56
 export const TOAST_CLASS_WARNING = 'toast-warning'
@@ -41,8 +45,8 @@ export const MESSAGE_TYPE_ERROR = 'error'
 export const MESSAGE_TYPE_SUCCESS = 'success'
 export const MESSAGE_TYPE_CONFIRM = 'confirm'
 
-export const EMIT_NAME_CLOSE = 'close'
-export const EMIT_NAME_RENDER_DIALOG = 'render-dialog'
+export const EMIT_CLOSE = 'close'
+export const EMIT_RENDER_DIALOG = 'render-dialog'
 
 export const colorfulShadowTypes = [
   MESSAGE_TYPE_WARNING,

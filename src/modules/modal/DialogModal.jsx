@@ -1,6 +1,6 @@
 import '../../styles/modal.sass'
 
-import { defineComponent, provide, onMounted } from 'vue'
+import { defineComponent, provide } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useModal } from '../../core/modal'
@@ -35,7 +35,6 @@ export default defineComponent({
   setup (props, { emit, slots }) {
     const {
       maximize,
-      openModal,
       ...restItems
     } = useModal(props, emit)
 
@@ -43,10 +42,6 @@ export default defineComponent({
       ...props,
       ...restItems,
       maximize
-    })
-
-    onMounted(() => {
-      openModal()
     })
 
     return () => (

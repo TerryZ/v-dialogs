@@ -106,6 +106,13 @@
         >
           Close button
         </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="bottomPlacement"
+        >
+          Show at bottom
+        </button>
       </div>
     </div>
   </div>
@@ -134,5 +141,8 @@ function closeButton () {
   DialogMessage('Click close button to dismiss notification.', {
     closeButton: true
   })
+}
+function bottomPlacement () {
+  DialogMessage('Hello, world', { placement: 'bottom' })
 }
 </script>

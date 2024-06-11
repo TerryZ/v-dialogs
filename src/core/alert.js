@@ -16,13 +16,17 @@ import { createDialog } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 
 import TheDialogAlert from '../modules/alert/DialogAlert'
+import { onMounted } from 'vue'
 
 export function useAlert (props, emit) {
   const { messageType, colorfulShadow } = props
   const {
     setDialogSize,
+    openDialog,
     closeDialog,
     closeDialogWithCallback,
+    setPosition,
+    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
   const { width, height } = getAlertSize(props)
@@ -30,6 +34,7 @@ export function useAlert (props, emit) {
   const lang = getLanguage(props.language)
 
   setDialogSize(width, height)
+  setupPositionAdjustBehavior(setPosition)
 
   function getShadowClass () {
     if (
@@ -41,6 +46,10 @@ export function useAlert (props, emit) {
   function cancelAlert () {
     closeDialog(props.cancelCallback)
   }
+
+  onMounted(() => {
+    openDialog()
+  })
 
   return {
     ...restItems,

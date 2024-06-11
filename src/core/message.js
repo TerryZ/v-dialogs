@@ -1,11 +1,15 @@
+import { ref, computed, onMounted } from 'vue'
+
 import {
-  colorfulShadowTypes,
   MESSAGE_WIDTH,
   MESSAGE_HEIGHT,
+  MESSAGE_EXPAND_HEIGHT,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_TYPE_CONFIRM
+  MESSAGE_TYPE_CONFIRM,
+  MESSAGE_PLACEMENT_BOTTOM,
+  MESSAGE_OFFSET
 } from '../constants'
 import { useDialog } from './base'
 import { createDialog } from './manage'
@@ -15,15 +19,39 @@ import TheDialogMessage from '../modules/message/DialogMessage'
 
 export function useMessage (props, emit) {
   const {
+    setPosition,
     setDialogSize,
+    openDialog,
     closeDialogWithCallback,
     shouldControlOverflow,
+    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
 
+  const expand = ref(false)
+  const messageHeight = computed(() => {
+    return expand.value ? MESSAGE_EXPAND_HEIGHT : MESSAGE_HEIGHT
+  })
   shouldControlOverflow.value = false
 
-  setDialogSize(MESSAGE_WIDTH, MESSAGE_HEIGHT)
+  function getMessageTop () {
+    const offset = props.offset || MESSAGE_OFFSET
+    if (props.placement === MESSAGE_PLACEMENT_BOTTOM) {
+      return window.innerHeight - offset - MESSAGE_HEIGHT
+    }
+    // top placement or the others
+    return offset
+  }
+  function setMessageTop () {
+    setPosition(getMessageTop())
+  }
+
+  setDialogSize(MESSAGE_WIDTH)
+  setupPositionAdjustBehavior(setMessageTop)
+
+  onMounted(() => {
+    openDialog()
+  })
 
   return {
     ...restItems,

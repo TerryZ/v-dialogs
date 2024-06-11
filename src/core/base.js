@@ -1,13 +1,13 @@
 import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 
 import {
-  setCssValue,
+  cssValue,
   calculateDialogTop,
   calculateDialogZIndex,
   hideDocumentBodyOverflow,
   restoreDocumentBodyOverflow
 } from './helper'
-import { EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG } from '../constants'
+import { EMIT_CLOSE, EMIT_RENDER_DIALOG } from '../constants'
 import { EN } from '../language'
 
 export const baseProps = {
@@ -39,13 +39,14 @@ export const baseProps = {
   callback: { type: Function, default: undefined }
 }
 
-export const baseEmits = [EMIT_NAME_CLOSE, EMIT_NAME_RENDER_DIALOG]
+export const baseEmits = [EMIT_CLOSE, EMIT_RENDER_DIALOG]
 
 export function useDialog (props, emit) {
   const show = ref(false)
-  const top = ref(0)
   const width = ref(0)
   const height = ref(0)
+  const top = ref(0)
+  const bottom = ref()
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)
   const shouldControlOverflow = ref(true)
@@ -53,28 +54,44 @@ export function useDialog (props, emit) {
   const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
 
   // the style v-dialog-dialog used
-  const dialogStyles = computed(() => ({
-    width: setCssValue(width.value),
-    height: setCssValue(height.value),
-    top: setCssValue(top.value)
-  }))
+  const dialogStyles = computed(() => {
+    const styles = { width: cssValue(width.value) }
+
+    if (typeof height.value !== 'undefined') {
+      styles.height = cssValue(height.value)
+    }
+    if (typeof top.value !== 'undefined') {
+      styles.top = cssValue(top.value)
+    }
+    if (typeof bottom.value !== 'undefined') {
+      styles.bottom = cssValue(bottom.value)
+    }
+    return styles
+  })
   // the style v-dialog-content used
   const contentStyles = computed(() => ({
-    height: setCssValue(height.value)
+    height: cssValue(height.value)
   }))
 
+  function getTopValue (topValue) {
+    if (typeof topValue !== 'undefined') return topValue
+
+    // center of screen
+    return calculateDialogTop(height.value)
+  }
   function setDialogSize (dialogWidth, dialogHeight) {
     width.value = dialogWidth
     height.value = dialogHeight
   }
-  function setDialogTop (topValue) {
-    top.value = typeof topValue !== 'undefined'
-      ? topValue
-      : calculateDialogTop(height.value)
+  function setPosition (topValue, bottomValue) {
+    top.value = getTopValue(topValue)
+    if (typeof bottomValue !== 'undefined') {
+      bottom.value = bottomValue
+    }
   }
   function openDialog () {
     show.value = true
-    emit(EMIT_NAME_RENDER_DIALOG, true)
+    emit(EMIT_RENDER_DIALOG, true)
 
     if (shouldControlOverflow.value) hideDocumentBodyOverflow()
   }
@@ -86,10 +103,10 @@ export function useDialog (props, emit) {
 
     const closeWork = () => {
       // close and destroy dialog
-      emit(EMIT_NAME_CLOSE, callback, data)
+      emit(EMIT_CLOSE, callback, data)
       options?.afterClose?.()
       // destroy DialogModalBox component
-      emit(EMIT_NAME_RENDER_DIALOG, false)
+      emit(EMIT_RENDER_DIALOG, false)
 
       if (shouldControlOverflow.value) restoreDocumentBodyOverflow()
     }
@@ -102,12 +119,14 @@ export function useDialog (props, emit) {
   function closeDialogWithoutCallback (options) {
     closeDialog(undefined, undefined, options)
   }
+  function setupPositionAdjustBehavior (setTop) {
+    useResizeAdjust(setTop)
 
-  useResizeAdjust(setDialogTop)
+    onBeforeMount(() => {
+      setTop()
+    })
+  }
 
-  onBeforeMount(() => {
-    setDialogTop()
-  })
   onMounted(() => {
     setTimeout(() => { dialogReady.value = true }, 300)
     useAutomaticClose(props, closeDialogWithCallback)
@@ -124,8 +143,9 @@ export function useDialog (props, emit) {
     closeDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,
-    setDialogTop,
-    setDialogSize
+    setPosition,
+    setDialogSize,
+    setupPositionAdjustBehavior
   }
 }
 
@@ -140,7 +160,7 @@ export function useAutomaticClose (props, close) {
   setTimeout(close, props.duration)
 }
 
-export function useResizeAdjust (callback, wait = 500) {
+export function useResizeAdjust (callback, wait = 200) {
   let timer
 
   function resizeHandler () {
