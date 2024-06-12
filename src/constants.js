@@ -24,6 +24,7 @@ export const MESSAGE_EXPAND_HEIGHT = 200
 export const MESSAGE_OFFSET = 40
 export const MESSAGE_PLACEMENT_TOP = 'top'
 export const MESSAGE_PLACEMENT_BOTTOM = 'bottom'
+export const MESSAGE_GAP = 15
 
 export const TOAST_MAX_CONTENT_LENGTH = 56
 export const TOAST_CLASS_WARNING = 'toast-warning'

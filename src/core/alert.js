@@ -78,7 +78,7 @@ export function getAlertSize (props) {
   return { width: ALERT_WIDTH, height }
 }
 
-export function getAlertClass (type) {
+export function getAlertTypeClass (type) {
   const types = [
     MESSAGE_TYPE_WARNING,
     MESSAGE_TYPE_ERROR,

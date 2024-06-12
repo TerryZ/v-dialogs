@@ -8,7 +8,7 @@ import {
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM
 } from '../../constants'
-import { getAlertClass } from '../../core/alert'
+import { getAlertTypeClass } from '../../core/alert'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'
@@ -28,7 +28,7 @@ export default {
     const classes = [
       'v-dialog-body',
       'v-dialog-alert',
-      getAlertClass(messageType)
+      getAlertTypeClass(messageType)
     ]
 
     function getIcon (type) {

@@ -1,15 +1,13 @@
-import { ref, computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 
 import {
-  MESSAGE_WIDTH,
-  MESSAGE_HEIGHT,
-  MESSAGE_EXPAND_HEIGHT,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_TYPE_CONFIRM,
   MESSAGE_PLACEMENT_BOTTOM,
-  MESSAGE_OFFSET
+  MESSAGE_OFFSET,
+  MESSAGE_PLACEMENT_TOP,
+  MESSAGE_GAP
 } from '../constants'
 import { useDialog } from './base'
 import { createDialog } from './manage'
@@ -28,26 +26,27 @@ export function useMessage (props, emit) {
     ...restItems
   } = useDialog(props, emit)
 
-  const expand = ref(false)
-  const messageHeight = computed(() => {
-    return expand.value ? MESSAGE_EXPAND_HEIGHT : MESSAGE_HEIGHT
-  })
   shouldControlOverflow.value = false
 
   function getMessageTop () {
+    if (props.placement === MESSAGE_PLACEMENT_BOTTOM) return
+
     const offset = props.offset || MESSAGE_OFFSET
-    if (props.placement === MESSAGE_PLACEMENT_BOTTOM) {
-      return window.innerHeight - offset - MESSAGE_HEIGHT
-    }
-    // top placement or the others
-    return offset
+
+    return offset + getNewPosition()
   }
-  function setMessageTop () {
-    setPosition(getMessageTop())
+  function getMessageBottom () {
+    if (props.placement === MESSAGE_PLACEMENT_TOP) return
+
+    const offset = props.offset || MESSAGE_OFFSET
+    return offset + getNewPosition()
+  }
+  function setMessagePosition () {
+    setPosition(getMessageTop(), getMessageBottom())
   }
 
-  setDialogSize(MESSAGE_WIDTH)
-  setupPositionAdjustBehavior(setMessageTop)
+  setDialogSize()
+  setupPositionAdjustBehavior(setMessagePosition)
 
   onMounted(() => {
     openDialog()
@@ -56,23 +55,32 @@ export function useMessage (props, emit) {
   return {
     ...restItems,
     lang: getLanguage(props.language),
-    closeDialogWithCallback,
-    backdropCloseDialog: closeDialogWithCallback
+    closeDialogWithCallback
   }
 }
 
-export function getAlertClass (type) {
+export function getMessageTypeClass (type) {
   const types = [
     MESSAGE_TYPE_WARNING,
     MESSAGE_TYPE_ERROR,
-    MESSAGE_TYPE_SUCCESS,
-    MESSAGE_TYPE_CONFIRM
+    MESSAGE_TYPE_SUCCESS
   ]
   if (!types.includes(type)) return ''
-  return `alert-${type}`
+  return `message-${type}`
 }
 
-export const isConfirmType = type => MESSAGE_TYPE_CONFIRM === type
+function getNewPosition () {
+  const nodes = document.querySelectorAll('div.v-dialog-message')
+  if (!nodes.length) return 0
+
+  let sum = 0
+
+  nodes.forEach(node => {
+    sum += MESSAGE_GAP + node.offsetHeight
+  })
+
+  return sum
+}
 
 /**
  * Open a message notification dialog

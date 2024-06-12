@@ -22,22 +22,37 @@
             Use icon
           </label>
         </div>
-
-        <div class="form-check">
+        <div class="form-check me-3">
           <input
             class="form-check-input"
             type="checkbox"
-            v-model="colorfulShadow"
+            v-model="closeBtn"
             :true-value="true"
             :false-value="false"
-            id="dialog-colorful-shadow"
+            id="dialog-use-icon"
           >
           <label
             class="form-check-label"
-            for="dialog-colorful-shadow"
+            for="dialog-use-icon"
           >
-            Colorful Shadow
+            Close button
           </label>
+        </div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckChecked"
+            true-value="top"
+            false-value="bottom"
+            checked
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="flexSwitchCheckChecked"
+          >Placement Top</label>
         </div>
       </div>
     </div>
@@ -54,7 +69,7 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="openMessage"
+          @click="openMessage()"
         >
           Info
         </button>
@@ -88,9 +103,9 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="autoClose"
+          @click="noAutoClose"
         >
-          Auto close Alert dialog
+          Do not auto close
         </button>
         <button
           type="button"
@@ -109,6 +124,13 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
+          @click="longTextWithCloseButton"
+        >
+          Long text with close button
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
           @click="bottomPlacement"
         >
           Show at bottom
@@ -123,22 +145,35 @@ import { ref } from 'vue'
 import { DialogMessage } from '@/'
 
 const icon = ref(true)
-const colorfulShadow = ref(true)
+const closeBtn = ref(true)
+const placement = ref('top')
 
 function openOneMessage () {
   DialogMessage('Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages')
 }
-function openMessage (type) {
-  DialogMessage('Hello, <b>world!</b>', () => {
-    DialogMessage('Dialog closed.')
+function openMessage (content = 'Hello world.', type = 'info') {
+  DialogMessage(content, () => {
+    // DialogMessage('Dialog closed.')
+    console.log('message closed.')
   }, {
     icon: icon.value,
-    messageType: typeof type === 'string' ? type : undefined,
-    colorfulShadow: colorfulShadow.value
+    messageType: type,
+    placement: placement.value,
+    closeButton: closeBtn.value
   })
 }
+function noAutoClose () {
+  DialogMessage('Hello world', { duration: 0 })
+}
 function closeButton () {
-  DialogMessage('Click close button to dismiss notification.', {
+  DialogMessage('Click close button to dismiss notification.', () => {
+    console.log('message closed.')
+  }, {
+    closeButton: true
+  })
+}
+function longTextWithCloseButton () {
+  DialogMessage('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', {
     closeButton: true
   })
 }

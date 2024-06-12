@@ -6,19 +6,29 @@ $borderRadius: .3rem
 
 .v-dialog-message
   background-color: transparent
-  margin: 0 auto
   overflow: unset
   transition: all .3s
   display: flex
+  justify-content: center
+  left: 50%
+  right: unset
+  transform: translateX(-50%)
   .v-dialog-body
     border-radius: 1rem
-    box-shadow: 0 2.5rem 8rem rgba(0, 0, 0, .8)
+    box-shadow: 0 2.5rem 8rem rgba(0, 0, 0, .9)
     overflow: hidden
     display: flex
     align-items: center
-    background-color: rgb(0,0,0,.3)
+    background-color: rgb(0,0,0,.35)
     backdrop-filter: saturate(180%) blur(12px)
-    // height: 100%
+    min-height: 52px
+    max-width: 500px
+    &.message-warning .v-dialog-message__prepend
+      @include icon-color-and-shadow(#FF9800, rgb(255,152,0,.95))
+    &.message-error .v-dialog-message__prepend
+      @include icon-color-and-shadow(#F44336, rgb(244,67,54,.95))
+    &.message-success .v-dialog-message__prepend
+      @include icon-color-and-shadow(#198754, rgb(25,135,84,.95))
   &__prepend,
   &__append
     width: 56px
@@ -28,29 +38,13 @@ $borderRadius: .3rem
     align-items: center
     font-size: 1.3rem
   &__body
-    // display: flex
+    display: flex
+    align-items: center
     font-size: 14px
     line-height: 1.3
     flex-grow: 1
-    margin: .5rem 1rem .5rem 0
+    padding: .5rem 1rem .5rem 0
     overflow: hidden
+    height: 100%
   &__close
     cursor: pointer
-  &.message-warning .v-dialog-message__icon
-    @include icon-color-and-shadow(#FF9800, rgb(255,152,0,.8))
-  &.message-error .v-dialog-message__icon
-    @include icon-color-and-shadow(#F44336, rgb(244,67,54,.8))
-  &.message-success .v-dialog-message__icon
-    @include icon-color-and-shadow(#198754, rgb(25,135,84,.8))
-
-=dialog-shadow($color)
-  box-shadow: 0 1rem 5rem $color !important
-
-.v-dialog__shadow--error
-  +dialog-shadow(rgba(255,0,0,0.5))
-
-.v-dialog__shadow--warning
-  +dialog-shadow(rgba(255,165,0,0.5))
-
-.v-dialog__shadow--success
-  +dialog-shadow(rgba(0,255,0,0.5))

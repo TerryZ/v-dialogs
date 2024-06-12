@@ -55,8 +55,10 @@ export function useDialog (props, emit) {
 
   // the style v-dialog-dialog used
   const dialogStyles = computed(() => {
-    const styles = { width: cssValue(width.value) }
-
+    const styles = {}
+    if (typeof width.value !== 'undefined') {
+      styles.width = cssValue(width.value)
+    }
     if (typeof height.value !== 'undefined') {
       styles.height = cssValue(height.value)
     }

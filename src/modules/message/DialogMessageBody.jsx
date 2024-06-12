@@ -8,6 +8,7 @@ import {
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM
 } from '../../constants'
+import { getMessageTypeClass } from '../../core/message'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'
@@ -37,7 +38,7 @@ export default {
       }
     }
     return () => (
-      <div class='v-dialog-body'>
+      <div class={['v-dialog-body', getMessageTypeClass(messageType)]}>
         {icon && (
           <div class='v-dialog-message__prepend'>
             {getIcon(messageType)}
