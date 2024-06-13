@@ -7,19 +7,27 @@ import {
   mergeProps
 } from 'vue'
 
-import { DIALOG_KEY_PREFIX } from '../constants'
+import { DIALOG_KEY_PREFIX, EVENT_MESSAGE_ADJUST_POSITION } from '../constants'
 
 const serialNumber = ref(0)
 
-const opening = ref([])
+export const opening = ref([])
+export const messageAdjustPositionEvent = new Event(EVENT_MESSAGE_ADJUST_POSITION)
 
 export function generateDialogKey () {
   serialNumber.value++
   return DIALOG_KEY_PREFIX + serialNumber.value
 }
 
-export function createDialog (component, options = {}) {
-  const { index, key } = addDialog()
+/**
+ * Render a new dialog to the DOM
+ * @param {VNode} component Component to render
+ * @param {object} options Component props
+ * @param {object} configs config properties add to opening list
+ * @returns {function} the function to close and destroy dialog
+ */
+export function createDialog (component, options = {}, configs) {
+  const { index, key } = addDialog(configs)
 
   // console.dir(options)
 
@@ -53,12 +61,14 @@ export function createDialog (component, options = {}) {
   return destroy
 }
 
-export function addDialog () {
+export function addDialog (configs) {
   const key = generateDialogKey()
   // console.log(key)
   opening.value.push({
     key,
-    singletonKey: ''
+    index: serialNumber.value,
+    singletonKey: '',
+    ...configs
   })
   return {
     key,
