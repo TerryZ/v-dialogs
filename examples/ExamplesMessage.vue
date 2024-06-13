@@ -76,21 +76,21 @@
         <button
           type="button"
           class="btn btn-outline-warning me-3"
-          @click="openMessage('warning')"
+          @click="openMessage(undefined, 'warning')"
         >
           Warning
         </button>
         <button
           type="button"
           class="btn btn-outline-danger me-3"
-          @click="openMessage('error')"
+          @click="openMessage(undefined, 'error')"
         >
           Error
         </button>
         <button
           type="button"
           class="btn btn-outline-success me-3"
-          @click="openMessage('success')"
+          @click="openMessage(undefined, 'success')"
         >
           Success
         </button>

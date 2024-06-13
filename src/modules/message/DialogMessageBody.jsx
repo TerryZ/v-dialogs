@@ -24,7 +24,7 @@ export default {
       message,
       messageType,
       closeButton,
-      closeDialogWithCallback
+      closeMessageWithCallback
     } = inject(propsInjectionKey)
 
     function getIcon (type) {
@@ -48,7 +48,7 @@ export default {
         {closeButton && (
           <div
             class='v-dialog-message__append'
-            onClick={closeDialogWithCallback}
+            onClick={closeMessageWithCallback}
           >
             <IconClose class='v-dialog-message__close' />
           </div>

@@ -49,6 +49,8 @@ export const MESSAGE_TYPE_CONFIRM = 'confirm'
 export const EMIT_CLOSE = 'close'
 export const EMIT_RENDER_DIALOG = 'render-dialog'
 
+export const EVENT_MESSAGE_ADJUST_POSITION = 'v-dialog-message-adjust-position'
+
 export const colorfulShadowTypes = [
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,

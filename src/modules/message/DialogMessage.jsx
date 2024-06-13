@@ -35,7 +35,7 @@ export default defineComponent({
     placement: { type: String, default: MESSAGE_PLACEMENT_TOP }
   }),
   emits: mergeDialogEmits(),
-  setup (props, { emit }) {
+  setup (props, { emit, expose }) {
     const {
       customClass,
       ...restItems
@@ -46,10 +46,15 @@ export default defineComponent({
       ...restItems
     })
 
+    expose({
+      offset: props.offset
+    })
+
     return () => (
       <DialogLiteContainer
         containerClass={['v-dialog-message', customClass]}
         transitionName='v-dialog--fade-lite'
+        id={props.dialogKey}
       >
         <DialogMessageBody />
       </DialogLiteContainer>

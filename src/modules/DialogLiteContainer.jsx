@@ -5,6 +5,7 @@ import { propsInjectionKey } from '../constants'
 export default {
   name: 'DialogLiteContainer',
   props: {
+    id: { type: [String, Number], default: '' },
     containerClass: { type: [String, Array, Object], default: '' },
     transitionName: { type: String, default: '' }
   },
@@ -18,6 +19,7 @@ export default {
     return () => (
       <Teleport to='body'>
         <div
+          id={props.id}
           class={['v-dialog-lite', props.containerClass]}
           style={{ ...dialogStyles.value, 'z-index': dialogZIndex }}
         >

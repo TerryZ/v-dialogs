@@ -7,10 +7,11 @@ import {
   MESSAGE_PLACEMENT_BOTTOM,
   MESSAGE_OFFSET,
   MESSAGE_PLACEMENT_TOP,
-  MESSAGE_GAP
+  MESSAGE_GAP,
+  MESSAGE
 } from '../constants'
 import { useDialog } from './base'
-import { createDialog } from './manage'
+import { createDialog, opening, messageAdjustPositionEvent } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 
 import TheDialogMessage from '../modules/message/DialogMessage'
@@ -28,21 +29,49 @@ export function useMessage (props, emit) {
 
   shouldControlOverflow.value = false
 
+  const offset = props.offset || MESSAGE_OFFSET
+  // get same placement Message configs
+  function getPreviousMessages () {
+    return opening.value.filter((item) => {
+      return item.type === MESSAGE &&
+      item.placement === props.placement &&
+      item.index < props.dialogIndex
+    })
+  }
+  function getVerticalPosition () {
+    const messages = getPreviousMessages()
+    console.log(messages)
+    if (!messages.length) return offset
+
+    let position = 0
+
+    messages.forEach(item => {
+      const el = document.getElementById(item.key)
+      position += el.offsetHeight + MESSAGE_GAP
+    })
+
+    return offset + position
+  }
   function getMessageTop () {
     if (props.placement === MESSAGE_PLACEMENT_BOTTOM) return
 
-    const offset = props.offset || MESSAGE_OFFSET
-
-    return offset + getNewPosition()
+    return getVerticalPosition()
   }
   function getMessageBottom () {
     if (props.placement === MESSAGE_PLACEMENT_TOP) return
 
-    const offset = props.offset || MESSAGE_OFFSET
-    return offset + getNewPosition()
+    return getVerticalPosition()
   }
   function setMessagePosition () {
     setPosition(getMessageTop(), getMessageBottom())
+  }
+  function closeMessageWithCallback (data) {
+    const options = {
+      afterClose: () => {
+        dispatchEvent(messageAdjustPositionEvent)
+      }
+    }
+    closeDialogWithCallback(data, options)
   }
 
   setDialogSize()
@@ -55,7 +84,7 @@ export function useMessage (props, emit) {
   return {
     ...restItems,
     lang: getLanguage(props.language),
-    closeDialogWithCallback
+    closeMessageWithCallback
   }
 }
 
@@ -69,18 +98,19 @@ export function getMessageTypeClass (type) {
   return `message-${type}`
 }
 
-function getNewPosition () {
-  const nodes = document.querySelectorAll('div.v-dialog-message')
-  if (!nodes.length) return 0
+// function getNewMessagePosition () {
+//   const nodes = document.querySelectorAll('div.v-dialog-message')
+//   // console.log(nodes)
+//   if (!nodes.length) return 0
 
-  let sum = 0
+//   let sum = 0
 
-  nodes.forEach(node => {
-    sum += MESSAGE_GAP + node.offsetHeight
-  })
+//   nodes.forEach(node => {
+//     sum += MESSAGE_GAP + node.offsetHeight
+//   })
 
-  return sum
-}
+//   return sum
+// }
 
 /**
  * Open a message notification dialog
@@ -91,5 +121,10 @@ function getNewPosition () {
  * @returns {function} call the function to close dialog
  */
 export function DialogMessage () {
-  return createDialog(TheDialogMessage, parseArgumentsToProps(...arguments))
+  const props = parseArgumentsToProps(...arguments)
+  const configs = {
+    type: MESSAGE,
+    placement: props.placement || MESSAGE_PLACEMENT_TOP
+  }
+  return createDialog(TheDialogMessage, props, configs)
 }
