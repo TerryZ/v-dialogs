@@ -1,3 +1,5 @@
+import { isVNode } from 'vue'
+
 import {
   MESSAGE_TYPE_CONFIRM,
   MESSAGE_TYPE_WARNING,
@@ -60,8 +62,8 @@ export function parseArgumentsToProps (param1, param2, param3) {
 
   const params = Array.from(arguments)
 
-  const props = params.find(val => typeof val === 'object') || {}
-  props.message = params.find(val => typeof val === 'string') || ''
+  const props = params.find(val => typeof val === 'object' && !isVNode(val)) || {}
+  props.message = params.find(val => typeof val === 'string' || isVNode(val)) || ''
   props.callback = params.find(val => typeof val === 'function')
 
   return props

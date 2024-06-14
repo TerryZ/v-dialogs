@@ -23,7 +23,7 @@ export const baseProps = {
   /** whether to display header */
   header: { type: Boolean, default: true },
   title: { type: String, default: '' },
-  message: { type: String, default: '' },
+  message: { type: [String, Object], default: '' },
   /** Dialog width */
   width: { type: Number, default: 0 },
   /** Dialog height */
@@ -50,6 +50,7 @@ export function useDialog (props, emit) {
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)
   const shouldControlOverflow = ref(true)
+  const shouldHandleResize = ref(true)
 
   const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
 
@@ -122,7 +123,7 @@ export function useDialog (props, emit) {
     closeDialog(undefined, undefined, options)
   }
   function setupPositionAdjustBehavior (setTop) {
-    useResizeAdjust(setTop)
+    if (shouldHandleResize.value) useResizeAdjust(setTop)
 
     onBeforeMount(() => {
       setTop()
@@ -137,6 +138,7 @@ export function useDialog (props, emit) {
   return {
     show,
     shouldControlOverflow,
+    shouldHandleResize,
     dialogStyles,
     contentStyles,
     dialogZIndex,
