@@ -29,11 +29,11 @@
             v-model="closeBtn"
             :true-value="true"
             :false-value="false"
-            id="dialog-use-icon"
+            id="dialog-close-button"
           >
           <label
             class="form-check-label"
-            for="dialog-use-icon"
+            for="dialog-close-button"
           >
             Close button
           </label>
@@ -141,7 +141,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import { DialogMessage } from '@/'
 
 const icon = ref(true)
@@ -149,7 +149,12 @@ const closeBtn = ref(true)
 const placement = ref('top')
 
 function openOneMessage () {
-  DialogMessage('Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages')
+  // using VNode content
+  const content = h('div', [
+    'Provide contextual feedback messages for typical user actions with ',
+    h('strong', 'the handful of available and flexible alert messages')
+  ])
+  DialogMessage(content)
 }
 function openMessage (content = 'Hello world.', type = 'info') {
   DialogMessage(content, () => {
@@ -169,6 +174,7 @@ function closeButton () {
   DialogMessage('Click close button to dismiss notification.', () => {
     console.log('message closed.')
   }, {
+    placement: placement.value,
     closeButton: true
   })
 }

@@ -8,7 +8,8 @@ import {
   MESSAGE_OFFSET,
   MESSAGE_PLACEMENT_TOP,
   MESSAGE_GAP,
-  MESSAGE
+  MESSAGE,
+  EVENT_MESSAGE_ADJUST_POSITION
 } from '../constants'
 import { useDialog } from './base'
 import { createDialog, opening, messageAdjustPositionEvent } from './manage'
@@ -22,11 +23,13 @@ export function useMessage (props, emit) {
     setDialogSize,
     openDialog,
     closeDialogWithCallback,
+    shouldHandleResize,
     shouldControlOverflow,
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
 
+  shouldHandleResize.value = false
   shouldControlOverflow.value = false
 
   const offset = props.offset || MESSAGE_OFFSET
@@ -40,7 +43,6 @@ export function useMessage (props, emit) {
   }
   function getVerticalPosition () {
     const messages = getPreviousMessages()
-    console.log(messages)
     if (!messages.length) return offset
 
     let position = 0
@@ -66,6 +68,7 @@ export function useMessage (props, emit) {
     setPosition(getMessageTop(), getMessageBottom())
   }
   function closeMessageWithCallback (data) {
+    removeEventListener(EVENT_MESSAGE_ADJUST_POSITION, setMessagePosition, false)
     const options = {
       afterClose: () => {
         dispatchEvent(messageAdjustPositionEvent)
@@ -76,6 +79,8 @@ export function useMessage (props, emit) {
 
   setDialogSize()
   setupPositionAdjustBehavior(setMessagePosition)
+
+  addEventListener(EVENT_MESSAGE_ADJUST_POSITION, setMessagePosition, false)
 
   onMounted(() => {
     openDialog()
@@ -97,20 +102,6 @@ export function getMessageTypeClass (type) {
   if (!types.includes(type)) return ''
   return `message-${type}`
 }
-
-// function getNewMessagePosition () {
-//   const nodes = document.querySelectorAll('div.v-dialog-message')
-//   // console.log(nodes)
-//   if (!nodes.length) return 0
-
-//   let sum = 0
-
-//   nodes.forEach(node => {
-//     sum += MESSAGE_GAP + node.offsetHeight
-//   })
-
-//   return sum
-// }
 
 /**
  * Open a message notification dialog
