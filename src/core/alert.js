@@ -26,6 +26,7 @@ export function useAlert (props, emit) {
     closeDialog,
     closeDialogWithCallback,
     setPosition,
+    setupAutomaticClose,
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
@@ -35,6 +36,7 @@ export function useAlert (props, emit) {
 
   setDialogSize(width, height)
   setupPositionAdjustBehavior(setPosition)
+  setupAutomaticClose(closeDialogWithCallback)
 
   function getShadowClass () {
     if (

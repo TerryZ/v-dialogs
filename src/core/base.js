@@ -129,10 +129,14 @@ export function useDialog (props, emit) {
       setTop()
     })
   }
+  function setupAutomaticClose (close) {
+    onMounted(() => {
+      useAutomaticClose(props, close)
+    })
+  }
 
   onMounted(() => {
     setTimeout(() => { dialogReady.value = true }, 300)
-    useAutomaticClose(props, closeDialogWithCallback)
   })
 
   return {
@@ -149,6 +153,7 @@ export function useDialog (props, emit) {
     closeDialogWithoutCallback,
     setPosition,
     setDialogSize,
+    setupAutomaticClose,
     setupPositionAdjustBehavior
   }
 }

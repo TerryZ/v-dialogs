@@ -25,6 +25,7 @@ export function useMessage (props, emit) {
     closeDialogWithCallback,
     shouldHandleResize,
     shouldControlOverflow,
+    setupAutomaticClose,
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
@@ -56,12 +57,10 @@ export function useMessage (props, emit) {
   }
   function getMessageTop () {
     if (props.placement === MESSAGE_PLACEMENT_BOTTOM) return
-
     return getVerticalPosition()
   }
   function getMessageBottom () {
     if (props.placement === MESSAGE_PLACEMENT_TOP) return
-
     return getVerticalPosition()
   }
   function setMessagePosition () {
@@ -79,6 +78,7 @@ export function useMessage (props, emit) {
 
   setDialogSize()
   setupPositionAdjustBehavior(setMessagePosition)
+  setupAutomaticClose(closeMessageWithCallback)
 
   addEventListener(EVENT_MESSAGE_ADJUST_POSITION, setMessagePosition, false)
 

@@ -30,12 +30,12 @@ export default defineComponent({
     colorfulShadow: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: false },
-    duration: { type: Number, default: 0 },
+    duration: { type: Number, default: 3000 },
     offset: { type: [String, Number], default: MESSAGE_OFFSET },
     placement: { type: String, default: MESSAGE_PLACEMENT_TOP }
   }),
   emits: mergeDialogEmits(),
-  setup (props, { emit, expose }) {
+  setup (props, { emit }) {
     const {
       customClass,
       ...restItems
@@ -44,10 +44,6 @@ export default defineComponent({
     provide(propsInjectionKey, {
       ...props,
       ...restItems
-    })
-
-    expose({
-      offset: props.offset
     })
 
     return () => (

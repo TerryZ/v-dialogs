@@ -19,6 +19,7 @@ export function useModal (props, emit) {
     openDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,
+    setupAutomaticClose,
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
@@ -61,6 +62,7 @@ export function useModal (props, emit) {
 
   setDialogSize(width, height)
   setupPositionAdjustBehavior(setModalTop)
+  setupAutomaticClose(closeModalWithCallback)
 
   onMounted(() => {
     openModal()

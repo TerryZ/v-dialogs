@@ -175,6 +175,7 @@ function closeButton () {
     console.log('message closed.')
   }, {
     placement: placement.value,
+    duration: 0,
     closeButton: true
   })
 }
