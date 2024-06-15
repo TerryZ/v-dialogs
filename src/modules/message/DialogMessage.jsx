@@ -1,6 +1,6 @@
 import '../../styles/message.sass'
 
-import { defineComponent, provide } from 'vue'
+import { defineComponent, provide, ref } from 'vue'
 
 import DialogMessageBody from './DialogMessageBody'
 import DialogLiteContainer from '../DialogLiteContainer'
@@ -32,19 +32,25 @@ export default defineComponent({
     closeButton: { type: Boolean, default: false },
     duration: { type: Number, default: 3000 },
     offset: { type: [String, Number], default: MESSAGE_OFFSET },
-    placement: { type: String, default: MESSAGE_PLACEMENT_TOP }
+    placement: { type: String, default: MESSAGE_PLACEMENT_TOP },
+    /** Pill style border */
+    pill: { type: Boolean, default: true }
   }),
   emits: mergeDialogEmits(),
   setup (props, { emit }) {
     const {
       customClass,
+      handleBodyRounded,
       ...restItems
     } = useMessage(props, emit)
+    const body = ref()
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems
     })
+
+    handleBodyRounded(body)
 
     return () => (
       <DialogLiteContainer
@@ -52,7 +58,7 @@ export default defineComponent({
         transitionName='v-dialog--fade-lite'
         id={props.dialogKey}
       >
-        <DialogMessageBody />
+        <DialogMessageBody ref={body} />
       </DialogLiteContainer>
     )
   }

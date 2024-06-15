@@ -21,11 +21,19 @@ export default {
   setup () {
     const {
       icon,
+      pill,
       message,
       messageType,
       closeButton,
       closeMessageWithCallback
     } = inject(propsInjectionKey)
+
+    const bodyClass = [
+      'v-dialog-body',
+      pill && 'v-dialog-message--pill',
+      icon || 'v-dialog-message--no-icon',
+      getMessageTypeClass(messageType)
+    ]
 
     function getIcon (type) {
       switch (type) {
@@ -38,7 +46,7 @@ export default {
       }
     }
     return () => (
-      <div class={['v-dialog-body', getMessageTypeClass(messageType)]}>
+      <div class={bodyClass}>
         {icon && (
           <div class='v-dialog-message__prepend'>
             {getIcon(messageType)}

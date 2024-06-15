@@ -1,4 +1,4 @@
-import { onMounted } from 'vue'
+import { onMounted, nextTick } from 'vue'
 
 import {
   MESSAGE_TYPE_WARNING,
@@ -29,11 +29,11 @@ export function useMessage (props, emit) {
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
+  const offset = props.offset || MESSAGE_OFFSET
 
   shouldHandleResize.value = false
   shouldControlOverflow.value = false
 
-  const offset = props.offset || MESSAGE_OFFSET
   // get same placement Message configs
   function getPreviousMessages () {
     return opening.value.filter((item) => {
@@ -75,6 +75,16 @@ export function useMessage (props, emit) {
     }
     closeDialogWithCallback(data, options)
   }
+  function handleBodyRounded (body) {
+    onMounted(() => {
+      nextTick(() => {
+        // long text
+        if (body.value.$el.offsetHeight > 60) {
+          body.value.$el.classList.remove('v-dialog-message--pill')
+        }
+      })
+    })
+  }
 
   setDialogSize()
   setupPositionAdjustBehavior(setMessagePosition)
@@ -89,6 +99,7 @@ export function useMessage (props, emit) {
   return {
     ...restItems,
     lang: getLanguage(props.language),
+    handleBodyRounded,
     closeMessageWithCallback
   }
 }
