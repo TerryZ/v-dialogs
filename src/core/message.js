@@ -8,11 +8,10 @@ import {
   MESSAGE_OFFSET,
   MESSAGE_PLACEMENT_TOP,
   MESSAGE_GAP,
-  MESSAGE,
-  EVENT_MESSAGE_ADJUST_POSITION
+  MESSAGE
 } from '../constants'
-import { useDialog } from './base'
-import { createDialog, opening, messageAdjustPositionEvent } from './manage'
+import { useDialog, useGroupItemPositionAdjust } from './base'
+import { createDialog, opening } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 
 import TheDialogMessage from '../modules/message/DialogMessage'
@@ -29,6 +28,11 @@ export function useMessage (props, emit) {
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
+  const {
+    bindPositionAdjust,
+    unbindPositionAdjust,
+    triggerPositionAdjust
+  } = useGroupItemPositionAdjust(setMessagePosition)
   const offset = props.offset || MESSAGE_OFFSET
 
   shouldHandleResize.value = false
@@ -67,10 +71,10 @@ export function useMessage (props, emit) {
     setPosition(getMessageTop(), getMessageBottom())
   }
   function closeMessageWithCallback (data) {
-    removeEventListener(EVENT_MESSAGE_ADJUST_POSITION, setMessagePosition, false)
+    unbindPositionAdjust()
     const options = {
       afterClose: () => {
-        dispatchEvent(messageAdjustPositionEvent)
+        triggerPositionAdjust()
       }
     }
     closeDialogWithCallback(data, options)
@@ -89,8 +93,7 @@ export function useMessage (props, emit) {
   setDialogSize()
   setupPositionAdjustBehavior(setMessagePosition)
   setupAutomaticClose(closeMessageWithCallback)
-
-  addEventListener(EVENT_MESSAGE_ADJUST_POSITION, setMessagePosition, false)
+  bindPositionAdjust()
 
   onMounted(() => {
     openDialog()

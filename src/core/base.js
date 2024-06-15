@@ -7,7 +7,8 @@ import {
   hideDocumentBodyOverflow,
   restoreDocumentBodyOverflow
 } from './helper'
-import { EMIT_CLOSE, EMIT_RENDER_DIALOG } from '../constants'
+import { messageAdjustPositionEvent } from './manage'
+import { EMIT_CLOSE, EMIT_RENDER_DIALOG, EVENT_MESSAGE_ADJUST_POSITION } from '../constants'
 import { EN } from '../language'
 
 export const baseProps = {
@@ -184,4 +185,12 @@ export function useResizeAdjust (callback, wait = 200) {
   onUnmounted(() => {
     removeEventListener('resize', resizeHandler, false)
   })
+}
+
+export function useGroupItemPositionAdjust (handler) {
+  return {
+    bindPositionAdjust: () => addEventListener(EVENT_MESSAGE_ADJUST_POSITION, handler, false),
+    unbindPositionAdjust: () => removeEventListener(EVENT_MESSAGE_ADJUST_POSITION, handler, false),
+    triggerPositionAdjust: () => dispatchEvent(messageAdjustPositionEvent)
+  }
 }
