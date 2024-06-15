@@ -70,7 +70,7 @@ export function parseArgumentsToProps (param1, param2, param3) {
 }
 
 /**
- * Calculate the top of the dialog
+ * The top value to center the dialog
  * @param {number} height - dialog height
  */
 export function calculateDialogTop (height) {

@@ -79,12 +79,14 @@ export function useMessage (props, emit) {
     }
     closeDialogWithCallback(data, options)
   }
+  // Remove pill style when long text content
   function handleBodyRounded (body) {
+    if (!props.pill) return
     onMounted(() => {
       nextTick(() => {
         // long text
-        if (body.value.$el.offsetHeight > 60) {
-          body.value.$el.classList.remove('v-dialog-message--pill')
+        if (body.value?.$el?.offsetHeight > 60) {
+          body.value?.$el?.classList?.remove('v-dialog-message--pill')
         }
       })
     })

@@ -99,6 +99,16 @@ export function useDialog (props, emit) {
 
     if (shouldControlOverflow.value) hideDocumentBodyOverflow()
   }
+  /**
+   * Close dialog
+   * @param {function} callback callback function after dialog closed
+   * @param {unknown} data the data that will be returned to the caller
+   * @param {object} options custom options and life cycle
+   *
+   * Life cycle
+   * - closing
+   * - afterClose
+   */
   function closeDialog (callback, data, options) {
     if (!dialogReady.value) return
 
