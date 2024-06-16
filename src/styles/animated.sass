@@ -42,8 +42,6 @@
 .v-dialog--fade-enter-active,
 .v-dialog--fade-leave-active
   will-change: opacity
-  // transition: opacity 2000ms
-  // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
   transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
   // transform: translateZ(0)
 .v-dialog--fade-enter-from,
@@ -54,11 +52,9 @@
 .v-dialog--fade-lite-enter-active,
 .v-dialog--fade-lite-leave-active
   will-change: opacity
-  // transition: opacity 2000ms
-  // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
   // transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
   // transform: translateZ(0)
-  transition: opacity .3s
+  transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
 .v-dialog--fade-lite-enter-from,
 .v-dialog--fade-lite-leave-to
   opacity: 0

@@ -27,7 +27,6 @@ export default {
 
     const classes = [
       'v-dialog-body',
-      'v-dialog-alert',
       getAlertTypeClass(messageType)
     ]
 

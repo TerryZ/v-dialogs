@@ -4,7 +4,6 @@ import {
   ALERT_WIDTH_LARGE,
   ALERT_HEIGHT_LARGE,
   ALERT_HEIGHT,
-  ALERT_HEIGHT_NO_HEADER,
   ALERT_WIDTH,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
@@ -70,14 +69,13 @@ export function useAlert (props, emit) {
  * @returns {object} dialog size
  */
 export function getAlertSize (props) {
-  const { message, header } = props
+  const { message } = props
   // large text
   if (message.length > ALERT_MAX_CONTENT_LENGTH) {
     return { width: ALERT_WIDTH_LARGE, height: ALERT_HEIGHT_LARGE }
   }
 
-  const height = header ? ALERT_HEIGHT : ALERT_HEIGHT_NO_HEADER
-  return { width: ALERT_WIDTH, height }
+  return { width: ALERT_WIDTH, height: ALERT_HEIGHT }
 }
 
 export function getAlertTypeClass (type) {

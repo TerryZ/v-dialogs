@@ -97,7 +97,7 @@
 
     <div class="mb-3">
       <h5>Features</h5>
-      <div class="">
+      <div class="mb-3">
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
@@ -125,6 +125,23 @@
           @click="largeText"
         >
           Large Text
+        </button>
+      </div>
+
+      <div class="mb-3">
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noParameters"
+        >
+          No parameters
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noHeader"
+        >
+          No header
         </button>
       </div>
     </div>
@@ -180,5 +197,11 @@ function backdropClose () {
 }
 function largeText () {
   DialogAlert('Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+}
+function noParameters () {
+  DialogAlert()
+}
+function noHeader () {
+  DialogAlert('Hello world', { header: false })
 }
 </script>

@@ -12,7 +12,6 @@ export const TITLE_TEXT_MAX_LENGTH = 30
 export const ALERT_WIDTH = 450
 export const ALERT_WIDTH_LARGE = 700
 export const ALERT_HEIGHT = 210
-export const ALERT_HEIGHT_NO_HEADER = 180
 export const ALERT_HEIGHT_LARGE = 400
 export const ALERT_MAX_CONTENT_LENGTH = 70
 

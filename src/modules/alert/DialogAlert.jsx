@@ -42,6 +42,7 @@ export default defineComponent({
 
     return () => (
       <DialogContainer
+        bodyClass={['v-dialog-alert', { 'no-header': !props.header }]}
         contentClass={['v-dialog-content', getShadowClass()]}
         transitionName='v-dialog--candy'
       >
