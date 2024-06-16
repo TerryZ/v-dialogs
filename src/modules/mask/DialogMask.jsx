@@ -16,12 +16,16 @@ export default defineComponent({
     pill: { type: Boolean, default: true }
   }),
   emits: mergeDialogEmits(),
-  setup (props, { emit }) {
-    const { messageText, ...restItems } = useMask(props, emit)
+  setup (props, { emit, expose }) {
+    const { messageText, closeDialogWithCallback, ...restItems } = useMask(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems
+    })
+
+    expose({
+      close: closeDialogWithCallback
     })
 
     return () => (
