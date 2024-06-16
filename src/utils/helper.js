@@ -1,11 +1,5 @@
 import languages, { EN } from '../language'
 import {
-  ALERT_HEIGHT,
-  ALERT_HEIGHT_LARGE,
-  ALERT_HEIGHT_NO_HEADER,
-  ALERT_WIDTH,
-  ALERT_WIDTH_LARGE,
-  ALERT_MAX_CONTENT_LENGTH,
   MESSAGE_TYPE_INFO,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
@@ -45,24 +39,6 @@ export function getTitle (type, language) {
     case MESSAGE_TYPE_CONFIRM: return i18n.titleConfirm
     default: return i18n.titleInfo
   }
-}
-
-/**
- * Get Alert dialog size
- * @param {object} option - dialog options
- * @returns {object} dialog size
- */
-export function getAlertSize (option) {
-  const { message, title } = option
-  const isLargeText = message.length > ALERT_MAX_CONTENT_LENGTH
-
-  if (isLargeText) {
-    return { width: ALERT_WIDTH_LARGE, height: ALERT_HEIGHT_LARGE }
-  }
-
-  const isHaveHeader = typeof title === 'string' || typeof title === 'undefined'
-  const height = isHaveHeader ? ALERT_HEIGHT : ALERT_HEIGHT_NO_HEADER
-  return { width: ALERT_WIDTH, height }
 }
 
 /**

@@ -10,7 +10,6 @@ import {
 } from '../constants'
 import {
   getTitle,
-  getAlertSize,
   getToastTheme,
   getToastIcon,
   getLanguage
@@ -51,9 +50,9 @@ export function parseArguments (param1, param2, param3) {
 export function generateAlertOption () {
   const options = Object.assign({}, defaultAlertOptions, parseArguments(...arguments))
 
-  const { width, height } = getAlertSize(options)
-  options.width = width
-  options.height = height
+  // const { width, height } = getAlertSize(options)
+  // options.width = width
+  // options.height = height
   return options
 }
 
