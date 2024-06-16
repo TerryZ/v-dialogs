@@ -14,7 +14,7 @@ import { instanceApi, DialogHelper } from './utils/instance'
 export { DialogAlert } from './core/alert'
 export { DialogModal } from './core/modal'
 export { default as DialogModalBox } from './modules/modal/DialogModalBox'
-export { DialogMask } from './utils/instance'
+export { DialogMask } from './core/mask'
 export { DialogMessage } from './core/message'
 export { DialogHelper }
 

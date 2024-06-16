@@ -2,7 +2,7 @@ import '../styles/mask.sass'
 
 import { ref, computed, onMounted, h } from 'vue'
 import { textTruncate, calculateDialogZIndex } from '../utils/helper'
-import { MASK_MAX_CONTENT_LENGTH } from '../constants'
+// import { MASK_MAX_CONTENT_LENGTH } from '../constants'
 import { commonEmits, commonProps, useDialog } from '../utils/dialog'
 import { useRenderPopup } from '../utils/render'
 
@@ -25,9 +25,9 @@ export default {
     const bodyHeight = ref(0)
 
     const messageText = computed(() => {
-      if (props.message.length > MASK_MAX_CONTENT_LENGTH) {
-        return textTruncate(props.message, MASK_MAX_CONTENT_LENGTH)
-      }
+      // if (props.message.length > MASK_MAX_CONTENT_LENGTH) {
+      //   return textTruncate(props.message, MASK_MAX_CONTENT_LENGTH)
+      // }
       return props.message
     })
 

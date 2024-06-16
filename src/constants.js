@@ -15,8 +15,6 @@ export const ALERT_HEIGHT = 210
 export const ALERT_HEIGHT_LARGE = 400
 export const ALERT_MAX_CONTENT_LENGTH = 70
 
-export const MASK_MAX_CONTENT_LENGTH = 65
-
 export const MESSAGE_WIDTH = 350
 export const MESSAGE_HEIGHT = 56
 export const MESSAGE_EXPAND_HEIGHT = 200

@@ -46,15 +46,15 @@
   // transform: translateZ(0)
 .v-dialog--fade-enter-from,
 .v-dialog--fade-leave-to
-  will-change: opacity
-  opacity: 0 !important
+  opacity: 0
 
 .v-dialog--fade-lite-enter-active,
 .v-dialog--fade-lite-leave-active
   will-change: opacity
   // transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
   // transform: translateZ(0)
-  transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
+  transition: opacity .3s ease-in-out
+
 .v-dialog--fade-lite-enter-from,
 .v-dialog--fade-lite-leave-to
   opacity: 0

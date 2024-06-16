@@ -1,8 +1,8 @@
-import { ref, Transition, Teleport, inject } from 'vue'
+import { ref, Transition, Teleport, inject, defineComponent } from 'vue'
 
 import { propsInjectionKey } from '../constants'
 
-export default {
+export default defineComponent({
   name: 'DialogContainer',
   props: {
     contentClass: { type: [String, Array, Object], default: '' },
@@ -98,4 +98,4 @@ export default {
 
     return () => [generateBackdrop(), generateContainer()]
   }
-}
+})
