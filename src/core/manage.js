@@ -29,8 +29,6 @@ export function generateDialogKey () {
 export function createDialog (component, options = {}, configs) {
   const { index, key } = addDialog(configs)
 
-  // console.dir(options)
-
   const props = {
     dialogKey: key,
     dialogIndex: index,
@@ -58,7 +56,9 @@ export function createDialog (component, options = {}, configs) {
     closeDialog(key)
   }
 
-  return destroy
+  return () => {
+    dialog.component.exposed.close()
+  }
 }
 
 export function addDialog (configs) {
