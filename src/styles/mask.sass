@@ -1,7 +1,14 @@
 /* Mask */
 .v-dialog-mask
-  &.v-dialog-mask--pill .v-dialog-content
+  &#{&}--pill .v-dialog-content
     border-radius: 50rem
+  &#{&}--no-icon .v-dialog-mask__content
+    margin-left: 2rem !important
+  &#{&}--no-panel
+    .v-dialog-content
+      box-shadow: none !important
+      background-color: transparent
+      // color: white !important
   .v-dialog-dialog
     display: flex
     justify-content: center
@@ -14,6 +21,7 @@
     align-items: center
     min-width: 300px
     max-width: 400px
+    color: #333
     .v-dialog-mask__content,
     .v-dialog-mask__icon
       display: flex
@@ -23,7 +31,6 @@
       font-size: 1rem
       line-height: 1.3
       overflow-y: hidden
-      color: #333
       display: -webkit-box
       -webkit-box-orient: vertical
       -webkit-line-clamp: 2

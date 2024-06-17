@@ -7,6 +7,7 @@ export default defineComponent({
   props: {
     contentClass: { type: [String, Array, Object], default: '' },
     bodyClass: { type: [String, Array, Object], default: '' },
+    backdropClass: { type: [String, Array, Object], default: '' },
     /** Dialog transition name */
     transitionName: { type: String, default: '' }
   },
@@ -49,7 +50,7 @@ export default defineComponent({
           >
             {() => show.value && (
               <div
-                class='v-dialog-overlay'
+                class={['v-dialog-overlay', props.backdropClass]}
                 style={{ 'z-index': backdropZIndex }}
               />
             )}

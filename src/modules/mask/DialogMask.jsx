@@ -13,7 +13,9 @@ export default defineComponent({
   name: 'DialogMask',
   props: mergeDialogProps({
     appendTo: { type: String, default: 'body' },
-    pill: { type: Boolean, default: true }
+    pill: { type: Boolean, default: true },
+    icon: { type: Boolean, default: true },
+    panel: { type: Boolean, default: true }
   }),
   emits: mergeDialogEmits(),
   setup (props, { emit, expose }) {
@@ -24,13 +26,23 @@ export default defineComponent({
       ...restItems
     })
 
+    const classes = [
+      'v-dialog-mask',
+      {
+        'v-dialog-mask--pill': props.pill,
+        'v-dialog-mask--no-icon': !props.icon,
+        'v-dialog-mask--no-panel': !props.panel
+      }
+    ]
+
     expose({
       close: closeDialogWithCallback
     })
 
     return () => (
       <DialogContainer
-        bodyClass={['v-dialog-mask', { 'v-dialog-mask--pill': props.pill }]}
+        bodyClass={classes}
+        backdropClass={{ 'v-dialog-overlay--blur': !props.panel }}
         contentClass={['v-dialog-content']}
         transitionName='v-dialog--smooth'
       >
