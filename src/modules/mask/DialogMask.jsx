@@ -19,7 +19,11 @@ export default defineComponent({
   }),
   emits: mergeDialogEmits(),
   setup (props, { emit, expose }) {
-    const { messageText, closeDialogWithCallback, ...restItems } = useMask(props, emit)
+    const {
+      messageText,
+      closeDialogWithCallback,
+      ...restItems
+    } = useMask(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
@@ -41,10 +45,11 @@ export default defineComponent({
 
     return () => (
       <DialogContainer
-        bodyClass={classes}
-        backdropClass={{ 'v-dialog-overlay--blur': !props.panel }}
-        contentClass={['v-dialog-content']}
-        transitionName='v-dialog--smooth'
+        body-class={classes}
+        backdrop-class={{ 'v-dialog-overlay--blur': !props.panel }}
+        content-class={['v-dialog-content']}
+        transition-name='v-dialog--smooth'
+        append-to={props.appendTo}
       >
         <DialogMaskBody>{() => messageText.value}</DialogMaskBody>
       </DialogContainer>

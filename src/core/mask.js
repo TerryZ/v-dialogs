@@ -8,6 +8,8 @@ import TheDialogMask from '../modules/mask/DialogMask'
 
 export function useMask (props, emit) {
   const {
+    shouldControlOverflow,
+    shouldHandleResize,
     setDialogSize,
     openDialog,
     closeDialog,
@@ -19,8 +21,12 @@ export function useMask (props, emit) {
   } = useDialog(props, emit)
 
   const lang = getLanguage(props.language)
-
   const messageText = computed(() => props.message || lang.maskText)
+
+  if (props.appendTo !== 'body') {
+    shouldControlOverflow.value = false
+    shouldControlOverflow.value = false
+  }
 
   setDialogSize(undefined, 60)
   setupPositionAdjustBehavior(setPosition)

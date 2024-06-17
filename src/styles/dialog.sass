@@ -12,10 +12,12 @@ $borderRadius: .8rem
 .v-dialog
   top: 0
   bottom: 0
+  &#{&}--embedded
+    position: absolute
   &.v-dialog-open
     overflow: hidden
   /* Window maximize */
-  &.v-dialog--maximize
+  &#{&}--maximize
     border-radius: 0
     padding-right: 0 !important
     .v-dialog-dialog
@@ -122,6 +124,8 @@ $borderRadius: .8rem
   background-color: rgba(0, 0, 0, .5)
   &#{&}--blur
     backdrop-filter: blur(3px)
+  &#{&}--embedded
+    position: absolute
 
 .v-dialog-icon
   display: inline-flex

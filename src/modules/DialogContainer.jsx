@@ -9,7 +9,8 @@ export default defineComponent({
     bodyClass: { type: [String, Array, Object], default: '' },
     backdropClass: { type: [String, Array, Object], default: '' },
     /** Dialog transition name */
-    transitionName: { type: String, default: '' }
+    transitionName: { type: String, default: '' },
+    appendTo: { type: [String, HTMLElement], default: 'body' }
   },
   setup (props, { slots }) {
     const {
@@ -42,15 +43,21 @@ export default defineComponent({
     function generateBackdrop () {
       if (!backdrop) return
 
+      const classes = [
+        'v-dialog-overlay',
+        props.backdropClass,
+        { 'v-dialog-overlay--embedded': props.backdropClass !== 'body' }
+      ]
+
       return (
-        <Teleport to='body'>
+        <Teleport to={props.appendTo}>
           <Transition
             name='v-dialog--fade'
             appear={true}
           >
             {() => show.value && (
               <div
-                class={['v-dialog-overlay', props.backdropClass]}
+                class={classes}
                 style={{ 'z-index': backdropZIndex }}
               />
             )}
@@ -61,8 +68,11 @@ export default defineComponent({
     function generateContainer () {
       const bodyClasses = [
         'v-dialog',
-        { 'v-dialog--buzz-out': shaking.value },
-        props.bodyClass
+        props.bodyClass,
+        {
+          'v-dialog--buzz-out': shaking.value,
+          'v-dialog--embedded': props.backdropClass !== 'body'
+        }
       ]
       const contentClasses = [props.contentClass, customClass]
       const backdropClick = e => {
@@ -71,7 +81,7 @@ export default defineComponent({
       }
 
       return (
-        <Teleport to='body'>
+        <Teleport to={props.appendTo}>
           <div
             class={bodyClasses}
             style={{ 'z-index': dialogZIndex }}
