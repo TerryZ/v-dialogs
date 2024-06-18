@@ -46,7 +46,7 @@ export function useDialog (props, emit) {
   const show = ref(false)
   const width = ref(0)
   const height = ref(0)
-  const top = ref(0)
+  const top = ref()
   const bottom = ref()
   // Dialog displayed and the animation is complete
   const dialogReady = ref(false)

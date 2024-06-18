@@ -42,13 +42,15 @@ export default defineComponent({
 
     return () => (
       <DialogContainer
-        bodyClass={['v-dialog-alert', { 'no-header': !props.header }]}
-        contentClass={['v-dialog-content', getShadowClass()]}
-        transitionName='v-dialog--candy'
+        body-class={['v-dialog--screen-center', 'v-dialog-alert', { 'no-header': !props.header }]}
+        content-class={['v-dialog-content', getShadowClass()]}
+        transition-name='v-dialog--candy'
       >
-        {props.header && <DialogAlertHeader />}
-        <DialogAlertBody />
-        <DialogAlertFooter />
+        <div>
+          {props.header && <DialogAlertHeader />}
+          <DialogAlertBody />
+          <DialogAlertFooter />
+        </div>
       </DialogContainer>
     )
   }

@@ -49,31 +49,6 @@ export default defineComponent({
         { 'v-dialog-overlay--embedded': props.appendTo !== 'body' }
       ]
 
-      return (
-        <Teleport to={props.appendTo}>
-          <Transition
-            name='v-dialog--fade'
-            appear={true}
-          >
-            {() => show.value && (
-              <div
-                class={classes}
-                style={{ 'z-index': backdropZIndex }}
-              />
-            )}
-          </Transition>
-        </Teleport>
-      )
-    }
-    function generateContainer () {
-      const bodyClasses = [
-        props.bodyClass,
-        {
-          'v-dialog--buzz-out': shaking.value,
-          'v-dialog--embedded': props.appendTo !== 'body'
-        }
-      ]
-      const contentClasses = [props.contentClass, customClass]
       const backdropClick = e => {
         if (e.target !== e.currentTarget) return
         outsideClick()
@@ -81,26 +56,49 @@ export default defineComponent({
 
       return (
         <Teleport to={props.appendTo}>
-          <div
-            class={['v-dialog', bodyClasses]}
-            style={{ 'z-index': dialogZIndex }}
-            onClick={backdropClick}
+          <Transition
+            name='v-dialog--fade'
+            appear
           >
-            <div class='v-dialog-dialog' style={dialogStyles.value}>
+            {() => show.value && (
+              <div
+                class={classes}
+                style={{ 'z-index': backdropZIndex }}
+                onClick={backdropClick}
+              />
+            )}
+          </Transition>
+        </Teleport>
+      )
+    }
+    function generateContainer () {
+      const classes = [
+        props.bodyClass,
+        props.contentClass,
+        customClass,
+        {
+          'v-dialog--buzz-out': shaking.value,
+          'v-dialog--embedded': props.appendTo !== 'body'
+        }
+      ]
+      const styles = {
+        ...dialogStyles.value,
+        ...contentStyles.value,
+        'z-index': dialogZIndex
+      }
+
+      return (
+        <Teleport to={props.appendTo}>
+          <div
+            class={['v-dialog', classes]}
+            style={styles}
+          >
               <Transition
                 name={props.transitionName}
-                appear={true}
+                appear
               >
-                {() => show.value && (
-                  <div
-                    class={contentClasses}
-                    style={contentStyles.value}
-                  >
-                    {slots.default && slots.default()}
-                  </div>
-                )}
+                {() => show.value && (slots.default && slots.default())}
               </Transition>
-            </div>
           </div>
         </Teleport>
       )

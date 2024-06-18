@@ -34,7 +34,7 @@ export function useAlert (props, emit) {
   const lang = getLanguage(props.language)
 
   setDialogSize(width, height)
-  setupPositionAdjustBehavior(setPosition)
+  // setupPositionAdjustBehavior(setPosition)
   setupAutomaticClose(closeDialogWithCallback)
 
   function getShadowClass () {
