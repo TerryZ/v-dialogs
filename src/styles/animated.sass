@@ -1,11 +1,5 @@
 /* css animate */
 
-@keyframes timerhand
-  0%
-    transform: rotate(0deg)
-  100%
-    transform: rotate(360deg)
-
 @keyframes animated-dialog-open
   0%
     transform: scale(0.7)
@@ -19,7 +13,7 @@
 /* modal, alert, mask show up animated */
 .v-dialog--candy-enter-active
   will-change: transform
-  animation: animated-dialog-open 300ms ease-in-out
+  animation: animated-dialog-open 300ms ease-out
   transform: translate3d(0, 0, 0)
 .v-dialog--candy-leave-active
   will-change: transform, opacity
