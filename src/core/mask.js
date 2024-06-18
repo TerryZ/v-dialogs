@@ -24,7 +24,7 @@ export function useMask (props, emit) {
   const messageText = computed(() => props.message || lang.maskText)
 
   if (props.appendTo !== 'body') {
-    shouldControlOverflow.value = false
+    shouldHandleResize.value = false
     shouldControlOverflow.value = false
   }
 

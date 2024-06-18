@@ -46,7 +46,7 @@ export default defineComponent({
       const classes = [
         'v-dialog-overlay',
         props.backdropClass,
-        { 'v-dialog-overlay--embedded': props.backdropClass !== 'body' }
+        { 'v-dialog-overlay--embedded': props.appendTo !== 'body' }
       ]
 
       return (
@@ -67,11 +67,10 @@ export default defineComponent({
     }
     function generateContainer () {
       const bodyClasses = [
-        'v-dialog',
         props.bodyClass,
         {
           'v-dialog--buzz-out': shaking.value,
-          'v-dialog--embedded': props.backdropClass !== 'body'
+          'v-dialog--embedded': props.appendTo !== 'body'
         }
       ]
       const contentClasses = [props.contentClass, customClass]
@@ -83,7 +82,7 @@ export default defineComponent({
       return (
         <Teleport to={props.appendTo}>
           <div
-            class={bodyClasses}
+            class={['v-dialog', bodyClasses]}
             style={{ 'z-index': dialogZIndex }}
             onClick={backdropClick}
           >
