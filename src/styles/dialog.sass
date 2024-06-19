@@ -1,4 +1,4 @@
-$borderRadius: .8rem
+@import variable
 
 // .v-dialog,
 // .v-dialog-lite
@@ -36,6 +36,7 @@ $borderRadius: .8rem
       border-radius: 0
     .v-dialog-header
       background-color: #eee
+  // TODO:to remove
   .v-dialog-dialog
     position: relative
     margin: 0 auto
@@ -46,7 +47,7 @@ $borderRadius: .8rem
     position: relative
     background-color: white
     box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
-    border-radius: $borderRadius
+    border-radius: $border-radius
     border: 0
     overflow: hidden
     display: flex
@@ -65,10 +66,11 @@ $borderRadius: .8rem
       flex-grow: 1
       display: flex
       align-items: center
+      color: #666
     button
-      transition: all .3s ease-out
-      height: 100%
       width: 60px
+      height: 100%
+      transition: all .3s ease-out
       text-shadow: none
       outline: none !important
       margin: 0
