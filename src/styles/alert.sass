@@ -1,16 +1,15 @@
-$borderRadius: .3rem
-
 @mixin icon-color-and-shadow($color, $shadow-color)
   color: $color
   filter: drop-shadow(4px 5px 5px $shadow-color)
 
 .v-dialog-alert
   // min-height: 100%
-  overflow: hidden
-  display: flex
-  flex-direction: column
-  background-color: white
-  .no-icon .v-dialog-alert__content
+  .v-dialog-content
+    overflow: hidden
+    display: flex
+    flex-direction: column
+    background-color: white
+  &.no-icon .v-dialog-alert__content
     padding-left: 15px
   &.no-header .v-dialog-alert__content
     padding-top: 2rem
@@ -44,9 +43,7 @@ $borderRadius: .3rem
 
 .v-dialog__shadow--error
   +dialog-shadow(rgba(255,0,0,0.5))
-
 .v-dialog__shadow--warning
   +dialog-shadow(rgba(255,165,0,0.5))
-
 .v-dialog__shadow--success
   +dialog-shadow(rgba(0,255,0,0.5))

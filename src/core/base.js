@@ -44,6 +44,7 @@ export const baseEmits = [EMIT_CLOSE, EMIT_RENDER_DIALOG]
 
 export function useDialog (props, emit) {
   const show = ref(false)
+  const shaking = ref(false)
   const width = ref(0)
   const height = ref(0)
   const top = ref()
@@ -73,6 +74,7 @@ export function useDialog (props, emit) {
     return styles
   })
   // the style v-dialog-content used
+  // TODO: to remove
   const contentStyles = computed(() => ({
     height: cssValue(height.value)
   }))
@@ -152,6 +154,7 @@ export function useDialog (props, emit) {
 
   return {
     show,
+    shaking,
     shouldControlOverflow,
     shouldHandleResize,
     dialogStyles,

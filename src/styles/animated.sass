@@ -1,6 +1,6 @@
 /* css animate */
 
-@keyframes animated-dialog-open
+@keyframes soft-candy-show
   0%
     transform: scale(0.7)
   45%
@@ -10,10 +10,9 @@
   100%
     transform: scale(1)
 
-/* modal, alert, mask show up animated */
 .v-dialog--candy-enter-active
   will-change: transform
-  animation: animated-dialog-open 300ms ease-out
+  animation: soft-candy-show 300ms ease-out
   transform: translate3d(0, 0, 0)
 .v-dialog--candy-leave-active
   will-change: transform, opacity
@@ -87,25 +86,3 @@
   animation-timing-function: linear
   /*执行次数*/
   animation-iteration-count: 1
-
-@keyframes popIn
-  0%
-    transform: scale3d(0, 0, 0)
-    opacity: 0
-  20%
-    opacity: 1
-  40%
-    animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715)
-    transform: scale3d(1.08, 1.08, 1.08)
-  60%
-    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
-    transform: scale3d(1, 1, 1)
-  80%
-    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
-    transform: scale3d(1.03, 1.03, 1.03)
-  100%
-    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    transform: scale3d(1, 1, 1)
-
-.popIn .v-dialog-content
-  animation: popIn .4s linear both

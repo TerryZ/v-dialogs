@@ -6,6 +6,7 @@ import DialogAlertHeader from './DialogAlertHeader'
 import DialogAlertBody from './DialogAlertBody'
 import DialogAlertFooter from './DialogAlertFooter'
 import DialogContainer from '../DialogContainer'
+import DialogContentBox from '../DialogContentBox'
 
 import { MESSAGE_TYPE_INFO, propsInjectionKey } from '../../constants'
 import { useAlert } from '../../core/alert'
@@ -42,15 +43,14 @@ export default defineComponent({
 
     return () => (
       <DialogContainer
-        body-class={['v-dialog--screen-center', 'v-dialog-alert', { 'no-header': !props.header }]}
-        content-class={['v-dialog-content', getShadowClass()]}
+        container-class={['v-dialog--screen-center', 'v-dialog-alert', { 'no-header': !props.header }]}
         transition-name='v-dialog--candy'
       >
-        <div>
+        <DialogContentBox class-name={[getShadowClass()]}>
           {props.header && <DialogAlertHeader />}
           <DialogAlertBody />
           <DialogAlertFooter />
-        </div>
+        </DialogContentBox>
       </DialogContainer>
     )
   }

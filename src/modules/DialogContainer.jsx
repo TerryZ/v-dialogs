@@ -1,32 +1,29 @@
-import { ref, Transition, Teleport, inject, defineComponent } from 'vue'
+import { Transition, Teleport, inject, defineComponent } from 'vue'
 
 import { propsInjectionKey } from '../constants'
 
 export default defineComponent({
   name: 'DialogContainer',
   props: {
-    contentClass: { type: [String, Array, Object], default: '' },
-    bodyClass: { type: [String, Array, Object], default: '' },
+    containerClass: { type: [String, Array, Object], default: '' },
     backdropClass: { type: [String, Array, Object], default: '' },
+    contentClass: { type: [String, Array, Object], default: '' },
     /** Dialog transition name */
     transitionName: { type: String, default: '' },
     appendTo: { type: [String, HTMLElement], default: 'body' }
   },
   setup (props, { slots }) {
     const {
+      show,
+      shaking,
       backdrop,
       backdropClose,
       customClass,
-      backdropCloseDialog = undefined,
       shake,
-      show,
-      dialogStyles,
-      contentStyles,
       dialogZIndex,
-      backdropZIndex
+      backdropZIndex,
+      backdropCloseDialog = undefined
     } = inject(propsInjectionKey)
-
-    const shaking = ref(false)
 
     function outsideClick () {
       if (!backdrop) return
@@ -73,17 +70,14 @@ export default defineComponent({
     }
     function generateContainer () {
       const classes = [
-        props.bodyClass,
+        props.containerClass,
         props.contentClass,
         customClass,
         {
-          'v-dialog--buzz-out': shaking.value,
           'v-dialog--embedded': props.appendTo !== 'body'
         }
       ]
       const styles = {
-        ...dialogStyles.value,
-        ...contentStyles.value,
         'z-index': dialogZIndex
       }
 
@@ -93,12 +87,12 @@ export default defineComponent({
             class={['v-dialog', classes]}
             style={styles}
           >
-              <Transition
-                name={props.transitionName}
-                appear
-              >
-                {() => show.value && (slots.default && slots.default())}
-              </Transition>
+            <Transition
+              name={props.transitionName}
+              appear
+            >
+              {() => show.value && (slots.default && slots.default())}
+            </Transition>
           </div>
         </Teleport>
       )
