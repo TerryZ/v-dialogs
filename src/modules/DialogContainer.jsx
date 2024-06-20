@@ -16,12 +16,13 @@ export default defineComponent({
     const {
       show,
       shaking,
+      transitionEnterComplete,
       backdrop,
       backdropClose,
-      customClass,
       shake,
       dialogZIndex,
       backdropZIndex,
+      destroy,
       backdropCloseDialog = undefined
     } = inject(propsInjectionKey)
 
@@ -37,6 +38,10 @@ export default defineComponent({
       shaking.value = true
       setTimeout(() => { shaking.value = false }, 750)
     }
+    const backdropClick = e => {
+      if (e.target !== e.currentTarget) return
+      outsideClick()
+    }
     function generateBackdrop () {
       if (!backdrop) return
 
@@ -45,11 +50,6 @@ export default defineComponent({
         props.backdropClass,
         { 'v-dialog-overlay--embedded': props.appendTo !== 'body' }
       ]
-
-      const backdropClick = e => {
-        if (e.target !== e.currentTarget) return
-        outsideClick()
-      }
 
       return (
         <Teleport to={props.appendTo}>
@@ -72,7 +72,6 @@ export default defineComponent({
       const classes = [
         props.containerClass,
         props.contentClass,
-        customClass,
         {
           'v-dialog--embedded': props.appendTo !== 'body'
         }
@@ -80,16 +79,25 @@ export default defineComponent({
       const styles = {
         'z-index': dialogZIndex
       }
+      function onAfterEnter () {
+        transitionEnterComplete.value = true
+      }
+      function onAfterLeave () {
+        destroy.value && destroy.value()
+      }
 
       return (
         <Teleport to={props.appendTo}>
           <div
             class={['v-dialog', classes]}
             style={styles}
+            onClick={backdropClick}
           >
             <Transition
               name={props.transitionName}
               appear
+              onAfterEnter={onAfterEnter}
+              onAfterLeave={onAfterLeave}
             >
               {() => show.value && (slots.default && slots.default())}
             </Transition>

@@ -49,10 +49,10 @@ export function useDialog (props, emit) {
   const height = ref(0)
   const top = ref()
   const bottom = ref()
-  // Dialog displayed and the animation is complete
-  const dialogReady = ref(false)
+  const transitionEnterComplete = ref(false)
   const shouldControlOverflow = ref(true)
   const shouldHandleResize = ref(true)
+  const destroy = ref()
 
   const { dialogZIndex, backdropZIndex } = calculateDialogZIndex(props.dialogIndex)
 
@@ -112,12 +112,13 @@ export function useDialog (props, emit) {
    * - afterClose
    */
   function closeDialog (callback, data, options) {
-    if (!dialogReady.value) return
+    if (!transitionEnterComplete.value) return
 
     show.value = false
     options?.closing?.()
 
-    const closeWork = () => {
+    // destroy dialog when transition leave complete
+    destroy.value = () => {
       // close and destroy dialog
       emit(EMIT_CLOSE, callback, data)
       options?.afterClose?.()
@@ -126,8 +127,6 @@ export function useDialog (props, emit) {
 
       if (shouldControlOverflow.value) restoreDocumentBodyOverflow()
     }
-    // waiting for dialog close animation complete
-    setTimeout(closeWork, 250)
   }
   function closeDialogWithCallback (data, options) {
     closeDialog(props.callback, data, options)
@@ -148,13 +147,10 @@ export function useDialog (props, emit) {
     })
   }
 
-  onMounted(() => {
-    setTimeout(() => { dialogReady.value = true }, 300)
-  })
-
   return {
     show,
     shaking,
+    transitionEnterComplete,
     shouldControlOverflow,
     shouldHandleResize,
     dialogStyles,
@@ -162,6 +158,7 @@ export function useDialog (props, emit) {
     dialogZIndex,
     backdropZIndex,
     openDialog,
+    destroy,
     closeDialog,
     closeDialogWithCallback,
     closeDialogWithoutCallback,
