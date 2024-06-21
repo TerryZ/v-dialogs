@@ -20,6 +20,11 @@ export function useMask (props, emit) {
     ...restItems
   } = useDialog(props, emit)
 
+  const {
+    addParentRelative,
+    removeParentRelative
+  } = useMaskParentHandle(props.appendTo)
+
   const lang = getLanguage(props.language)
   const messageText = computed(() => props.message || lang.maskText)
 
@@ -28,13 +33,17 @@ export function useMask (props, emit) {
     shouldControlOverflow.value = false
   }
 
+  addParentRelative()
+
+  function closeMaskWithCallback () {
+    closeDialogWithCallback(undefined, {
+      afterClose: () => removeParentRelative
+    })
+  }
+
   setDialogSize(undefined, 60)
   // setupPositionAdjustBehavior(setPosition)
-  setupAutomaticClose(closeDialogWithCallback)
-
-  function cancelAlert () {
-    closeDialog(props.cancelCallback)
-  }
+  setupAutomaticClose(closeMaskWithCallback)
 
   onMounted(() => {
     openDialog()
@@ -44,8 +53,34 @@ export function useMask (props, emit) {
     ...restItems,
     messageText,
     closeDialog,
-    cancelAlert,
     closeDialogWithCallback
+  }
+}
+
+function useMaskParentHandle (appendTo) {
+  const el = getElement()
+
+  function getElement () {
+    if (typeof appendTo === 'string') {
+      return document.querySelector(appendTo)
+    }
+    if (appendTo instanceof HTMLElement) {
+      return appendTo
+    }
+    return undefined
+  }
+  function addParentRelative () {
+    if (appendTo === 'body') return
+    el.classList.add('v-dialog-mask-parent--relative')
+  }
+  function removeParentRelative () {
+    if (appendTo === 'body') return
+    el.classList.remove('v-dialog-mask-parent--relative')
+  }
+
+  return {
+    addParentRelative,
+    removeParentRelative
   }
 }
 

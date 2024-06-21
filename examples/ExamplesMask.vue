@@ -40,7 +40,7 @@
     </div>
     <div
       class="
-      bg-light rounded-3 position-relative mb-3 overflow-hidden
+      bg-light rounded-3 mb-3 overflow-hidden
       d-flex justify-content-center align-items-center flex-column
       "
       style="height: 300px;"
