@@ -4,9 +4,9 @@ import {
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_PLACEMENT_BOTTOM,
   MESSAGE_OFFSET,
-  MESSAGE_PLACEMENT_TOP,
+  PLACEMENT_BOTTOM,
+  PLACEMENT_TOP,
   MESSAGE_GAP,
   MESSAGE
 } from '../constants'
@@ -60,11 +60,11 @@ export function useMessage (props, emit) {
     return offset + position
   }
   function getMessageTop () {
-    if (props.placement === MESSAGE_PLACEMENT_BOTTOM) return
+    if (props.placement === PLACEMENT_BOTTOM) return
     return getVerticalPosition()
   }
   function getMessageBottom () {
-    if (props.placement === MESSAGE_PLACEMENT_TOP) return
+    if (props.placement === PLACEMENT_TOP) return
     return getVerticalPosition()
   }
   function setMessagePosition () {
@@ -131,7 +131,7 @@ export function DialogMessage () {
   const props = parseArgumentsToProps(...arguments)
   const configs = {
     type: MESSAGE,
-    placement: props.placement || MESSAGE_PLACEMENT_TOP
+    placement: props.placement || PLACEMENT_TOP
   }
   return createDialog(TheDialogMessage, props, configs)
 }

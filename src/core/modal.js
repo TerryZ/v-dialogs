@@ -2,9 +2,7 @@ import { onMounted, ref, watch } from 'vue'
 
 import {
   MODAL_WIDTH,
-  MODAL_HEIGHT,
-  MODAL_MIN_WIDTH,
-  MODAL_MIN_HEIGHT
+  MODAL_HEIGHT
 } from '../constants'
 import { createDialog } from './manage'
 import { useDialog } from './base'
@@ -25,7 +23,6 @@ export function useModal (props, emit) {
   } = useDialog(props, emit)
 
   const maximize = ref(false)
-  const { width, height } = getModalSize(props)
 
   watch(() => props.visible, val => {
     if (val) return
@@ -60,7 +57,7 @@ export function useModal (props, emit) {
     closeDialogWithoutCallback(closeOptions)
   }
 
-  setDialogSize(width, height)
+  setDialogSize(props.width || MODAL_WIDTH, props.height || MODAL_HEIGHT)
   // setupPositionAdjustBehavior(setModalTop)
   setupAutomaticClose(closeModalWithCallback)
 
@@ -81,24 +78,10 @@ export function useModal (props, emit) {
   }
 }
 
-function getModalSize (props) {
-  let width = props.width || MODAL_WIDTH
-  let height = props.height || MODAL_HEIGHT
-
-  if (width < MODAL_MIN_WIDTH) {
-    width = MODAL_MIN_WIDTH
-  }
-  if (height < MODAL_MIN_HEIGHT) {
-    height = MODAL_MIN_HEIGHT
-  }
-  return { width, height }
-}
-
 /**
  * Open a modal dialog
  *
- * @param {string} message - message content
- * @param {function} [callback] - callback function
+ * @param {object | function} component
  * @param {object} [option] - options
  * @returns
  */

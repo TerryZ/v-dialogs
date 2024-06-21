@@ -33,14 +33,13 @@ export function useMask (props, emit) {
     shouldControlOverflow.value = false
   }
 
-  addParentRelative()
-
   function closeMaskWithCallback () {
     closeDialogWithCallback(undefined, {
       afterClose: () => removeParentRelative
     })
   }
 
+  addParentRelative()
   setDialogSize(undefined, 60)
   // setupPositionAdjustBehavior(setPosition)
   setupAutomaticClose(closeMaskWithCallback)

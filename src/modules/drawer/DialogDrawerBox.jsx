@@ -2,10 +2,10 @@ import { defineComponent, mergeProps, ref } from 'vue'
 
 import { addDialog } from '../../core/manage'
 
-import DialogModal from './DialogModal'
+import DialogDrawer from './DialogDrawer'
 
 export default defineComponent({
-  name: 'DialogModalBox',
+  name: 'DialogModalDrawer',
   setup (props, { attrs, slots }) {
     const renderDialog = ref(false)
 
@@ -22,9 +22,9 @@ export default defineComponent({
       if (!attrs.visible && !renderDialog.value) return
 
       return (
-        <DialogModal {...mergeProps(attrs, baseProps)}>
+        <DialogDrawer {...mergeProps(attrs, baseProps)}>
           {slots.default()}
-        </DialogModal>
+        </DialogDrawer>
       )
     }
   }

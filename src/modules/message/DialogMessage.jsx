@@ -8,7 +8,7 @@ import DialogLiteContainer from '../DialogLiteContainer'
 import {
   MESSAGE_TYPE_INFO,
   MESSAGE_OFFSET,
-  MESSAGE_PLACEMENT_TOP,
+  PLACEMENT_TOP,
   propsInjectionKey
 } from '../../constants'
 import { useMessage } from '../../core/message'
@@ -32,7 +32,7 @@ export default defineComponent({
     closeButton: { type: Boolean, default: false },
     duration: { type: Number, default: 3000 },
     offset: { type: [String, Number], default: MESSAGE_OFFSET },
-    placement: { type: String, default: MESSAGE_PLACEMENT_TOP },
+    placement: { type: String, default: PLACEMENT_TOP },
     /** Pill style border */
     pill: { type: Boolean, default: true }
   }),
