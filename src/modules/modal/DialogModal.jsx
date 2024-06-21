@@ -1,12 +1,13 @@
 import '../../styles/modal.sass'
 
-import { defineComponent, provide } from 'vue'
+import { defineComponent, provide, computed } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useModal } from '../../core/modal'
 import { propsInjectionKey, MODAL_WIDTH, MODAL_HEIGHT } from '../../constants'
 
 import DialogContainer from '../DialogContainer'
+import DialogContentBox from '../DialogContentBox'
 import DialogModalHeader from './DialogModalHeader'
 import DialogModalBody from './DialogModalBody'
 
@@ -16,7 +17,7 @@ export default defineComponent({
     /**
      * The component to put in the Modal
      */
-    component: Object,
+    component: [Function, Object],
     shake: { type: Boolean, default: true },
     title: { type: String, default: 'Dialog' },
     width: { type: Number, default: MODAL_WIDTH },
@@ -44,18 +45,30 @@ export default defineComponent({
       maximize
     })
 
+    // v-dialog--screen-center
+    const containerClass = computed(() => (
+      [
+        'v-dialog-modal',
+        'v-dialog--content-center',
+        {
+          'v-dialog-modal--maximize': maximize.value
+        }
+      ]
+    ))
+
     return () => (
       <DialogContainer
-        bodyClass={['v-dialog-modal', { 'v-dialog--maximize': maximize.value }]}
-        contentClass={['v-dialog-content']}
-        transitionName='v-dialog--smooth'
+        container-class={containerClass.value}
+        transition-name='v-dialog--smooth'
       >
-        {props.header && <DialogModalHeader />}
-        {
-          slots.default
-            ? <DialogModalBody>{slots.default()}</DialogModalBody>
-            : <DialogModalBody></DialogModalBody>
-        }
+        <DialogContentBox>
+          {props.header && <DialogModalHeader />}
+          {
+            slots.default
+              ? <DialogModalBody>{slots.default()}</DialogModalBody>
+              : <DialogModalBody></DialogModalBody>
+          }
+        </DialogContentBox>
       </DialogContainer>
     )
   }

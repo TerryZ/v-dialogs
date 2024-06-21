@@ -1,1 +1,14 @@
 $border-radius: 1rem
+
+@mixin flex-center($horizontal: true,$vertical: true)
+  display: flex
+  @if $horizontal
+    justify-content: center
+  @if $vertical
+    align-items: center
+
+@mixin fill-fullscreen()
+  left: 0
+  right: 0
+  top:0
+  bottom: 0

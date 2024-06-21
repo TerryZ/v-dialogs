@@ -1,4 +1,9 @@
-/* css animate */
+/* css animation */
+
+$candy: v-dialog--candy
+$smooth: v-dialog--smooth
+$fade: v-dialog--fade
+$fade-lite: v-dialog--fade-lite
 
 @keyframes soft-candy-show
   0%
@@ -10,46 +15,39 @@
   100%
     transform: scale(1)
 
-.v-dialog--candy-enter-active
-  will-change: transform
+.#{$candy}-enter-active
   animation: soft-candy-show 300ms ease-out
-  transform: translate3d(0, 0, 0)
-.v-dialog--candy-leave-active
-  will-change: transform, opacity
-  transform: scale(0.5) translate3d(0, 0, 0)
-  transition: transform 200ms ease, opacity 200ms linear
-  opacity: 0
-
-.v-dialog--smooth-enter-from,
-.v-dialog--smooth-leave-to
-  will-change: transform, opacity
-  transform: scale(0.5) translate3d(0, 0, 0)
-  opacity: 0
+  // transform: translate3d(0, 0, 0)
+.#{$candy}-leave-active
+  transform: scale(0.5)
   transition: transform 200ms linear, opacity 200ms linear
-.v-dialog--smooth-enter-active,
-.v-dialog--smooth-leave-active
-  will-change: transform, opacity
-  transition: transform 250ms linear, opacity 250ms linear
+  opacity: 0
 
-/* overlay fade in and out */
-.v-dialog--fade-enter-active,
-.v-dialog--fade-leave-active
+.#{$smooth}-enter-active,
+.#{$smooth}-leave-active
+  transition: transform 250ms ease-in-out, opacity 150ms ease-in-out !important
+.#{$smooth}-enter-from,
+.#{$smooth}-leave-to
+  transform: scale(0.5)
+  opacity: 0
+
+.#{$fade}-enter-active,
+.#{$fade}-leave-active
   will-change: opacity
   transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
   // transform: translateZ(0)
-.v-dialog--fade-enter-from,
-.v-dialog--fade-leave-to
+.#{$fade}-enter-from,
+.#{$fade}-leave-to
   opacity: 0
 
-.v-dialog--fade-lite-enter-active,
-.v-dialog--fade-lite-leave-active
-  will-change: opacity
+.#{$fade-lite}-enter-active,
+.#{$fade-lite}-leave-active
+  // will-change: opacity
   // transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
   // transform: translateZ(0)
   transition: opacity .3s ease-in-out
-
-.v-dialog--fade-lite-enter-from,
-.v-dialog--fade-lite-leave-to
+.#{$fade-lite}-enter-from,
+.#{$fade-lite}-leave-to
   opacity: 0
 
 =transform($tx: 3px, $rt: 2deg)
@@ -78,7 +76,7 @@
   100%
     +transform(-1px, 0)
 
-.v-dialog--buzz-out .v-dialog-content
+.v-dialog--buzz-out
   animation-name: animated-buzz-out
   /*规定完成动画所花费的时间，以秒或毫秒计*/
   animation-duration: 750ms

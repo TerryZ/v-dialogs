@@ -39,7 +39,7 @@ export function useModal (props, emit) {
   function switchMaximize () {
     maximize.value = !maximize.value
 
-    setModalTop()
+    // setModalTop()
   }
   function openModal () {
     openDialog()
@@ -61,7 +61,7 @@ export function useModal (props, emit) {
   }
 
   setDialogSize(width, height)
-  setupPositionAdjustBehavior(setModalTop)
+  // setupPositionAdjustBehavior(setModalTop)
   setupAutomaticClose(closeModalWithCallback)
 
   onMounted(() => {

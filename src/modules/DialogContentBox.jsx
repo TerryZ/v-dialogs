@@ -1,4 +1,4 @@
-import { inject } from 'vue'
+import { inject, computed } from 'vue'
 
 import { propsInjectionKey } from '../constants'
 
@@ -14,21 +14,23 @@ export default {
       dialogStyles
     } = inject(propsInjectionKey)
 
-    const classes = [
-      'v-dialog-content',
-      props.className,
-      customClass,
-      {
-        'v-dialog--buzz-out': shaking.value
-      }
-    ]
-    const styles = {
+    const classes = computed(() => (
+      [
+        'v-dialog-content',
+        props.className,
+        customClass,
+        {
+          'v-dialog--buzz-out': shaking.value
+        }
+      ]
+    ))
+    const styles = computed(() => ({
       ...dialogStyles.value
-    }
+    }))
     return () => (
       <div
-        class={classes}
-        style={styles}
+        class={classes.value}
+        style={styles.value}
       >
         {slots.default && slots.default()}
       </div>

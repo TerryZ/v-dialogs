@@ -183,7 +183,7 @@ function noButtons () {
 }
 function fullscreen () {
   openModal({
-    customClass: 'bg-light',
+    customClass: '',
     fullscreen: true
   })
 }

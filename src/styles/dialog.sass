@@ -10,9 +10,9 @@
 //   outline: 0
 //   box-sizing: border-box
 .v-dialog
-  // top: 0
-  // bottom: 0
   position: fixed
+  &#{&}--content-center
+    @include flex-center()
   &#{&}--screen-center
     left: 50%
     top: 50%
@@ -22,20 +22,6 @@
     transform: translateX(-50%)
   &#{&}--embedded
     position: absolute
-  &.v-dialog-open
-    overflow: hidden
-  /* Window maximize */
-  &#{&}--maximize
-    border-radius: 0
-    padding-right: 0 !important
-    .v-dialog-dialog
-      width: 100vw !important
-      height: 100vh !important
-    .v-dialog-content
-      height: 100% !important
-      border-radius: 0
-    .v-dialog-header
-      background-color: #eee
   // TODO:to remove
   .v-dialog-dialog
     position: relative
@@ -53,6 +39,7 @@
     display: flex
     flex-direction: column
     transition: all .2s ease-out
+    // transition: all .3s ease
   .v-dialog-header
     display: flex
     flex-shrink: 0

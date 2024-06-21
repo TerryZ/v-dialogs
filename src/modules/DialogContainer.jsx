@@ -7,8 +7,6 @@ export default defineComponent({
   props: {
     containerClass: { type: [String, Array, Object], default: '' },
     backdropClass: { type: [String, Array, Object], default: '' },
-    contentClass: { type: [String, Array, Object], default: '' },
-    /** Dialog transition name */
     transitionName: { type: String, default: '' },
     appendTo: { type: [String, HTMLElement], default: 'body' }
   },
@@ -71,7 +69,6 @@ export default defineComponent({
     function generateContainer () {
       const classes = [
         props.containerClass,
-        props.contentClass,
         {
           'v-dialog--embedded': props.appendTo !== 'body'
         }
@@ -95,9 +92,9 @@ export default defineComponent({
           >
             <Transition
               name={props.transitionName}
-              appear
               onAfterEnter={onAfterEnter}
               onAfterLeave={onAfterLeave}
+              appear
             >
               {() => show.value && (slots.default && slots.default())}
             </Transition>

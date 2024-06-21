@@ -1,9 +1,19 @@
+@import variable
+
 /* modal */
+
 .v-dialog-modal
-  .v-dialog-body
-    padding: 0 !important
+  @include fill-fullscreen
+  &#{&}--maximize
+    padding-right: 0 !important
+    .v-dialog-content
+      width: 100vw !important
+      height: 100vh !important
+      border-radius: 0
+    .v-dialog-header
+      background-color: #eee
   .v-dialog-content
     border-radius: .5rem
-/* max window animated */
-.v-dialog-default-animated
-  transition: all .2s ease-in-out
+    transition: width .2s ease-in-out, height .2s ease-in-out
+    .v-dialog-body
+      padding: 0 !important

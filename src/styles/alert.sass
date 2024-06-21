@@ -1,9 +1,12 @@
+@import variable
+
 @mixin icon-color-and-shadow($color, $shadow-color)
   color: $color
   filter: drop-shadow(4px 5px 5px $shadow-color)
 
 .v-dialog-alert
   // min-height: 100%
+  @include fill-fullscreen
   .v-dialog-content
     overflow: hidden
     display: flex
