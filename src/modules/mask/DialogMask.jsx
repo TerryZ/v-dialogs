@@ -3,6 +3,7 @@ import '../../styles/mask.sass'
 import { defineComponent, provide } from 'vue'
 
 import DialogContainer from '../DialogContainer'
+import DialogContentBox from '../DialogContentBox'
 import DialogMaskBody from './DialogMaskBody'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
@@ -32,6 +33,7 @@ export default defineComponent({
 
     const classes = [
       'v-dialog-mask',
+      'v-dialog--content-center',
       {
         'v-dialog-mask--pill': props.pill,
         'v-dialog-mask--no-icon': !props.icon,
@@ -45,13 +47,14 @@ export default defineComponent({
 
     return () => (
       <DialogContainer
-        body-class={classes}
+        container-class={classes}
         backdrop-class={{ 'v-dialog-overlay--blur': !props.panel }}
-        content-class={['v-dialog-content']}
         transition-name='v-dialog--smooth'
         append-to={props.appendTo}
       >
-        <DialogMaskBody>{() => messageText.value}</DialogMaskBody>
+        <DialogContentBox>
+          <DialogMaskBody>{() => messageText.value}</DialogMaskBody>
+        </DialogContentBox>
       </DialogContainer>
     )
   }

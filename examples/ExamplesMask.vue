@@ -39,10 +39,20 @@
       </button>
     </div>
     <div
-      class="bg-light rounded-3 position-relative mb-3 overflow-hidden"
+      class="
+      bg-light rounded-3 position-relative mb-3 overflow-hidden
+      d-flex justify-content-center align-items-center flex-column
+      "
       style="height: 300px;"
       id="v-dialog-mask-append-to-area"
-    />
+    >
+      <div>Content Area</div>
+      <div>Content Area</div>
+      <div>Content Area</div>
+      <div>Content Area</div>
+      <div>Content Area</div>
+      <div>Content Area</div>
+    </div>
 
     <h5>Features</h5>
     <div class="mb-3">

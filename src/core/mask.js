@@ -29,7 +29,7 @@ export function useMask (props, emit) {
   }
 
   setDialogSize(undefined, 60)
-  setupPositionAdjustBehavior(setPosition)
+  // setupPositionAdjustBehavior(setPosition)
   setupAutomaticClose(closeDialogWithCallback)
 
   function cancelAlert () {
