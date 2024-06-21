@@ -7,15 +7,40 @@
 .v-dialog-alert
   // min-height: 100%
   @include fill-fullscreen
+  &.no-icon .v-dialog-alert__content
+    padding-left: 15px
+  &.no-header .v-dialog-alert__content
+    padding-top: 2rem
   .v-dialog-content
     overflow: hidden
     display: flex
     flex-direction: column
     background-color: white
-  &.no-icon .v-dialog-alert__content
-    padding-left: 15px
-  &.no-header .v-dialog-alert__content
-    padding-top: 2rem
+  .v-dialog-footer
+    flex-shrink: 0
+    overflow: hidden
+    .v-dialog-alert__buttons
+      display: flex
+      justify-content: flex-end
+      padding: 0 1rem 1rem 0
+      button
+        outline: none !important
+        padding: 8px 15px
+        min-width: 90px
+        border-radius: .7rem
+        font-size: 14px
+        transition: all .2s ease-in-out
+        user-select: none
+        &:active
+          box-shadow: 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.23)
+      .v-dialog-btn__ok
+        border: 1px solid #516270
+        background-color: #516270
+        color: white
+      .v-dialog-btn__cancel
+        border: 1px solid #F0F0F0
+        background-color: #F0F0F0
+        margin-left: 1rem
   .v-dialog-alert__content
     overflow-y: auto
     min-height: 100px

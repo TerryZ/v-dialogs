@@ -5,8 +5,6 @@
   position: fixed
   z-index: 1050
   outline: 0
-//   right: 0
-//   left: 0
 //   overflow: hidden
 //   box-sizing: border-box
 .v-dialog-lite
@@ -25,12 +23,6 @@
     transform: translateX(-50%)
   &#{&}--embedded
     position: absolute
-  // TODO:to remove
-  .v-dialog-dialog
-    position: relative
-    margin: 0 auto
-    width: 100%
-    transition: all .3s ease-out
   .v-dialog-content
     outline: 0
     position: relative
@@ -57,30 +49,6 @@
       display: flex
       align-items: center
       color: #666
-    button
-      width: 60px
-      height: 100%
-      transition: all .3s ease-out
-      text-shadow: none
-      outline: none !important
-      margin: 0
-      opacity: 0.3
-      font-size: 18px !important
-      border: 0
-      background-color: transparent
-      display: inline-flex
-      justify-content: center
-      align-items: center
-      &:hover
-        opacity: 1
-      &.v-dialog-btn__close
-        font-weight: normal
-        &:hover
-          background-color: #E81123
-          color: white
-      &.v-dialog-btn__maximize
-        &:hover
-          background-color: #E0E0E0
   .v-dialog-body
     position: relative
     width: 100%
@@ -88,31 +56,6 @@
     overflow: auto
     box-sizing: border-box
     flex-grow: 1
-  .v-dialog-footer
-    flex-shrink: 0
-    overflow: hidden
-    .v-dialog-alert__buttons
-      display: flex
-      justify-content: flex-end
-      padding: 0 1rem 1rem 0
-      button
-        outline: none !important
-        padding: 8px 15px
-        min-width: 90px
-        border-radius: .7rem
-        font-size: 14px
-        transition: all .2s ease-in-out
-        user-select: none
-        &:active
-          box-shadow: 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.23)
-      .v-dialog-btn__ok
-        border: 1px solid #516270
-        background-color: #516270
-        color: white
-      .v-dialog-btn__cancel
-        border: 1px solid #F0F0F0
-        background-color: #F0F0F0
-        margin-left: 1rem
 
 .v-dialog-overlay
   position: fixed

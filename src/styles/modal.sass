@@ -15,5 +15,30 @@
   .v-dialog-content
     border-radius: .5rem
     transition: width .2s ease-in-out, height .2s ease-in-out
+    .v-dialog-header
+      button
+        width: 60px
+        height: 100%
+        transition: all .3s ease-out
+        text-shadow: none
+        outline: none !important
+        margin: 0
+        opacity: 0.3
+        font-size: 18px !important
+        border: 0
+        background-color: transparent
+        display: inline-flex
+        justify-content: center
+        align-items: center
+        &:hover
+          opacity: 1
+        &.v-dialog-btn__close
+          font-weight: normal
+          &:hover
+            background-color: #E81123
+            color: white
+        &.v-dialog-btn__maximize
+          &:hover
+            background-color: #E0E0E0
     .v-dialog-body
       padding: 0 !important
