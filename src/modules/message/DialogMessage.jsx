@@ -39,7 +39,6 @@ export default defineComponent({
   emits: mergeDialogEmits(),
   setup (props, { emit }) {
     const {
-      customClass,
       handleBodyRounded,
       ...restItems
     } = useMessage(props, emit)
@@ -54,8 +53,8 @@ export default defineComponent({
 
     return () => (
       <DialogLiteContainer
-        containerClass={['v-dialog-message', customClass]}
-        transitionName='v-dialog--fade-lite'
+        container-class={['v-dialog-message']}
+        transition-name='v-dialog--fade-lite'
         id={props.dialogKey}
       >
         <DialogMessageBody ref={body} />

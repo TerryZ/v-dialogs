@@ -1,14 +1,17 @@
 @import variable
 
-// .v-dialog,
-// .v-dialog-lite
-//   position: fixed
+.v-dialog,
+.v-dialog-lite
+  position: fixed
+  z-index: 1050
+  outline: 0
 //   right: 0
 //   left: 0
-//   z-index: 1050
 //   overflow: hidden
-//   outline: 0
 //   box-sizing: border-box
+.v-dialog-lite
+  left: 0
+  right: 0
 .v-dialog
   position: fixed
   &#{&}--content-center

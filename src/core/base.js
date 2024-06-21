@@ -146,6 +146,12 @@ export function useDialog (props, emit) {
       useAutomaticClose(props, close)
     })
   }
+  function onTransitionAfterEnter () {
+    transitionEnterComplete.value = true
+  }
+  function onTransitionAfterLeave () {
+    destroy.value && destroy.value()
+  }
 
   return {
     show,
@@ -165,7 +171,9 @@ export function useDialog (props, emit) {
     setPosition,
     setDialogSize,
     setupAutomaticClose,
-    setupPositionAdjustBehavior
+    setupPositionAdjustBehavior,
+    onTransitionAfterEnter,
+    onTransitionAfterLeave
   }
 }
 

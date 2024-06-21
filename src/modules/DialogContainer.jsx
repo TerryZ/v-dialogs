@@ -14,13 +14,13 @@ export default defineComponent({
     const {
       show,
       shaking,
-      transitionEnterComplete,
       backdrop,
       backdropClose,
       shake,
       dialogZIndex,
       backdropZIndex,
-      destroy,
+      onTransitionAfterEnter,
+      onTransitionAfterLeave,
       backdropCloseDialog = undefined
     } = inject(propsInjectionKey)
 
@@ -76,12 +76,6 @@ export default defineComponent({
       const styles = {
         'z-index': dialogZIndex
       }
-      function onAfterEnter () {
-        transitionEnterComplete.value = true
-      }
-      function onAfterLeave () {
-        destroy.value && destroy.value()
-      }
 
       return (
         <Teleport to={props.appendTo}>
@@ -92,8 +86,8 @@ export default defineComponent({
           >
             <Transition
               name={props.transitionName}
-              onAfterEnter={onAfterEnter}
-              onAfterLeave={onAfterLeave}
+              onAfterEnter={onTransitionAfterEnter}
+              onAfterLeave={onTransitionAfterLeave}
               appear
             >
               {() => show.value && (slots.default && slots.default())}

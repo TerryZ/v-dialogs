@@ -13,19 +13,30 @@ export default {
     const {
       show,
       dialogStyles,
-      dialogZIndex
+      dialogZIndex,
+      customClass,
+      onTransitionAfterEnter,
+      onTransitionAfterLeave
     } = inject(propsInjectionKey)
+
+    const classes = [
+      'v-dialog-lite',
+      props.containerClass,
+      customClass
+    ]
 
     return () => (
       <Teleport to='body'>
         <div
           id={props.id}
-          class={['v-dialog-lite', props.containerClass]}
+          class={classes}
           style={{ ...dialogStyles.value, 'z-index': dialogZIndex }}
         >
           <Transition
             name={props.transitionName}
-            appear={true}
+            onAfterEnter={onTransitionAfterEnter}
+            onAfterLeave={onTransitionAfterLeave}
+            appear
           >
             {() => show.value && slots.default && slots.default()}
           </Transition>
