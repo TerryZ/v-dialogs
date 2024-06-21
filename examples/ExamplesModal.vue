@@ -45,7 +45,7 @@
           class="btn btn-outline-secondary me-3"
           @click="noCloseButton"
         >
-          No close button
+          No close button(min size)
         </button>
         <button
           type="button"
@@ -172,7 +172,9 @@ function noMaxButton () {
 }
 function noCloseButton () {
   openModal({
-    closeButton: false
+    closeButton: false,
+    width: 100,
+    height: 50
   })
 }
 function noButtons () {

@@ -8,6 +8,8 @@ export const DIALOG_HEADER_CLASS = 'v-dialog-header'
 export const START_Z_INDEX = 5100
 export const Z_INDEX_INCREMENT = 50
 export const TITLE_TEXT_MAX_LENGTH = 30
+export const FULL_WIDTH = '100vw'
+export const FULL_HEIGHT = '100vh'
 
 export const ALERT_WIDTH = 450
 export const ALERT_WIDTH_LARGE = 700
@@ -19,8 +21,6 @@ export const MESSAGE_WIDTH = 350
 export const MESSAGE_HEIGHT = 56
 export const MESSAGE_EXPAND_HEIGHT = 200
 export const MESSAGE_OFFSET = 40
-export const MESSAGE_PLACEMENT_TOP = 'top'
-export const MESSAGE_PLACEMENT_BOTTOM = 'bottom'
 export const MESSAGE_GAP = 15
 
 export const TOAST_MAX_CONTENT_LENGTH = 56
@@ -34,14 +34,20 @@ export const TOAST_ICON_ERROR = 'dlg-icon-toast--error'
 
 export const MODAL_WIDTH = 700
 export const MODAL_HEIGHT = 400
-export const MODAL_MIN_WIDTH = 300
-export const MODAL_MIN_HEIGHT = 100
 
 export const MESSAGE_TYPE_INFO = 'info'
 export const MESSAGE_TYPE_WARNING = 'warning'
 export const MESSAGE_TYPE_ERROR = 'error'
 export const MESSAGE_TYPE_SUCCESS = 'success'
 export const MESSAGE_TYPE_CONFIRM = 'confirm'
+
+export const DRAWER_WIDTH = 400
+export const DRAWER_HEIGHT = 300
+
+export const PLACEMENT_TOP = 'top'
+export const PLACEMENT_BOTTOM = 'bottom'
+export const PLACEMENT_LEFT = 'left'
+export const PLACEMENT_RIGHT = 'right'
 
 export const EMIT_CLOSE = 'close'
 export const EMIT_RENDER_DIALOG = 'render-dialog'
