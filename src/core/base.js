@@ -1,11 +1,11 @@
 import {
+  h,
   ref,
   inject,
   computed,
   onBeforeMount,
   onMounted,
   onUnmounted,
-  h,
   mergeProps
 } from 'vue'
 
@@ -16,7 +16,7 @@ import {
   hideDocumentBodyOverflow,
   restoreDocumentBodyOverflow
 } from './helper'
-import { messageAdjustPositionEvent } from './manage'
+import { messageAdjustPositionEvent, addDialog } from './manage'
 import {
   EMIT_CLOSE,
   EMIT_RENDER_DIALOG,
@@ -269,5 +269,24 @@ export function useCloseDialog (emit, closeWithCallback, closeWithoutCallback) {
   return {
     closeDialogWithCallback,
     closeDialogWithoutCallback
+  }
+}
+
+export function useComponent (component, { attrs, slots }) {
+  const renderDialog = ref(false)
+
+  const { index, key } = addDialog()
+  const baseProps = {
+    dialogKey: key,
+    dialogIndex: index,
+    onRenderDialog: val => {
+      renderDialog.value = val
+    }
+  }
+
+  return () => {
+    if (!attrs.visible && !renderDialog.value) return
+
+    return h(component, mergeProps(attrs, baseProps), slots.default())
   }
 }
