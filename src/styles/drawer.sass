@@ -1,0 +1,58 @@
+@import variable
+
+/* drawer */
+
+.v-dialog-drawer
+  &#{&}--top
+    top: 0
+    left: 0
+  &#{&}--bottom
+    bottom: 0
+    left: 0
+  &#{&}--left
+    top: 0
+    left: 0
+  &#{&}--right
+    top: 0
+    right: 0
+  .v-dialog-content
+    min-width: 400px
+    min-height: 200px
+    .v-dialog-header
+      button
+        width: 60px
+        height: 100%
+        transition: all .3s ease-out
+        text-shadow: none
+        outline: none !important
+        margin: 0
+        opacity: 0.3
+        font-size: 18px !important
+        border: 0
+        background-color: transparent
+        display: inline-flex
+        justify-content: center
+        align-items: center
+        &:hover
+          opacity: 1
+        &.v-dialog-btn__close
+          font-weight: normal
+          &:hover
+            background-color: #E81123
+            color: white
+    .v-dialog-body
+      padding: 0 !important
+
+@mixin slide-in($slide-in-name, $transform)
+  .#{$slide-in-name}-enter-active,
+  .#{$slide-in-name}-leave-active
+    transition: transform 250ms ease-in-out, opacity 250ms linear
+  .#{$slide-in-name}-enter-from,
+  .#{$slide-in-name}-leave-to
+    transform: $transform
+    opacity: 0
+
+@include slide-in(v-dialog-drawer-slide-in-top , translateY(-100%))
+@include slide-in(v-dialog-drawer-slide-in-bottom , translateY(100%))
+@include slide-in(v-dialog-drawer-slide-in-left , translateX(-100%))
+@include slide-in(v-dialog-drawer-slide-in-right , translateX(100%))

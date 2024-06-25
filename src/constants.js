@@ -54,6 +54,7 @@ export const EMIT_RENDER_DIALOG = 'render-dialog'
 
 export const EVENT_MESSAGE_ADJUST_POSITION = 'v-dialog-message-adjust-position'
 
+export const placements = [PLACEMENT_TOP, PLACEMENT_BOTTOM, PLACEMENT_LEFT, PLACEMENT_RIGHT]
 export const colorfulShadowTypes = [
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,

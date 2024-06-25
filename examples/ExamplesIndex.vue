@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex vw-100 vh-100">
+  <div class="d-flex vh-100">
     <div
-      class="bg-light fw-bold"
+      class="bg-light fw-bold flex-shrink-0"
       style="width: 18rem;"
     >
       <div class="py-4 px-3 d-flex align-items-center font-monospace">
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="p-5">
+    <div class="p-5 flex-grow-1 overflow-auto">
       <router-view />
     </div>
   </div>

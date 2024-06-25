@@ -1,54 +1,55 @@
-import '../../styles/modal.sass'
+import '../../styles/drawer.sass'
 
 import { defineComponent, provide, computed } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
-import { useModal } from '../../core/modal'
-import { propsInjectionKey, MODAL_WIDTH, MODAL_HEIGHT, PLACEMENT_RIGHT } from '../../constants'
+import { useDrawer } from '../../core/drawer'
+import { propsInjectionKey, PLACEMENT_RIGHT } from '../../constants'
 
 import DialogContainer from '../DialogContainer'
 import DialogContentBox from '../DialogContentBox'
-import DialogModalHeader from './DialogModalHeader'
-import DialogModalBody from './DialogModalBody'
+import DialogDrawerHeader from './DialogDrawerHeader'
+import DialogDrawerBody from './DialogDrawerBody'
 
 export default defineComponent({
   name: 'DialogDrawer',
   props: mergeDialogProps({
     /**
-     * The component to put in the Modal
+     * The component to put in the Drawer
      */
     component: [Function, Object],
     title: { type: String, default: 'Dialog' },
-    width: { type: Number, default: MODAL_WIDTH },
-    height: { type: Number, default: MODAL_HEIGHT },
+    width: { type: Number, default: undefined },
+    height: { type: Number, default: undefined },
+    backdropClose: { type: Boolean, default: true },
     /**
      * The parameters pass to Component as props
      */
     params: Object,
     closeButton: { type: Boolean, default: true },
     placement: { type: String, default: PLACEMENT_RIGHT },
+    rounded: { type: Boolean, default: true },
     visible: { type: Boolean, default: false }
   }),
   emits: mergeDialogEmits(['update:visible']),
   setup (props, { emit, slots }) {
     const {
-      maximize,
+      getPositionClass,
+      getTransitionName,
       ...restItems
-    } = useModal(props, emit)
+    } = useDrawer(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems,
-      maximize
+      ...restItems
     })
 
-    // v-dialog--screen-center
     const containerClass = computed(() => (
       [
-        'v-dialog-modal',
-        'v-dialog--content-center',
+        'v-dialog-drawer',
+        getPositionClass(),
         {
-          'v-dialog-modal--maximize': maximize.value
+
         }
       ]
     ))
@@ -56,14 +57,14 @@ export default defineComponent({
     return () => (
       <DialogContainer
         container-class={containerClass.value}
-        transition-name='v-dialog--smooth'
+        transition-name={getTransitionName()}
       >
         <DialogContentBox>
-          {props.header && <DialogModalHeader />}
+          {props.header && <DialogDrawerHeader />}
           {
             slots.default
-              ? <DialogModalBody>{slots.default()}</DialogModalBody>
-              : <DialogModalBody></DialogModalBody>
+              ? <DialogDrawerBody>{slots.default()}</DialogDrawerBody>
+              : <DialogDrawerBody />
           }
         </DialogContentBox>
       </DialogContainer>

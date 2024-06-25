@@ -1,41 +1,266 @@
 <template>
-  <section>
-    <h3 class="">
-      Text
-      <small>纯文本模式，初始化选中的项目，以纯文本的内容显示</small>
-    </h3>
-    <div class="p-3 shadow-sm rounded-3 border">
-      <h5>默认显示文本</h5>
-      <div class="mb-3 text-muted rounded-3 bg-light p-3">
-        <region-text v-model="region" />
-      </div>
-
-      <h5>带分隔符</h5>
-      <div class="text-muted rounded-3 bg-light p-3">
-        asf
+  <h3 class="mb-3">
+    Drawer
+  </h3>
+  <div class="d-flex flex-column">
+    <div class="mb-3">
+      <h5>Placement</h5>
+      <div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-top"
+            value="top"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-top"
+          >Top</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-bottom"
+            value="bottom"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-bottom"
+          >Bottom</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-left"
+            value="left"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-left"
+          >Left</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-right"
+            value="right"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-right"
+          >Right</label>
+        </div>
       </div>
     </div>
-  </section>
+    <div class="mb-3">
+      <h5>Base</h5>
+      <div class="">
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="base"
+        >
+          Drawer
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="backdropClose"
+        >
+          Backdrop close
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noHeader"
+        >
+          No header
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <h5>Buttons</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noMaxButton"
+        >
+          No maximize button
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noCloseButton"
+        >
+          No close button(min size)
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noButtons"
+        >
+          No buttons
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <h5>Fullscreen</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="fullscreen"
+        >
+          Open Modal dialog with fullscreen
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <h5>Card layout</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="openCardPanel"
+        >
+          Open a Card layout dialog
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <h4>使用标签</h4>
+      <div>
+        <h5>Base</h5>
+        <div>
+          <DialogDrawerBox
+            v-model:visible="visible"
+            title="abcd"
+            @close="modalBoxClose"
+          >
+            <div class="p-3">
+              这是一个使用 DialogDrawerBox 打开的模态窗口
+            </div>
+          </DialogDrawerBox>
+          <DialogDrawerBox
+            v-model:visible="visibleUserControl"
+            :header="false"
+          >
+            <CardPanel @close="handleCloseModal" />
+          </DialogDrawerBox>
+          <button
+            type="button"
+            class="btn btn-outline-secondary me-3"
+            @click="() => { visible = true }"
+          >
+            Open Modal Box
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary me-3"
+            @click="() => { visibleUserControl = true }"
+          >
+            Open Modal Box with VNode content
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
+import { DialogDrawer, DialogAlert, DialogDrawerBox } from '@/'
+import UserProfile from './UserProfile.vue'
+import CardPanel from './CardPanel.vue'
 
-export default {
-  data () {
-    return {
-      region: {
-        province: '350000',
-        city: '350100',
-        area: '350104',
-        town: '350104008'
-      },
-      invalidRegion: {
-        province: '350000',
-        city: '350100',
-        area: '350103',
-        town: '350103012'
+const visible = ref(false)
+const visibleUserControl = ref(false)
+const placement = ref('right')
+
+function openDrawer (params) {
+  const options = {
+    title: 'User Profile',
+    backdrop: true,
+    params: { name: 'Terry Zeng' },
+    placement: placement.value,
+    ...params
+  }
+  DialogDrawer(UserProfile, options)
+}
+function base () {
+  openDrawer({
+    width: 500,
+    height: 320,
+    customClass: 'rounded-0',
+    callback: data => {
+      console.log(data)
+      if (data) {
+        DialogAlert(`Received user name: ${data?.companyName}`)
       }
     }
-  }
+  })
+}
+function backdropClose () {
+  openDrawer({
+    backdropClose: true
+  })
+}
+function noHeader () {
+  openDrawer({
+    header: false
+  })
+}
+function noMaxButton () {
+  openDrawer({
+    maxButton: false
+  })
+}
+function noCloseButton () {
+  openDrawer({
+    closeButton: false,
+    width: 100,
+    height: 50
+  })
+}
+function noButtons () {
+  openDrawer({
+    maxButton: false,
+    closeButton: false
+  })
+}
+function fullscreen () {
+  openDrawer({
+    customClass: '',
+    fullscreen: true
+  })
+}
+
+function modalBoxClose () {
+  console.log(visible.value)
+}
+
+function openCardPanel () {
+  // 使用函数返回组件
+  DialogDrawer(() => CardPanel, {
+    width: 330,
+    height: 420,
+    header: false
+  })
+}
+function handleCloseModal () {
+  visibleUserControl.value = false
 }
 </script>
