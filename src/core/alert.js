@@ -23,7 +23,7 @@ export function useAlert (props, emit) {
     setDialogSize,
     openDialog,
     closeDialog,
-    closeDialogWithCallback,
+    closeWithCallback,
     setPosition,
     setupAutomaticClose,
     setupPositionAdjustBehavior,
@@ -35,7 +35,7 @@ export function useAlert (props, emit) {
 
   setDialogSize(width, height)
   // setupPositionAdjustBehavior(setPosition)
-  setupAutomaticClose(closeDialogWithCallback)
+  setupAutomaticClose(closeWithCallback)
 
   function getShadowClass () {
     if (
@@ -57,8 +57,8 @@ export function useAlert (props, emit) {
     lang,
     closeDialog,
     cancelAlert,
-    closeDialogWithCallback,
-    backdropCloseDialog: closeDialogWithCallback,
+    closeWithCallback,
+    backdropCloseDialog: closeWithCallback,
     getShadowClass
   }
 }

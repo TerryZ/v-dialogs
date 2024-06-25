@@ -11,7 +11,7 @@ export default {
     const {
       messageType,
       lang,
-      closeDialogWithCallback,
+      closeWithCallback,
       cancelAlert
     } = inject(propsInjectionKey)
 
@@ -29,7 +29,7 @@ export default {
             type='button'
             class='v-dialog-btn__ok'
             ref={btnOk}
-            onClick={closeDialogWithCallback}
+            onClick={closeWithCallback}
           >{lang.btnOk}</button>
 
           {isConfirmType(messageType) && (

@@ -5,7 +5,7 @@ import {
   MODAL_HEIGHT
 } from '../constants'
 import { createDialog } from './manage'
-import { useDialog } from './base'
+import { useDialog, useCloseDialog } from './base'
 
 import TheDialogModal from '../modules/modal/DialogModal'
 
@@ -15,19 +15,23 @@ export function useModal (props, emit) {
     setPosition,
     setDialogSize,
     openDialog,
-    closeDialogWithCallback,
-    closeDialogWithoutCallback,
+    closeWithCallback,
+    closeWithoutCallback,
     setupAutomaticClose,
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
 
   const maximize = ref(false)
+  const {
+    closeDialogWithCallback,
+    closeDialogWithoutCallback
+  } = useCloseDialog(emit, closeWithCallback, closeWithoutCallback)
 
   watch(() => props.visible, val => {
     if (val) return
     // close modal when visible is set to false
-    closeModalWithoutCallback()
+    closeDialogWithoutCallback()
   })
 
   function setModalTop () {
@@ -45,21 +49,10 @@ export function useModal (props, emit) {
       switchMaximize()
     }
   }
-  const closeOptions = {
-    closing: () => {
-      emit('update:visible', false)
-    }
-  }
-  function closeModalWithCallback (data) {
-    closeDialogWithCallback(data, closeOptions)
-  }
-  function closeModalWithoutCallback () {
-    closeDialogWithoutCallback(closeOptions)
-  }
 
   setDialogSize(props.width || MODAL_WIDTH, props.height || MODAL_HEIGHT)
   // setupPositionAdjustBehavior(setModalTop)
-  setupAutomaticClose(closeModalWithCallback)
+  setupAutomaticClose(closeDialogWithCallback)
 
   onMounted(() => {
     openModal()
@@ -72,9 +65,9 @@ export function useModal (props, emit) {
     openModal,
     setModalTop,
     switchMaximize,
-    closeModalWithCallback,
-    closeModalWithoutCallback,
-    backdropCloseDialog: closeModalWithoutCallback
+    closeDialogWithCallback,
+    closeDialogWithoutCallback,
+    backdropCloseDialog: closeDialogWithoutCallback
   }
 }
 

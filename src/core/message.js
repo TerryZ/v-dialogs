@@ -21,7 +21,7 @@ export function useMessage (props, emit) {
     setPosition,
     setDialogSize,
     openDialog,
-    closeDialogWithCallback,
+    closeWithCallback,
     shouldHandleResize,
     shouldControlOverflow,
     setupAutomaticClose,
@@ -77,7 +77,7 @@ export function useMessage (props, emit) {
         triggerPositionAdjust()
       }
     }
-    closeDialogWithCallback(data, options)
+    closeWithCallback(data, options)
   }
   // Remove pill style when long text content
   function handleBodyRounded (body) {

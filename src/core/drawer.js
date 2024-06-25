@@ -11,7 +11,7 @@ import {
   placements
 } from '../constants'
 import { createDialog } from './manage'
-import { useDialog } from './base'
+import { useDialog, useCloseDialog } from './base'
 
 import TheDialogDrawer from '../modules/drawer/DialogDrawer'
 
@@ -21,47 +21,41 @@ export function useDrawer (props, emit) {
     setPosition,
     setDialogSize,
     openDialog,
-    closeDialogWithCallback,
-    closeDialogWithoutCallback,
+    closeWithCallback,
+    closeWithoutCallback,
     setupAutomaticClose,
     setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
 
-  const { placement } = props
+  const { placement, rounded } = props
   const { width, height } = getDrawerSize(props)
+  const {
+    closeDialogWithCallback,
+    closeDialogWithoutCallback
+  } = useCloseDialog(emit, closeWithCallback, closeWithoutCallback)
 
   watch(() => props.visible, val => {
     if (val) return
-    closeDrawerWithoutCallback()
+    closeDialogWithoutCallback()
   })
 
-  function setModalTop () {
-    setPosition()
-  }
   function getPositionClass () {
     const prefix = 'v-dialog-drawer--'
-    return prefix + (placements.includes(placement) ? placement : PLACEMENT_RIGHT)
+    const classes = [prefix + (placements.includes(placement) ? placement : PLACEMENT_RIGHT)]
+    if (rounded) {
+      classes.push(prefix + 'rounded')
+    }
+    return classes
   }
   function getTransitionName () {
     const prefix = 'v-dialog-drawer-slide-in-'
     return prefix + (placements.includes(placement) ? placement : PLACEMENT_RIGHT)
   }
-  const closeOptions = {
-    closing: () => {
-      emit('update:visible', false)
-    }
-  }
-  function closeDrawerWithCallback (data) {
-    closeDialogWithCallback(data, closeOptions)
-  }
-  function closeDrawerWithoutCallback () {
-    closeDialogWithoutCallback(closeOptions)
-  }
 
   setDialogSize(width, height)
   // setupPositionAdjustBehavior(setModalTop)
-  setupAutomaticClose(closeDrawerWithCallback)
+  setupAutomaticClose(closeDialogWithCallback)
 
   onMounted(() => {
     openDialog()
@@ -70,12 +64,11 @@ export function useDrawer (props, emit) {
   return {
     ...restItems,
     show,
-    setModalTop,
     getPositionClass,
     getTransitionName,
-    closeDrawerWithCallback,
-    closeDrawerWithoutCallback,
-    backdropCloseDialog: closeDrawerWithoutCallback
+    closeDialogWithCallback,
+    closeDialogWithoutCallback,
+    backdropCloseDialog: closeDialogWithoutCallback
   }
 }
 
@@ -95,8 +88,7 @@ function getDrawerSize (props) {
 /**
  * Open a drawer dialog
  *
- * @param {string} message - message content
- * @param {function} [callback] - callback function
+ * @param {object | function} component
  * @param {object} [option] - options
  * @returns
  */

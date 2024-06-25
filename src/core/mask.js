@@ -13,7 +13,7 @@ export function useMask (props, emit) {
     setDialogSize,
     openDialog,
     closeDialog,
-    closeDialogWithCallback,
+    closeWithCallback,
     setPosition,
     setupAutomaticClose,
     setupPositionAdjustBehavior,
@@ -34,7 +34,7 @@ export function useMask (props, emit) {
   }
 
   function closeMaskWithCallback () {
-    closeDialogWithCallback(undefined, {
+    closeWithCallback(undefined, {
       afterClose: () => removeParentRelative
     })
   }
@@ -52,7 +52,7 @@ export function useMask (props, emit) {
     ...restItems,
     messageText,
     closeDialog,
-    closeDialogWithCallback
+    closeWithCallback
   }
 }
 

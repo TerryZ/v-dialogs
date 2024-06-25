@@ -73,9 +73,9 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="backdropClose"
+          @click="noBackdropClose"
         >
-          Backdrop close
+          Do not backdrop close
         </button>
         <button
           type="button"
@@ -213,9 +213,9 @@ function base () {
     }
   })
 }
-function backdropClose () {
+function noBackdropClose () {
   openDrawer({
-    backdropClose: true
+    backdropClose: false
   })
 }
 function noHeader () {
