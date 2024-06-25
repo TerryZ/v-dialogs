@@ -9,7 +9,7 @@ import { propsInjectionKey, MODAL_WIDTH, MODAL_HEIGHT } from '../../constants'
 import DialogContainer from '../DialogContainer'
 import DialogContentBox from '../DialogContentBox'
 import DialogModalHeader from './DialogModalHeader'
-import DialogModalBody from './DialogModalBody'
+import DialogComponentBody from '../DialogComponentBody'
 
 export default defineComponent({
   name: 'DialogModal',
@@ -65,8 +65,8 @@ export default defineComponent({
           {props.header && <DialogModalHeader />}
           {
             slots.default
-              ? <DialogModalBody>{slots.default()}</DialogModalBody>
-              : <DialogModalBody></DialogModalBody>
+              ? <DialogComponentBody>{slots.default()}</DialogComponentBody>
+              : <DialogComponentBody />
           }
         </DialogContentBox>
       </DialogContainer>

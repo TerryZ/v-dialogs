@@ -9,7 +9,7 @@ import { propsInjectionKey, PLACEMENT_RIGHT } from '../../constants'
 import DialogContainer from '../DialogContainer'
 import DialogContentBox from '../DialogContentBox'
 import DialogDrawerHeader from './DialogDrawerHeader'
-import DialogDrawerBody from './DialogDrawerBody'
+import DialogComponentBody from '../DialogComponentBody'
 
 export default defineComponent({
   name: 'DialogDrawer',
@@ -63,8 +63,8 @@ export default defineComponent({
           {props.header && <DialogDrawerHeader />}
           {
             slots.default
-              ? <DialogDrawerBody>{slots.default()}</DialogDrawerBody>
-              : <DialogDrawerBody />
+              ? <DialogComponentBody>{slots.default()}</DialogComponentBody>
+              : <DialogComponentBody />
           }
         </DialogContentBox>
       </DialogContainer>
