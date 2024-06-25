@@ -1,4 +1,13 @@
-import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import {
+  ref,
+  inject,
+  computed,
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  h,
+  mergeProps
+} from 'vue'
 
 import {
   cssValue,
@@ -8,7 +17,12 @@ import {
   restoreDocumentBodyOverflow
 } from './helper'
 import { messageAdjustPositionEvent } from './manage'
-import { EMIT_CLOSE, EMIT_RENDER_DIALOG, EVENT_MESSAGE_ADJUST_POSITION } from '../constants'
+import {
+  EMIT_CLOSE,
+  EMIT_RENDER_DIALOG,
+  EVENT_MESSAGE_ADJUST_POSITION,
+  propsInjectionKey
+} from '../constants'
 import { EN } from '../language'
 
 export const baseProps = {
@@ -128,10 +142,10 @@ export function useDialog (props, emit) {
       if (shouldControlOverflow.value) restoreDocumentBodyOverflow()
     }
   }
-  function closeDialogWithCallback (data, options) {
+  function closeWithCallback (data, options) {
     closeDialog(props.callback, data, options)
   }
-  function closeDialogWithoutCallback (options) {
+  function closeWithoutCallback (options) {
     closeDialog(undefined, undefined, options)
   }
   function setupPositionAdjustBehavior (setTop) {
@@ -166,8 +180,8 @@ export function useDialog (props, emit) {
     openDialog,
     destroy,
     closeDialog,
-    closeDialogWithCallback,
-    closeDialogWithoutCallback,
+    closeWithCallback,
+    closeWithoutCallback,
     setPosition,
     setDialogSize,
     setupAutomaticClose,
@@ -175,6 +189,32 @@ export function useDialog (props, emit) {
     onTransitionAfterEnter,
     onTransitionAfterLeave
   }
+}
+
+export function useDialogComponent (slots) {
+  const {
+    component,
+    params,
+    closeDialogWithCallback
+  } = inject(propsInjectionKey)
+
+  function getComponentContent () {
+    // use slot content first
+    if (slots.default) return slots.default()
+    // dynamic component
+    if (!component) return
+
+    const VNode = typeof component === 'function'
+      ? component()
+      : component
+
+    const options = {
+      onClose: data => closeDialogWithCallback(data)
+    }
+    return h(VNode, mergeProps(params, options))
+  }
+
+  return { getComponentContent }
 }
 
 /**
@@ -210,5 +250,24 @@ export function useGroupItemPositionAdjust (handler) {
     bindPositionAdjust: () => addEventListener(EVENT_MESSAGE_ADJUST_POSITION, handler, false),
     unbindPositionAdjust: () => removeEventListener(EVENT_MESSAGE_ADJUST_POSITION, handler, false),
     triggerPositionAdjust: () => dispatchEvent(messageAdjustPositionEvent)
+  }
+}
+
+export function useCloseDialog (emit, closeWithCallback, closeWithoutCallback) {
+  const closeOptions = {
+    closing: () => {
+      emit('update:visible', false)
+    }
+  }
+  function closeDialogWithCallback (data) {
+    closeWithCallback(data, closeOptions)
+  }
+  function closeDialogWithoutCallback () {
+    closeWithoutCallback(closeOptions)
+  }
+
+  return {
+    closeDialogWithCallback,
+    closeDialogWithoutCallback
   }
 }
