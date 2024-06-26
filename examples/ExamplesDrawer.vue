@@ -93,36 +93,9 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="noMaxButton"
-        >
-          No maximize button
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-secondary me-3"
           @click="noCloseButton"
         >
           No close button(min size)
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-secondary me-3"
-          @click="noButtons"
-        >
-          No buttons
-        </button>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <h5>Fullscreen</h5>
-      <div>
-        <button
-          type="button"
-          class="btn btn-outline-secondary me-3"
-          @click="fullscreen"
-        >
-          Open Modal dialog with fullscreen
         </button>
       </div>
     </div>
@@ -223,28 +196,11 @@ function noHeader () {
     header: false
   })
 }
-function noMaxButton () {
-  openDrawer({
-    maxButton: false
-  })
-}
 function noCloseButton () {
   openDrawer({
     closeButton: false,
     width: 100,
     height: 50
-  })
-}
-function noButtons () {
-  openDrawer({
-    maxButton: false,
-    closeButton: false
-  })
-}
-function fullscreen () {
-  openDrawer({
-    customClass: '',
-    fullscreen: true
   })
 }
 

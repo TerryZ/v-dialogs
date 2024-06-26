@@ -28,7 +28,6 @@ export default defineComponent({
     params: Object,
     closeButton: { type: Boolean, default: true },
     placement: { type: String, default: PLACEMENT_RIGHT },
-    rounded: { type: Boolean, default: true },
     visible: { type: Boolean, default: false }
   }),
   emits: mergeDialogEmits(['update:visible']),

@@ -28,7 +28,7 @@ export function useDrawer (props, emit) {
     ...restItems
   } = useDialog(props, emit)
 
-  const { placement, rounded } = props
+  const { placement } = props
   const { width, height } = getDrawerSize(props)
   const {
     closeDialogWithCallback,
@@ -42,11 +42,7 @@ export function useDrawer (props, emit) {
 
   function getPositionClass () {
     const prefix = 'v-dialog-drawer--'
-    const classes = [prefix + (placements.includes(placement) ? placement : PLACEMENT_RIGHT)]
-    if (rounded) {
-      classes.push(prefix + 'rounded')
-    }
-    return classes
+    return prefix + (placements.includes(placement) ? placement : PLACEMENT_RIGHT)
   }
   function getTransitionName () {
     const prefix = 'v-dialog-drawer-slide-in-'

@@ -287,6 +287,6 @@ export function useComponent (component, { attrs, slots }) {
   return () => {
     if (!attrs.visible && !renderDialog.value) return
 
-    return h(component, mergeProps(attrs, baseProps), slots.default())
+    return h(component, mergeProps(attrs, baseProps), () => slots.default())
   }
 }
