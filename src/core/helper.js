@@ -6,11 +6,10 @@ import {
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
   START_Z_INDEX,
-  Z_INDEX_INCREMENT,
-  TITLE_TEXT_MAX_LENGTH
+  Z_INDEX_INCREMENT
 } from '../constants'
 import languages, { EN } from '../language'
-import { baseProps, baseEmits } from './base'
+import { baseProps, baseEmits } from './base-settings'
 
 export function mergeDialogProps (props) {
   return { ...baseProps, ...props }
@@ -95,18 +94,6 @@ export function getLanguage (lang = EN) {
   if (key in languages) return languages[key]
 
   return languages[EN]
-}
-
-/**
- * Text truncation
- * @param {string} text - source string
- * @param {number} keepLength - save string length
- * @returns {string} truncated string
- */
-export function textTruncate (text, keepLength = TITLE_TEXT_MAX_LENGTH) {
-  if (typeof text !== 'string') return ''
-  if (text.length <= keepLength) return text
-  return text.substring(0, keepLength) + '...'
 }
 
 export function isDocumentBodyOverflowing () {

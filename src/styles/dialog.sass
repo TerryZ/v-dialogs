@@ -37,18 +37,22 @@
     // transition: all .3s ease
   .v-dialog-header
     display: flex
+    align-items: center
     flex-shrink: 0
     height: 42px
     h3
       margin: 0
-      height: 100%
+      // height: 100%
       font-size: 18px
-      padding-left: 15px
+      padding: 0 15px
       font-weight: 500
       flex-grow: 1
-      display: flex
-      align-items: center
+      // display: flex
+      // align-items: center
       color: #666
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
   .v-dialog-body
     position: relative
     width: 100%
