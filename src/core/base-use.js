@@ -9,9 +9,11 @@ import {
 
 import {
   EVENT_MESSAGE_ADJUST_POSITION,
+  MESSAGE_GAP,
+  MESSAGE_OFFSET,
   propsInjectionKey
 } from '../constants'
-import { messageAdjustPositionEvent, addDialog } from './manage'
+import { messageAdjustPositionEvent, addDialog, opening } from './manage'
 
 export function useDialogComponent (slots) {
   const {
@@ -94,6 +96,28 @@ export function useCloseDialog (emit, closeWithCallback, closeWithoutCallback) {
   }
 }
 
+export function useCloseGroupDialog (eventHandler, close) {
+  const {
+    bindPositionAdjust,
+    unbindPositionAdjust,
+    triggerPositionAdjust
+  } = useGroupItemPositionAdjust(eventHandler)
+
+  function closeGroupDialogWithCallback (data) {
+    unbindPositionAdjust()
+    const options = {
+      afterClose: triggerPositionAdjust
+    }
+    close(data, options)
+  }
+
+  bindPositionAdjust()
+
+  return {
+    closeGroupDialogWithCallback
+  }
+}
+
 export function useComponent (component, { attrs, slots }) {
   const renderDialog = ref(false)
 
@@ -111,4 +135,30 @@ export function useComponent (component, { attrs, slots }) {
 
     return h(component, mergeProps(attrs, baseProps), () => slots.default())
   }
+}
+
+export function useVerticalPosition (type, props) {
+  const offset = props.offset || MESSAGE_OFFSET
+  // get same placement Message configs
+  function getPreviousElements () {
+    return opening.value.filter((item) => {
+      return item.type === type &&
+      item.placement === props.placement &&
+      item.index < props.dialogIndex
+    })
+  }
+  function getVerticalPosition () {
+    const elements = getPreviousElements()
+    if (!elements.length) return offset
+
+    let position = 0
+
+    elements.forEach(item => {
+      const el = document.getElementById(item.key)
+      position += el.offsetHeight + MESSAGE_GAP
+    })
+
+    return offset + position
+  }
+  return { getVerticalPosition }
 }
