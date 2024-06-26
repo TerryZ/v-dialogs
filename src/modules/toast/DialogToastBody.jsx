@@ -7,7 +7,7 @@ import {
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS
 } from '../../constants'
-import { getMessageTypeClass } from '../../core/message'
+import { getToastTypeClass } from '../../core/toast'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'
@@ -20,7 +20,6 @@ export default {
   setup () {
     const {
       icon,
-      pill,
       message,
       messageType,
       closeButton,
@@ -29,9 +28,8 @@ export default {
 
     const bodyClass = [
       'v-dialog-body',
-      pill && 'v-dialog-message--pill',
-      icon || 'v-dialog-message--no-icon',
-      getMessageTypeClass(messageType)
+      icon || 'v-dialog-toast--no-icon',
+      getToastTypeClass(messageType)
     ]
 
     function getIcon (type) {
@@ -46,17 +44,17 @@ export default {
     return () => (
       <div class={bodyClass}>
         {icon && (
-          <div class='v-dialog-message__prepend'>
+          <div class='v-dialog-toast__prepend'>
             {getIcon(messageType)}
           </div>
         )}
-        <div class='v-dialog-message__body'>{message}</div>
+        <div class='v-dialog-toast__body'>{message}</div>
         {closeButton && (
           <div
-            class='v-dialog-message__append'
+            class='v-dialog-toast__append'
             onClick={closeGroupDialogWithCallback}
           >
-            <IconClose class='v-dialog-message__close' />
+            <IconClose class='v-dialog-toast__close' />
           </div>
         )}
       </div>

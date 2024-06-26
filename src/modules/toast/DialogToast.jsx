@@ -1,21 +1,21 @@
-import '../../styles/message.sass'
+import '../../styles/toast.sass'
 
 import { defineComponent, provide, ref } from 'vue'
 
-import DialogMessageBody from './DialogMessageBody'
+import DialogToastBody from './DialogToastBody'
 import DialogLiteContainer from '../DialogLiteContainer'
 
 import {
   MESSAGE_TYPE_INFO,
-  MESSAGE_OFFSET,
-  PLACEMENT_TOP,
+  TOAST_OFFSET,
+  PLACEMENT_TOP_RIGHT,
   propsInjectionKey
 } from '../../constants'
-import { useMessage } from '../../core/message'
+import { useToast, getToastPositionClass } from '../../core/toast'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
 export default defineComponent({
-  name: 'DialogMessage',
+  name: 'DialogToast',
   props: mergeDialogProps({
     /**
      * Message type
@@ -29,18 +29,15 @@ export default defineComponent({
     backdrop: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: false },
-    duration: { type: Number, default: 3000 },
-    offset: { type: [String, Number], default: MESSAGE_OFFSET },
-    placement: { type: String, default: PLACEMENT_TOP },
-    /** Pill style border */
-    pill: { type: Boolean, default: true }
+    duration: { type: Number, default: 0 },
+    offset: { type: [String, Number], default: TOAST_OFFSET },
+    placement: { type: String, default: PLACEMENT_TOP_RIGHT }
   }),
   emits: mergeDialogEmits(),
   setup (props, { emit }) {
     const {
-      handleBodyRounded,
       ...restItems
-    } = useMessage(props, emit)
+    } = useToast(props, emit)
     const body = ref()
 
     provide(propsInjectionKey, {
@@ -48,15 +45,18 @@ export default defineComponent({
       ...restItems
     })
 
-    handleBodyRounded(body)
+    const classes = [
+      'v-dialog-toast',
+      getToastPositionClass(props.placement)
+    ]
 
     return () => (
       <DialogLiteContainer
-        container-class={['v-dialog-message']}
+        container-class={classes}
         transition-name='v-dialog--fade-lite'
         id={props.dialogKey}
       >
-        <DialogMessageBody ref={body} />
+        <DialogToastBody ref={body} />
       </DialogLiteContainer>
     )
   }

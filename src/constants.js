@@ -21,9 +21,10 @@ export const ALERT_MAX_CONTENT_LENGTH = 70
 export const MESSAGE_WIDTH = 350
 export const MESSAGE_HEIGHT = 56
 export const MESSAGE_EXPAND_HEIGHT = 200
-export const MESSAGE_OFFSET = 40
+export const MESSAGE_OFFSET = 32
 export const MESSAGE_GAP = 15
 
+export const TOAST_OFFSET = 16
 export const TOAST_MAX_CONTENT_LENGTH = 56
 export const TOAST_CLASS_WARNING = 'toast-warning'
 export const TOAST_CLASS_SUCCESS = 'toast-success'
@@ -49,6 +50,10 @@ export const PLACEMENT_TOP = 'top'
 export const PLACEMENT_BOTTOM = 'bottom'
 export const PLACEMENT_LEFT = 'left'
 export const PLACEMENT_RIGHT = 'right'
+export const PLACEMENT_TOP_LEFT = 'top-left'
+export const PLACEMENT_TOP_RIGHT = 'top-right'
+export const PLACEMENT_BOTTOM_LEFT = 'bottom-left'
+export const PLACEMENT_BOTTOM_RIGHT = 'bottom-right'
 
 export const EMIT_CLOSE = 'close'
 export const EMIT_RENDER_DIALOG = 'render-dialog'

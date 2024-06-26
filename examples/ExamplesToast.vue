@@ -1,174 +1,233 @@
 <template>
-  <section>
-    <h3 class="">
-      Column
-      <small>下拉选择器多列竖排模式</small>
-    </h3>
-    <div class="p-3 shadow-sm rounded-3 border">
-      <div class="mb-3">
-        asdf
-      </div>
-      <div class="mb-3">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          @click="setSelectorRegion"
-        >
-          Set region
-        </button>
-      </div>
-      <div class="bg-light p-3 mb-3 rounded-3">
-        <pre
-          class="m-0 mb-3"
-          v-text="JSON.stringify(modelColumn, null, 2)"
-        />
-        <pre
-          class="m-0"
-          v-text="JSON.stringify(valuesColumn, null, 2)"
-        />
-      </div>
-
-      <h4>核心模块</h4>
-      <div class="my-3">
-        <div class="form-check form-check-inline">
+  <h3 class="mb-3">
+    Toast
+  </h3>
+  <div class="">
+    <div class="mb-3">
+      <h5>Options</h5>
+      <div class="d-flex">
+        <div class="form-check me-3">
           <input
             class="form-check-input"
             type="checkbox"
-            id="inlineCheckboxCity"
-            v-model="enabledCity"
+            v-model="icon"
             :true-value="true"
             :false-value="false"
+            id="dialog-use-icon"
           >
           <label
             class="form-check-label"
-            for="inlineCheckboxCity"
-          >City</label>
+            for="dialog-use-icon"
+          >
+            Use icon
+          </label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check me-3">
           <input
             class="form-check-input"
             type="checkbox"
-            id="inlineCheckboxArea"
-            v-model="enabledArea"
+            v-model="closeBtn"
             :true-value="true"
             :false-value="false"
+            id="dialog-close-button"
           >
           <label
             class="form-check-label"
-            for="inlineCheckboxArea"
-          >Area</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckboxTown"
-            v-model="enabledTown"
-            :true-value="true"
-            :false-value="false"
+            for="dialog-close-button"
           >
-          <label
-            class="form-check-label"
-            for="inlineCheckboxTown"
-          >Town</label>
+            Close button
+          </label>
         </div>
-      </div>
-
-      <div class="d-flex mb-3">
-        aaa
-      </div>
-
-      <div>
-        <button
-          type="button"
-          class="btn btn-secondary me-3"
-          @click="setRegion"
-        >
-          Set Region
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          @click="reset"
-        >
-          Reset
-        </button>
-      </div>
-
-      <h4 class="mt-3">
-        下拉选择器多列竖排模式（自定义呼出按钮）
-      </h4>
-      <div>
-        <RegionColumns>
-          <template #default="{ region, visible }">
-            <button
-              type="button"
-              class="btn btn-primary"
-            >
-              region:{{ resultText(region) }},
-              visible: {{ visible }}
-            </button>
-          </template>
-        </RegionColumns>
       </div>
     </div>
-  </section>
+    <div class="mb-3">
+      <h5>Placement</h5>
+      <div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-top-left"
+            value="top-left"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-top-left"
+          >Top left</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-top-right"
+            value="top-right"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-top-right"
+          >Top right</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-bottom-left"
+            value="bottom-left"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-bottom-left"
+          >Bottom left</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="placement-bottom-right"
+            value="bottom-right"
+            v-model="placement"
+          >
+          <label
+            class="form-check-label"
+            for="placement-bottom-right"
+          >Bottom right</label>
+        </div>
+      </div>
+    </div>
+    <div class="mb-5">
+      <h5>Message notification</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="openOneMessage"
+        >
+          Open a Message Dialog
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="openToast()"
+        >
+          Info
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-warning me-3"
+          @click="openToast(undefined, 'warning')"
+        >
+          Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger me-3"
+          @click="openToast(undefined, 'error')"
+        >
+          Error
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success me-3"
+          @click="openToast(undefined, 'success')"
+        >
+          Success
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <h5>Features</h5>
+      <div class="mb-3">
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noAutoClose"
+        >
+          Do not auto close
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="customTitle"
+        >
+          Custom title
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="closeButton"
+        >
+          Close button
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="longText"
+        >
+          Long text
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="bottomPlacement"
+        >
+          Show at bottom
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-// import { RegionColumnsCore, RegionColumns } from '@/'
+import { ref, h } from 'vue'
+import { DialogToast } from '@/'
 
-const model = {
-  province: '410000',
-  city: '419001',
-  area: '419001',
-  town: '419001001'
-}
+const icon = ref(true)
+const closeBtn = ref(true)
+const placement = ref('top-right')
 
-const modelCore = ref(null)
-const modelColumn = ref({
-  province: '350000',
-  city: '350100',
-  area: '350104',
-  town: '350104008'
-})
-const valuesColumn = ref(null)
-const enabledCity = ref(true)
-const enabledArea = ref(true)
-const enabledTown = ref(true)
-const columnCore = ref()
-const columnSelector = ref()
-
-function cbColumn (data) {
-  // if (!this.valuesColumn) {
-  valuesColumn.value = data
-  // console.log('set data')
-  // }
-  // console.dir(data)
+function openOneMessage () {
+  // using VNode content
+  const content = h('div', [
+    'Provide contextual feedback messages for typical user actions with ',
+    h('strong', 'the handful of available and flexible alert messages')
+  ])
+  DialogToast(content)
 }
-function columnGroupCoreDone () {
-  console.log('columnGroupCoreDone')
+function openToast (content = 'Hello world.', type = 'info') {
+  DialogToast(content, () => {
+    // DialogToast('Dialog closed.')
+    console.log('message closed.')
+  }, {
+    icon: icon.value,
+    messageType: type,
+    placement: placement.value,
+    closeButton: closeBtn.value
+  })
 }
-function resultText (region) {
-  if (!region) return '无数据'
-
-  if (!Object.values(region).some(val => val) || !region) {
-    return '无数据'
-  }
-  return Object
-    .values(region)
-    .filter(val => val)
-    .map(val => val.value)
-    .join(',')
+function noAutoClose () {
+  DialogToast('Hello world', { duration: 0, icon: false })
 }
-function reset () {
-  columnCore.value.reset()
+function closeButton () {
+  DialogToast('Click close button to dismiss notification.', () => {
+    console.log('message closed.')
+  }, {
+    placement: placement.value,
+    duration: 0,
+    closeButton: true
+  })
 }
-function setRegion () {
-  modelCore.value = model
+function longText () {
+  DialogToast('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', {
+    icon: icon.value,
+    placement: placement.value,
+    closeButton: closeBtn.value
+  })
 }
-function setSelectorRegion () {
-  modelColumn.value = model
+function bottomPlacement () {
+  DialogToast('Hello, world', { placement: 'bottom' })
 }
 </script>

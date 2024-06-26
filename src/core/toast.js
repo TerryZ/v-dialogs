@@ -4,21 +4,20 @@ import {
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  PLACEMENT_BOTTOM,
-  PLACEMENT_TOP,
-  MESSAGE
+  PLACEMENT_TOP_LEFT,
+  PLACEMENT_TOP_RIGHT,
+  TOAST,
+  PLACEMENT_BOTTOM_LEFT,
+  PLACEMENT_BOTTOM_RIGHT
 } from '../constants'
 import { useDialog } from './base-dialog'
-import {
-  useVerticalPosition,
-  useCloseGroupDialog
-} from './base-use'
+import { useCloseGroupDialog, useVerticalPosition } from './base-use'
 import { createDialog } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 
-import TheDialogMessage from '../modules/message/DialogMessage'
+import TheDialogToast from '../modules/toast/DialogToast'
 
-export function useMessage (props, emit) {
+export function useToast (props, emit) {
   const {
     setPosition,
     setDialogSize,
@@ -31,17 +30,19 @@ export function useMessage (props, emit) {
     ...restItems
   } = useDialog(props, emit)
   const { closeGroupDialogWithCallback } = useCloseGroupDialog(setMessagePosition, closeWithCallback)
-  const { getVerticalPosition } = useVerticalPosition(MESSAGE, props)
+  const { getVerticalPosition } = useVerticalPosition(TOAST, props)
 
   shouldHandleResize.value = false
   shouldControlOverflow.value = false
 
   function getMessageTop () {
-    if (props.placement === PLACEMENT_BOTTOM) return
+    if (props.placement === PLACEMENT_BOTTOM_LEFT) return
+    if (props.placement === PLACEMENT_BOTTOM_RIGHT) return
     return getVerticalPosition()
   }
   function getMessageBottom () {
-    if (props.placement === PLACEMENT_TOP) return
+    if (props.placement === PLACEMENT_TOP_LEFT) return
+    if (props.placement === PLACEMENT_TOP_RIGHT) return
     return getVerticalPosition()
   }
   function setMessagePosition () {
@@ -76,29 +77,37 @@ export function useMessage (props, emit) {
   }
 }
 
-export function getMessageTypeClass (type) {
+export function getToastTypeClass (type) {
   const types = [
     MESSAGE_TYPE_WARNING,
     MESSAGE_TYPE_ERROR,
     MESSAGE_TYPE_SUCCESS
   ]
   if (!types.includes(type)) return ''
-  return `message-${type}`
+  return `toast-${type}`
+}
+
+export function getToastPositionClass (placement) {
+  const prefix = 'v-dialog-toast--'
+  if (placement === PLACEMENT_TOP_LEFT || placement === PLACEMENT_BOTTOM_LEFT) {
+    return prefix + 'left'
+  }
+  return prefix + 'right'
 }
 
 /**
- * Open a message notification dialog
+ * Open a corner message notification dialog
  *
  * @param {string} message - message content
  * @param {function} [callback] - callback function
  * @param {object} [option] - options
  * @returns {function} call the function to close dialog
  */
-export function DialogMessage () {
+export function DialogToast () {
   const props = parseArgumentsToProps(...arguments)
   const configs = {
-    type: MESSAGE,
-    placement: props.placement || PLACEMENT_TOP
+    type: TOAST,
+    placement: props.placement || PLACEMENT_TOP_RIGHT
   }
-  return createDialog(TheDialogMessage, props, configs)
+  return createDialog(TheDialogToast, props, configs)
 }
