@@ -10,7 +10,8 @@ import {
   MESSAGE_GAP,
   MESSAGE
 } from '../constants'
-import { useDialog, useGroupItemPositionAdjust } from './base'
+import { useDialog } from './base-dialog'
+import { useGroupItemPositionAdjust } from './base-use'
 import { createDialog, opening } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 

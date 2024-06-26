@@ -187,7 +187,7 @@ function autoClose () {
 }
 function customTitle () {
   DialogAlert('Hello', {
-    title: 'This is Alert Dialog'
+    title: 'This is Alert Dialog, This is Alert Dialog, This is Alert Dialog, This is Alert Dialog'
   })
 }
 function backdropClose () {

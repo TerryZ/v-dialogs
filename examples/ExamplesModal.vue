@@ -144,6 +144,7 @@ function openModal (params) {
 }
 function base () {
   openModal({
+    title: 'This is a Modal dialog, This is a Modal dialog, This is a Modal dialog, This is a Modal dialog',
     width: 500,
     height: 320,
     customClass: 'rounded-0',

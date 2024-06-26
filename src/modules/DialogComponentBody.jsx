@@ -1,4 +1,4 @@
-import { useDialogComponent } from '../core/base'
+import { useDialogComponent } from '../core/base-use'
 
 export default {
   name: 'DialogComponentBody',

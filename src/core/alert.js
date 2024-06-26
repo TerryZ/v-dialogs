@@ -10,7 +10,7 @@ import {
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM
 } from '../constants'
-import { useDialog } from './base'
+import { useDialog } from './base-dialog'
 import { createDialog } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 

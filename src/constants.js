@@ -7,6 +7,7 @@ export const DIALOG_KEY_PREFIX = 'v-dialogs-'
 export const DIALOG_HEADER_CLASS = 'v-dialog-header'
 export const START_Z_INDEX = 5100
 export const Z_INDEX_INCREMENT = 50
+// TODO: to remove
 export const TITLE_TEXT_MAX_LENGTH = 30
 export const FULL_WIDTH = '100vw'
 export const FULL_HEIGHT = '100vh'

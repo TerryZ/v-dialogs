@@ -1,6 +1,6 @@
 import { onMounted, computed } from 'vue'
 
-import { useDialog } from './base'
+import { useDialog } from './base-dialog'
 import { createDialog } from './manage'
 import { parseArgumentsToProps, getLanguage } from './helper'
 

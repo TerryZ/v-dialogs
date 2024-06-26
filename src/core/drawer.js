@@ -11,7 +11,8 @@ import {
   placements
 } from '../constants'
 import { createDialog } from './manage'
-import { useDialog, useCloseDialog } from './base'
+import { useDialog } from './base-dialog'
+import { useCloseDialog } from './base-use'
 
 import TheDialogDrawer from '../modules/drawer/DialogDrawer'
 

@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 
-import { useComponent } from '../../core/base'
+import { useComponent } from '../../core/base-use'
 
 import DialogModal from './DialogModal'
 
