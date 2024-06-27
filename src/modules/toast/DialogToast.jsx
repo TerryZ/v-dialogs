@@ -28,7 +28,7 @@ export default defineComponent({
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
     backdrop: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
-    closeButton: { type: Boolean, default: false },
+    closeButton: { type: Boolean, default: true },
     duration: { type: Number, default: 0 },
     offset: { type: [String, Number], default: TOAST_OFFSET },
     placement: { type: String, default: PLACEMENT_TOP_RIGHT }

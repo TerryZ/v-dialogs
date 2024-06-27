@@ -103,7 +103,7 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="openOneMessage"
+          @click="openOneToast"
         >
           Open a Message Dialog
         </button>
@@ -158,9 +158,16 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="closeButton"
+          @click="noTitle"
         >
-          Close button
+          No title
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noCloseButton"
+        >
+          No close button
         </button>
         <button
           type="button"
@@ -168,13 +175,6 @@
           @click="longText"
         >
           Long text
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-secondary me-3"
-          @click="bottomPlacement"
-        >
-          Show at bottom
         </button>
       </div>
     </div>
@@ -189,7 +189,7 @@ const icon = ref(true)
 const closeBtn = ref(true)
 const placement = ref('top-right')
 
-function openOneMessage () {
+function openOneToast () {
   // using VNode content
   const content = h('div', [
     'Provide contextual feedback messages for typical user actions with ',
@@ -211,13 +211,13 @@ function openToast (content = 'Hello world.', type = 'info') {
 function noAutoClose () {
   DialogToast('Hello world', { duration: 0, icon: false })
 }
-function closeButton () {
+function noCloseButton () {
   DialogToast('Click close button to dismiss notification.', () => {
     console.log('message closed.')
   }, {
     placement: placement.value,
     duration: 0,
-    closeButton: true
+    closeButton: false
   })
 }
 function longText () {
@@ -227,7 +227,10 @@ function longText () {
     closeButton: closeBtn.value
   })
 }
-function bottomPlacement () {
-  DialogToast('Hello, world', { placement: 'bottom' })
+function noTitle () {
+  DialogToast('Hello, world', { header: false })
+}
+function customTitle () {
+  DialogToast('Hello, world', { title: 'This is Toast title, This is Toast title, This is Toast title, This is Toast title, This is Toast title' })
 }
 </script>

@@ -6,9 +6,9 @@ import { getDefaultTitle } from '../../core/helper'
 export default {
   name: 'DialogAlertHeader',
   setup () {
-    const { title, lang } = inject(propsInjectionKey)
+    const { title, lang, messageType } = inject(propsInjectionKey)
 
-    const text = title || getDefaultTitle(title, lang)
+    const text = title || getDefaultTitle(messageType, lang)
 
     return () => (
       <div class='v-dialog-header'>

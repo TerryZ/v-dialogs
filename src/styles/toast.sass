@@ -1,59 +1,40 @@
-$gap: 15px
+/* toast */
 
 .v-dialog-toast
-  padding: 0 !important
-  overflow: hidden
-  box-shadow: 0 1px 8px rgba(0,0,0,0.5)
-  border-radius: 5px
-  border-width: 2px
-  border-style: solid
-  border-color: #999
-  color: #333
-  background-color: white
-  width: 300px
+  background-color: transparent
+  box-sizing: border-box
+  transition: all .3s
   .v-dialog-body
     position: relative
     display: flex
     padding: 1rem
+    box-shadow: 0 5px 40px rgba(0,0,0,.4)
+    border-radius: .7rem
+    border-width: 2px
+    border-style: solid
+    border-color: #ccc
+    color: #333
+    background-color: white
+    width: 300px
     &.toast-warning
       border-color: #333
       background-color: #F5CF87
     &.toast-error
       background-color: #FF5252
       border-color: #bf2a2a
+      color: white
+      .v-dialog-toast__append
+        color: #ccc
+        &:hover
+          color: white
     &.toast-success
       background-color: #2CBE4E
       border-color: #0a8427
-  &.bottom-left
-    bottom: $gap
-    left: $gap
-    top: auto
-    right: auto
-  &.bottom-right
-    bottom: $gap
-    right: $gap
-    top: auto
-    left: auto
-  &.top-left
-    top: $gap
-    left: $gap
-    right: auto
-    bottom: auto
-  &.top-right
-    top: $gap
-    right: $gap
-    left: auto
-    bottom: auto
-  &.toast-error,
-  &.toast-success,
-  &.toast-error .v-dialog-toast__close,
-  &.toast-success .v-dialog-toast__close,
-  &.toast-error h3,
-  &.toast-success h3
-    color: white !important
-  &.no-icon
-    .v-dialog-toast__body
-      padding-left: 15px
+      color: #1B5E20
+      .v-dialog-toast__append
+        color: #666
+        &:hover
+          color: black
   &--left
     left: 16px
     right: unset
@@ -62,22 +43,21 @@ $gap: 15px
     right: 16px
   &__prepend,
   &__append
-    width: 40px
+    display: flex
+    justify-content: center
+    flex-shrink: 0
   &__prepend
     font-size: 1.3rem
-    display: flex
-    justify-content: flex-end
   &__body
     flex-grow: 1
-    padding: 0 10px 0 10px
+    padding: 0 10px
     font-size: 14px
     overflow: hidden
-    min-height: 80px
+    min-height: 60px
     h3
       margin: 0 0 3px 0
       font-size: 16px
-      font-weight: bold
-      color: black
+      font-weight: 600
     div
       font-size: 14px
       line-height: 1.4
@@ -86,15 +66,8 @@ $gap: 15px
     color: #999
     font-size: 1rem
     outline: none
+    transition: all .3s
     &:hover
       color: black
   &__close
     cursor: pointer
-  &__icon
-    display: inline-flex
-    align-items: center
-    padding-left: 15px
-    padding-right: 15px
-    i
-      font-size: 40px
-

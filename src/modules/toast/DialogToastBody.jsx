@@ -7,6 +7,7 @@ import {
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS
 } from '../../constants'
+import { getDefaultTitle } from '../../core/helper'
 import { getToastTypeClass } from '../../core/toast'
 
 import IconInfo from '../../icons/IconInfo.vue'
@@ -22,15 +23,18 @@ export default {
       icon,
       message,
       messageType,
+      header,
+      title,
+      lang,
       closeButton,
       closeGroupDialogWithCallback
     } = inject(propsInjectionKey)
 
     const bodyClass = [
       'v-dialog-body',
-      icon || 'v-dialog-toast--no-icon',
       getToastTypeClass(messageType)
     ]
+    const titleText = title || getDefaultTitle(messageType, lang)
 
     function getIcon (type) {
       switch (type) {
@@ -48,7 +52,10 @@ export default {
             {getIcon(messageType)}
           </div>
         )}
-        <div class='v-dialog-toast__body'>{message}</div>
+        <div class='v-dialog-toast__body'>
+          {header && (<h3>{titleText}</h3>)}
+          <div>{message}</div>
+        </div>
         {closeButton && (
           <div
             class='v-dialog-toast__append'
