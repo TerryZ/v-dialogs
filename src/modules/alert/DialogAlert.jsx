@@ -11,6 +11,7 @@ import DialogContentBox from '../DialogContentBox'
 import { MESSAGE_TYPE_INFO, propsInjectionKey } from '../../constants'
 import { useAlert } from '../../core/alert'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
+import { alertEnforcedSettings } from '../../core/base-settings'
 
 export default defineComponent({
   name: 'DialogAlert',
@@ -38,7 +39,8 @@ export default defineComponent({
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems
+      ...restItems,
+      ...alertEnforcedSettings
     })
 
     return () => (

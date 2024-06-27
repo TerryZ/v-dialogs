@@ -11,7 +11,7 @@ export const baseProps = {
   backdrop: { type: Boolean, default: true },
   /** Click backdrop to close dialog */
   backdropClose: { type: Boolean, default: false },
-  /** whether to display header */
+  /** Display dialog header */
   header: { type: Boolean, default: true },
   title: { type: String, default: '' },
   message: { type: [String, Object], default: '' },
@@ -20,14 +20,24 @@ export const baseProps = {
   /** Dialog height */
   height: { type: Number, default: 0 },
   shake: { type: Boolean, default: false },
-  /**
-   * Auto close dialog milliseconds
-   * - 0: disabled automatic close
-   * - number of milliseconds: specify times to automatic close dialog
-   */
-  duration: { type: Number, default: 0 },
   language: { type: String, default: EN },
   callback: { type: Function, default: undefined }
 }
 
 export const baseEmits = [EMIT_CLOSE, EMIT_RENDER_DIALOG]
+
+export const alertEnforcedSettings = {
+  backdrop: true
+}
+export const modalEnforcedSettings = {
+  backdrop: true,
+  backdropClose: false
+}
+export const maskEnforcedSettings = {
+  backdrop: true,
+  backdropClose: false,
+  shake: false
+}
+export const drawerEnforcedSettings = {
+  shake: false
+}

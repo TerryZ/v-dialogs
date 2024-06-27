@@ -5,6 +5,7 @@ import { defineComponent, provide, computed } from 'vue'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useDrawer } from '../../core/drawer'
 import { propsInjectionKey, PLACEMENT_RIGHT } from '../../constants'
+import { drawerEnforcedSettings } from '../../core/base-settings'
 
 import DialogContainer from '../DialogContainer'
 import DialogContentBox from '../DialogContentBox'
@@ -40,7 +41,8 @@ export default defineComponent({
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems
+      ...restItems,
+      ...drawerEnforcedSettings
     })
 
     const containerClass = computed(() => (

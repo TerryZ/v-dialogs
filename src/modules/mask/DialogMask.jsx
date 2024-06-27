@@ -9,6 +9,7 @@ import DialogMaskBody from './DialogMaskBody'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useMask } from '../../core/mask'
 import { propsInjectionKey } from '../../constants'
+import { maskEnforcedSettings } from '../../core/base-settings'
 
 export default defineComponent({
   name: 'DialogMask',
@@ -28,7 +29,8 @@ export default defineComponent({
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems
+      ...restItems,
+      ...maskEnforcedSettings
     })
 
     const classes = [

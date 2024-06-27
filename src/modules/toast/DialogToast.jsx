@@ -29,7 +29,7 @@ export default defineComponent({
     backdrop: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: true },
-    duration: { type: Number, default: 0 },
+    duration: { type: Number, default: 3000 },
     offset: { type: [String, Number], default: TOAST_OFFSET },
     placement: { type: String, default: PLACEMENT_TOP_RIGHT }
   }),

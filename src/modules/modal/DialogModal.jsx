@@ -5,6 +5,7 @@ import { defineComponent, provide, computed } from 'vue'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useModal } from '../../core/modal'
 import { propsInjectionKey, MODAL_WIDTH, MODAL_HEIGHT } from '../../constants'
+import { modalEnforcedSettings } from '../../core/base-settings'
 
 import DialogContainer from '../DialogContainer'
 import DialogContentBox from '../DialogContentBox'
@@ -42,6 +43,7 @@ export default defineComponent({
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
+      ...modalEnforcedSettings,
       maximize
     })
 

@@ -29,6 +29,11 @@ export default defineComponent({
     backdrop: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: false },
+    /**
+     * Auto close dialog milliseconds
+     * - 0: disabled automatic close
+     * - number of milliseconds: specify times to automatic close dialog
+     */
     duration: { type: Number, default: 3000 },
     offset: { type: [String, Number], default: MESSAGE_OFFSET },
     placement: { type: String, default: PLACEMENT_TOP },
