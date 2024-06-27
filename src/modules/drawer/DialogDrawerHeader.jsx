@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import { propsInjectionKey, DIALOG_HEADER_CLASS } from '../../constants'
+import { propsInjectionKey } from '../../constants'
 
 import IconClose from '../../icons/IconClose.vue'
 
@@ -12,7 +12,7 @@ export default {
     } = inject(propsInjectionKey)
 
     return () => (
-      <div class={DIALOG_HEADER_CLASS}>
+      <div class='v-dialog-header'>
         <h3>{title}</h3>
         {closeButton && (
           <button

@@ -2,7 +2,6 @@ export const propsInjectionKey = Symbol('props')
 
 export const DEFAULT_INSTANCE_NAME = '$dlg'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
-export const DIALOG_HEADER_CLASS = 'v-dialog-header'
 export const START_Z_INDEX = 5100
 export const Z_INDEX_INCREMENT = 50
 
@@ -18,7 +17,6 @@ export const ALERT_MAX_CONTENT_LENGTH = 70
 
 export const MESSAGE_WIDTH = 350
 export const MESSAGE_HEIGHT = 56
-export const MESSAGE_EXPAND_HEIGHT = 200
 export const MESSAGE_OFFSET = 32
 export const MESSAGE_GAP = 15
 
