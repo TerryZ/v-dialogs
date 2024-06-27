@@ -3,7 +3,7 @@ import '../../styles/message.sass'
 import { defineComponent, provide, ref } from 'vue'
 
 import DialogMessageBody from './DialogMessageBody'
-import DialogLiteContainer from '../DialogLiteContainer'
+import DialogLiteContainer from '../../components/DialogLiteContainer'
 
 import {
   MESSAGE_TYPE_INFO,

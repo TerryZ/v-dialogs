@@ -2,8 +2,8 @@ import '../../styles/mask.sass'
 
 import { defineComponent, provide } from 'vue'
 
-import DialogContainer from '../DialogContainer'
-import DialogContentBox from '../DialogContentBox'
+import DialogContainer from '../../components/DialogContainer'
+import DialogContentBox from '../../components/DialogContentBox'
 import DialogMaskBody from './DialogMaskBody'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'

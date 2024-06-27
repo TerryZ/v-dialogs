@@ -3,7 +3,7 @@ import '../../styles/toast.sass'
 import { defineComponent, provide, ref } from 'vue'
 
 import DialogToastBody from './DialogToastBody'
-import DialogLiteContainer from '../DialogLiteContainer'
+import DialogLiteContainer from '../../components/DialogLiteContainer'
 
 import {
   MESSAGE_TYPE_INFO,

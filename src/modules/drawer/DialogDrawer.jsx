@@ -7,10 +7,10 @@ import { useDrawer } from '../../core/drawer'
 import { propsInjectionKey, PLACEMENT_RIGHT } from '../../constants'
 import { drawerEnforcedSettings } from '../../core/base-settings'
 
-import DialogContainer from '../DialogContainer'
-import DialogContentBox from '../DialogContentBox'
+import DialogContainer from '../../components/DialogContainer'
+import DialogContentBox from '../../components/DialogContentBox'
 import DialogDrawerHeader from './DialogDrawerHeader'
-import DialogComponentBody from '../DialogComponentBody'
+import DialogComponentBody from '../../components/DialogComponentBody'
 
 export default defineComponent({
   name: 'DialogDrawer',

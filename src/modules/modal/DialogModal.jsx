@@ -7,10 +7,10 @@ import { useModal } from '../../core/modal'
 import { propsInjectionKey, MODAL_WIDTH, MODAL_HEIGHT } from '../../constants'
 import { modalEnforcedSettings } from '../../core/base-settings'
 
-import DialogContainer from '../DialogContainer'
-import DialogContentBox from '../DialogContentBox'
+import DialogContainer from '../../components/DialogContainer'
+import DialogContentBox from '../../components/DialogContentBox'
 import DialogModalHeader from './DialogModalHeader'
-import DialogComponentBody from '../DialogComponentBody'
+import DialogComponentBody from '../../components/DialogComponentBody'
 
 export default defineComponent({
   name: 'DialogModal',
