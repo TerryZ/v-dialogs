@@ -55,11 +55,6 @@ export function useDialog (props, emit) {
     }
     return styles
   })
-  // the style v-dialog-content used
-  // TODO: to remove
-  const contentStyles = computed(() => ({
-    height: cssValue(height.value)
-  }))
 
   function getTopValue (topValue) {
     if (typeof topValue !== 'undefined') return topValue
@@ -142,7 +137,6 @@ export function useDialog (props, emit) {
     shouldControlOverflow,
     shouldHandleResize,
     dialogStyles,
-    contentStyles,
     dialogZIndex,
     backdropZIndex,
     openDialog,
