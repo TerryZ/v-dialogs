@@ -18,17 +18,12 @@ import TheDialogDrawer from '../modules/drawer/DialogDrawer'
 
 export function useDrawer (props, emit) {
   const {
-    show,
-    setPosition,
     setDialogSize,
     openDialog,
     closeWithCallback,
     closeWithoutCallback,
-    setupAutomaticClose,
-    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
-
   const { placement } = props
   const { width, height } = getDrawerSize(props)
   const {
@@ -51,8 +46,6 @@ export function useDrawer (props, emit) {
   }
 
   setDialogSize(width, height)
-  // setupPositionAdjustBehavior(setModalTop)
-  setupAutomaticClose(closeDialogWithCallback)
 
   onMounted(() => {
     openDialog()
@@ -60,7 +53,6 @@ export function useDrawer (props, emit) {
 
   return {
     ...restItems,
-    show,
     getPositionClass,
     getTransitionName,
     closeDialogWithCallback,

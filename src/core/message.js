@@ -14,7 +14,7 @@ import {
   useCloseGroupDialog
 } from './base-use'
 import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage } from './helper'
+import { parseArgumentsToProps } from './helper'
 
 import TheDialogMessage from '../modules/message/DialogMessage'
 
@@ -70,7 +70,6 @@ export function useMessage (props, emit) {
 
   return {
     ...restItems,
-    lang: getLanguage(props.language),
     handleBodyRounded,
     closeGroupDialogWithCallback
   }

@@ -101,13 +101,6 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
-          @click="autoClose"
-        >
-          Auto close Alert dialog
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-secondary me-3"
           @click="customTitle"
         >
           Custom title
@@ -178,11 +171,6 @@ function openConfirmAlert () {
     cancelCallback () {
       DialogAlert('Confirm dialog canceled.')
     }
-  })
-}
-function autoClose () {
-  DialogAlert('Alert dialog will auto close in 3 second.', {
-    duration: 3000
   })
 }
 function customTitle () {

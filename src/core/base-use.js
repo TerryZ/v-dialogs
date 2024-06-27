@@ -77,6 +77,13 @@ export function useGroupItemPositionAdjust (handler) {
   }
 }
 
+/**
+ * Close dialog and update visible prop value
+ * @param {function} emit
+ * @param {function} closeWithCallback
+ * @param {function} closeWithoutCallback
+ * @returns {object}
+ */
 export function useCloseDialog (emit, closeWithCallback, closeWithoutCallback) {
   const closeOptions = {
     closing: () => {

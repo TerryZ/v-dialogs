@@ -12,14 +12,10 @@ import TheDialogModal from '../modules/modal/DialogModal'
 
 export function useModal (props, emit) {
   const {
-    show,
-    setPosition,
     setDialogSize,
     openDialog,
     closeWithCallback,
     closeWithoutCallback,
-    setupAutomaticClose,
-    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
 
@@ -35,13 +31,8 @@ export function useModal (props, emit) {
     closeDialogWithoutCallback()
   })
 
-  function setModalTop () {
-    setPosition(maximize.value ? 0 : undefined)
-  }
   function switchMaximize () {
     maximize.value = !maximize.value
-
-    // setModalTop()
   }
   function openModal () {
     openDialog()
@@ -52,8 +43,6 @@ export function useModal (props, emit) {
   }
 
   setDialogSize(props.width || MODAL_WIDTH, props.height || MODAL_HEIGHT)
-  // setupPositionAdjustBehavior(setModalTop)
-  setupAutomaticClose(closeDialogWithCallback)
 
   onMounted(() => {
     openModal()
@@ -61,10 +50,8 @@ export function useModal (props, emit) {
 
   return {
     ...restItems,
-    show,
     maximize,
     openModal,
-    setModalTop,
     switchMaximize,
     closeDialogWithCallback,
     closeDialogWithoutCallback,

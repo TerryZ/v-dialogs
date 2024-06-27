@@ -23,7 +23,7 @@ export default defineComponent({
   setup (props, { emit, expose }) {
     const {
       messageText,
-      closeWithCallback,
+      closeMaskWithCallback,
       ...restItems
     } = useMask(props, emit)
 
@@ -44,7 +44,7 @@ export default defineComponent({
     ]
 
     expose({
-      close: closeWithCallback
+      close: closeMaskWithCallback
     })
 
     return () => (

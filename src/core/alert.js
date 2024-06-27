@@ -24,18 +24,12 @@ export function useAlert (props, emit) {
     openDialog,
     closeDialog,
     closeWithCallback,
-    setPosition,
-    setupAutomaticClose,
-    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
   const { width, height } = getAlertSize(props)
-
   const lang = getLanguage(props.language)
 
   setDialogSize(width, height)
-  // setupPositionAdjustBehavior(setPosition)
-  setupAutomaticClose(closeWithCallback)
 
   function getShadowClass () {
     if (
@@ -55,7 +49,6 @@ export function useAlert (props, emit) {
   return {
     ...restItems,
     lang,
-    closeDialog,
     cancelAlert,
     closeWithCallback,
     backdropCloseDialog: closeWithCallback,

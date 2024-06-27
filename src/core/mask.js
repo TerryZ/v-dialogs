@@ -12,19 +12,13 @@ export function useMask (props, emit) {
     shouldHandleResize,
     setDialogSize,
     openDialog,
-    closeDialog,
     closeWithCallback,
-    setPosition,
-    setupAutomaticClose,
-    setupPositionAdjustBehavior,
     ...restItems
   } = useDialog(props, emit)
-
   const {
     addParentRelative,
     removeParentRelative
   } = useMaskParentHandle(props.appendTo)
-
   const lang = getLanguage(props.language)
   const messageText = computed(() => props.message || lang.maskText)
 
@@ -41,8 +35,6 @@ export function useMask (props, emit) {
 
   addParentRelative()
   setDialogSize(undefined, 60)
-  // setupPositionAdjustBehavior(setPosition)
-  setupAutomaticClose(closeMaskWithCallback)
 
   onMounted(() => {
     openDialog()
@@ -51,8 +43,7 @@ export function useMask (props, emit) {
   return {
     ...restItems,
     messageText,
-    closeDialog,
-    closeWithCallback
+    closeMaskWithCallback
   }
 }
 
