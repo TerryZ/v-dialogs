@@ -10,6 +10,7 @@ import {
 } from '../constants'
 import languages, { EN } from '../language'
 import { baseProps, baseEmits } from './base-settings'
+import { createDialog } from './manage'
 
 export function mergeDialogProps (props) {
   return { ...baseProps, ...props }
@@ -120,4 +121,23 @@ export function cssValue (value, unit = 'px') {
     return `${value}${unit}`
   }
   return value // string value
+}
+
+export function messageTypeQuickAccess (types, prefix, component, setConfig) {
+  const quickAccess = {}
+
+  types.forEach(type => {
+    const [firstChar, ...restChars] = type
+    const name = prefix + firstChar.toUpperCase() + restChars.join('')
+    quickAccess[name] = function () {
+      const props = {
+        ...parseArgumentsToProps(...arguments),
+        messageType: type
+      }
+      const config = setConfig(props)
+      return createDialog(component, props, config)
+    }
+  })
+
+  return quickAccess
 }

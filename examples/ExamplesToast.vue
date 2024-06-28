@@ -178,12 +178,52 @@
         </button>
       </div>
     </div>
+
+    <div class="mb-3">
+      <h5>Quick access</h5>
+      <div class="mb-3">
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickInfo"
+        >
+          Quick info
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickWarning"
+        >
+          Quick warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickError"
+        >
+          Quick error
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickSuccess"
+        >
+          Quick success
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, h } from 'vue'
-import { DialogToast } from '@/'
+import {
+  DialogToast,
+  DialogToastInfo,
+  DialogToastWarning,
+  DialogToastError,
+  DialogToastSuccess
+} from '@/'
 
 const icon = ref(true)
 const closeBtn = ref(true)
@@ -232,5 +272,17 @@ function noTitle () {
 }
 function customTitle () {
   DialogToast('Hello, world', { title: 'This is Toast title, This is Toast title, This is Toast title, This is Toast title, This is Toast title' })
+}
+function quickInfo () {
+  DialogToastInfo('Hello')
+}
+function quickWarning () {
+  DialogToastWarning('Hello')
+}
+function quickError () {
+  DialogToastError('Hello')
+}
+function quickSuccess () {
+  DialogToastSuccess('Hello')
 }
 </script>

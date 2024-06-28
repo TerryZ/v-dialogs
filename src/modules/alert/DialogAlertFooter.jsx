@@ -1,7 +1,6 @@
 import { ref, inject, onMounted } from 'vue'
 
 import { propsInjectionKey } from '../../constants'
-import { isConfirmType } from '../../core/alert'
 
 export default {
   name: 'DialogAlertFooter',
@@ -9,10 +8,10 @@ export default {
     const btnOk = ref()
 
     const {
-      messageType,
       lang,
-      closeWithCallback,
-      cancelAlert
+      cancelAlert,
+      isConfirmType,
+      closeWithCallback
     } = inject(propsInjectionKey)
 
     onMounted(() => {
@@ -32,7 +31,7 @@ export default {
             onClick={closeWithCallback}
           >{lang.btnOk}</button>
 
-          {isConfirmType(messageType) && (
+          {isConfirmType() && (
             <button
               type='button'
               class='v-dialog-btn__cancel'

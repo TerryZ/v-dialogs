@@ -138,12 +138,60 @@
         </button>
       </div>
     </div>
+
+    <div class="mb-3">
+      <h5>Quick access</h5>
+      <div class="mb-3">
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickInfo"
+        >
+          Quick info
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickWarning"
+        >
+          Quick warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickError"
+        >
+          Quick error
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickSuccess"
+        >
+          Quick success
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="quickConfirm"
+        >
+          Quick confirm
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { DialogAlert } from '@/'
+import {
+  DialogAlert,
+  DialogAlertInfo,
+  DialogAlertWarning,
+  DialogAlertError,
+  DialogAlertSuccess,
+  DialogAlertConfirm
+} from '@/'
 
 const icon = ref(true)
 const colorfulShadow = ref(true)
@@ -191,5 +239,20 @@ function noParameters () {
 }
 function noHeader () {
   DialogAlert('Hello world', { header: false })
+}
+function quickInfo () {
+  DialogAlertInfo('Hello')
+}
+function quickWarning () {
+  DialogAlertWarning('Hello')
+}
+function quickError () {
+  DialogAlertError('Hello')
+}
+function quickSuccess () {
+  DialogAlertSuccess('Hello')
+}
+function quickConfirm () {
+  DialogAlertConfirm('Hello')
 }
 </script>

@@ -8,7 +8,6 @@ import {
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM
 } from '../../constants'
-import { getAlertTypeClass } from '../../core/alert'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'
@@ -22,7 +21,8 @@ export default {
     const {
       icon,
       message,
-      messageType
+      messageType,
+      getAlertTypeClass
     } = inject(propsInjectionKey)
 
     const classes = [

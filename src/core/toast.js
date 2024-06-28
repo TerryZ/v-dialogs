@@ -8,12 +8,13 @@ import {
   PLACEMENT_TOP_RIGHT,
   TOAST,
   PLACEMENT_BOTTOM_LEFT,
-  PLACEMENT_BOTTOM_RIGHT
+  PLACEMENT_BOTTOM_RIGHT,
+  messageTypes
 } from '../constants'
 import { useDialog } from './base-dialog'
 import { useCloseGroupDialog, useVerticalPosition } from './base-use'
 import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage } from './helper'
+import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from './helper'
 
 import TheDialogToast from '../modules/toast/DialogToast'
 
@@ -111,3 +112,18 @@ export function DialogToast () {
   }
   return createDialog(TheDialogToast, props, configs)
 }
+
+export const {
+  DialogToastInfo,
+  DialogToastWarning,
+  DialogToastError,
+  DialogToastSuccess
+} = messageTypeQuickAccess(
+  messageTypes,
+  'DialogToast',
+  TheDialogToast,
+  props => ({
+    type: TOAST,
+    placement: props.placement || PLACEMENT_TOP_RIGHT
+  })
+)

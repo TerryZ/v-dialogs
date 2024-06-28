@@ -8,11 +8,12 @@ import {
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_TYPE_CONFIRM
+  MESSAGE_TYPE_CONFIRM,
+  messageTypes
 } from '../constants'
 import { useDialog } from './base-dialog'
 import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage } from './helper'
+import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from './helper'
 
 import TheDialogAlert from '../modules/alert/DialogAlert'
 import { onMounted } from 'vue'
@@ -31,6 +32,17 @@ export function useAlert (props, emit) {
 
   setDialogSize(width, height)
 
+  const isConfirmType = () => MESSAGE_TYPE_CONFIRM === messageType
+  function getAlertTypeClass () {
+    const types = [
+      MESSAGE_TYPE_WARNING,
+      MESSAGE_TYPE_ERROR,
+      MESSAGE_TYPE_SUCCESS,
+      MESSAGE_TYPE_CONFIRM
+    ]
+    if (!types.includes(messageType)) return ''
+    return `alert-${messageType}`
+  }
   function getShadowClass () {
     if (
       !colorfulShadow ||
@@ -50,6 +62,8 @@ export function useAlert (props, emit) {
     ...restItems,
     lang,
     cancelAlert,
+    isConfirmType,
+    getAlertTypeClass,
     closeWithCallback,
     backdropCloseDialog: closeWithCallback,
     getShadowClass
@@ -61,7 +75,7 @@ export function useAlert (props, emit) {
  * @param {object} props
  * @returns {object} dialog size
  */
-export function getAlertSize (props) {
+function getAlertSize (props) {
   const { message } = props
   // large text
   if (message.length > ALERT_MAX_CONTENT_LENGTH) {
@@ -70,19 +84,6 @@ export function getAlertSize (props) {
 
   return { width: ALERT_WIDTH, height: ALERT_HEIGHT }
 }
-
-export function getAlertTypeClass (type) {
-  const types = [
-    MESSAGE_TYPE_WARNING,
-    MESSAGE_TYPE_ERROR,
-    MESSAGE_TYPE_SUCCESS,
-    MESSAGE_TYPE_CONFIRM
-  ]
-  if (!types.includes(type)) return ''
-  return `alert-${type}`
-}
-
-export const isConfirmType = type => MESSAGE_TYPE_CONFIRM === type
 
 /**
  * Open a message alert dialog
@@ -95,3 +96,15 @@ export const isConfirmType = type => MESSAGE_TYPE_CONFIRM === type
 export function DialogAlert () {
   return createDialog(TheDialogAlert, parseArgumentsToProps(...arguments))
 }
+
+export const {
+  DialogAlertInfo,
+  DialogAlertWarning,
+  DialogAlertError,
+  DialogAlertSuccess,
+  DialogAlertConfirm
+} = messageTypeQuickAccess(
+  [MESSAGE_TYPE_CONFIRM, ...messageTypes],
+  'DialogAlert',
+  TheDialogAlert
+)

@@ -6,7 +6,8 @@ import {
   MESSAGE_TYPE_SUCCESS,
   PLACEMENT_BOTTOM,
   PLACEMENT_TOP,
-  MESSAGE
+  MESSAGE,
+  messageTypes
 } from '../constants'
 import { useDialog } from './base-dialog'
 import {
@@ -14,7 +15,7 @@ import {
   useCloseGroupDialog
 } from './base-use'
 import { createDialog } from './manage'
-import { parseArgumentsToProps } from './helper'
+import { parseArgumentsToProps, messageTypeQuickAccess } from './helper'
 
 import TheDialogMessage from '../modules/message/DialogMessage'
 
@@ -101,3 +102,18 @@ export function DialogMessage () {
   }
   return createDialog(TheDialogMessage, props, configs)
 }
+
+export const {
+  DialogMessageInfo,
+  DialogMessageWarning,
+  DialogMessageError,
+  DialogMessageSuccess
+} = messageTypeQuickAccess(
+  messageTypes,
+  'DialogMessage',
+  TheDialogMessage,
+  props => ({
+    type: MESSAGE,
+    placement: props.placement || PLACEMENT_TOP
+  })
+)
