@@ -1,11 +1,15 @@
-import { DialogBaseOption } from './helper'
+import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
 
-declare interface AlertOption extends DialogBaseOption {
+declare type AlertOption = DialogBaseOption & {
+  /**
+   * Display the header
+   * @default true
+   */
+  header?: boolean
   /**
    * The title text displayed in header
-   * - set to false to close header
    */
-  title?: boolean | string
+  title?: string
   /**
    * Alert message type
    * - `info` default
@@ -14,36 +18,80 @@ declare interface AlertOption extends DialogBaseOption {
    * - `success`
    * - `confirm`
    */
-  messageType?: 'info' | 'warning' | 'error' | 'success' | 'confirm'
-  /** Message type icon */
+  messageType?: DialogMessageType | 'confirm'
+  /**
+   * Message type icon
+   * @default true
+   */
   icon?: boolean
   /** Shake the dialog when operating outside the dialog */
   shaking?: boolean
   /**
-   * The time(second) to automatically close dialog
+   * Use colorful shadow
+   * @default false
    */
-  closeTime?: boolean | number
+  colorfulShadow?: boolean
   /**
    * Respond the cancel button click in `confirm` type alert
    */
   cancelCallback?: Function
   /**
    * The dialog background overlay
+   * @default true
    */
   backdrop?: boolean
-  /** Click outside the dialog to close dialog */
+  /**
+   * Click outside the dialog to close dialog
+   * @default false
+   */
   backdropClose?: boolean
 }
 
 /**
- * Display a alert dialog
+ * Open an alert dialog
  * @param message - The message to display
  * @param callback - respond the dialog close
- * @param options - custom options
- * @returns the dialog key
+ * @param options - dialog options
+ * @returns the method to close dialog
  */
-export function DialogAlert (
-  message: string,
-  callback?: Function,
-  options?: AlertOption
-): string
+export const DialogAlert:MessageDialog<AlertOption>
+/**
+ * Open an information type alert dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export const DialogAlertInfo:MessageDialog<AlertOption>
+/**
+ * Open an warning type alert dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export const DialogAlertWarning:MessageDialog<AlertOption>
+/**
+ * Open an error type alert dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export const DialogAlertError:MessageDialog<AlertOption>
+/**
+ * Open an success type alert dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export const DialogAlertSuccess:MessageDialog<AlertOption>
+/**
+ * Open an confirm type alert dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export const DialogAlertConfirm:MessageDialog<AlertOption>
