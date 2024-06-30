@@ -1,11 +1,15 @@
 import './styles/dialog.sass'
 import './styles/animated.sass'
 
-// import { DEFAULT_INSTANCE_NAME } from './constants'
-// import { instanceApi } from './utils/instance'
+import { DEFAULT_INSTANCE_NAME } from './constants'
+import { DialogModal } from './core/modal'
+import { DialogMask } from './core/mask'
+import { DialogDrawer } from './core/drawer'
+import { DialogAlert } from './core/alert'
+import { DialogMessage } from './core/message'
+import { DialogToast } from './core/toast'
 
 export {
-  DialogAlert,
   DialogAlertInfo,
   DialogAlertWarning,
   DialogAlertError,
@@ -13,31 +17,43 @@ export {
   DialogAlertConfirm
 } from './core/alert'
 export {
-  DialogMessage,
   DialogMessageInfo,
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess
 } from './core/message'
 export {
-  DialogToast,
   DialogToastInfo,
   DialogToastWarning,
   DialogToastError,
   DialogToastSuccess
 } from './core/toast'
-export { DialogModal } from './core/modal'
-export { DialogMask } from './core/mask'
-export { DialogDrawer } from './core/drawer'
 
 export { default as DialogModalBox } from './modules/modal/DialogModalBox'
 export { default as DialogDrawerBox } from './modules/drawer/DialogDrawerBox'
 
 export default {
   install (app, options = {}) {
-    // const instanceName = options?.instanceName || DEFAULT_INSTANCE_NAME
-    // app.config.globalProperties[instanceName] = instanceApi
+    const instanceName = options?.instanceName || DEFAULT_INSTANCE_NAME
+    const dialogs = {
+      alert: DialogAlert,
+      message: DialogMessage,
+      toast: DialogToast,
+      modal: DialogModal,
+      mask: DialogMask,
+      drawer: DialogDrawer
+    }
+    app.config.globalProperties[instanceName] = dialogs
 
     // DialogHelper.appContent = app._context
   }
+}
+
+export {
+  DialogAlert,
+  DialogMessage,
+  DialogToast,
+  DialogModal,
+  DialogMask,
+  DialogDrawer
 }

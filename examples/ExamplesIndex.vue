@@ -40,6 +40,7 @@ import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 
 const modules = [
+  { key: 'global', name: 'Global', url: '/global' },
   { key: 'alert', name: 'Alert', url: '/alert' },
   { key: 'message', name: 'Message', url: '/message' },
   { key: 'toast', name: 'Toast', url: '/toast' },

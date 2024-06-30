@@ -1,8 +1,5 @@
 import {
   colorfulShadowTypes,
-  ALERT_MAX_CONTENT_LENGTH,
-  ALERT_WIDTH_LARGE,
-  ALERT_HEIGHT_LARGE,
   ALERT_HEIGHT,
   ALERT_WIDTH,
   MESSAGE_TYPE_WARNING,
@@ -27,10 +24,9 @@ export function useAlert (props, emit) {
     closeWithCallback,
     ...restItems
   } = useDialog(props, emit)
-  const { width, height } = getAlertSize(props)
   const lang = getLanguage(props.language)
 
-  setDialogSize(width, height)
+  setDialogSize(ALERT_WIDTH, ALERT_HEIGHT)
 
   const isConfirmType = () => MESSAGE_TYPE_CONFIRM === messageType
   function getAlertTypeClass () {
@@ -68,21 +64,6 @@ export function useAlert (props, emit) {
     backdropCloseDialog: closeWithCallback,
     getShadowClass
   }
-}
-
-/**
- * Get Alert dialog size
- * @param {object} props
- * @returns {object} dialog size
- */
-function getAlertSize (props) {
-  const { message } = props
-  // large text
-  if (message.length > ALERT_MAX_CONTENT_LENGTH) {
-    return { width: ALERT_WIDTH_LARGE, height: ALERT_HEIGHT_LARGE }
-  }
-
-  return { width: ALERT_WIDTH, height: ALERT_HEIGHT }
 }
 
 /**

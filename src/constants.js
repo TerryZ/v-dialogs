@@ -9,11 +9,7 @@ export const FULL_WIDTH = '100vw'
 export const FULL_HEIGHT = '100vh'
 
 export const ALERT_WIDTH = 450
-export const ALERT_WIDTH_LARGE = 700
 export const ALERT_HEIGHT = 210
-export const ALERT_HEIGHT_LARGE = 400
-// TODO: to remove
-export const ALERT_MAX_CONTENT_LENGTH = 70
 
 export const MESSAGE_WIDTH = 350
 export const MESSAGE_HEIGHT = 56
