@@ -134,7 +134,7 @@ export function messageTypeQuickAccess (types, prefix, component, setConfig) {
         ...parseArgumentsToProps(...arguments),
         messageType: type
       }
-      const config = setConfig(props)
+      const config = setConfig && setConfig(props)
       return createDialog(component, props, config)
     }
   })
