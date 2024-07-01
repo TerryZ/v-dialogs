@@ -2,7 +2,6 @@ import { AppContext } from 'vue'
 
 import {
   DialogAlert,
-  DialogAlertInfo,
   DialogAlertWarning,
   DialogAlertError,
   DialogAlertSuccess,
@@ -10,7 +9,6 @@ import {
 } from './alert'
 import {
   DialogMessage,
-  DialogMessageInfo,
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess
@@ -21,13 +19,11 @@ import { DialogMask } from './mask'
 
 export {
   DialogAlert,
-  DialogAlertInfo,
   DialogAlertWarning,
   DialogAlertError,
   DialogAlertSuccess,
   DialogAlertConfirm,
   DialogMessage,
-  DialogMessageInfo,
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess,

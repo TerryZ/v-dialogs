@@ -53,14 +53,6 @@ declare type MessageOption = DialogBaseOption & {
  */
 export declare const DialogMessage: typeof MessageDialog<MessageOption>
 /**
- * Open an information type message dialog
- * @param message - The message to display
- * @param callback - respond the dialog close
- * @param options - dialog options
- * @returns the method to close dialog
- */
-export declare const DialogMessageInfo: typeof MessageDialog<MessageOption>
-/**
  * Open an warning type message dialog
  * @param message - The message to display
  * @param callback - respond the dialog close

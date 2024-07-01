@@ -56,14 +56,6 @@ declare type AlertOption = DialogBaseOption & {
  */
 export declare const DialogAlert: typeof MessageDialog<AlertOption>
 /**
- * Open an information type alert dialog
- * @param message - The message to display
- * @param callback - respond the dialog close
- * @param options - dialog options
- * @returns the method to close dialog
- */
-export declare const DialogAlertInfo: typeof MessageDialog<AlertOption>
-/**
  * Open an warning type alert dialog
  * @param message - The message to display
  * @param callback - respond the dialog close
