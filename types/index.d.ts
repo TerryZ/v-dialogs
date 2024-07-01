@@ -1,16 +1,15 @@
 import Vue from 'vue'
-import { DialogAlert } from './alert'
+
+import { DialogAlert, DialogAlertInfo } from './alert'
 import { DialogModal } from './modal'
 import { DialogToast } from './toast'
 import { DialogMask } from './mask'
-import { DialogHelper } from './helper'
 
 export {
   DialogAlert,
   DialogModal,
   DialogToast,
-  DialogMask,
-  DialogHelper
+  DialogMask
 }
 
 declare interface DialogInstallOption {

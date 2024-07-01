@@ -12,7 +12,10 @@
   "module": "./dist/v-dialogs.js",
   "exports": {
     ".": {
-      "import": "./dist/v-dialogs.js",
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/v-dialogs.js"
+      },
       "require": "./dist/v-dialogs.umd.cjs"
     }
   },
