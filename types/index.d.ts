@@ -8,6 +8,13 @@ import {
   DialogAlertSuccess,
   DialogAlertConfirm
 } from './alert'
+import {
+  DialogMessage,
+  DialogMessageInfo,
+  DialogMessageWarning,
+  DialogMessageError,
+  DialogMessageSuccess
+} from './message'
 import { DialogModal } from './modal'
 import { DialogToast } from './toast'
 import { DialogMask } from './mask'
@@ -19,6 +26,11 @@ export {
   DialogAlertError,
   DialogAlertSuccess,
   DialogAlertConfirm,
+  DialogMessage,
+  DialogMessageInfo,
+  DialogMessageWarning,
+  DialogMessageError,
+  DialogMessageSuccess,
   DialogModal,
   DialogToast,
   DialogMask

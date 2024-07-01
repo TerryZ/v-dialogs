@@ -11,7 +11,7 @@ declare type AlertOption = DialogBaseOption & {
    */
   title?: string
   /**
-   * Alert message type
+   * Message type
    * - `info` default
    * - `warning`
    * - `error`
