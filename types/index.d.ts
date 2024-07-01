@@ -13,8 +13,13 @@ import {
   DialogMessageError,
   DialogMessageSuccess
 } from './message'
+import {
+  DialogToast,
+  DialogToastWarning,
+  DialogToastError,
+  DialogToastSuccess
+} from './toast'
 import { DialogModal } from './modal'
-import { DialogToast } from './toast'
 import { DialogMask } from './mask'
 
 export {
@@ -27,8 +32,11 @@ export {
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess,
-  DialogModal,
   DialogToast,
+  DialogToastWarning,
+  DialogToastError,
+  DialogToastSuccess,
+  DialogModal,
   DialogMask
 }
 

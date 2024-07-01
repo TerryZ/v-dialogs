@@ -1,56 +1,73 @@
-import { DialogBaseOption } from './helper'
+import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
 
-declare type ToastPosition = 'topLeft'
-  | 'topCenter'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomCenter'
-  | 'bottomRight'
-
-declare interface ToastOption extends DialogBaseOption {
+declare type ToastOption = DialogBaseOption & {
   /**
-   * The title text displayed in header
-   * - set to false to close header
-   */
-  title?: boolean | string
-  /**
-   * Toast message type
+   * Message type
    * - `info` default
    * - `warning`
    * - `error`
    * - `success`
    */
-  messageType?: 'info' | 'warning' | 'error' | 'success'
-  /** Message type icon */
+  messageType?: DialogMessageType
+  /**
+   * Message type icon
+   * @default true
+   */
   icon?: boolean
   /**
-   * The time(second) to automatically close dialog
+   * Display close button
+   * @default false
    */
-  closeTime?: boolean | number
-  /** Display close button */
   closeButton?: boolean
   /**
-   * Toast dialog display position
+   * The number of milliseconds to automatically close the dialog
    *
-   * - `topLeft`
-   * - `topCenter`
-   * - `topRight`
-   * - `bottomLeft`
-   * - `bottomCenter`
-   * - `bottomRight` default
+   * set to 0 to disable auto close
+   *
+   * @default 3000
    */
-  position?: ToastPosition
+  duration?: number
+  /**
+   * The distance to the top of viewport
+   * @default 16
+   */
+  offset?: string | number
+  /**
+   * The placement of the toast dialog
+   * @default `top-right`
+   */
+  placement?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 }
 
 /**
- * Display a toast dialog
+ * Open a toast dialog
  * @param message - The message to display
  * @param callback - respond the dialog close
- * @param options - custom options
- * @returns the dialog key
+ * @param options - dialog options
+ * @returns the method to close dialog
  */
-export function DialogToast (
-  message: string,
-  callback?: Function,
-  options?: ToastOption
-): string
+export declare const DialogToast: typeof MessageDialog<ToastOption>
+/**
+ * Open an warning type toast dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export declare const DialogToastWarning: typeof MessageDialog<ToastOption>
+/**
+ * Open an error type toast dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export declare const DialogToastError: typeof MessageDialog<ToastOption>
+/**
+ * Open an success type toast dialog
+ * @param message - The message to display
+ * @param callback - respond the dialog close
+ * @param options - dialog options
+ * @returns the method to close dialog
+ */
+export declare const DialogToastSuccess: typeof MessageDialog<ToastOption>
