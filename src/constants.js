@@ -50,8 +50,7 @@ export const colorfulShadowTypes = [
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS
 ]
-export const messageTypes = [
-  MESSAGE_TYPE_INFO,
+export const quickAccessTypes = [
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS

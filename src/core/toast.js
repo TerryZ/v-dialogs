@@ -9,7 +9,7 @@ import {
   TOAST,
   PLACEMENT_BOTTOM_LEFT,
   PLACEMENT_BOTTOM_RIGHT,
-  messageTypes
+  quickAccessTypes
 } from '../constants'
 import { useDialog } from './base-dialog'
 import { useCloseGroupDialog, useVerticalPosition } from './base-use'
@@ -119,7 +119,7 @@ export const {
   DialogToastError,
   DialogToastSuccess
 } = messageTypeQuickAccess(
-  messageTypes,
+  quickAccessTypes,
   'DialogToast',
   TheDialogToast,
   props => ({

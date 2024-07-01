@@ -13,7 +13,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  ignores: [
+  ignorePatterns: [
     'types/'
   ],
   settings: {

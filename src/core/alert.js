@@ -6,7 +6,7 @@ import {
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM,
-  messageTypes
+  quickAccessTypes
 } from '../constants'
 import { useDialog } from './base-dialog'
 import { createDialog } from './manage'
@@ -85,7 +85,7 @@ export const {
   DialogAlertSuccess,
   DialogAlertConfirm
 } = messageTypeQuickAccess(
-  [MESSAGE_TYPE_CONFIRM, ...messageTypes],
+  [...quickAccessTypes, MESSAGE_TYPE_CONFIRM],
   'DialogAlert',
   TheDialogAlert
 )

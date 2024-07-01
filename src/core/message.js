@@ -7,7 +7,7 @@ import {
   PLACEMENT_BOTTOM,
   PLACEMENT_TOP,
   MESSAGE,
-  messageTypes
+  quickAccessTypes
 } from '../constants'
 import { useDialog } from './base-dialog'
 import {
@@ -109,7 +109,7 @@ export const {
   DialogMessageError,
   DialogMessageSuccess
 } = messageTypeQuickAccess(
-  messageTypes,
+  quickAccessTypes,
   'DialogMessage',
   TheDialogMessage,
   props => ({
