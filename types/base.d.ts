@@ -18,11 +18,15 @@ export declare type MessageContent = string | VNode
 
 export declare type ComponentContent = VNode | (() => VNode)
 
-export declare type MessageDialog<T> = (
+export declare function MessageDialog<T> (
   message: MessageContent,
   callback?: Function,
   options?: T
-) => Function
+): Function
+export declare function MessageDialog<T> (
+  message: MessageContent,
+  options?: T
+): Function
 
 export declare type ContainerDialog<T> = (
   component: ComponentContent,

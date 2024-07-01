@@ -54,7 +54,7 @@ declare type AlertOption = DialogBaseOption & {
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export const DialogAlert:MessageDialog<AlertOption>
+export declare const DialogAlert: typeof MessageDialog<AlertOption>
 /**
  * Open an information type alert dialog
  * @param message - The message to display
@@ -62,7 +62,7 @@ export const DialogAlert:MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export const DialogAlertInfo:MessageDialog<AlertOption>
+export declare const DialogAlertInfo: typeof MessageDialog<AlertOption>
 /**
  * Open an warning type alert dialog
  * @param message - The message to display
@@ -70,7 +70,7 @@ export const DialogAlertInfo:MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export const DialogAlertWarning:MessageDialog<AlertOption>
+export declare const DialogAlertWarning: typeof MessageDialog<AlertOption>
 /**
  * Open an error type alert dialog
  * @param message - The message to display
@@ -78,7 +78,7 @@ export const DialogAlertWarning:MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export const DialogAlertError:MessageDialog<AlertOption>
+export declare const DialogAlertError: typeof MessageDialog<AlertOption>
 /**
  * Open an success type alert dialog
  * @param message - The message to display
@@ -86,7 +86,7 @@ export const DialogAlertError:MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export const DialogAlertSuccess:MessageDialog<AlertOption>
+export declare const DialogAlertSuccess: typeof MessageDialog<AlertOption>
 /**
  * Open an confirm type alert dialog
  * @param message - The message to display
@@ -94,4 +94,4 @@ export const DialogAlertSuccess:MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export const DialogAlertConfirm:MessageDialog<AlertOption>
+export declare const DialogAlertConfirm: typeof MessageDialog<AlertOption>
