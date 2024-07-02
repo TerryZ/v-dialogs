@@ -41,19 +41,25 @@ export default defineComponent({
     pill: { type: Boolean, default: true }
   }),
   emits: mergeDialogEmits(),
-  setup (props, { emit }) {
+  setup (props, { emit, expose }) {
     const {
       handleBodyRounded,
+      closeGroupDialogWithCallback,
       ...restItems
     } = useMessage(props, emit)
     const body = ref()
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems
+      ...restItems,
+      closeGroupDialogWithCallback
     })
 
     handleBodyRounded(body)
+
+    expose({
+      close: closeGroupDialogWithCallback
+    })
 
     return () => (
       <DialogLiteContainer

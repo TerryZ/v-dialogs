@@ -34,9 +34,10 @@ export default defineComponent({
     visible: { type: Boolean, default: false }
   }),
   emits: mergeDialogEmits(['update:visible']),
-  setup (props, { emit, slots }) {
+  setup (props, { emit, slots, expose }) {
     const {
       maximize,
+      closeDialogWithoutCallback,
       ...restItems
     } = useModal(props, emit)
 
@@ -44,6 +45,7 @@ export default defineComponent({
       ...props,
       ...restItems,
       ...modalEnforcedSettings,
+      closeDialogWithoutCallback,
       maximize
     })
 
@@ -57,6 +59,10 @@ export default defineComponent({
         }
       ]
     ))
+
+    expose({
+      close: closeDialogWithoutCallback
+    })
 
     return () => (
       <DialogContainer

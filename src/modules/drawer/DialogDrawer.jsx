@@ -32,28 +32,29 @@ export default defineComponent({
     visible: { type: Boolean, default: false }
   }),
   emits: mergeDialogEmits(['update:visible']),
-  setup (props, { emit, slots }) {
+  setup (props, { emit, slots, expose }) {
     const {
       getPositionClass,
       getTransitionName,
+      closeDialogWithoutCallback,
       ...restItems
     } = useDrawer(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
-      ...drawerEnforcedSettings
+      ...drawerEnforcedSettings,
+      closeDialogWithoutCallback
     })
 
-    const containerClass = computed(() => (
-      [
-        'v-dialog-drawer',
-        getPositionClass(),
-        {
+    const containerClass = computed(() => ([
+      'v-dialog-drawer',
+      getPositionClass()
+    ]))
 
-        }
-      ]
-    ))
+    expose({
+      close: closeDialogWithoutCallback
+    })
 
     return () => (
       <DialogContainer

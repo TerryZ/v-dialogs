@@ -34,21 +34,27 @@ export default defineComponent({
     placement: { type: String, default: PLACEMENT_TOP_RIGHT }
   }),
   emits: mergeDialogEmits(),
-  setup (props, { emit }) {
+  setup (props, { emit, expose }) {
     const {
+      closeGroupDialogWithCallback,
       ...restItems
     } = useToast(props, emit)
     const body = ref()
 
     provide(propsInjectionKey, {
       ...props,
-      ...restItems
+      ...restItems,
+      closeGroupDialogWithCallback
     })
 
     const classes = [
       'v-dialog-toast',
       getToastPositionClass(props.placement)
     ]
+
+    expose({
+      close: closeGroupDialogWithCallback
+    })
 
     return () => (
       <DialogLiteContainer

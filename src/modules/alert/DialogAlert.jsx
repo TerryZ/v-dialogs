@@ -31,16 +31,22 @@ export default defineComponent({
     cancelCallback: { type: Function, default: undefined }
   }),
   emits: mergeDialogEmits(),
-  setup (props, { emit }) {
+  setup (props, { emit, expose }) {
     const {
       getShadowClass,
+      closeWithCallback,
       ...restItems
     } = useAlert(props, emit)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
-      ...alertEnforcedSettings
+      ...alertEnforcedSettings,
+      closeWithCallback
+    })
+
+    expose({
+      close: closeWithCallback
     })
 
     return () => (
