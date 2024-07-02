@@ -35,7 +35,7 @@ declare type EmitUpdateVisible = (event: "update:visible", value: boolean) => vo
 declare type EmitClose = (event: "close") => void
 
 export declare function MessageDialog<T> (
-  message: MessageContent,
+  message?: MessageContent,
   callback?: Function,
   options?: T
 ): Function
