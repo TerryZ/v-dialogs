@@ -186,7 +186,6 @@
 import { ref } from 'vue'
 import {
   DialogAlert,
-  DialogAlertInfo,
   DialogAlertWarning,
   DialogAlertError,
   DialogAlertSuccess,
@@ -241,7 +240,7 @@ function noHeader () {
   DialogAlert('Hello world', { header: false })
 }
 function quickInfo () {
-  DialogAlertInfo('Hello')
+  DialogAlert()
 }
 function quickWarning () {
   DialogAlertWarning('Hello')

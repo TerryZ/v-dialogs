@@ -219,7 +219,6 @@
 import { ref, h } from 'vue'
 import {
   DialogToast,
-  DialogToastInfo,
   DialogToastWarning,
   DialogToastError,
   DialogToastSuccess
@@ -274,7 +273,7 @@ function customTitle () {
   DialogToast('Hello, world', { title: 'This is Toast title, This is Toast title, This is Toast title, This is Toast title, This is Toast title' })
 }
 function quickInfo () {
-  DialogToastInfo('Hello')
+  DialogToast('Hello')
 }
 function quickWarning () {
   DialogToastWarning('Hello')

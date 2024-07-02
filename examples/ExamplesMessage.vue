@@ -188,7 +188,6 @@
 import { ref, h } from 'vue'
 import {
   DialogMessage,
-  DialogMessageInfo,
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess
@@ -243,7 +242,7 @@ function rounded () {
   DialogMessage('Hello, world', { pill: false })
 }
 function quickInfo () {
-  DialogMessageInfo('Hello')
+  DialogMessage('Hello')
 }
 function quickWarning () {
   DialogMessageWarning('Hello')
