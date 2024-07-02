@@ -1,6 +1,6 @@
 import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
 
-declare type AlertOption = DialogBaseOption & {
+declare interface AlertOption extends DialogBaseOption {
   /**
    * Display the header
    * @default true

@@ -1,23 +1,33 @@
-import { DialogBaseOption } from './helper'
+import { DialogBaseOption, MessageDialog } from './base'
 
 declare interface MaskOption extends DialogBaseOption {
-  /** Shake the dialog when operating outside the dialog */
-  shaking?: boolean
   /**
-   * The time(second) to automatically close dialog
+   * The element that mask append to
+   * @default `body`
    */
-  closeTime?: boolean | number
+  appendTo?: string
+  /**
+   * Pill style border
+   * @default true
+   */
+  pill?: boolean
+  /**
+   * Display spinner icon
+   * @default true
+   */
+  icon?: boolean
+  /**
+   * Display the content panel
+   * @default true
+   */
+  panel?: boolean
 }
 
 /**
- * Display a mask layer
+ * Display a overlay mask
  * @param message - The message to display
  * @param callback - respond the dialog close
  * @param options - custom options
- * @returns the dialog key
+ * @returns the method to close dialog
  */
-export function DialogMask (
-  message?: string,
-  callback?: Function,
-  options?: MaskOption
-): string
+export declare const DialogMask: typeof MessageDialog<MaskOption>

@@ -28,7 +28,7 @@ export declare function MessageDialog<T> (
   options?: T
 ): Function
 
-export declare type ContainerDialog<T> = (
+export declare function ContainerDialog<T> (
   component: ComponentContent,
   options?: T
-) => Function
+): Function

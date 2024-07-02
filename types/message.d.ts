@@ -1,6 +1,6 @@
 import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
 
-declare type MessageOption = DialogBaseOption & {
+declare interface MessageOption extends DialogBaseOption {
   /**
    * Message type
    * - `info` default
