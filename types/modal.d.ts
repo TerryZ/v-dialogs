@@ -1,41 +1,57 @@
-import { Component } from 'vue'
-import { DialogBaseOption } from './helper'
+import { DialogBaseOption, ContainerDialog, ContainerDialogBox } from './base'
 
 declare interface ModalOption extends DialogBaseOption {
   /**
-   * The title text displayed in header
-   * - set to false to close header
+   * Display the header
+   * @default true
    */
-  title?: boolean | string
-  /** Dialog width */
+  header?: boolean
+  /**
+   * The title text displayed in header
+   */
+  title?: string
+  /**
+   * Dialog width
+   * @default 700
+   */
   width?: number
-  /** Dialog height */
+  /**
+   * Dialog height
+   * @default 400
+   */
   height?: number
-  /** The parameters pass to component */
-  params?: any
-  /** Close dialog button in header */
+  /** The parameters pass to component as props */
+  params?: Record<string, unknown>
+  /**
+   * The close dialog button in header
+   * @default true
+   */
   closeButton?: boolean
-  /** Maximize dialog button in header */
+  /**
+   * Maximize dialog button in header
+   * @default true
+   */
   maxButton?: boolean
-  /** Open and maximize the modal dialog */
+  /**
+   * Open and maximize the modal dialog
+   * @default false
+   */
   fullscreen?: boolean
-  /** Shake the dialog when operating outside the dialog */
+  /**
+   * Shake the dialog when operating outside the dialog
+   * @default true
+   */
   shaking?: boolean
-  /** The dialog background overlay */
-  backdrop?: boolean
-  /** Click outside the dialog to close dialog */
-  backdropClose?: boolean
-  /** Dialog close callback */
-  callback?: Function
 }
 
 /**
  * Display a modal dialog
  * @param component - The component to display
  * @param options - custom options
- * @returns the dialog key
+ * @returns the method to close dialog
  */
-export function DialogModal (
-  component: Component,
-  options?: ModalOption
-): string
+export declare const DialogModal: typeof ContainerDialog<ModalOption>
+/**
+ * Use component to display content in a modal dialog
+ */
+export declare const DialogModalBox: ContainerDialogBox<ModalOption>

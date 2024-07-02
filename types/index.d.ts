@@ -19,7 +19,8 @@ import {
   DialogToastError,
   DialogToastSuccess
 } from './toast'
-import { DialogModal } from './modal'
+import { DialogModal, DialogModalBox } from './modal'
+import { DialogDrawer, DialogDrawerBox } from './drawer'
 import { DialogMask } from './mask'
 
 export {
@@ -37,6 +38,9 @@ export {
   DialogToastError,
   DialogToastSuccess,
   DialogModal,
+  DialogModalBox,
+  DialogDrawer,
+  DialogDrawerBox,
   DialogMask
 }
 
