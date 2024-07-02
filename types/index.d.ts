@@ -1,48 +1,27 @@
 import { AppContext } from 'vue'
 
-import {
+export {
   DialogAlert,
   DialogAlertWarning,
   DialogAlertError,
   DialogAlertSuccess,
   DialogAlertConfirm
 } from './alert'
-import {
+export {
   DialogMessage,
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess
 } from './message'
-import {
+export {
   DialogToast,
   DialogToastWarning,
   DialogToastError,
   DialogToastSuccess
 } from './toast'
-import { DialogModal, DialogModalBox } from './modal'
-import { DialogDrawer, DialogDrawerBox } from './drawer'
-import { DialogMask } from './mask'
-
-export {
-  DialogAlert,
-  DialogAlertWarning,
-  DialogAlertError,
-  DialogAlertSuccess,
-  DialogAlertConfirm,
-  DialogMessage,
-  DialogMessageWarning,
-  DialogMessageError,
-  DialogMessageSuccess,
-  DialogToast,
-  DialogToastWarning,
-  DialogToastError,
-  DialogToastSuccess,
-  DialogModal,
-  DialogModalBox,
-  DialogDrawer,
-  DialogDrawerBox,
-  DialogMask
-}
+export { DialogModal, DialogModalBox } from './modal'
+export { DialogDrawer, DialogDrawerBox } from './drawer'
+export { DialogMask } from './mask'
 
 declare interface DialogInstallOption {
   /**
