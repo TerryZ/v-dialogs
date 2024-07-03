@@ -1,98 +1,126 @@
 import { describe, it, expect } from 'vitest'
-import { } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import { nextTick, h } from 'vue'
 
-import { DialogAlert } from '@/'
+import DialogAlert from '@/modules/alert/DialogAlert'
+import DialogAlertHeader from '@/modules/alert/DialogAlertHeader'
+import DialogAlertBody from '@/modules/alert/DialogAlertBody'
+import DialogAlertFooter from '@/modules/alert/DialogAlertFooter'
 
 describe('v-dialogs Alert 模式', () => {
-  describe('不指定任何参数', () => {
-    // const w = mount(Container, {
-    //   attachTo: document.body
-    // })
-    // w.vm.addDialog(generateAlertOption())
+  describe('不指定任何参数', async () => {
+    const wrapper = mount(DialogAlert, {
+      props: {
+        dialogKey: 'alert-1',
+        dialogIndex: 1
+      }
+    })
+    await nextTick()
+    // const header = wrapper.findComponent('.v-dialog-header')
+    const header = wrapper.findComponent(DialogAlertHeader)
+    const body = wrapper.findComponent(DialogAlertBody)
+    const footer = wrapper.findComponent(DialogAlertFooter)
 
-    // it('弹出默认形态窗口，信息内容为空', () => {
-    //   expect(w.find('.v-dialog-alert').exists()).to.equal(true)
-    //   expect(w.find('.v-dialog-alert__content').text()).to.equal('')
-    // })
-
-    // it('消息类型应为 `info`', () => {
-    //   expect(w.find('.v-dialog-alert.alertInfo').exists()).to.equal(true)
-    // })
-
-    // it('存在标题栏，且文本内容应为 `提示`', () => {
-    //   expect(w.find('.v-dialog-header').text()).to.equal('提示')
-    //   w.destroy()
-    // })
-    DialogAlert()
-
-    it('sfsf', () => {
-      console.log(document.body.innerHTML)
+    it('标题栏中应显示 Information 文本', () => {
+      expect(header.text()).to.equal('Information')
+    })
+    it('显示默认的信息类型图标', () => {
+      expect(body.find('.v-dialog-alert__icon').exists()).to.equal(true)
+      expect(body.find('.bi-info-circle').exists()).to.equal(true)
+    })
+    it('信息内容为空', () => {
+      expect(body.find('.v-dialog-alert__message').text()).to.equal('')
+    })
+    it('存在一个确认按钮', () => {
+      expect(footer.find('.v-dialog-alert__buttons button').exists()).to.equal(true)
+      expect(footer.find('.v-dialog-alert__buttons button').text()).to.equal('OK')
+    })
+    it('点击 OK 按钮，触发 `click` 事件', () => {
+      footer.find('button').trigger('click')
+      expect(footer.emitted('click').length).to.equal(1)
+    })
+    it('窗口与遮罩应均被销毁', () => {
+      setTimeout(() => {
+        expect(document.querySelectorAll('.v-dialog').length).toBe(0)
+        expect(document.querySelectorAll('.v-dialog-overlay').length).toBe(0)
+      }, 1000)
     })
   })
 
-  // describe('大文本输入', () => {
-  //   const w = mount(Container, {
-  //     attachTo: document.body
-  //   })
+  describe('彩色阴影的 Error 消息类型对话框', async () => {
+    const vNodeContent = h('div', [
+      'Hello, This is a ',
+      h('strong', 'Alert Dialog'),
+      '!'
+    ])
+    const wrapper = mount(DialogAlert, {
+      props: {
+        dialogKey: 'alert-2',
+        dialogIndex: 2,
+        colorfulShadow: true,
+        messageType: 'error',
+        title: 'System Error',
+        icon: false,
+        message: vNodeContent
+      }
+    })
+    await nextTick()
+    const header = wrapper.findComponent(DialogAlertHeader)
+    const body = wrapper.findComponent(DialogAlertBody)
+    // const footer = wrapper.findComponent(DialogAlertFooter)
 
-  //   let msg = '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-  //   msg += '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-  //   msg += '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-  //   msg += '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-  //   msg += '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
+    it('窗口应用了错误时的红色阴影', () => {
+      const div = wrapper.findComponent('.v-dialog__shadow--error')
+      expect(div.exists()).to.equal(true)
+    })
+    it('应用了 Error 消息类型', () => {
+      expect(body.classes().includes('alert-error')).toBeTruthy()
+    })
+    it('标题栏文本应为 System Error', () => {
+      expect(header.text()).to.equal('System Error')
+    })
+    it('图标应不显示', () => {
+      expect(body.find('.v-dialog-alert__icon').exists()).to.equal(false)
+    })
+    it('VNode 内容应被正确渲染', () => {
+      expect(body.find('.v-dialog-alert__message').text()).to.equal('Hello, This is a Alert Dialog!')
+      expect(body.find('.v-dialog-alert__message strong').text()).toBe('Alert Dialog')
+    })
+  })
 
-  //   w.vm.addDialog(generateAlertOption(msg))
-  //   it('消息框应以大尺寸形式展示', () => {
-  //     const style = w.find('.v-dialog-dialog').element.style
-  //     expect(style.width).equal('700px')
-  //     expect(style.height).equal('400px')
-  //     w.destroy()
-  //   })
-  // })
+  describe('Confirm 对话框', async () => {
+    const wrapper = mount(DialogAlert, {
+      props: {
+        dialogKey: 'alert-3',
+        dialogIndex: 3,
+        messageType: 'confirm',
+        header: false,
+        language: 'cn',
+        message: '确定执行该操作吗？',
+        customClass: 'rounded-0'
+      }
+    })
+    await nextTick()
+    const header = wrapper.findComponent(DialogAlertHeader)
+    const body = wrapper.findComponent(DialogAlertBody)
+    const footer = wrapper.findComponent(DialogAlertFooter)
 
-  // describe('confirm 确认对话框', () => {
-  //   const w = mount(Container, {
-  //     attachTo: document.body
-  //   })
-
-  //   w.vm.addDialog(generateAlertOption('confirm', {
-  //     messageType: 'confirm'
-  //   }))
-
-  //   it('标题栏文本应为 `确认`', () => {
-  //     expect(w.find('.v-dialog-header').text()).to.equal('确认')
-  //   })
-  //   it('操作区域应有两个按钮，`确认` 与 `取消`', () => {
-  //     const buttons = w.findAll('.v-dialog-alert__buttons button')
-  //     expect(buttons.length).equal(2)
-  //     expect(buttons.at(0).text()).equal('确认')
-  //     expect(buttons.at(1).text()).equal('取消')
-  //     w.destroy()
-  //   })
-  // })
-
-  // describe('界面定制化', () => {
-  //   const w = mount(Container, {
-  //     attachTo: document.body
-  //   })
-
-  //   w.vm.addDialog(generateAlertOption('custom', {
-  //     messageType: 'warning',
-  //     title: false,
-  //     icon: false
-  //   }))
-
-  //   it('`title` 设置为 false，标题栏应不存在', () => {
-  //     expect(w.find('.v-dialog-header').exists()).to.equal(false)
-  //   })
-
-  //   it('消息类型应为 `warning`', () => {
-  //     expect(w.find('.v-dialog-content.v-dialog__shadow--warning').exists()).to.equal(true)
-  //   })
-
-  //   it('`icon` 设置为 false，图标区域应被关闭', () => {
-  //     expect(w.find('.v-dialog-alert.no-icon').exists()).to.equal(true)
-  //     w.destroy()
-  //   })
-  // })
+    it('应用了 Confirm 消息类型', () => {
+      expect(body.classes().includes('alert-confirm')).toBeTruthy()
+    })
+    it('标题栏应不存在', () => {
+      expect(header.exists()).toBeFalsy()
+    })
+    it('应用了自定义样式 `rounded-0`', () => {
+      const content = wrapper.findComponent('.v-dialog-content')
+      expect(content.classes()).to.include('rounded-0')
+    })
+    it('设置语言为中文时，确认按钮显示文本应为 `确认`', () => {
+      expect(footer.find('.v-dialog-btn__ok').text()).toBe('确认')
+    })
+    it('Confirm 类型下，应出现 `取消` 按钮', () => {
+      expect(footer.find('.v-dialog-btn__cancel').exists()).toBe(true)
+      expect(footer.find('.v-dialog-btn__cancel').text()).toBe('取消')
+    })
+  })
 })

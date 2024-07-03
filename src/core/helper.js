@@ -62,11 +62,23 @@ export function parseArgumentsToProps (param1, param2, param3) {
 
   const params = Array.from(arguments)
 
-  const props = params.find(val => typeof val === 'object' && !isVNode(val)) || {}
-  props.message = params.find(val => typeof val === 'string' || isVNode(val)) || ''
+  const props = params.find(val => typeof val === 'object' && !isVNode(val) && !isSFC(val)) || {}
+  props.message = params.find(val => typeof val === 'string' || isVNode(val) || isSFC(val)) || ''
   props.callback = params.find(val => typeof val === 'function')
 
   return props
+}
+
+/**
+ * Check if content is SFC(Single file component)
+ * @param {unknown} content
+ */
+export function isSFC (content) {
+  if (typeof content !== 'object') return false
+  if (Object.hasOwn(content, 'render')) return true
+  if (Object.hasOwn(content, 'template')) return true
+  if (Object.hasOwn(content, 'setup')) return true
+  return false
 }
 
 /**

@@ -55,6 +55,7 @@ export default {
   props: {
     name: { type: String, default: '' }
   },
+  emits: ['close'],
   data () {
     return {
       company: '',

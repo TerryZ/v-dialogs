@@ -183,7 +183,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, h } from 'vue'
+
 import {
   DialogAlert,
   DialogAlertWarning,
@@ -196,7 +197,17 @@ const icon = ref(true)
 const colorfulShadow = ref(true)
 
 function openOneAlert () {
-  DialogAlert('Hello, This is a <b>Alert Dialog</b>!')
+  DialogAlert(
+    h('div', [
+      'Hello, This is a ',
+      h('strong', 'Alert Dialog'),
+      '!'
+    ]),
+    {
+      language: 'cn',
+      customClass: 'rounded-0'
+    }
+  )
 }
 function openAlert (type) {
   DialogAlert('Hello, <b>world!</b>', () => {
