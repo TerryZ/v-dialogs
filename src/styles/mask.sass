@@ -4,21 +4,15 @@
 
 .v-dialog-mask
   @include fill-fullscreen
-  &#{&}--pill .v-dialog-content
-    border-radius: 50rem
-  &#{&}--no-icon .v-dialog-mask__content
-    margin-left: 2rem !important
-  &#{&}--no-panel
-    .v-dialog-content
+  .v-dialog-content
+    &.mask--pill
+      border-radius: 50rem
+    &.mask--no-icon .v-dialog-mask__content
+      margin-left: 2rem !important
+    &.mask--no-panel
       box-shadow: none !important
       background-color: transparent
       // color: white !important
-  .v-dialog-dialog
-    display: flex
-    justify-content: center
-    .v-dialog-content
-      flex-direction: row
-      box-shadow: 0 3rem 5rem rgba(0,0,0,0.3)
   .v-dialog-body
     overflow: hidden !important
     display: flex

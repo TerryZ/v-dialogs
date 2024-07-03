@@ -35,13 +35,13 @@ export default defineComponent({
 
     const classes = [
       'v-dialog-mask',
-      'v-dialog--content-center',
-      {
-        'v-dialog-mask--pill': props.pill,
-        'v-dialog-mask--no-icon': !props.icon,
-        'v-dialog-mask--no-panel': !props.panel
-      }
+      'v-dialog--content-center'
     ]
+    const contentClass = [{
+      'mask--pill': props.pill,
+      'mask--no-icon': !props.icon,
+      'mask--no-panel': !props.panel
+    }]
 
     expose({
       close: closeMaskWithCallback
@@ -54,7 +54,7 @@ export default defineComponent({
         transition-name='v-dialog--smooth'
         append-to={props.appendTo}
       >
-        <DialogContentBox>
+        <DialogContentBox class-name={contentClass}>
           <DialogMaskBody>{() => messageText.value}</DialogMaskBody>
         </DialogContentBox>
       </DialogContainer>
