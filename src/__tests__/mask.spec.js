@@ -1,10 +1,33 @@
-// import { mount } from '@vue/test-utils'
-// import { expect } from 'chai'
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 
-// import Container from '@/Container'
-// import { generateMaskOption } from '@/utils/options'
+import DialogMask from '@/modules/mask/DialogMask'
+import DialogMaskBody from '@/modules/mask/DialogMaskBody'
 
-// describe('v-dialogs Mask 模式', () => {
+describe('v-dialogs Mask 模式', () => {
+  describe('不传递任何参数', async () => {
+    const wrapper = mount(DialogMask, {
+      props: {
+        dialogKey: 'mask-1',
+        dialogIndex: 1
+      }
+    })
+    await nextTick()
+    const body = wrapper.findComponent(DialogMaskBody)
+    it('默认应用胶囊形状圆角', () => {
+      const container = wrapper.findComponent('.v-dialog-content')
+      expect(container.classes().includes('mask--pill')).toBeTruthy()
+    })
+    it('显示 loading 动画图标', () => {
+      expect(body.find('.v-dialog-mask__icon').exists()).toBeTruthy()
+      expect(body.find('svg.v-dialog-icon-loading').exists()).toBeTruthy()
+    })
+    it('默认显示 `Loading……` 文本', () => {
+      expect(body.find('.v-dialog-mask__content').text()).toBe('Loading……')
+    })
+  })
+})
 //   describe('不传递任何参数', () => {
 //     const w = mount(Container, {
 //       attachTo: document.body
