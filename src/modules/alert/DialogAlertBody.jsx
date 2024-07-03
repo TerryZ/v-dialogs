@@ -51,10 +51,9 @@ export default {
               { getIcon(messageType) }
             </div>
           )}
-          <div
-            class='v-dialog-alert__message'
-            v-html={message}
-          />
+          <div class='v-dialog-alert__message'>
+            {message}
+          </div>
         </div>
       </div>
     )
