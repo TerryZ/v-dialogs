@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { nextTick, markRaw, ref } from 'vue'
+import { nextTick, markRaw } from 'vue'
 
 import DialogModal from '@/modules/modal/DialogModal'
 import DialogModalHeader from '@/modules/modal/DialogModalHeader'
@@ -111,7 +111,10 @@ describe('v-dialogs Modal 模式', () => {
   describe('DialogModalBox 渲染纯文本', async () => {
     const wrapper = mount(DialogModalBox, {
       props: {
-        visible: true
+        visible: true,
+        title: 'Hello Modal',
+        closeButton: false,
+        maxButton: false
       },
       slots: {
         default: 'Hello World'
@@ -119,10 +122,21 @@ describe('v-dialogs Modal 模式', () => {
     })
     await nextTick()
 
+    const header = wrapper.findComponent(DialogModalHeader)
     const body = wrapper.findComponent('.v-dialog-body')
 
     test('DialogModalBox 应渲染纯文本 `Hello World`', () => {
       expect(body.text()).to.equal('Hello World')
+    })
+    // 测试 props 透传
+    test('标题栏应显示文本 `Hello Modal`', () => {
+      expect(header.text()).to.equal('Hello Modal')
+    })
+    test('最大化按钮应不被渲染', () => {
+      expect(header.find('.v-dialog-btn__maximize').exists()).equal(false)
+    })
+    test('关闭按钮应不被渲染', () => {
+      expect(header.find('.v-dialog-btn__close').exists()).equal(false)
     })
   })
   describe('DialogModalBox 渲染 Vue 文件', async () => {
