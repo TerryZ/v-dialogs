@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, test, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 
@@ -15,49 +15,81 @@ describe('v-dialogs Mask 模式', () => {
     })
     await nextTick()
     const body = wrapper.findComponent(DialogMaskBody)
-    it('默认应用胶囊形状圆角', () => {
+    test('默认应用胶囊形状圆角', () => {
       const container = wrapper.findComponent('.v-dialog-content')
       expect(container.classes().includes('mask--pill')).toBeTruthy()
     })
-    it('显示 loading 动画图标', () => {
+    test('显示 loading 动画图标', () => {
       expect(body.find('.v-dialog-mask__icon').exists()).toBeTruthy()
       expect(body.find('svg.v-dialog-icon-loading').exists()).toBeTruthy()
     })
-    it('默认显示 `Loading……` 文本', () => {
+    test('默认显示 `Loading……` 文本', () => {
       expect(body.find('.v-dialog-mask__content').text()).toBe('Loading……')
     })
   })
+
+  describe('样式定制化', async () => {
+    const wrapper = mount(DialogMask, {
+      props: {
+        dialogKey: 'mask-2',
+        dialogIndex: 2,
+        message: 'Bootstrap is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.',
+        pill: false,
+        icon: false
+      }
+    })
+    await nextTick()
+    const body = wrapper.findComponent(DialogMaskBody)
+
+    test('不应用胶囊形状圆角', () => {
+      const container = wrapper.findComponent('.v-dialog-content')
+      expect(container.classes().includes('mask--pill')).toBeFalsy()
+    })
+    test('不显示 loading 动画图标', () => {
+      expect(body.find('.v-dialog-mask__icon').exists()).toBeFalsy()
+    })
+  })
+
+  describe('不使用内容面板', async () => {
+    const wrapper = mount(DialogMask, {
+      props: {
+        dialogKey: 'mask-3',
+        dialogIndex: 3,
+        panel: false,
+        customClass: 'text-white'
+      }
+    })
+    await nextTick()
+    const container = wrapper.findComponent('.v-dialog-content')
+
+    test('不应用内容面板样式，内容平铺于遮罩', () => {
+      const container = wrapper.findComponent('.v-dialog-content')
+      expect(container.classes().includes('mask--no-panel')).toBeTruthy()
+    })
+    test('应用了自定义样式 `text-white`', () => {
+      expect(container.classes().includes('text-white')).toBeTruthy()
+    })
+  })
+
+  describe('自定义遮罩区域', async () => {
+    // 创建自定义元素
+    const el = document.createElement('div')
+    el.id = 'container'
+    document.body.appendChild(el)
+
+    mount(DialogMask, {
+      props: {
+        dialogKey: 'mask-4',
+        dialogIndex: 4,
+        appendTo: '#container'
+      }
+    })
+    await nextTick()
+
+    test('遮罩与内容应添加在目标元素内', () => {
+      const target = document.querySelector('#container')
+      expect(target.querySelectorAll('.v-dialog').length).toBe(1)
+      expect(target.querySelectorAll('.v-dialog-overlay').length).toBe(1)
+    })
+  })
 })
-//   describe('不传递任何参数', () => {
-//     const w = mount(Container, {
-//       attachTo: document.body
-//     })
-//     w.vm.addDialog(generateMaskOption())
-
-//     it('显示文本内容应为 `数据加载中……`', () => {
-//       expect(w.find('.v-dialog-mask__content').text()).to.equal('数据加载中……')
-//     })
-
-//     it('显示时针旋转效果的动画图标', () => {
-//       expect(w.find('.v-dialog-timer').exists()).equal(true)
-//       w.destroy()
-//     })
-//   })
-
-//   describe('界面定制化', () => {
-//     const w = mount(Container, {
-//       attachTo: document.body
-//     })
-//     w.vm.addDialog(generateMaskOption('Data loading...', {
-//       backdrop: false
-//     }))
-
-//     it('显示文本应为 `Data loading...`', () => {
-//       expect(w.find('.v-dialog-mask__content').text()).to.equal('Data loading...')
-//     })
-//     it('`backdrop` 设置为 false，遮罩依然显示', () => {
-//       expect(w.find('.v-dialog-overlay').exists()).equal(true)
-//       w.destroy()
-//     })
-//   })
-// })
