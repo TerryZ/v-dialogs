@@ -1,4 +1,4 @@
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, markRaw } from 'vue'
 
 import {
   DRAWER_WIDTH,
@@ -82,6 +82,9 @@ function getDrawerSize (props) {
  * @returns
  */
 export function DialogDrawer (component, options = {}) {
-  const props = { ...options, component }
+  const props = {
+    ...options,
+    component: markRaw(component)
+  }
   return createDialog(TheDialogDrawer, props)
 }
