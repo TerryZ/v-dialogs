@@ -26,7 +26,6 @@ export default defineComponent({
      * - `success`
      */
     messageType: { type: String, default: MESSAGE_TYPE_INFO },
-    backdrop: { type: Boolean, default: false },
     icon: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: false },
     /**
