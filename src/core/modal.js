@@ -1,4 +1,4 @@
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, markRaw } from 'vue'
 
 import {
   MODAL_WIDTH,
@@ -67,6 +67,9 @@ export function useModal (props, emit) {
  * @returns
  */
 export function DialogModal (component, options = {}) {
-  const props = { ...options, component }
+  const props = {
+    ...options,
+    component: markRaw(component)
+  }
   return createDialog(TheDialogModal, props)
 }

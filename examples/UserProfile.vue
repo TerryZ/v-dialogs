@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3">
+  <div class="p-3 user-profile">
     <div class="mb-3">
       <div>Name (received by params option):</div>
       <div class="my-2">
