@@ -1,101 +1,186 @@
-// import { mount } from '@vue/test-utils'
-// import { expect } from 'chai'
+import { describe, test, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 
-// import Container from '@/Container'
-// import { generateToastOption } from '@/utils/options'
+import DialogToast from '@/modules/toast/DialogToast'
+import DialogToastBody from '@/modules/toast/DialogToastBody'
 
-// describe('v-dialogs Toast 模式', () => {
-//   describe('不指定任何参数', () => {
-//     const w = mount(Container, {
-//       attachTo: document.body
-//     })
-//     const option = generateToastOption()
-//     w.vm.addDialog(option)
+describe('v-dialogs Toast 模式', () => {
+  describe('不指定任何参数', async () => {
+    const wrapper = mount(DialogToast, {
+      props: {
+        dialogKey: 'toast-1',
+        dialogIndex: 1
+      }
+    })
+    await nextTick()
+    const body = wrapper.findComponent(DialogToastBody)
+    const root = body.element.parentElement.parentElement
 
-//     it('弹出默认形态窗口，信息内容为空', () => {
-//       expect(w.find('.v-dialog-toast').exists()).to.equal(true)
-//       expect(w.find('.v-dialog-toast__content div').text()).to.equal('')
-//     })
+    test('弹出默认形态窗口，信息内容为空', () => {
+      expect(body.exists()).toBeTruthy()
+      expect(body.find('.v-dialog-toast__body div').text()).to.equal('')
+    })
+    test('消息类型应为 `info`，显示默认信息类型图标', () => {
+      expect(body.find('.v-dialog-toast__prepend').exists()).toBeTruthy()
+      expect(body.find('svg.bi-info-circle').exists()).toBeTruthy()
+    })
+    test('显示位置应为右上角', () => {
+      expect(root.className.includes('v-dialog-toast--right')).toBeTruthy()
+      // top 存在值则在顶部，bottom 存在值则在底部
+      expect(root.style.top).to.not.equal('')
+    })
+    test('存在默认标题 `Information`', () => {
+      expect(body.find('.v-dialog-toast__body h3').text()).to.equal('Information')
+    })
+    test('存在关闭按钮', () => {
+      expect(body.find('.v-dialog-toast__append').exists()).toBeTruthy()
+    })
+    test('应用默认屏幕间距 16px', () => {
+      expect(root.style.top).to.equal('16px')
+    })
+  })
+  test('完成定时器倒计时后，窗口应被销毁', async () => {
+    vi.useFakeTimers()
+    mount(DialogToast, {
+      props: {
+        dialogKey: 'toast-2',
+        dialogIndex: 2
+      }
+    })
+    await nextTick()
 
-//     it('消息类型应为 `info`', () => {
-//       expect(option.messageType).to.equal('info')
-//     })
+    expect(vi.getTimerCount()).toBe(1)
 
-//     it('显示位置应为右下角', () => {
-//       expect(w.find('.v-dialog-toast.bottomRight').exists()).to.equal(true)
-//     })
+    vi.runAllTimers()
+    // 暂时只能使用最精颗粒度来测试该功能
+    // 有待后续 test-utils 对 Transition 的生命周期钩子有更完善的触发与测试方式
+    expect(vi.getTimerCount()).toBe(0)
 
-//     it('存在标题栏，且文本内容应为 `提示`', () => {
-//       expect(w.find('.v-dialog-toast__content h3').text()).to.equal('提示')
-//     })
+    vi.useRealTimers()
+  })
+  test('关闭倒计时，窗口不会自动被关闭', async () => {
+    vi.useFakeTimers()
+    mount(DialogToast, {
+      props: {
+        dialogKey: 'toast-3',
+        dialogIndex: 3,
+        duration: 0
+      }
+    })
+    expect(vi.getTimerCount()).toBe(0)
+    vi.useRealTimers()
+  })
 
-//     it('存在图标，且为信息类型图标', () => {
-//       expect(w.find('.v-dialog-toast__icon').exists()).equal(true)
-//       expect(w.find('.dlg-icon-toast--info').exists()).equal(true)
-//       w.destroy()
-//     })
-//   })
+  describe('界面定制化', async () => {
+    const wrapper = mount(DialogToast, {
+      props: {
+        dialogKey: 'toast-4',
+        dialogIndex: 4,
+        header: false,
+        icon: false,
+        closeButton: false,
+        offset: 32
+      }
+    })
+    await nextTick()
+    const body = wrapper.findComponent(DialogToastBody)
+    const root = body.element.parentElement.parentElement
 
-//   describe('界面定制化', () => {
-//     const w = mount(Container, {
-//       attachTo: document.body
-//     })
+    test('应不显示图标栏', () => {
+      expect(body.find('.v-dialog-toast__prepend').exists()).toBe(false)
+    })
+    test('应不显示关闭按钮', () => {
+      expect(body.find('.v-dialog-toast__append').exists()).toBe(false)
+    })
+    test('屏幕间距应为 32px', () => {
+      expect(root.style.top).to.equal('32px')
+    })
+    test('应不显示标题栏', () => {
+      expect(body.find('.v-dialog-toast__content h3').exists()).toBe(false)
+    })
+  })
 
-//     w.vm.addDialog(generateToastOption('custom', {
-//       messageType: 'warning',
-//       position: 'topCenter',
-//       title: false,
-//       icon: false
-//     }))
+  describe('消息类型与位置', () => {
+    describe('左上角的 Warning 类型', async () => {
+      const wrapper = mount(DialogToast, {
+        props: {
+          dialogKey: 'toast-5',
+          dialogIndex: 5,
+          title: 'Custom warning title',
+          messageType: 'warning',
+          placement: 'top-left'
+        }
+      })
+      await nextTick()
+      const body = wrapper.findComponent(DialogToastBody)
+      const root = body.element.parentElement.parentElement
 
-//     it('`title` 设置为 false，标题栏应不存在', () => {
-//       expect(w.find('.v-dialog-toast__content h3').exists()).to.equal(false)
-//     })
+      test('消息类型应为 `warning`', () => {
+        expect(body.find('.v-dialog-toast__prepend').exists()).toBeTruthy()
+        expect(body.find('svg.bi-exclamation-triangle').exists()).toBeTruthy()
+        expect(body.classes().includes('toast-warning')).toBeTruthy()
+      })
+      test('显示位置应为左上角', () => {
+        expect(root.className.includes('v-dialog-toast--left')).toBeTruthy()
+        expect(root.style.top).to.not.equal('')
+      })
+      test('标题应为 `Custom warning title`', () => {
+        expect(body.find('.v-dialog-toast__body h3').text()).to.equal('Custom warning title')
+      })
+    })
+    describe('左下角的 Error 类型', async () => {
+      const wrapper = mount(DialogToast, {
+        props: {
+          dialogKey: 'toast-6',
+          dialogIndex: 6,
+          language: 'cn',
+          messageType: 'error',
+          placement: 'bottom-left'
+        }
+      })
+      await nextTick()
+      const body = wrapper.findComponent(DialogToastBody)
+      const root = body.element.parentElement.parentElement
 
-//     it('消息类型应为 `warning`', () => {
-//       expect(w.find('.v-dialog-toast.toast-warning').exists()).to.equal(true)
-//     })
+      test('消息类型应为 `error`', () => {
+        expect(body.find('.v-dialog-toast__prepend').exists()).toBeTruthy()
+        expect(body.find('svg.bi-x-circle').exists()).toBeTruthy()
+        expect(body.classes().includes('toast-error')).toBeTruthy()
+      })
+      test('显示位置应为左下角', () => {
+        expect(root.className.includes('v-dialog-toast--left')).toBeTruthy()
+        expect(root.style.bottom).to.not.equal('')
+      })
+      test('标题应为 `错误`', () => {
+        expect(body.find('.v-dialog-toast__body h3').text()).to.equal('错误')
+      })
+    })
+    describe('右下角的 Success 类型', async () => {
+      const wrapper = mount(DialogToast, {
+        props: {
+          dialogKey: 'toast-7',
+          dialogIndex: 7,
+          messageType: 'success',
+          placement: 'bottom-right'
+        }
+      })
+      await nextTick()
+      const body = wrapper.findComponent(DialogToastBody)
+      const root = body.element.parentElement.parentElement
 
-//     it('`position` 设置为 `topCenter`，显示位置应为顶部居中位置', () => {
-//       expect(w.find('.v-dialog-toast.topCenter').exists()).to.equal(true)
-//     })
-
-//     it('`icon` 设置为 false，图标区域应被关闭', () => {
-//       expect(w.find('.v-dialog-toast__icon').exists()).equal(false)
-//       w.destroy()
-//     })
-//   })
-
-//   describe('边界值处理', () => {
-//     const w = mount(Container, {
-//       attachTo: document.body
-//     })
-
-//     let msg = '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-//     msg += '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-//     msg += '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-
-//     w.vm.addDialog(generateToastOption(msg, {
-//       title: '这是一段用于演示的文本内容这是一段用于演示的文本内容'
-//     }))
-
-//     it('`title` 设置较多文字，标题栏内容应为 `这是一段用于演示的文...`', () => {
-//       expect(w.find('.v-dialog-toast__content h3').text()).equal('这是一段用于演示的文...')
-//     })
-
-//     it('不指定 `messageType`，消息类型应重置为 `info`', () => {
-//       expect(w.find('.dlg-icon-toast--info').exists()).to.equal(true)
-//     })
-
-//     it('不指定 `position`，显示位置应重置为右下角', () => {
-//       expect(w.find('.v-dialog-toast.bottomRight').exists()).to.equal(true)
-//     })
-
-//     it('设置内容过多时，将保留 56 个文字，并显示 `...` 符号表示文本溢出', () => {
-//       let expectText = '这是一段用于演示的文本内容这是一段用于演示的文本内容这是一段用于演示的文本内容'
-//       expectText += '这是一段用于演示的文本内容这是一段...'
-//       expect(w.find('.v-dialog-toast__content div').text()).equal(expectText)
-//       w.destroy()
-//     })
-//   })
-// })
+      test('消息类型应为 `success`', () => {
+        expect(body.find('.v-dialog-toast__prepend').exists()).toBeTruthy()
+        expect(body.find('svg.bi-check-circle').exists()).toBeTruthy()
+        expect(body.classes().includes('toast-success')).toBeTruthy()
+      })
+      test('显示位置应为右下角', () => {
+        expect(root.className.includes('v-dialog-toast--right')).toBeTruthy()
+        expect(root.style.bottom).to.not.equal('')
+      })
+      test('标题应为 `Success`', () => {
+        expect(body.find('.v-dialog-toast__body h3').text()).to.equal('Success')
+      })
+    })
+  })
+})

@@ -248,7 +248,11 @@ function openToast (content = 'Hello world.', type = 'info') {
   })
 }
 function noAutoClose () {
-  DialogToast('Hello world', { duration: 0, icon: false })
+  DialogToast('Hello world', {
+    duration: 0,
+    icon: icon.value,
+    closeButton: closeBtn.value
+  })
 }
 function noCloseButton () {
   DialogToast('Click close button to dismiss notification.', () => {
@@ -273,7 +277,7 @@ function customTitle () {
   DialogToast('Hello, world', { title: 'This is Toast title, This is Toast title, This is Toast title, This is Toast title, This is Toast title' })
 }
 function quickInfo () {
-  DialogToast('Hello')
+  DialogToast()
 }
 function quickWarning () {
   DialogToastWarning('Hello')

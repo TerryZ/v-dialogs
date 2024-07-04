@@ -43,6 +43,7 @@ describe('v-dialogs 基础模块', () => {
       expect(typeof destroy).equal('function')
     })
     it('执行该返回函数，应销毁窗口', () => {
+      // TODO: 窗口的销毁并没有被正确测试，因为Transition生命周期钩子无法正常使用
       destroy()
 
       setTimeout(() => {
