@@ -1,6 +1,6 @@
-import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
+import { DialogBaseOptions, DialogMessageType, MessageDialog } from './base'
 
-declare interface AlertOption extends DialogBaseOption {
+export declare interface AlertOptions extends DialogBaseOptions {
   /**
    * Display the header
    * @default true
@@ -54,7 +54,7 @@ declare interface AlertOption extends DialogBaseOption {
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogAlert: typeof MessageDialog<AlertOption>
+export declare const DialogAlert: typeof MessageDialog<AlertOptions>
 /**
  * Open an warning type alert dialog
  * @param message - The message to display
@@ -62,7 +62,7 @@ export declare const DialogAlert: typeof MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogAlertWarning: typeof MessageDialog<AlertOption>
+export declare const DialogAlertWarning: typeof MessageDialog<AlertOptions>
 /**
  * Open an error type alert dialog
  * @param message - The message to display
@@ -70,7 +70,7 @@ export declare const DialogAlertWarning: typeof MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogAlertError: typeof MessageDialog<AlertOption>
+export declare const DialogAlertError: typeof MessageDialog<AlertOptions>
 /**
  * Open an success type alert dialog
  * @param message - The message to display
@@ -78,7 +78,7 @@ export declare const DialogAlertError: typeof MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogAlertSuccess: typeof MessageDialog<AlertOption>
+export declare const DialogAlertSuccess: typeof MessageDialog<AlertOptions>
 /**
  * Open an confirm type alert dialog
  * @param message - The message to display
@@ -86,4 +86,4 @@ export declare const DialogAlertSuccess: typeof MessageDialog<AlertOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogAlertConfirm: typeof MessageDialog<AlertOption>
+export declare const DialogAlertConfirm: typeof MessageDialog<AlertOptions>

@@ -1,6 +1,6 @@
-import { DialogBaseOption, ContainerDialog, ContainerDialogBox } from './base'
+import { DialogBaseOptions, ContainerDialog, ContainerDialogBox } from './base'
 
-declare interface DrawerOption extends DialogBaseOption {
+export declare interface DrawerOptions extends DialogBaseOptions {
   /**
    * Display the header
    * @default true
@@ -43,8 +43,8 @@ declare interface DrawerOption extends DialogBaseOption {
  * @param options - custom options
  * @returns the method to close dialog
  */
-export declare const DialogDrawer: typeof ContainerDialog<DrawerOption>
+export declare const DialogDrawer: typeof ContainerDialog<DrawerOptions>
 /**
  * Use component to display content in a drawer dialog
  */
-export declare const DialogDrawerBox: ContainerDialogBox<DrawerOption>
+export declare const DialogDrawerBox: ContainerDialogBox<DrawerOptions>

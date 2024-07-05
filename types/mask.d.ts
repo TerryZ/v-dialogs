@@ -1,6 +1,6 @@
-import { DialogBaseOption, MessageDialog } from './base'
+import { DialogBaseOptions, MessageDialog } from './base'
 
-declare interface MaskOption extends DialogBaseOption {
+export declare interface MaskOptions extends DialogBaseOptions {
   /**
    * The element that mask append to
    * @default `body`
@@ -30,4 +30,4 @@ declare interface MaskOption extends DialogBaseOption {
  * @param options - custom options
  * @returns the method to close dialog
  */
-export declare const DialogMask: typeof MessageDialog<MaskOption>
+export declare const DialogMask: typeof MessageDialog<MaskOptions>

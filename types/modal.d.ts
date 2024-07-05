@@ -1,6 +1,6 @@
-import { DialogBaseOption, ContainerDialog, ContainerDialogBox } from './base'
+import { DialogBaseOptions, ContainerDialog, ContainerDialogBox } from './base'
 
-declare interface ModalOption extends DialogBaseOption {
+export declare interface ModalOptions extends DialogBaseOptions {
   /**
    * Display the header
    * @default true
@@ -50,8 +50,8 @@ declare interface ModalOption extends DialogBaseOption {
  * @param options - custom options
  * @returns the method to close dialog
  */
-export declare const DialogModal: typeof ContainerDialog<ModalOption>
+export declare const DialogModal: typeof ContainerDialog<ModalOptions>
 /**
  * Use component to display content in a modal dialog
  */
-export declare const DialogModalBox: ContainerDialogBox<ModalOption>
+export declare const DialogModalBox: ContainerDialogBox<ModalOptions>

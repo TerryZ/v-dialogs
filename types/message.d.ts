@@ -1,6 +1,6 @@
-import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
+import { DialogBaseOptions, DialogMessageType, MessageDialog } from './base'
 
-declare interface MessageOption extends DialogBaseOption {
+export declare interface MessageOptions extends DialogBaseOptions {
   /**
    * Message type
    * - `info` default
@@ -51,7 +51,7 @@ declare interface MessageOption extends DialogBaseOption {
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogMessage: typeof MessageDialog<MessageOption>
+export declare const DialogMessage: typeof MessageDialog<MessageOptions>
 /**
  * Open an warning type message dialog
  * @param message - The message to display
@@ -59,7 +59,7 @@ export declare const DialogMessage: typeof MessageDialog<MessageOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogMessageWarning: typeof MessageDialog<MessageOption>
+export declare const DialogMessageWarning: typeof MessageDialog<MessageOptions>
 /**
  * Open an error type message dialog
  * @param message - The message to display
@@ -67,7 +67,7 @@ export declare const DialogMessageWarning: typeof MessageDialog<MessageOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogMessageError: typeof MessageDialog<MessageOption>
+export declare const DialogMessageError: typeof MessageDialog<MessageOptions>
 /**
  * Open an success type message dialog
  * @param message - The message to display
@@ -75,4 +75,4 @@ export declare const DialogMessageError: typeof MessageDialog<MessageOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogMessageSuccess: typeof MessageDialog<MessageOption>
+export declare const DialogMessageSuccess: typeof MessageDialog<MessageOptions>

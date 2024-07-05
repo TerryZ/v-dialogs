@@ -1,29 +1,13 @@
 import { AppContext } from 'vue'
 
-export {
-  DialogAlert,
-  DialogAlertWarning,
-  DialogAlertError,
-  DialogAlertSuccess,
-  DialogAlertConfirm
-} from './alert'
-export {
-  DialogMessage,
-  DialogMessageWarning,
-  DialogMessageError,
-  DialogMessageSuccess
-} from './message'
-export {
-  DialogToast,
-  DialogToastWarning,
-  DialogToastError,
-  DialogToastSuccess
-} from './toast'
-export { DialogModal, DialogModalBox } from './modal'
-export { DialogDrawer, DialogDrawerBox } from './drawer'
-export { DialogMask } from './mask'
+export * from './alert'
+export * from './message'
+export * from './toast'
+export * from './modal'
+export * from './drawer'
+export * from './mask'
 
-declare interface DialogInstallOption {
+declare interface DialogInstallOptions {
   /**
    * The instance name of the dialog
    *
@@ -46,5 +30,5 @@ export default class {
    * @param app - the Vue app instance
    * @param options - globally install options
    */
-  install (app:AppContext, options: DialogInstallOption): void
+  install (app:AppContext, options: DialogInstallOptions): void
 }

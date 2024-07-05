@@ -2,10 +2,11 @@ import {
   AllowedComponentProps,
   ComponentCustomProps,
   VNodeProps,
-  VNode
+  VNode,
+  Component
 } from 'vue'
 
-export interface DialogBaseOption {
+export interface DialogBaseOptions {
   /**
    * Plugin language
    * @default `en`
@@ -17,7 +18,7 @@ export interface DialogBaseOption {
   singletonKey?: string
 }
 
-declare interface ContainerBoxOption {
+declare interface ContainerBoxOptions {
   /**
    * Whether to display the dialog
    * @default false
@@ -25,11 +26,11 @@ declare interface ContainerBoxOption {
   visible?: boolean
 }
 
+type ComponentResult = VNode | Component
 export declare type DialogMessageType = 'info' | 'warning' | 'error' |'success'
 
 export declare type MessageContent = string | VNode
-
-export declare type ComponentContent = VNode | (() => VNode)
+export declare type ComponentContent = ComponentResult | (() => ComponentResult)
 
 declare type EmitUpdateVisible = (event: "update:visible", value: boolean) => void
 declare type EmitClose = (event: "close") => void
@@ -51,7 +52,7 @@ export declare function ContainerDialog<T> (
 
 export declare interface ContainerDialogBox<T> {
   new (): {
-    $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & T & ContainerBoxOption
+    $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & T & ContainerBoxOptions
     $emit: EmitClose & EmitUpdateVisible
     $slots: {
       default?: () => VNode[]

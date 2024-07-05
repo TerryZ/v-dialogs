@@ -1,6 +1,6 @@
-import { DialogBaseOption, DialogMessageType, MessageDialog } from './base'
+import { DialogBaseOptions, DialogMessageType, MessageDialog } from './base'
 
-declare interface ToastOption extends DialogBaseOption {
+export declare interface ToastOptions extends DialogBaseOptions {
   /**
    * Message type
    * - `info` default
@@ -46,7 +46,7 @@ declare interface ToastOption extends DialogBaseOption {
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogToast: typeof MessageDialog<ToastOption>
+export declare const DialogToast: typeof MessageDialog<ToastOptions>
 /**
  * Open an warning type toast dialog
  * @param message - The message to display
@@ -54,7 +54,7 @@ export declare const DialogToast: typeof MessageDialog<ToastOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogToastWarning: typeof MessageDialog<ToastOption>
+export declare const DialogToastWarning: typeof MessageDialog<ToastOptions>
 /**
  * Open an error type toast dialog
  * @param message - The message to display
@@ -62,7 +62,7 @@ export declare const DialogToastWarning: typeof MessageDialog<ToastOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogToastError: typeof MessageDialog<ToastOption>
+export declare const DialogToastError: typeof MessageDialog<ToastOptions>
 /**
  * Open an success type toast dialog
  * @param message - The message to display
@@ -70,4 +70,4 @@ export declare const DialogToastError: typeof MessageDialog<ToastOption>
  * @param options - dialog options
  * @returns the method to close dialog
  */
-export declare const DialogToastSuccess: typeof MessageDialog<ToastOption>
+export declare const DialogToastSuccess: typeof MessageDialog<ToastOptions>
