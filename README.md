@@ -10,36 +10,98 @@ A simple and clean instructional dialog plugin for **Vue2**, dialog type includi
 
 ## Examples and Documentation
 
-Live Examples on [CodePen](https://codepen.io/terry05/pen/JjLoxMN), more examples and documentation please visit below
+Documentation and examples please visit below sites
 
-- [English site](https://terryz.github.io/vue/#/dialog)
-- [国内站点](https://terryz.gitee.io/vue/#/dialog)
+- [Github pages](https://terryz.github.io/docs-vue3/dialog/)
 
-The jQuery version: [bDialog](https://github.com/TerryZ/bDialog)
+## Features
 
-## The Dialog Icon
-
-The icons in alert dialog used are made by [Elegant Themes](http://www.elegantthemes.com/blog/freebie-of-the-week/beautiful-flat-icons-for-free)
-
-The control icon, toast icon used are come from [IconFont](http://www.iconfont.cn)
+- Provides 6 types of dialogs: **Modal**, **Drawer**, **Alert**, **Message**, **Mask** and **Toast**
+- Functional form of use
+- **Modal** and **Drawer** provide `DialogModalBox` and `DialogDrawerBox` component form
+- **Alert**, **Message** and **Toast** types provides message type quick access function
+- Built-in 4 languages: `Chinese`, `English`, `Japanese` and `Portuguese`
+- Globally instance(not recommended)
 
 ## Installation
 
 ```sh
-npm i -S v-dialogs
+# npm
+npm i v-dialogs
+# yarn
+yarn add v-dialogs
+# pnpm
+pnpm add v-dialogs
 ```
 
-Include plugin in your project
+## API
 
-```js
-import Vue from 'vue'
-import Dialogs from 'v-dialogs'
-Vue.use(Dialogs, {
-  // global config options...
-})
+```ts
+type MessageContent = string | VNode
+type ComponentResult = VNode | Component
+type ComponentContent = ComponentResult | (() => ComponentResult)
+
+DialogAlert(message?: MessageContent, callback?: Function, options?: AlertOptions): Function
+DialogMessage(message?: MessageContent, callback?: Function, options?: MessageOptions): Function
+DialogToast(message?: MessageContent, callback?: Function, options?: ToastOptions): Function
+DialogMask(message?: MessageContent, callback?: Function, options?: MaskOptions): Function
+DialogModal(component: ComponentContent, options?: ModalOptions): Function
+DialogDrawer(component: ComponentContent, options?: DrawerOptions): Function
 ```
 
 ## Usage
+
+### Confirm and Message
+
+```ts
+import { DialogAlert, DialogMessage } from 'v-dialogs'
+
+function deleteUser (userId) {
+  DialogAlert('Deleted data cannot be recovered, are you sure?', () => {
+    executeDeleteUser(userId).then(() => {
+      DialogMessage('Delete complete.', { messageType: 'success' })
+    })
+  }, { messageType: 'confirm' })
+}
+```
+
+### Fetch data
+
+```ts
+import { DialogMask, DialogMessage, DialogAlert } from 'v-dialogs'
+
+function loadDataList () {
+  const destroy = DialogMask('Data loading...')
+
+  fetchData()
+    .then(data => {
+      list.value = data.list
+      // Dismiss mask overlay
+      destroy()
+      DialogMessage('Data loaded successfully', { messageType: 'success' })
+    })
+    .catch(() => {
+      DialogAlert('Data Load Failure', { messageType: 'error' })
+    })
+}
+```
+
+### Message type quick access
+
+**Alert**, **Message** and **Toast** types provides message type quick access function
+
+```ts
+import {
+  DialogMessage
+  DialogMessageWarning,
+  DialogMessageError,
+  DialogMessageSuccess
+} from 'v-dialogs'
+
+DialogMessageSuccess('Saved successfully!')
+// Equivalent to
+DialogMessage('Saved successfully!', { messageType: 'success' })
+```
 
 ### Alert
 
@@ -129,44 +191,39 @@ DialogMask()
 DialogMask('Data loading, please hold on a moment...')
 ```
 
-### DialogHelper
+## Globally instance
 
-Dialog helper collection
+`v-dialogs` also provides a globally instance to open dialogs, you can use it in any component
 
-#### close(key?: string): void
-
-Close a dialog, when no specified `key` parameter, will close the last one opened dialog
+The default instance name is `$dlg`
 
 ```js
-import { DialogMask, DialogHelper } from 'v-dialogs'
+import { createApp } from 'vue'
+import dialogs from 'v-dialogs'
+import App from 'App.vue'
 
-const key = DialogMask()
-// do your job stuff
-doSomeJobStuff().then(() => {
-  // close mask with key
-  DialogHelper.close(key)
-})
+createApp(App).use(dialogs).mount('#app')
 ```
 
-#### closeAll(): void
+> The global instance are only supported as a feature and are not recommended for use
 
-Close all dialogs at once
+### Option API
 
 ```js
-import { DialogHelper } from 'v-dialogs'
+export default {
+  mounted () {
+    this.$dlg.message('Saved successfully!')
+  }
+}
+```
 
-fetchData()
-  .then(() => {
-    // Do fetch data success work
-    ...
-  })
-  .catch(error => {
-    // Login state timeout for example
-    if (error.isLoginTimeout) {
-      // Close all opened dialogs
-      DialogHelper.closeAll()
-      // Redirect to login page
-      router.push({ path: '/login' })
-    }
-  })
+### Composition API
+
+```js
+import { getCurrentInstance } from 'vue'
+
+// const $dlg = getCurrentInstance().appContext.config.globalProperties.$dlg
+const $dlg = getCurrentInstance().proxy.$dlg
+
+$dlg.message('Saved successfully!')
 ```
