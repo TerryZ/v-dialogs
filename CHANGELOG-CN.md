@@ -2,25 +2,35 @@
 
 英文 changelog 内容请访问 [CHANGELOG](CHANGELOG.md)
 
-## [3.0.0-beta.3](https://github.com/TerryZ/v-page/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2023-03-04)
-
-### 问题修复
-
-- 修复 `Group` 模式的 `乡/镇/街道` 级别列表数据加载有概率错误
-
-## [3.0.0-beta.2](https://github.com/TerryZ/v-page/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2023-03-04)
-
-### 问题修复
-
-- 增加对 `window` 对象的判断，解决在非浏览器环境中打包失败
-
-## [3.0.0-beta.1](https://github.com/TerryZ/v-page/compare/v2.3.0...v3.0.0-beta.1) (2023-03-02)
+## [3.0.0](https://github.com/TerryZ/v-dialogs/compare/v2.2.0...v3.0.0) (2024-07-06)
 
 ### 新特性
 
-- 使用 vue3 **composition api** 重构 `v-region`
-- 工具链从 `webpack` 更换为 `vite`
-- 单元测试库从 `mocha` 更换为 `vitest`
-- `RegionGroupCore` 与 `RegionColumnsCore` 核心模块增加 `complete` 事件，响应所有有效级别选择完成操作
-- 下拉列表形态模块 `RegionGroup`、`RegionColumns` 与 `RegionCityPicker` 均增加 `visible-change` 事件，响应下拉层打开/关闭状态
-- 移除 `Group` 模式搜索功能
+#### 公共内容
+
+- 新增 **Message**、**Drawer** 两种对话框类型
+- 新增 `header` prop 用于设置标题栏的显示，`title` prop 则仅用于标题栏文本内容设置
+- **Alert**、**Message**、**Toast** 增加消息类型快速入口函数
+- 新增 `shake` prop 用于设置窗口以外的区域操作，是否应用抖动动画提醒
+- 默认语言使用英文
+- `closeTime` 更名为 `duration`
+
+#### Alert
+
+- 新增 `colorfulShadow` prop 用于指定在 `warning`、`error` 与 `success` 消息类型时是否显示相应配色的阴影
+
+#### Mask
+
+- 新增 `pill` prop 用于设置内容面板是否使用胶囊圆角样式
+- 新增 `icon` prop 用于设置是否显示 Loading 动画图标
+- 新增 `panel` prop 用于是否显示内容面板，关闭则内容直接显示在遮罩上
+- 新增 `appendTo` prop 用于指定遮罩覆盖的目标区域
+
+#### Toast
+
+- 新增 `offset` prop 用于指定对话框与屏幕边缘的间距
+- `position` 更名为 `placement`，并移除显示于屏幕中间区域的两个位置
+
+#### Modal
+
+- 新增 `DialogModalBox` 的组件式的使用形态
