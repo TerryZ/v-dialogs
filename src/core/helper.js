@@ -81,6 +81,13 @@ export function isSFC (content) {
   return false
 }
 
+export function isDOM (target) {
+  if (typeof target !== 'object') return false
+  if (Object.hasOwn(target, 'tagName')) return true
+  if (Object.hasOwn(target, 'tagName') && target.outerHTML) return true
+  return false
+}
+
 /**
  * The top value to center the dialog
  * @param {number} height - dialog height

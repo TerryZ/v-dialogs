@@ -2,7 +2,7 @@ import { onMounted, computed } from 'vue'
 
 import { useDialog } from './base-dialog'
 import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage } from './helper'
+import { parseArgumentsToProps, getLanguage, isDOM } from './helper'
 
 import TheDialogMask from '../modules/mask/DialogMask'
 
@@ -54,7 +54,7 @@ function useMaskParentHandle (appendTo) {
     if (typeof appendTo === 'string') {
       return document.querySelector(appendTo)
     }
-    if (appendTo instanceof HTMLElement) {
+    if (isDOM(appendTo)) {
       return appendTo
     }
     return undefined
