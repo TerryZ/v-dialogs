@@ -2,6 +2,12 @@
 
 Please refer to [CHANGELOG-CN](CHANGELOG-CN.md) for Chinese changelog
 
+## [3.0.1](https://github.com/TerryZ/v-dialogs/compare/v3.0.0...v3.0.1) (2024-07-06)
+
+### Bug Fixes
+
+- Fixed `DialogMask` build failure in SSR(HTMLElement is undefined)
+
 ## [3.0.0](https://github.com/TerryZ/v-dialogs/compare/v2.2.0...v3.0.0) (2024-07-06)
 
 ### Features
