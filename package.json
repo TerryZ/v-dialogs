@@ -1,7 +1,7 @@
 {
   "name": "v-dialogs",
   "description": "A simple style useful dialog component collection for Vue3",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "TerryZ <terry5@foxmail.com>",
   "type": "module",
   "files": [
