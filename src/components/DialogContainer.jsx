@@ -8,7 +8,7 @@ export default defineComponent({
     containerClass: { type: [String, Array, Object], default: '' },
     backdropClass: { type: [String, Array, Object], default: '' },
     transitionName: { type: String, default: '' },
-    appendTo: { type: [String, HTMLElement], default: 'body' }
+    appendTo: { type: [String, Object], default: 'body' }
   },
   setup (props, { slots }) {
     const {
