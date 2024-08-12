@@ -2,6 +2,12 @@
 
 英文 changelog 内容请访问 [CHANGELOG](CHANGELOG.md)
 
+## [3.0.3](https://github.com/TerryZ/v-dialogs/compare/v3.0.2...v3.0.3) (2024-08-12)
+
+### 新特性
+
+- 添加 **土耳其语**，语言编码为 `TR`
+
 ## [3.0.2](https://github.com/TerryZ/v-dialogs/compare/v3.0.1...v3.0.2) (2024-07-06)
 
 ### 问题修复

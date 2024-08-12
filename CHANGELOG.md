@@ -2,6 +2,12 @@
 
 Please refer to [CHANGELOG-CN](CHANGELOG-CN.md) for Chinese changelog
 
+## [3.0.3](https://github.com/TerryZ/v-dialogs/compare/v3.0.2...v3.0.3) (2024-08-12)
+
+### New Features
+
+- Add **Turkish** , the language key is `TR`
+
 ## [3.0.2](https://github.com/TerryZ/v-dialogs/compare/v3.0.1...v3.0.2) (2024-07-06)
 
 ### Bug Fixes
