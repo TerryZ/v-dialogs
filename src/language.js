@@ -1,4 +1,4 @@
-export const [CN, EN, PT, JP] = ['cn', 'en', 'pt', 'jp']
+export const [CN, EN, PT, JP, TR] = ['cn', 'en', 'pt', 'jp','tr']
 
 export default {
   [CN]: {
@@ -40,5 +40,14 @@ export default {
     btnOk: '確認',
     btnCancel: 'キャンセル',
     maskText: 'データロード……'
+  },[TR]: {
+    titleInfo: 'Bilgi',
+    titleWarning: 'Uyarı',
+    titleError: 'Hata',
+    titleSuccess: 'Başarılı',
+    titleConfirm: 'Onay',
+    btnOk: 'Evet',
+    btnCancel: 'İptal',
+    maskText: 'Yükleniyor'
   }
 }
