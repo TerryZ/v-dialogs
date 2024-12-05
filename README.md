@@ -1,4 +1,4 @@
-# [v-dialogs](https://terryz.github.io/vue/#/dialog)
+# [v-dialogs](https://terryz.github.io/docs-vue3/dialog/)
 <!-- &middot; -->
 [![CircleCI](https://circleci.com/gh/TerryZ/v-dialogs/tree/master.svg?style=svg)](https://circleci.com/gh/TerryZ/v-dialogs/tree/master)
 [![code coverage](https://codecov.io/gh/TerryZ/v-dialogs/branch/master/graph/badge.svg)](https://codecov.io/gh/TerryZ/v-dialogs)
