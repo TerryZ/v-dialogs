@@ -7,60 +7,84 @@ $fade-lite: v-dialog--fade-lite
 
 @keyframes soft-candy-show
   0%
-    transform: scale(0.7)
+    transform: scale3d(0.8, 0.8, 1) translateZ(0)
   45%
-    transform: scale(1.05)
+    transform: scale3d(1.05, 1.05, 1) translateZ(0)
   80%
-    transform: scale(0.95)
+    transform: scale3d(0.98, 0.98, 1) translateZ(0)
   100%
-    transform: scale(1)
+    transform: scale3d(1, 1, 1) translateZ(0)
 
 .#{$candy}-enter-active
-  animation: soft-candy-show 300ms ease-out
-  // transform: translate3d(0, 0, 0)
+  animation: soft-candy-show 320ms cubic-bezier(0.34, 1.56, 0.64, 1)
+  will-change: transform
+  backface-visibility: hidden
+  perspective: 1000px
 .#{$candy}-leave-active
-  transform: scale(0.5)
-  transition: transform 200ms linear, opacity 200ms linear
+  transition: transform 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  will-change: transform, opacity
+  backface-visibility: hidden
+.#{$candy}-leave-to
+  transform: scale3d(0.9, 0.9, 1) translateZ(0)
   opacity: 0
+
+
 
 .#{$smooth}-enter-active,
 .#{$smooth}-leave-active
-  transition: transform 250ms ease-in-out, opacity 150ms ease-in-out !important
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) !important
+  will-change: transform, opacity
+  transform: translateZ(0)
+  backface-visibility: hidden
+  perspective: 1000px
+
 .#{$smooth}-enter-from,
 .#{$smooth}-leave-to
-  transform: scale(0.5)
+  transform: scale3d(0.9, 0.9, 1)
   opacity: 0
+
+.#{$smooth}-enter-to,
+.#{$smooth}-leave-from
+  transform: scale3d(1, 1, 1)
+  opacity: 1
+
+
 
 .#{$fade}-enter-active,
 .#{$fade}-leave-active
-  will-change: opacity
   transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
-  // transform: translateZ(0)
+  will-change: opacity
+  transform: translateZ(0)
+  backface-visibility: hidden
 .#{$fade}-enter-from,
 .#{$fade}-leave-to
   opacity: 0
 
+
+
 .#{$fade-lite}-enter-active,
 .#{$fade-lite}-leave-active
-  // will-change: opacity
-  // transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1)
-  // transform: translateZ(0)
-  transition: opacity .3s ease-in-out
+  transition: opacity .25s cubic-bezier(0.4, 0, 0.2, 1)
+  will-change: opacity
+  transform: translateZ(0)
+  backface-visibility: hidden
 .#{$fade-lite}-enter-from,
 .#{$fade-lite}-leave-to
   opacity: 0
 
-=transform($tx: 3px, $rt: 2deg)
-  transform: translateX($tx) rotate($rt)
+
+
+=transform($tx, $rt)
+  transform: translate3d($tx, 0, 0) rotate($rt)
 
 /* Buzz Out */
 @keyframes animated-buzz-out
   10%
-    +transform()
+    +transform(3px, 2deg)
   20%
     +transform(-3px, -2deg)
   30%
-    +transform()
+    +transform(3px, 2deg)
   40%
     +transform(-3px, -2deg)
   50%
@@ -77,10 +101,8 @@ $fade-lite: v-dialog--fade-lite
     +transform(-1px, 0)
 
 .v-dialog--buzz-out
-  animation-name: animated-buzz-out
-  /*规定完成动画所花费的时间，以秒或毫秒计*/
-  animation-duration: 750ms
-  /*动画从头到尾的速度是相同的*/
-  animation-timing-function: linear
-  /*执行次数*/
-  animation-iteration-count: 1
+  animation: animated-buzz-out 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  will-change: transform
+  backface-visibility: hidden
+  // perspective: 1000px
+  transform: translateZ(0)

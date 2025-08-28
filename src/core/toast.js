@@ -66,9 +66,7 @@ export function useToast (props, emit) {
   setupPositionAdjustBehavior(setMessagePosition)
   setupAutomaticClose(closeGroupDialogWithCallback)
 
-  onMounted(() => {
-    openDialog()
-  })
+  onMounted(openDialog)
 
   return {
     ...restItems,

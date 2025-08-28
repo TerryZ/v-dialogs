@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex vh-100">
     <div
-      class="bg-light fw-bold flex-shrink-0"
+      class="bg-secondary-subtle fw-bold flex-shrink-0"
       style="width: 18rem;"
     >
       <div class="py-4 px-3 d-flex align-items-center font-monospace">

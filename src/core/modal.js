@@ -44,9 +44,7 @@ export function useModal (props, emit) {
 
   setDialogSize(props.width || MODAL_WIDTH, props.height || MODAL_HEIGHT)
 
-  onMounted(() => {
-    openModal()
-  })
+  onMounted(openModal)
 
   return {
     ...restItems,

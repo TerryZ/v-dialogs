@@ -16,6 +16,13 @@
         <button
           type="button"
           class="btn btn-outline-secondary me-3"
+          @click="minSize"
+        >
+          Min size
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
           @click="backdropClose"
         >
           Backdrop close
@@ -168,7 +175,14 @@ function noHeader () {
 }
 function noMaxButton () {
   openModal({
+    height: 450,
     maxButton: false
+  })
+}
+function minSize () {
+  openModal({
+    width: 100,
+    height: 50
   })
 }
 function noCloseButton () {

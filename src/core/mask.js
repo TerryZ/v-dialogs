@@ -36,9 +36,7 @@ export function useMask (props, emit) {
   addParentRelative()
   setDialogSize(undefined, 60)
 
-  onMounted(() => {
-    openDialog()
-  })
+  onMounted(openDialog)
 
   return {
     ...restItems,

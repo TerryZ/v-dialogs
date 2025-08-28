@@ -19,7 +19,7 @@ import {
 import { useResizeAdjust, useAutomaticClose } from './base-use'
 
 /**
- * Dialog basic behavior
+ * Dialog base behavior
  * @param {object} props
  * @param {string[]} emit
  * @returns {object}

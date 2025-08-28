@@ -47,9 +47,7 @@ export function useDrawer (props, emit) {
 
   setDialogSize(width, height)
 
-  onMounted(() => {
-    openDialog()
-  })
+  onMounted(openDialog)
 
   return {
     ...restItems,
