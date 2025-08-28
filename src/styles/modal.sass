@@ -1,9 +1,9 @@
-@import variable
+@use 'variable'
 
 /* modal */
 
 .v-dialog-modal
-  @include fill-fullscreen
+  @include variable.fill-fullscreen
   &#{&}--maximize
     padding-right: 0 !important
     .v-dialog-content
@@ -15,7 +15,7 @@
   .v-dialog-content
     border-radius: .5rem
     transition: width .2s ease-in-out, height .2s ease-in-out
-    min-width: 400px
+    min-width: 280px
     min-height: 200px
     .v-dialog-header
       button
