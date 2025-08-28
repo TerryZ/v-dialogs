@@ -1,4 +1,4 @@
-@import variable
+@use 'variable'
 
 /* drawer */
 
@@ -48,12 +48,16 @@
   .#{$slide-in-name}-enter-active,
   .#{$slide-in-name}-leave-active
     transition: transform 250ms ease-in-out, opacity 250ms linear
+    will-change: transform, opacity
+    transform: translateZ(0)
+    backface-visibility: hidden
   .#{$slide-in-name}-enter-from,
   .#{$slide-in-name}-leave-to
     transform: $transform
     opacity: 0
 
-@include slide-in(v-dialog-drawer-slide-in-top , translateY(-100%))
-@include slide-in(v-dialog-drawer-slide-in-bottom , translateY(100%))
-@include slide-in(v-dialog-drawer-slide-in-left , translateX(-100%))
-@include slide-in(v-dialog-drawer-slide-in-right , translateX(100%))
+
+@include slide-in(v-dialog-drawer-slide-in-top , translate3d(0, -100%, 0))
+@include slide-in(v-dialog-drawer-slide-in-bottom , translate3d(0, 100%, 0))
+@include slide-in(v-dialog-drawer-slide-in-left , translate3d(-100%, 0, 0))
+@include slide-in(v-dialog-drawer-slide-in-right , translate3d(100%, 0, 0))

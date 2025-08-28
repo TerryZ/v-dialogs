@@ -1,9 +1,9 @@
-@import variable
+@use 'variable'
 
 /* Mask */
 
 .v-dialog-mask
-  @include fill-fullscreen
+  @include variable.fill-fullscreen
   .v-dialog-content
     &.mask--pill
       border-radius: 50rem

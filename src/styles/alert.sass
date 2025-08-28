@@ -1,4 +1,4 @@
-@import variable
+@use 'variable'
 
 @mixin icon-color-and-shadow($color, $shadow-color)
   color: $color
@@ -6,7 +6,7 @@
 
 .v-dialog-alert
   // min-height: 100%
-  @include fill-fullscreen
+  @include variable.fill-fullscreen
   &.no-icon .v-dialog-alert__content
     padding-left: 15px
   &.no-header .v-dialog-alert__content
@@ -32,7 +32,7 @@
         transition: all .2s ease-in-out
         user-select: none
         &:active
-          box-shadow: 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.23)
+          box-shadow: 0 10px 20px rgb(0,0,0,.2), 0 6px 6px rgb(0,0,0,.23)
       .v-dialog-btn__ok
         border: 1px solid #516270
         background-color: #516270
@@ -43,7 +43,6 @@
         margin-left: 1rem
   .v-dialog-alert__content
     overflow-y: auto
-    min-height: 100px
     flex-grow: 1
     display: flex
     padding: 1rem
@@ -56,7 +55,8 @@
       flex-grow: 1
       font-size: 14px
       line-height: 1.5
-      padding-top: 5px
+      display: flex
+      align-items: center
   .alert-warning .v-dialog-alert__icon
     @include icon-color-and-shadow(#FF9800, rgb(255,152,0,.8))
   .alert-error .v-dialog-alert__icon
@@ -70,8 +70,8 @@
   box-shadow: 0 1rem 5rem $color !important
 
 .v-dialog__shadow--error
-  +dialog-shadow(rgba(255,0,0,0.5))
+  +dialog-shadow(rgb(255,0,0,0.5))
 .v-dialog__shadow--warning
-  +dialog-shadow(rgba(255,165,0,0.5))
+  +dialog-shadow(rgb(255,165,0,0.5))
 .v-dialog__shadow--success
-  +dialog-shadow(rgba(0,255,0,0.5))
+  +dialog-shadow(rgb(0,255,0,0.5))
