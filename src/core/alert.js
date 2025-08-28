@@ -1,6 +1,5 @@
 import {
   colorfulShadowTypes,
-  ALERT_HEIGHT,
   ALERT_WIDTH,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
@@ -26,7 +25,7 @@ export function useAlert (props, emit) {
   } = useDialog(props, emit)
   const lang = getLanguage(props.language)
 
-  setDialogSize(ALERT_WIDTH, ALERT_HEIGHT)
+  setDialogSize(ALERT_WIDTH, 'auto')
 
   const isConfirmType = () => MESSAGE_TYPE_CONFIRM === messageType
   function getAlertTypeClass () {
@@ -50,9 +49,7 @@ export function useAlert (props, emit) {
     closeDialog(props.cancelCallback)
   }
 
-  onMounted(() => {
-    openDialog()
-  })
+  onMounted(openDialog)
 
   return {
     ...restItems,
