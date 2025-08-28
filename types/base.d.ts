@@ -11,7 +11,7 @@ export interface DialogBaseOptions {
    * Plugin language
    * @default `en`
    */
-  language?: string
+  language?: 'cn' | 'en' | 'pt' | 'jp' | 'tr'
   /** Custom class name */
   customClass?: string
   /** Only one singleton key dialog can be open at a time */
