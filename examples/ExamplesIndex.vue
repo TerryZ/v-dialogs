@@ -13,9 +13,9 @@
         </div>
       </div>
       <div
-        class="px-3 pb-4"
         v-for="item in modules"
         :key="item.key"
+        class="px-3 pb-4"
       >
         <router-link
           class="nav-link"

@@ -3,26 +3,47 @@ import standard from '@vue/eslint-config-standard'
 import globals from 'globals'
 
 export default [
-  {
-    ignores: [
-      'types/**'
-    ]
-  },
+  // {
+  //   // ignores: [
+  //   //   'types/**'
+  //   // ],
+  //   languageOptions: {
+  //     sourceType: 'module',
+  //     globals: {
+  //       ...globals.browser,
+  //       ...globals.node
+  //     }
+  //   }
+  // },
+
+  // {
+  //   name: 'app/files-to-lint',
+  //   files: ['**/*.{js,mjs,jsx,vue}']
+  // },
+
   ...pluginVue.configs[
+    // 'flat/essential'
     'flat/strongly-recommended'
-    // 'plugin:vue/strongly-recommended'
+    // 'flat/recommended'
   ],
   ...standard,
+  { ignores: ['**/dist/**', '**/coverage/**', 'types/**'] },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      'vue/no-unused-vars': 'error',
+      'vue/jsx-uses-vars': 'error'
+    },
     languageOptions: {
-      sourceType: 'module',
       ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
         ...globals.browser,
         ...globals.node
       },
       parserOptions: {
+        // ecmaVersion: 'latest',
+        // sourceType: 'module',
         ecmaFeatures: {
           jsx: true // 启用 JSX 支持
         }
