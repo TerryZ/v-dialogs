@@ -9,12 +9,12 @@ import {
   FULL_WIDTH,
   FULL_HEIGHT,
   placements
-} from '../constants'
-import { createDialog } from './manage'
-import { useDialog } from './base-dialog'
-import { useCloseDialog } from './base-use'
+} from '../../constants'
+import { createDialog } from '../../core/manage'
+import { useDialog } from '../../core/base-dialog'
+import { useCloseDialog } from '../../core/base-use'
 
-import TheDialogDrawer from '../modules/drawer/DialogDrawer'
+import TheDialogDrawer from './DialogDrawer'
 
 export function useDrawer (props, emit) {
   const {

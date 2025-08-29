@@ -1,10 +1,10 @@
 import { onMounted, computed } from 'vue'
 
-import { useDialog } from './base-dialog'
-import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage, isDOM } from './helper'
+import { useDialog } from '../../core/base-dialog'
+import { createDialog } from '../../core/manage'
+import { parseArgumentsToProps, getLanguage, isDOM } from '../../core/helper'
 
-import TheDialogMask from '../modules/mask/DialogMask'
+import TheDialogMask from './DialogMask'
 
 export function useMask (props, emit) {
   const {

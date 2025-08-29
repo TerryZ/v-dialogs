@@ -11,7 +11,7 @@ import {
   PLACEMENT_TOP_RIGHT,
   propsInjectionKey
 } from '../../constants'
-import { useToast, getToastPositionClass } from '../../core/toast'
+import { useToast, getToastPositionClass } from './toast'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
 export default defineComponent({

@@ -10,13 +10,13 @@ import {
   PLACEMENT_BOTTOM_LEFT,
   PLACEMENT_BOTTOM_RIGHT,
   quickAccessTypes
-} from '../constants'
-import { useDialog } from './base-dialog'
-import { useCloseGroupDialog, useVerticalPosition } from './base-use'
-import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from './helper'
+} from '../../constants'
+import { useDialog } from '../../core/base-dialog'
+import { useCloseGroupDialog, useVerticalPosition } from '../../core/base-use'
+import { createDialog } from '../../core/manage'
+import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from '../../core/helper'
 
-import TheDialogToast from '../modules/toast/DialogToast'
+import TheDialogToast from './DialogToast'
 
 export function useToast (props, emit) {
   const {

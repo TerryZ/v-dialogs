@@ -3,7 +3,7 @@ import '../../styles/drawer.sass'
 import { defineComponent, provide, computed } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
-import { useDrawer } from '../../core/drawer'
+import { useDrawer } from './drawer'
 import { propsInjectionKey, PLACEMENT_RIGHT } from '../../constants'
 import { drawerEnforcedSettings } from '../../core/base-settings'
 

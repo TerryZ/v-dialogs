@@ -97,41 +97,38 @@
 
     <div class="mb-3">
       <h5>Features</h5>
-      <div class="mb-3">
+      <div class="mb-3 d-flex flex-wrap gap-3">
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="customTitle"
         >
           Custom title
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="backdropClose"
         >
           Backdrop close
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="largeText"
         >
           Large Text
         </button>
-      </div>
-
-      <div class="mb-3">
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="noParameters"
         >
           No parameters
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="noHeader"
         >
           No header
@@ -141,38 +138,38 @@
 
     <div class="mb-3">
       <h5>Quick access</h5>
-      <div class="mb-3">
+      <div class="mb-3 d-flex flex-wrap gap-3">
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="quickInfo"
         >
           Quick info
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="quickWarning"
         >
           Quick warning
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="quickError"
         >
           Quick error
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="quickSuccess"
         >
           Quick success
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="quickConfirm"
         >
           Quick confirm

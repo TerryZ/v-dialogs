@@ -3,11 +3,11 @@ import './styles/animated.sass'
 
 import { DEFAULT_INSTANCE_NAME } from './constants'
 import { DialogModal } from './modules/modal/modal'
-import { DialogMask } from './core/mask'
-import { DialogDrawer } from './core/drawer'
+import { DialogMask } from './modules/mask/mask'
+import { DialogDrawer } from './modules/drawer/drawer'
 import { DialogAlert } from './modules/alert/alert'
-import { DialogMessage } from './core/message'
-import { DialogToast } from './core/toast'
+import { DialogMessage } from './modules/message/message'
+import { DialogToast } from './modules/toast/toast'
 
 export {
   DialogAlertInfo,
@@ -21,13 +21,13 @@ export {
   DialogMessageWarning,
   DialogMessageError,
   DialogMessageSuccess
-} from './core/message'
+} from './modules/message/message'
 export {
   DialogToastInfo,
   DialogToastWarning,
   DialogToastError,
   DialogToastSuccess
-} from './core/toast'
+} from './modules/toast/toast'
 
 export { default as DialogModalBox } from './modules/modal/DialogModalBox'
 export { default as DialogDrawerBox } from './modules/drawer/DialogDrawerBox'

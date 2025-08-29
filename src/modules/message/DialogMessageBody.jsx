@@ -7,7 +7,7 @@ import {
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS
 } from '../../constants'
-import { getMessageTypeClass } from '../../core/message'
+import { getMessageTypeClass } from './message'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'

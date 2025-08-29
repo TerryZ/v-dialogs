@@ -7,7 +7,7 @@ import DialogContentBox from '../../components/DialogContentBox'
 import DialogMaskBody from './DialogMaskBody'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
-import { useMask } from '../../core/mask'
+import { useMask } from './mask'
 import { propsInjectionKey } from '../../constants'
 import { maskEnforcedSettings } from '../../core/base-settings'
 

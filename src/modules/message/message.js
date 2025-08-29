@@ -8,16 +8,16 @@ import {
   PLACEMENT_TOP,
   MESSAGE,
   quickAccessTypes
-} from '../constants'
-import { useDialog } from './base-dialog'
+} from '../../constants'
+import { useDialog } from '../../core/base-dialog'
 import {
   useVerticalPosition,
   useCloseGroupDialog
-} from './base-use'
-import { createDialog } from './manage'
-import { parseArgumentsToProps, messageTypeQuickAccess } from './helper'
+} from '../../core/base-use'
+import { createDialog } from '../../core/manage'
+import { parseArgumentsToProps, messageTypeQuickAccess } from '../../core/helper'
 
-import TheDialogMessage from '../modules/message/DialogMessage'
+import TheDialogMessage from './DialogMessage'
 
 export function useMessage (props, emit) {
   const {

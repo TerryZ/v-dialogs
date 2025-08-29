@@ -11,7 +11,7 @@ import {
   PLACEMENT_TOP,
   propsInjectionKey
 } from '../../constants'
-import { useMessage } from '../../core/message'
+import { useMessage } from './message'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 
 export default defineComponent({

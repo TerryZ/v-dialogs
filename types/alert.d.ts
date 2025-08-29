@@ -36,11 +36,6 @@ export declare interface AlertOptions extends DialogBaseOptions {
    */
   cancelCallback?: Function
   /**
-   * The dialog background overlay
-   * @default true
-   */
-  backdrop?: boolean
-  /**
    * Click outside the dialog to close dialog
    * @default false
    */

@@ -8,7 +8,7 @@ import {
   MESSAGE_TYPE_SUCCESS
 } from '../../constants'
 import { getDefaultTitle } from '../../core/helper'
-import { getToastTypeClass } from '../../core/toast'
+import { getToastTypeClass } from './toast'
 
 import IconInfo from '../../icons/IconInfo.vue'
 import IconWarning from '../../icons/IconWarning.vue'
