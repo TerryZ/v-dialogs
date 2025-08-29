@@ -37,9 +37,7 @@ export function useModal (props, emit) {
   function openModal () {
     openDialog()
 
-    if (props.fullscreen) {
-      switchMaximize()
-    }
+    if (props.fullscreen) switchMaximize()
   }
 
   setDialogSize(props.width || MODAL_WIDTH, props.height || MODAL_HEIGHT)

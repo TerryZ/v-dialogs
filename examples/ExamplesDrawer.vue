@@ -84,6 +84,13 @@
         >
           No header
         </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-3"
+          @click="noBackdrop"
+        >
+          No backdrop
+        </button>
       </div>
     </div>
 
@@ -178,10 +185,12 @@ function base () {
     width: 500,
     height: 320,
     customClass: 'rounded-0',
-    callback: data => {
-      console.log(data)
-      if (data) {
-        DialogAlert(`Received user name: ${data?.companyName}`)
+    callback: (name, data) => {
+      // console.log(data)
+      console.log('event name: ', name)
+      console.log('event data: ', data)
+      if (name === 'close') {
+        DialogAlert(`Received user name: ${data[0]?.companyName}`)
       }
     }
   })
@@ -194,6 +203,11 @@ function noBackdropClose () {
 function noHeader () {
   openDrawer({
     header: false
+  })
+}
+function noBackdrop () {
+  openDrawer({
+    backdrop: false
   })
 }
 function noCloseButton () {

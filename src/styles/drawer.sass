@@ -2,19 +2,27 @@
 
 /* drawer */
 
+@mixin shadow($x, $y)
+  .v-dialog-content
+    box-shadow: $x $y 5rem rgb(0,0,0,0.5)
+
 .v-dialog-drawer
   &#{&}--top
     top: 0
     left: 0
+    @include shadow(0, 1rem)
   &#{&}--bottom
     bottom: 0
     left: 0
+    @include shadow(0, 1rem)
   &#{&}--left
     top: 0
     left: 0
+    @include shadow(0, 1rem)
   &#{&}--right
     top: 0
     right: 0
+    @include shadow(0, 1rem)
   .v-dialog-content
     border-radius: 0
     min-width: 400px

@@ -108,7 +108,11 @@
             v-model:visible="visibleUserControl"
             :header="false"
           >
-            <CardPanel @close="handleCloseModal" />
+            <CardPanel
+              @close="handleCloseModal"
+              @abc="customEvent"
+              @abc-efg="customEvent"
+            />
           </DialogModalBox>
           <button
             type="button"
@@ -139,6 +143,9 @@ import CardPanel from './CardPanel.vue'
 const visible = ref(false)
 const visibleUserControl = ref(false)
 
+// console.log(CardPanel.render.toString())
+
+const customEvent = () => console.log('custom event')
 function openModal (params) {
   const options = {
     title: 'User Profile',
@@ -155,10 +162,11 @@ function base () {
     width: 500,
     height: 320,
     customClass: 'rounded-0',
-    callback: data => {
-      console.log(data)
-      if (data) {
-        DialogAlert(`Received user name: ${data?.companyName}`)
+    callback: (name, data) => {
+      console.log('event name: ', name)
+      console.log('event data: ', data)
+      if (name === 'close') {
+        DialogAlert(`Received company name: ${data[0]?.companyName}`)
       }
     }
   })

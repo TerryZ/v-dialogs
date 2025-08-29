@@ -91,13 +91,16 @@ export function useDialog (props, emit) {
   function closeDialog (callback, data, options) {
     if (!transitionEnterComplete.value) return
 
+    // trigger dialog close
     show.value = false
+    // do some work after trigger dialog close
     options?.closing?.()
 
     // destroy dialog when transition leave complete
     destroy.value = () => {
       // close and destroy dialog
       emit(EMIT_CLOSE, callback, data)
+      // dialog closed
       options?.afterClose?.()
       // destroy DialogModalBox component
       emit(EMIT_RENDER_DIALOG, false)

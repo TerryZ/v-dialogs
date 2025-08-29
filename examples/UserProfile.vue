@@ -48,13 +48,27 @@
     >
       space
     </div>
-    <div class="mt-3">
+    <div class="mt-3 d-flex gap-3">
       <button
         type="button"
-        class="btn btn-primary me-3"
+        class="btn btn-primary"
         @click="ok"
       >
         OK
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="handleEvent"
+      >
+        event 1
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="handleTheEvent"
+      >
+        event 2
       </button>
     </div>
   </div>
@@ -66,7 +80,7 @@ import { ref, computed } from 'vue'
 import { DialogModal, DialogAlert } from '@/'
 import UserCompany from './UserCompany.vue'
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'event', 'the-event'])
 
 const props = defineProps({
   name: { type: String, default: '' }
@@ -96,10 +110,16 @@ function chooseCompany () {
     width: 500,
     height: 500,
     title: 'Company list',
-    callback: data => {
-      DialogAlert(`Your selected <b>${data.name}</b> company.`, { closeTime: 2 })
-      company.value = data && data.name
+    callback: (name, data) => {
+      DialogAlert(`Your selected ${data} company.`)
+      company.value = data[0]
     }
   })
+}
+function handleEvent () {
+  emit('event', 1, 1)
+}
+function handleTheEvent () {
+  emit('the-event', 1, 1, 1)
 }
 </script>

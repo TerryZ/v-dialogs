@@ -160,3 +160,9 @@ export function messageTypeQuickAccess (types, prefix, component, setConfig) {
 
   return quickAccess
 }
+export function toPascalCase (str) {
+  return str
+    .toLowerCase()
+    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
+    .replace(/^\w/, c => c.toUpperCase())
+}

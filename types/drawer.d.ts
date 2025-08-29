@@ -27,9 +27,14 @@ export declare interface DrawerOptions extends DialogBaseOptions {
   closeButton?: boolean
   /**
    * The drawer dialog placement
-   * @default 'right'
+   * @default `right`
    */
   placement?: 'left' | 'right' | 'top' | 'bottom'
+  /**
+   * Display drawer dialog backdrop
+   * @default true
+   */
+  backdrop?: boolean
   /**
    * Backdrop click to close dialog
    * @default true

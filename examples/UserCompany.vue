@@ -15,7 +15,7 @@
           <td align="center">
             <input
               type="radio"
-              @click="value='Google'"
+              @click="value = 'Google'"
             >
           </td>
           <td>Google</td>
@@ -25,7 +25,7 @@
           <td align="center">
             <input
               type="radio"
-              @click="value='Microsoft'"
+              @click="value = 'Microsoft'"
             >
           </td>
           <td>Microsoft</td>
@@ -35,7 +35,7 @@
           <td align="center">
             <input
               type="radio"
-              @click="value='Facebook'"
+              @click="value = 'Facebook'"
             >
           </td>
           <td>Facebook</td>
@@ -49,23 +49,18 @@
         class="btn btn-primary"
         @click="ok"
       >
-        <fa-icon icon="check" /> Ok
+        Ok
       </button>
     </p>
   </div>
 </template>
 
-<script>
-export default {
-  data () {
-    return {
-      value: ''
-    }
-  },
-  methods: {
-    ok () {
-      this.$emit('close', { name: this.value })
-    }
-  }
-}
+<script setup>
+import { ref } from 'vue'
+
+const emit = defineEmits(['close'])
+
+const value = ref('')
+
+const ok = () => emit('close', value.value)
 </script>

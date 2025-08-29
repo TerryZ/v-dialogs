@@ -42,6 +42,13 @@ export declare interface ModalOptions extends DialogBaseOptions {
    * @default true
    */
   shaking?: boolean
+  /**
+   * Event responder
+   * @param eventName
+   * @param data
+   * @returns
+   */
+  callback?: (eventName: string, data?: unknown[]) => void
 }
 
 /**

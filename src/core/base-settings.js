@@ -26,6 +26,9 @@ export const baseProps = {
 
 export const baseEmits = [EMIT_CLOSE, EMIT_RENDER_DIALOG]
 
+/**
+ * Component properties that cannot be overridden
+ */
 export const alertEnforcedSettings = {
   backdrop: true
 }

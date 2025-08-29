@@ -27,7 +27,7 @@
         <span class="badge rounded-pill text-bg-light me-2">Configurable</span>
         <span class="badge rounded-pill text-bg-secondary">Functional</span>
       </div>
-      <div class="">
+      <div class="d-flex gap-3">
         <button
           type="button"
           class="btn btn-outline-secondary w-100"
@@ -35,15 +35,30 @@
         >
           OK
         </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary w-100"
+          @click="triggerEvent('abc')"
+        >
+          event 1
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary w-100"
+          @click="triggerEvent('abc-efg')"
+        >
+          event 2
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'abc', 'abc-efg'])
 
 function close () {
   emit('close')
 }
+const triggerEvent = name => emit(name)
 </script>

@@ -14,16 +14,18 @@ import {
   propsInjectionKey
 } from '../constants'
 import { messageAdjustPositionEvent, addDialog, opening } from './manage'
+import { toPascalCase } from './helper'
 
 export function useDialogComponent (slots) {
   const {
     component,
+    callback,
     params,
-    closeDialogWithCallback
+    closeDialogWithoutCallback
   } = inject(propsInjectionKey)
 
   function getComponentContent () {
-    // use slot content first
+    // use default slot content first
     if (slots.default) return slots.default()
     // dynamic component
     if (!component) return
@@ -32,9 +34,19 @@ export function useDialogComponent (slots) {
       ? component()
       : component
 
-    const options = {
-      onClose: data => closeDialogWithCallback(data)
-    }
+    const emits = VNode?.emits || []
+    const options = {}
+
+    emits.forEach(name => {
+      const eventName = 'on' + toPascalCase(name)
+      options[eventName] = (...args) => {
+        // close dialog when event name is `close`
+        if (name.toLowerCase() === 'close') closeDialogWithoutCallback()
+
+        callback?.(name, args)
+      }
+    })
+
     return h(VNode, mergeProps(params, options))
   }
 

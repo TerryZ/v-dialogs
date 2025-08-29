@@ -33,7 +33,7 @@ export function createDialog (component, options = {}, configs) {
     dialogKey: key,
     dialogIndex: index,
     onClose: (callback, data) => {
-      callback && callback(data)
+      callback?.(data)
       destroy()
     }
   }
