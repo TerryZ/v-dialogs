@@ -2,10 +2,10 @@ import './styles/dialog.sass'
 import './styles/animated.sass'
 
 import { DEFAULT_INSTANCE_NAME } from './constants'
-import { DialogModal } from './core/modal'
+import { DialogModal } from './modules/modal/modal'
 import { DialogMask } from './core/mask'
 import { DialogDrawer } from './core/drawer'
-import { DialogAlert } from './core/alert'
+import { DialogAlert } from './modules/alert/alert'
 import { DialogMessage } from './core/message'
 import { DialogToast } from './core/toast'
 
@@ -15,7 +15,7 @@ export {
   DialogAlertError,
   DialogAlertSuccess,
   DialogAlertConfirm
-} from './core/alert'
+} from './modules/alert/alert'
 export {
   DialogMessageInfo,
   DialogMessageWarning,

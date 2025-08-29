@@ -104,7 +104,7 @@ const longTextZhCN = '互联网科技与金融的结合变革了传统金融的�
 
 function base () {
   const destroy = DialogMask()
-  setTimeout(destroy, 3000);
+  setTimeout(destroy, 3000)
 }
 function longText () {
   DialogMask(longTextEN)

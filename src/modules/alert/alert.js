@@ -6,12 +6,12 @@ import {
   MESSAGE_TYPE_SUCCESS,
   MESSAGE_TYPE_CONFIRM,
   quickAccessTypes
-} from '../constants'
-import { useDialog } from './base-dialog'
-import { createDialog } from './manage'
-import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from './helper'
+} from '../../constants'
+import { useDialog } from '../../core/base-dialog'
+import { createDialog } from '../../core/manage'
+import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from '../../core/helper'
 
-import TheDialogAlert from '../modules/alert/DialogAlert'
+import TheDialogAlert from './DialogAlert'
 import { onMounted } from 'vue'
 
 export function useAlert (props, emit) {

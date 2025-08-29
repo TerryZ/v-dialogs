@@ -9,7 +9,7 @@ import DialogContainer from '../../components/DialogContainer'
 import DialogContentBox from '../../components/DialogContentBox'
 
 import { MESSAGE_TYPE_INFO, propsInjectionKey } from '../../constants'
-import { useAlert } from '../../core/alert'
+import { useAlert } from './alert'
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { alertEnforcedSettings } from '../../core/base-settings'
 

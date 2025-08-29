@@ -3,12 +3,12 @@ import { onMounted, ref, watch, markRaw } from 'vue'
 import {
   MODAL_WIDTH,
   MODAL_HEIGHT
-} from '../constants'
-import { createDialog } from './manage'
-import { useDialog } from './base-dialog'
-import { useCloseDialog } from './base-use'
+} from '../../constants'
+import { createDialog } from '../../core/manage'
+import { useDialog } from '../../core/base-dialog'
+import { useCloseDialog } from '../../core/base-use'
 
-import TheDialogModal from '../modules/modal/DialogModal'
+import TheDialogModal from './DialogModal'
 
 export function useModal (props, emit) {
   const {
