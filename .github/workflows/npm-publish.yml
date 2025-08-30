@@ -1,0 +1,74 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: test
+
+on:
+  push:
+    branches:
+      - master
+      - release
+  # release:
+  #   types: [published]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: pnpm
+
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          files: ./coverage1.xml,./coverage2.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true # optional (default = false)
+
+  publish-npm:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: https://registry.npmjs.org/
+          cache: pnpm
+
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm build
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Get version from package.json
+        id: version
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - name: Create Release and Tag
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v${{ steps.version.outputs.version }}"
+          tag_name: "v${{ steps.version.outputs.version }}"
+          body: |
+            Please refer to [CHANGELOG.md](https://github.com/TerryZ/v-dialogs/blob/dev/CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
