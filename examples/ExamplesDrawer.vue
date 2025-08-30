@@ -4,6 +4,25 @@
   </h3>
   <div class="d-flex flex-column">
     <div class="mb-3">
+      <h5>Features</h5>
+      <div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="border-rounded"
+            v-model="rounded"
+          >
+          <label
+            class="form-check-label"
+            for="border-rounded"
+          >
+            Border rounded
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
       <h5>Placement</h5>
       <div>
         <div class="form-check form-check-inline">
@@ -62,31 +81,31 @@
     </div>
     <div class="mb-3">
       <h5>Base</h5>
-      <div class="">
+      <div class="d-flex gap-3 flex-wrap">
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="base"
         >
           Drawer
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="noBackdropClose"
         >
           Do not backdrop close
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="noHeader"
         >
-          No header
+          No header(border-0)
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="noBackdrop"
         >
           No backdrop
@@ -169,6 +188,7 @@ import CardPanel from './CardPanel.vue'
 const visible = ref(false)
 const visibleUserControl = ref(false)
 const placement = ref('right')
+const rounded = ref(true)
 
 function openDrawer (params) {
   const options = {
@@ -176,6 +196,7 @@ function openDrawer (params) {
     backdrop: true,
     params: { name: 'Terry Zeng' },
     placement: placement.value,
+    rounded: rounded.value,
     ...params
   }
   DialogDrawer(UserProfile, options)
@@ -184,7 +205,6 @@ function base () {
   openDrawer({
     width: 500,
     height: 320,
-    customClass: 'rounded-0',
     callback: (name, data) => {
       // console.log(data)
       console.log('event name: ', name)
@@ -202,6 +222,7 @@ function noBackdropClose () {
 }
 function noHeader () {
   openDrawer({
+    customClass: 'rounded-0',
     header: false
   })
 }

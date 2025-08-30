@@ -1,6 +1,6 @@
 import '../../styles/drawer.sass'
 
-import { defineComponent, provide, computed } from 'vue'
+import { defineComponent, provide } from 'vue'
 
 import { mergeDialogProps, mergeDialogEmits } from '../../core/helper'
 import { useDrawer } from './drawer'
@@ -29,12 +29,13 @@ export default defineComponent({
     params: Object,
     closeButton: { type: Boolean, default: true },
     placement: { type: String, default: PLACEMENT_RIGHT },
+    rounded: { type: Boolean, default: true },
     visible: { type: Boolean, default: false }
   }),
   emits: mergeDialogEmits(['update:visible']),
   setup (props, { emit, slots, expose }) {
     const {
-      getPositionClass,
+      drawerClasses,
       getTransitionName,
       closeDialogWithoutCallback,
       ...restItems
@@ -47,18 +48,13 @@ export default defineComponent({
       closeDialogWithoutCallback
     })
 
-    const containerClass = computed(() => ([
-      'v-dialog-drawer',
-      getPositionClass()
-    ]))
-
     expose({
       close: closeDialogWithoutCallback
     })
 
     return () => (
       <DialogContainer
-        container-class={containerClass.value}
+        container-class={drawerClasses.value}
         transition-name={getTransitionName()}
       >
         <DialogContentBox>

@@ -1,12 +1,14 @@
 @use 'variable'
 
 /* drawer */
+$drawer: v-dialog-drawer
+$border-rounded: 18px
 
 @mixin shadow($x, $y)
   .v-dialog-content
     box-shadow: $x $y 5rem rgb(0,0,0,0.5)
 
-.v-dialog-drawer
+.#{$drawer}
   &#{&}--top
     top: 0
     left: 0
@@ -23,11 +25,29 @@
     top: 0
     right: 0
     @include shadow(0, 1rem)
+  &#{&}--rounded
+    .v-dialog-content
+      border-radius: $border-rounded
+    &.#{$drawer}--top .v-dialog-content
+      border-top-left-radius: 0
+      border-top-right-radius: 0
+    &.#{$drawer}--bottom .v-dialog-content
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+    &.#{$drawer}--left .v-dialog-content
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+    &.#{$drawer}--right .v-dialog-content
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
   .v-dialog-content
     border-radius: 0
     min-width: 400px
     min-height: 200px
     .v-dialog-header
+      h3
+        font-weight: 600
+        color: #333333
       button
         width: 60px
         height: 100%
@@ -55,15 +75,15 @@
 @mixin slide-in($slide-in-name, $transform)
   .#{$slide-in-name}-enter-active,
   .#{$slide-in-name}-leave-active
-    transition: transform 250ms ease-in-out, opacity 250ms linear
+    transition: transform 280ms cubic-bezier(0.25, 1, 0.5, 1), opacity 180ms ease-out 60ms
     will-change: transform, opacity
     transform: translateZ(0)
     backface-visibility: hidden
+    contain: layout style paint
   .#{$slide-in-name}-enter-from,
   .#{$slide-in-name}-leave-to
     transform: $transform
     opacity: 0
-
 
 @include slide-in(v-dialog-drawer-slide-in-top , translate3d(0, -100%, 0))
 @include slide-in(v-dialog-drawer-slide-in-bottom , translate3d(0, 100%, 0))

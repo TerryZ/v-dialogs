@@ -17,13 +17,14 @@ $fade-lite: v-dialog--fade-lite
 
 .#{$candy}-enter-active
   animation: soft-candy-show 320ms cubic-bezier(0.34, 1.56, 0.64, 1)
-  will-change: transform
+  will-change: transform, opacity
   backface-visibility: hidden
-  perspective: 1000px
+  // perspective: 1000px
 .#{$candy}-leave-active
   transition: transform 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
   will-change: transform, opacity
   backface-visibility: hidden
+.#{$candy}-enter-from,
 .#{$candy}-leave-to
   transform: scale3d(0.9, 0.9, 1) translateZ(0)
   opacity: 0

@@ -1,4 +1,4 @@
-import { onMounted, watch, markRaw } from 'vue'
+import { onMounted, watch, markRaw, computed } from 'vue'
 
 import {
   DRAWER_WIDTH,
@@ -24,12 +24,18 @@ export function useDrawer (props, emit) {
     closeWithoutCallback,
     ...restItems
   } = useDialog(props, emit)
-  const { placement } = props
+  const { placement, rounded } = props
   const { width, height } = getDrawerSize(props)
   const {
     closeDialogWithCallback,
     closeDialogWithoutCallback
   } = useCloseDialog(emit, closeWithCallback, closeWithoutCallback)
+  const drawerClasses = computed(() => {
+    const classes = ['v-dialog-drawer']
+    classes.push(getPositionClass())
+    if (rounded) classes.push('v-dialog-drawer--rounded')
+    return classes
+  })
 
   watch(() => props.visible, val => {
     if (val) return
@@ -51,7 +57,7 @@ export function useDrawer (props, emit) {
 
   return {
     ...restItems,
-    getPositionClass,
+    drawerClasses,
     getTransitionName,
     closeDialogWithCallback,
     closeDialogWithoutCallback,

@@ -31,6 +31,11 @@ export declare interface DrawerOptions extends DialogBaseOptions {
    */
   placement?: 'left' | 'right' | 'top' | 'bottom'
   /**
+   * Drawer dialog rounded border
+   * @default true
+   */
+  rounded?: boolean
+  /**
    * Display drawer dialog backdrop
    * @default true
    */
