@@ -44,7 +44,7 @@ describe('v-dialogs Message 模式', () => {
         dialogIndex: 2
       }
     })
-    await nextTick()
+    // await nextTick()
 
     expect(vi.getTimerCount()).toBe(1)
 
