@@ -45,7 +45,7 @@ export default defineComponent({
       handleBodyRounded,
       closeGroupDialogWithCallback,
       ...restItems
-    } = useMessage(props, emit)
+    } = useMessage(props, emit, expose)
     const body = ref()
 
     provide(propsInjectionKey, {
@@ -55,10 +55,6 @@ export default defineComponent({
     })
 
     handleBodyRounded(body)
-
-    expose({
-      close: closeGroupDialogWithCallback
-    })
 
     return () => (
       <DialogLiteContainer

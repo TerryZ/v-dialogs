@@ -39,7 +39,7 @@ export default defineComponent({
       maximize,
       closeDialogWithoutCallback,
       ...restItems
-    } = useModal(props, emit)
+    } = useModal(props, emit, expose)
 
     provide(propsInjectionKey, {
       ...props,
@@ -51,18 +51,10 @@ export default defineComponent({
 
     // v-dialog--screen-center
     const containerClass = computed(() => (
-      [
-        'v-dialog-modal',
-        'v-dialog--content-center',
-        {
-          'v-dialog-modal--maximize': maximize.value
-        }
-      ]
+      ['v-dialog-modal', 'v-dialog--content-center', {
+        'v-dialog-modal--maximize': maximize.value
+      }]
     ))
-
-    expose({
-      close: closeDialogWithoutCallback
-    })
 
     return () => (
       <DialogContainer

@@ -16,7 +16,7 @@ import { useCloseDialog } from '../../core/base-use'
 
 import TheDialogDrawer from './DialogDrawer'
 
-export function useDrawer (props, emit) {
+export function useDrawer (props, emit, expose) {
   const {
     setDialogSize,
     openDialog,
@@ -29,7 +29,11 @@ export function useDrawer (props, emit) {
   const {
     closeDialogWithCallback,
     closeDialogWithoutCallback
-  } = useCloseDialog(emit, closeWithCallback, closeWithoutCallback)
+  } = useCloseDialog(emit, {
+    callback: props.callback,
+    withCallback: closeWithCallback,
+    withoutCallback: closeWithoutCallback
+  })
   const drawerClasses = computed(() => {
     const classes = ['v-dialog-drawer']
     classes.push(getPositionClass())
@@ -54,6 +58,10 @@ export function useDrawer (props, emit) {
   setDialogSize(width, height)
 
   onMounted(openDialog)
+
+  expose({
+    close: closeDialogWithoutCallback
+  })
 
   return {
     ...restItems,

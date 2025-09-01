@@ -6,7 +6,7 @@ import { parseArgumentsToProps, getLanguage, isDOM } from '../../core/helper'
 
 import TheDialogMask from './DialogMask'
 
-export function useMask (props, emit) {
+export function useMask (props, emit, expose) {
   const {
     shouldControlOverflow,
     shouldHandleResize,
@@ -37,6 +37,10 @@ export function useMask (props, emit) {
   setDialogSize(undefined, 60)
 
   onMounted(openDialog)
+
+  expose({
+    close: closeMaskWithCallback
+  })
 
   return {
     ...restItems,

@@ -36,17 +36,13 @@ export default defineComponent({
       getShadowClass,
       closeWithCallback,
       ...restItems
-    } = useAlert(props, emit)
+    } = useAlert(props, emit, expose)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
       ...alertEnforcedSettings,
       closeWithCallback
-    })
-
-    expose({
-      close: closeWithCallback
     })
 
     return () => (

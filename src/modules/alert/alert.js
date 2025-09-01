@@ -14,7 +14,7 @@ import { parseArgumentsToProps, getLanguage, messageTypeQuickAccess } from '../.
 import TheDialogAlert from './DialogAlert'
 import { onMounted } from 'vue'
 
-export function useAlert (props, emit) {
+export function useAlert (props, emit, expose) {
   const { messageType, colorfulShadow } = props
   const {
     setDialogSize,
@@ -24,10 +24,8 @@ export function useAlert (props, emit) {
     ...restItems
   } = useDialog(props, emit)
   const lang = getLanguage(props.language)
-
-  setDialogSize(ALERT_WIDTH, 'auto')
-
   const isConfirmType = () => MESSAGE_TYPE_CONFIRM === messageType
+
   function getAlertTypeClass () {
     const types = [
       MESSAGE_TYPE_WARNING,
@@ -49,7 +47,13 @@ export function useAlert (props, emit) {
     closeDialog(props.cancelCallback)
   }
 
+  setDialogSize(ALERT_WIDTH, 'auto')
+
   onMounted(openDialog)
+
+  expose({
+    close: closeWithCallback
+  })
 
   return {
     ...restItems,

@@ -39,17 +39,13 @@ export default defineComponent({
       getTransitionName,
       closeDialogWithoutCallback,
       ...restItems
-    } = useDrawer(props, emit)
+    } = useDrawer(props, emit, expose)
 
     provide(propsInjectionKey, {
       ...props,
       ...restItems,
       ...drawerEnforcedSettings,
       closeDialogWithoutCallback
-    })
-
-    expose({
-      close: closeDialogWithoutCallback
     })
 
     return () => (

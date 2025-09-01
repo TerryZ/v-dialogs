@@ -25,7 +25,7 @@ export default defineComponent({
       messageText,
       closeMaskWithCallback,
       ...restItems
-    } = useMask(props, emit)
+    } = useMask(props, emit, expose)
 
     provide(propsInjectionKey, {
       ...props,
@@ -42,10 +42,6 @@ export default defineComponent({
       'mask--no-icon': !props.icon,
       'mask--no-panel': !props.panel
     }]
-
-    expose({
-      close: closeMaskWithCallback
-    })
 
     return () => (
       <DialogContainer

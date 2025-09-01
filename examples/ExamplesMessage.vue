@@ -5,8 +5,8 @@
   <div class="">
     <div class="mb-5">
       <h5>Options</h5>
-      <div class="d-flex">
-        <div class="form-check me-3">
+      <div class="d-flex gap-3 flex-wrap">
+        <div class="form-check">
           <input
             class="form-check-input"
             type="checkbox"
@@ -22,7 +22,7 @@
             Use icon
           </label>
         </div>
-        <div class="form-check me-3">
+        <div class="form-check">
           <input
             class="form-check-input"
             type="checkbox"
@@ -53,6 +53,20 @@
             class="form-check-label"
             for="flexSwitchCheckChecked"
           >Placement Top</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="autoClose"
+            id="dialog-auto-close"
+          >
+          <label
+            class="form-check-label"
+            for="dialog-auto-close"
+          >
+            Auto close
+          </label>
         </div>
       </div>
     </div>
@@ -99,48 +113,45 @@
 
     <div class="mb-3">
       <h5>Features</h5>
-      <div class="mb-3">
+      <div class="mb-3 d-flex gap-3 flex-wrap">
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="noAutoClose"
         >
           Do not auto close
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="customTitle"
         >
           Custom title
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="closeButton"
         >
           Close button
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="longText"
         >
           Long text
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="bottomPlacement"
         >
           Show at bottom
         </button>
-      </div>
-
-      <div>
         <button
           type="button"
-          class="btn btn-outline-secondary me-3"
+          class="btn btn-outline-secondary"
           @click="rounded"
         >
           Rounded border
@@ -185,7 +196,7 @@
 </template>
 
 <script setup>
-import { ref, h } from 'vue'
+import { ref, h, computed } from 'vue'
 import {
   DialogMessage,
   DialogMessageWarning,
@@ -196,6 +207,9 @@ import {
 const icon = ref(true)
 const closeBtn = ref(true)
 const placement = ref('top')
+const autoClose = ref(true)
+
+const duration = computed(() => autoClose.value ? 3000 : 0)
 
 function openOneMessage () {
   // using VNode content
@@ -203,7 +217,7 @@ function openOneMessage () {
     'Provide contextual feedback messages for typical user actions with ',
     h('strong', 'the handful of available and flexible alert messages')
   ])
-  DialogMessage(content)
+  DialogMessage(content, undefined, { duration: duration.value })
 }
 function openMessage (content = 'Hello world.', type = 'info') {
   DialogMessage(content, () => {
@@ -212,6 +226,7 @@ function openMessage (content = 'Hello world.', type = 'info') {
   }, {
     icon: icon.value,
     messageType: type,
+    duration: duration.value,
     placement: placement.value,
     closeButton: closeBtn.value
   })
@@ -229,11 +244,7 @@ function closeButton () {
   })
 }
 function longText () {
-  DialogMessage('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', {
-    icon: icon.value,
-    placement: placement.value,
-    closeButton: closeBtn.value
-  })
+  openMessage('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
 }
 function bottomPlacement () {
   DialogMessage('Hello, world', { placement: 'bottom' })

@@ -19,7 +19,7 @@ import { parseArgumentsToProps, messageTypeQuickAccess } from '../../core/helper
 
 import TheDialogMessage from './DialogMessage'
 
-export function useMessage (props, emit) {
+export function useMessage (props, emit, expose) {
   const {
     setPosition,
     setDialogSize,
@@ -53,10 +53,12 @@ export function useMessage (props, emit) {
     if (!props.pill) return
     onMounted(() => {
       nextTick(() => {
-        // long text
-        if (body.value?.$el?.offsetHeight > 60) {
-          body.value?.$el?.classList?.remove('v-dialog-message--pill')
-        }
+        requestAnimationFrame(() => {
+          // long text
+          if (body.value?.$el?.offsetHeight > 60) {
+            body.value?.$el?.classList?.remove('v-dialog-message--pill')
+          }
+        })
       })
     })
   }
@@ -66,6 +68,10 @@ export function useMessage (props, emit) {
   setupAutomaticClose(closeGroupDialogWithCallback)
 
   onMounted(openDialog)
+
+  expose({
+    close: closeGroupDialogWithCallback
+  })
 
   return {
     ...restItems,

@@ -95,25 +95,6 @@
       <div>
         <h5>Base</h5>
         <div>
-          <DialogModalBox
-            v-model:visible="visible"
-            title="abcd"
-            @close="modalBoxClose"
-          >
-            <div class="p-3">
-              这是一个使用 DialogModalBox 打开的模态窗口
-            </div>
-          </DialogModalBox>
-          <DialogModalBox
-            v-model:visible="visibleUserControl"
-            :header="false"
-          >
-            <CardPanel
-              @close="handleCloseModal"
-              @abc="customEvent"
-              @abc-efg="customEvent"
-            />
-          </DialogModalBox>
           <button
             type="button"
             class="btn btn-outline-secondary me-3"
@@ -131,6 +112,26 @@
         </div>
       </div>
     </div>
+
+    <DialogModalBox
+      v-model:visible="visible"
+      title="abcd"
+      @close="modalBoxClose"
+    >
+      <div class="p-3">
+        这是一个使用 DialogModalBox 打开的模态窗口
+      </div>
+    </DialogModalBox>
+    <DialogModalBox
+      v-model:visible="visibleUserControl"
+      :header="false"
+    >
+      <CardPanel
+        @close="handleCloseModal"
+        @abc="customEvent"
+        @abc-efg="customEvent"
+      />
+    </DialogModalBox>
   </div>
 </template>
 
@@ -166,7 +167,7 @@ function base () {
       console.log('event name: ', name)
       console.log('event data: ', data)
       if (name === 'close') {
-        DialogAlert(`Received company name: ${data[0]?.companyName}`)
+        DialogAlert(`Received company name: ${data?.[0]?.companyName}`)
       }
     }
   })

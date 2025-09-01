@@ -16,7 +16,7 @@ export default {
 
     onMounted(() => {
       // set the default focus on the OK button
-      btnOk.value && btnOk.value.focus()
+      btnOk.value?.focus()
     })
 
     return () => (

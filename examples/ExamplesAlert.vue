@@ -207,13 +207,13 @@ function openOneAlert () {
   )
 }
 function openAlert (type) {
-  DialogAlert('Hello, <b>world!</b>', () => {
-    DialogAlert('Dialog closed.')
-  }, {
+  const handleClose = () => DialogAlert('Dialog closed.')
+  const options = {
     icon: icon.value,
     messageType: typeof type === 'string' ? type : undefined,
     colorfulShadow: colorfulShadow.value
-  })
+  }
+  DialogAlert('Hello, <b>world!</b>', handleClose, options)
 }
 function openConfirmAlert () {
   DialogAlert('Are you sure?', () => {
