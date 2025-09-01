@@ -16,10 +16,11 @@ $fade-lite: v-dialog--fade-lite
     transform: scale3d(1, 1, 1) translateZ(0)
 
 .#{$candy}-enter-active
-  animation: soft-candy-show 320ms cubic-bezier(0.34, 1.56, 0.64, 1)
+  animation: soft-candy-show 360ms cubic-bezier(0.34, 1.56, 0.64, 1)
   will-change: transform, opacity
   backface-visibility: hidden
   // perspective: 1000px
+  contain: layout style paint
 .#{$candy}-leave-active
   transition: transform 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
   will-change: transform, opacity
@@ -38,6 +39,7 @@ $fade-lite: v-dialog--fade-lite
   transform: translateZ(0)
   backface-visibility: hidden
   perspective: 1000px
+  contain: layout style paint
 
 .#{$smooth}-enter-from,
 .#{$smooth}-leave-to
@@ -107,3 +109,4 @@ $fade-lite: v-dialog--fade-lite
   backface-visibility: hidden
   // perspective: 1000px
   transform: translateZ(0)
+  contain: layout style paint
