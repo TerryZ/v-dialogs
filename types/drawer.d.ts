@@ -45,6 +45,13 @@ export declare interface DrawerOptions extends DialogBaseOptions {
    * @default true
    */
   backdropClose?: boolean
+  /**
+   * Event responder
+   * @param eventName
+   * @param data
+   * @returns
+   */
+  callback?: (eventName: string, data?: unknown[]) => void
 }
 
 /**
