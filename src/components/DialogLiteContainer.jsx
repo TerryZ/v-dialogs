@@ -2,6 +2,13 @@ import { Transition, Teleport, inject } from 'vue'
 
 import { propsInjectionKey } from '../constants'
 
+/**
+ * Dialog without backdrop
+ *
+ * Applies dialog components
+ * - Toast
+ * - Message
+ */
 export default {
   name: 'DialogLiteContainer',
   props: {
@@ -19,11 +26,7 @@ export default {
       onTransitionAfterLeave
     } = inject(propsInjectionKey)
 
-    const classes = [
-      'v-dialog-lite',
-      props.containerClass,
-      customClass
-    ]
+    const classes = ['v-dialog-lite', props.containerClass, customClass]
 
     return () => (
       <Teleport to='body'>
@@ -38,7 +41,7 @@ export default {
             onAfterLeave={onTransitionAfterLeave}
             appear
           >
-            {() => show.value && slots.default && slots.default()}
+            {() => show.value && slots?.default()}
           </Transition>
         </div>
       </Teleport>

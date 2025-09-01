@@ -2,6 +2,15 @@ import { inject, computed } from 'vue'
 
 import { propsInjectionKey } from '../constants'
 
+/**
+ * The main content container of the Dialog
+ *
+ * Applies dialog components
+ * - Alert
+ * - Mask
+ * - Modal
+ * - Drawer
+ */
 export default {
   name: 'DialogContentBox',
   props: {

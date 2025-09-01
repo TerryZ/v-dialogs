@@ -2,6 +2,15 @@ import { Transition, Teleport, inject, defineComponent } from 'vue'
 
 import { propsInjectionKey } from '../constants'
 
+/**
+ * Dialog container with backdrop
+ *
+ * Applies dialog components
+ * - Alert
+ * - Mask
+ * - Modal
+ * - Drawer
+ */
 export default defineComponent({
   name: 'DialogContainer',
   props: {
@@ -43,60 +52,56 @@ export default defineComponent({
     function generateBackdrop () {
       if (!backdrop) return
 
-      const classes = [
-        'v-dialog-overlay',
-        props.backdropClass,
+      const classes = ['v-dialog-overlay', props.backdropClass,
         { 'v-dialog-overlay--embedded': props.appendTo !== 'body' }
       ]
 
       return (
-        <Teleport to={props.appendTo}>
-          <Transition
-            name='v-dialog--fade'
-            appear
-          >
-            {() => show.value && (
-              <div
-                class={classes}
-                style={{ 'z-index': backdropZIndex }}
-                onClick={backdropClick}
-              />
-            )}
-          </Transition>
-        </Teleport>
+        <Transition
+          name='v-dialog--fade'
+          appear
+        >
+          {() => show.value && (
+            <div
+              class={classes}
+              style={{ 'z-index': backdropZIndex }}
+              onClick={backdropClick}
+            />
+          )}
+        </Transition>
       )
     }
     function generateContainer () {
-      const classes = [
-        props.containerClass,
-        {
-          'v-dialog--embedded': props.appendTo !== 'body'
-        }
-      ]
+      const classes = [props.containerClass, {
+        'v-dialog--embedded': props.appendTo !== 'body'
+      }]
       const styles = {
         'z-index': dialogZIndex
       }
 
       return (
-        <Teleport to={props.appendTo}>
-          <div
-            class={['v-dialog', classes]}
-            style={styles}
-            onClick={backdropClick}
+        <div
+          class={['v-dialog', classes]}
+          style={styles}
+          onClick={backdropClick}
+        >
+          <Transition
+            name={props.transitionName}
+            onAfterEnter={onTransitionAfterEnter}
+            onAfterLeave={onTransitionAfterLeave}
+            appear
           >
-            <Transition
-              name={props.transitionName}
-              onAfterEnter={onTransitionAfterEnter}
-              onAfterLeave={onTransitionAfterLeave}
-              appear
-            >
-              {() => show.value && (slots.default && slots.default())}
-            </Transition>
-          </div>
-        </Teleport>
+            {() => show.value && slots?.default()}
+          </Transition>
+        </div>
       )
     }
 
-    return () => [generateBackdrop(), generateContainer()]
+    return () => (
+      <Teleport to={props.appendTo}>
+        {generateBackdrop()}
+        {generateContainer()}
+      </Teleport>
+    )
   }
 })
