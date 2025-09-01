@@ -2,6 +2,16 @@
 
 英文 changelog 内容请访问 [CHANGELOG](CHANGELOG.md)
 
+## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.0.3...v3.1.3) (2025-09-02)
+
+### 新特性
+
+- `DialogAlert` 内容高度自适应
+- `DialogModal` 最小宽度调整为 `280px`
+- 优化动画性能与效果
+- `DialogModal` 与 `DialogDrawer` 的 `callback` 响应事件 `(data: unknown) => void` 调整为 `(name: string, data: unknown[]) => void`，并响应所有窗口组件内部触发的所有事件以及窗口的操作事件
+- `DialogDrawer` 新增 `rounded` prop，用于设置抽屉的圆角边框样式
+
 ## [3.0.3](https://github.com/TerryZ/v-dialogs/compare/v3.0.2...v3.0.3) (2024-08-12)
 
 ### 新特性

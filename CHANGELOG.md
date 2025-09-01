@@ -2,9 +2,19 @@
 
 Please refer to [CHANGELOG-CN](CHANGELOG-CN.md) for Chinese changelog
 
+## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.0.3...v3.1.3) (2025-09-02)
+
+### Features
+
+- `DialogAlert` content height adaptive
+- `DialogModal` minimum width is adjusted to `280px`
+- Optimize animation performance and effects
+- `DialogModal` and `DialogDrawer`'s `callback` response event `(data: unknown) => void` is adjusted to `(name: string, data: unknown[]) => void`, and responds to all events triggered by component inside dialog and dialog operation events
+- `DialogDrawer` adds `rounded` prop to set the rounded border style of the drawer
+
 ## [3.0.3](https://github.com/TerryZ/v-dialogs/compare/v3.0.2...v3.0.3) (2024-08-12)
 
-### New Features
+### Features
 
 - Add **Turkish** , the language key is `TR`
 
