@@ -1,6 +1,7 @@
 # [v-dialogs](https://terryz.github.io/docs-vue3/dialog/)
 <!-- &middot; -->
 [![CircleCI](https://circleci.com/gh/TerryZ/v-dialogs/tree/master.svg?style=svg)](https://circleci.com/gh/TerryZ/v-dialogs/tree/master)
+[![GithubActions](https://github.com/TerryZ/v-dialogs/actions/workflows/npm-publish.yml/badge.svg?branch=master)](https://github.com/TerryZ/v-dialogs/actions/workflows/npm-publish.yml)
 [![code coverage](https://codecov.io/gh/TerryZ/v-dialogs/branch/master/graph/badge.svg)](https://codecov.io/gh/TerryZ/v-dialogs)
 [![npm version](https://img.shields.io/npm/v/v-dialogs.svg)](https://www.npmjs.com/package/v-dialogs)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
