@@ -28,7 +28,7 @@
     "preview": "vite preview --port 4173",
     "test:unit": "vitest",
     "coverage": "vitest run --coverage",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint . --fix --config ./eslint.config.js --ignore-pattern .gitignore",
     "dts": "vue-tsc --declaration --emitDeclarationOnly"
   },
   "repository": {

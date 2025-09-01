@@ -27,7 +27,7 @@ export default [
     // 'flat/recommended'
   ],
   ...standard,
-  { ignores: ['**/dist/**', '**/coverage/**', 'types/**'] },
+  { ignores: ['.gitignore', '**/dist/**', '**/coverage/**', 'types/**'] },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {
