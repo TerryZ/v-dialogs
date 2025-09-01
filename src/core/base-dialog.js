@@ -73,10 +73,15 @@ export function useDialog (props, emit) {
     }
   }
   function openDialog () {
-    show.value = true
-    emit(EMIT_RENDER_DIALOG, true)
-
     if (shouldControlOverflow.value) hideDocumentBodyOverflow()
+
+    // nextTick(() => {
+    // requestAnimationFrame(() => {
+    show.value = true
+
+    emit(EMIT_RENDER_DIALOG, true)
+    // })
+    // })
   }
   /**
    * Close dialog
@@ -98,11 +103,17 @@ export function useDialog (props, emit) {
 
     // destroy dialog when transition leave complete
     destroy.value = () => {
+      console.log('close: ', data)
+      callback?.(data)
       // close and destroy dialog
-      emit(EMIT_CLOSE, callback, data)
+      emit(EMIT_CLOSE)
       // dialog closed
       options?.afterClose?.()
-      // destroy DialogModalBox component
+      /**
+       * Destroy tag form dialog component
+       * - DialogModalBox
+       * - DialogDrawerBox
+       */
       emit(EMIT_RENDER_DIALOG, false)
 
       if (shouldControlOverflow.value) restoreDocumentBodyOverflow()
@@ -117,9 +128,7 @@ export function useDialog (props, emit) {
   function setupPositionAdjustBehavior (setTop) {
     if (shouldHandleResize.value) useResizeAdjust(setTop)
 
-    onBeforeMount(() => {
-      setTop()
-    })
+    onBeforeMount(setTop)
   }
   function setupAutomaticClose (close) {
     onMounted(() => {
@@ -130,7 +139,7 @@ export function useDialog (props, emit) {
     transitionEnterComplete.value = true
   }
   function onTransitionAfterLeave () {
-    destroy.value && destroy.value()
+    destroy?.value()
   }
 
   return {

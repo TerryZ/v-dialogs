@@ -14,11 +14,6 @@ const serialNumber = ref(0)
 export const opening = ref([])
 export const messageAdjustPositionEvent = new Event(EVENT_MESSAGE_ADJUST_POSITION)
 
-export function generateDialogKey () {
-  serialNumber.value++
-  return DIALOG_KEY_PREFIX + serialNumber.value
-}
-
 /**
  * Render a new dialog to the DOM
  * @param {VNode} component Component to render
@@ -32,33 +27,35 @@ export function createDialog (component, options = {}, configs) {
   const props = {
     dialogKey: key,
     dialogIndex: index,
-    onClose: (callback, data) => {
-      callback?.(data)
-      destroy()
-    }
+    // Dialog close and destroy
+    onClose: () => destroy()
   }
 
-  // createVNode is the same as h
   let dialog = createVNode(component, mergeProps(options, props))
 
   const globalAppContext = getCurrentInstance()?.appContext ?? null
   dialog.appContext = globalAppContext
 
-  // let root = document.body.appendChild(document.createElement('div'))
   let root = document.createElement('div')
   render(dialog, root)
 
   const destroy = () => {
     render(null, root)
-    // document.body.removeChild(root)
+    root.remove()
+
     root = null
     dialog = null
+
     closeDialog(key)
   }
 
   return () => {
-    dialog.component.exposed.close()
+    dialog.component.exposed?.close?.()
   }
+}
+
+export function generateDialogKey () {
+  return DIALOG_KEY_PREFIX + ++serialNumber.value
 }
 
 export function addDialog (configs) {

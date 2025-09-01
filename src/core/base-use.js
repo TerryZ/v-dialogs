@@ -9,49 +9,13 @@ import {
 
 import {
   EVENT_MESSAGE_ADJUST_POSITION,
+  EMIT_CLOSE,
   MESSAGE_GAP,
   MESSAGE_OFFSET,
   propsInjectionKey
 } from '../constants'
 import { messageAdjustPositionEvent, addDialog, opening } from './manage'
 import { toPascalCase } from './helper'
-
-export function useDialogComponent (slots) {
-  const {
-    component,
-    callback,
-    params,
-    closeDialogWithoutCallback
-  } = inject(propsInjectionKey)
-
-  function getComponentContent () {
-    // use default slot content first
-    if (slots.default) return slots.default()
-    // dynamic component
-    if (!component) return
-
-    const VNode = typeof component === 'function'
-      ? component()
-      : component
-
-    const emits = VNode?.emits || []
-    const options = {}
-
-    emits.forEach(name => {
-      const eventName = 'on' + toPascalCase(name)
-      options[eventName] = (...args) => {
-        // close dialog when event name is `close`
-        if (name.toLowerCase() === 'close') closeDialogWithoutCallback()
-
-        callback?.(name, args)
-      }
-    })
-
-    return h(VNode, mergeProps(params, options))
-  }
-
-  return { getComponentContent }
-}
 
 /**
  * Automatically close dialog at a specified time
@@ -91,22 +55,30 @@ export function useGroupItemPositionAdjust (handler) {
 
 /**
  * Close dialog and update visible prop value
+ *
+ * Applies dialog components
+ * - Modal
+ * - Drawer
+ *
  * @param {function} emit
- * @param {function} closeWithCallback
- * @param {function} closeWithoutCallback
+ * @param {object} options
+ * @param {function} options.callback
+ * @param {function} options.withCallback
+ * @param {function} options.withoutCallback
  * @returns {object}
  */
-export function useCloseDialog (emit, closeWithCallback, closeWithoutCallback) {
+export function useCloseDialog (emit, options) {
   const closeOptions = {
     closing: () => {
+      options.callback?.(EMIT_CLOSE, [])
       emit('update:visible', false)
     }
   }
   function closeDialogWithCallback (data) {
-    closeWithCallback(data, closeOptions)
+    options.withCallback(data, closeOptions)
   }
   function closeDialogWithoutCallback () {
-    closeWithoutCallback(closeOptions)
+    options.withoutCallback(closeOptions)
   }
 
   return {
@@ -137,6 +109,43 @@ export function useCloseGroupDialog (eventHandler, close) {
   }
 }
 
+export function useDialogComponent (slots) {
+  const {
+    component,
+    callback,
+    params,
+    closeDialogWithoutCallback
+  } = inject(propsInjectionKey)
+
+  function getComponentContent () {
+    // use default slot content first
+    if (slots.default) return slots.default()
+    // dynamic component
+    if (!component) return
+
+    const VNode = typeof component === 'function'
+      ? component()
+      : component
+
+    const emits = VNode?.emits || []
+    const options = {}
+
+    emits.forEach(name => {
+      const eventName = 'on' + toPascalCase(name)
+      options[eventName] = (...args) => {
+        // close dialog event `close` triggered by components within the Dialog
+        if (name.toLowerCase() === EMIT_CLOSE) closeDialogWithoutCallback()
+
+        callback?.(name, args)
+      }
+    })
+
+    return h(VNode, mergeProps(params, options))
+  }
+
+  return { getComponentContent }
+}
+
 export function useComponent (component, { attrs, slots }) {
   const renderDialog = ref(false)
 
@@ -150,9 +159,9 @@ export function useComponent (component, { attrs, slots }) {
   }
 
   return () => {
-    if (!attrs.visible && !renderDialog.value) return
+    if (!attrs?.visible && !renderDialog.value) return
 
-    return h(component, mergeProps(attrs, baseProps), () => slots.default())
+    return h(component, mergeProps(attrs, baseProps), () => slots?.default())
   }
 }
 
