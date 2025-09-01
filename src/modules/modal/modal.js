@@ -10,7 +10,7 @@ import { useCloseDialog } from '../../core/base-use'
 
 import TheDialogModal from './DialogModal'
 
-export function useModal (props, emit) {
+export function useModal (props, emit, expose) {
   const {
     setDialogSize,
     openDialog,
@@ -23,7 +23,11 @@ export function useModal (props, emit) {
   const {
     closeDialogWithCallback,
     closeDialogWithoutCallback
-  } = useCloseDialog(emit, closeWithCallback, closeWithoutCallback)
+  } = useCloseDialog(emit, {
+    callback: props.callback,
+    withCallback: closeWithCallback,
+    withoutCallback: closeWithoutCallback
+  })
 
   watch(() => props.visible, val => {
     if (val) return
@@ -33,16 +37,20 @@ export function useModal (props, emit) {
 
   function switchMaximize () {
     maximize.value = !maximize.value
+    props.callback?.('maximize', [maximize.value])
   }
   function openModal () {
     openDialog()
-
     if (props.fullscreen) switchMaximize()
   }
 
   setDialogSize(props.width || MODAL_WIDTH, props.height || MODAL_HEIGHT)
 
   onMounted(openModal)
+
+  expose({
+    close: closeDialogWithoutCallback
+  })
 
   return {
     ...restItems,
