@@ -10,6 +10,7 @@
   ],
   "main": "./dist/v-dialogs.umd.cjs",
   "module": "./dist/v-dialogs.js",
+  "packageManager": "pnpm@10.15.0",
   "exports": {
     ".": {
       "import": {
