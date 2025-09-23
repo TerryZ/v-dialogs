@@ -12,7 +12,7 @@ import {
 } from '../../constants'
 import { createDialog } from '../../core/manage'
 import { useDialog } from '../../core/base-dialog'
-import { useCloseDialog } from '../../core/base-use'
+import { useCloseContainerDialog } from '../../core/base-use'
 
 import TheDialogDrawer from './DialogDrawer'
 
@@ -27,9 +27,10 @@ export function useDrawer (props, emit, expose) {
   const { placement, rounded } = props
   const { width, height } = getDrawerSize(props)
   const {
-    closeDialogWithCallback,
-    closeDialogWithoutCallback
-  } = useCloseDialog(emit, {
+    closeContainerOnly,
+    closeContainerWithCallback,
+    closeContainerWithoutCallback
+  } = useCloseContainerDialog(emit, {
     callback: props.callback,
     withCallback: closeWithCallback,
     withoutCallback: closeWithoutCallback
@@ -43,7 +44,7 @@ export function useDrawer (props, emit, expose) {
 
   watch(() => props.visible, val => {
     if (val) return
-    closeDialogWithoutCallback()
+    closeContainerWithoutCallback()
   })
 
   function getPositionClass () {
@@ -60,16 +61,17 @@ export function useDrawer (props, emit, expose) {
   onMounted(openDialog)
 
   expose({
-    close: closeDialogWithoutCallback
+    close: closeContainerWithoutCallback
   })
 
   return {
     ...restItems,
     drawerClasses,
     getTransitionName,
-    closeDialogWithCallback,
-    closeDialogWithoutCallback,
-    backdropCloseDialog: closeDialogWithoutCallback
+    closeContainerOnly,
+    closeContainerWithCallback,
+    closeContainerWithoutCallback,
+    backdropCloseDialog: closeContainerWithoutCallback
   }
 }
 

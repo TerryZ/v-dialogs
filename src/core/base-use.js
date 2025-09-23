@@ -67,23 +67,29 @@ export function useGroupItemPositionAdjust (handler) {
  * @param {function} options.withoutCallback
  * @returns {object}
  */
-export function useCloseDialog (emit, options) {
-  const closeOptions = {
-    closing: () => {
-      options.callback?.(EMIT_CLOSE, [])
-      emit('update:visible', false)
+export function useCloseContainerDialog (emit, options) {
+  function getOptions (data, callback = true) {
+    return {
+      closing: () => {
+        if (callback) options.callback?.(EMIT_CLOSE, data || [])
+        emit('update:visible', false)
+      }
     }
   }
-  function closeDialogWithCallback (data) {
-    options.withCallback(data, closeOptions)
+  function closeContainerWithCallback (data) {
+    options.withoutCallback(getOptions(data))
   }
-  function closeDialogWithoutCallback () {
-    options.withoutCallback(closeOptions)
+  function closeContainerWithoutCallback () {
+    options.withoutCallback(getOptions())
+  }
+  function closeContainerOnly () {
+    options.withoutCallback(getOptions(undefined, false))
   }
 
   return {
-    closeDialogWithCallback,
-    closeDialogWithoutCallback
+    closeContainerOnly,
+    closeContainerWithCallback,
+    closeContainerWithoutCallback
   }
 }
 
@@ -114,7 +120,7 @@ export function useDialogComponent (slots) {
     component,
     callback,
     params,
-    closeDialogWithoutCallback
+    closeContainerOnly
   } = inject(propsInjectionKey)
 
   function getComponentContent () {
@@ -123,9 +129,7 @@ export function useDialogComponent (slots) {
     // dynamic component
     if (!component) return
 
-    const VNode = typeof component === 'function'
-      ? component()
-      : component
+    const VNode = typeof component === 'function' ? component() : component
 
     const emits = VNode?.emits || []
     const options = {}
@@ -134,7 +138,7 @@ export function useDialogComponent (slots) {
       const eventName = 'on' + toPascalCase(name)
       options[eventName] = (...args) => {
         // close dialog event `close` triggered by components within the Dialog
-        if (name.toLowerCase() === EMIT_CLOSE) closeDialogWithoutCallback()
+        if (name.toLowerCase() === EMIT_CLOSE) closeContainerOnly()
 
         callback?.(name, args)
       }

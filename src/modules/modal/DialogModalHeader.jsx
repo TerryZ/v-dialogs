@@ -13,7 +13,7 @@ export default {
       title,
       closeButton,
       switchMaximize,
-      closeDialogWithoutCallback
+      closeContainerWithoutCallback
     } = inject(propsInjectionKey)
 
     return () => (
@@ -32,7 +32,7 @@ export default {
           <button
             type='button'
             class='v-dialog-btn__close'
-            onClick={closeDialogWithoutCallback}
+            onClick={closeContainerWithoutCallback}
           >
             <IconClose />
           </button>

@@ -6,7 +6,7 @@ import {
 } from '../../constants'
 import { createDialog } from '../../core/manage'
 import { useDialog } from '../../core/base-dialog'
-import { useCloseDialog } from '../../core/base-use'
+import { useCloseContainerDialog } from '../../core/base-use'
 
 import TheDialogModal from './DialogModal'
 
@@ -21,9 +21,10 @@ export function useModal (props, emit, expose) {
 
   const maximize = ref(false)
   const {
-    closeDialogWithCallback,
-    closeDialogWithoutCallback
-  } = useCloseDialog(emit, {
+    closeContainerOnly,
+    closeContainerWithCallback,
+    closeContainerWithoutCallback
+  } = useCloseContainerDialog(emit, {
     callback: props.callback,
     withCallback: closeWithCallback,
     withoutCallback: closeWithoutCallback
@@ -32,7 +33,7 @@ export function useModal (props, emit, expose) {
   watch(() => props.visible, val => {
     if (val) return
     // close modal when visible is set to false
-    closeDialogWithoutCallback()
+    closeContainerWithoutCallback()
   })
 
   function switchMaximize () {
@@ -49,7 +50,7 @@ export function useModal (props, emit, expose) {
   onMounted(openModal)
 
   expose({
-    close: closeDialogWithoutCallback
+    close: closeContainerWithoutCallback
   })
 
   return {
@@ -57,9 +58,10 @@ export function useModal (props, emit, expose) {
     maximize,
     openModal,
     switchMaximize,
-    closeDialogWithCallback,
-    closeDialogWithoutCallback,
-    backdropCloseDialog: closeDialogWithoutCallback
+    closeContainerOnly,
+    closeContainerWithCallback,
+    closeContainerWithoutCallback,
+    backdropCloseDialog: closeContainerWithoutCallback
   }
 }
 

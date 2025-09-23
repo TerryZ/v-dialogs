@@ -90,20 +90,20 @@ export function useDialog (props, emit) {
    * @param {object} options custom options and life cycle
    *
    * Life cycle
-   * - closing
-   * - afterClose
+   * - closing(Modal, Drawer)
+   * - afterClose(Message, Toast)
    */
   function closeDialog (callback, data, options) {
     if (!transitionEnterComplete.value) return
 
     // trigger dialog close
     show.value = false
-    // do some work after trigger dialog close
+    // do some work when dialog closing
     options?.closing?.()
 
     // destroy dialog when transition leave complete
     destroy.value = () => {
-      console.log('close: ', data)
+      // console.log('close: ', data)
       callback?.(data)
       // close and destroy dialog
       emit(EMIT_CLOSE)

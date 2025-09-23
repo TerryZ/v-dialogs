@@ -37,7 +37,6 @@ export default defineComponent({
   setup (props, { emit, slots, expose }) {
     const {
       maximize,
-      closeDialogWithoutCallback,
       ...restItems
     } = useModal(props, emit, expose)
 
@@ -45,7 +44,6 @@ export default defineComponent({
       ...props,
       ...restItems,
       ...modalEnforcedSettings,
-      closeDialogWithoutCallback,
       maximize
     })
 
