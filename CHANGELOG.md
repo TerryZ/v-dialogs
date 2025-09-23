@@ -2,7 +2,13 @@
 
 Please refer to [CHANGELOG-CN](CHANGELOG-CN.md) for Chinese changelog
 
-## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.0.3...v3.1.3) (2025-09-02)
+## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.1.0...v3.1.1) (2025-09-24)
+
+### Bug Fixes
+
+- The `callback` event is triggered repeatedly when the user closes the `DialogModal` and `DialogDrawer` dialog
+
+## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.0.3...v3.1.0) (2025-09-02)
 
 ### Features
 

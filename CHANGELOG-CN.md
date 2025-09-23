@@ -2,7 +2,13 @@
 
 英文 changelog 内容请访问 [CHANGELOG](CHANGELOG.md)
 
-## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.0.3...v3.1.3) (2025-09-02)
+## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.1.0...v3.1.1) (2025-09-24)
+
+### 问题修复
+
+- `DialogModal` 与 `DialogDrawer` 的用户关闭窗口操作，`callback` 事件重复触发
+
+## [3.1.0](https://github.com/TerryZ/v-dialogs/compare/v3.0.3...v3.1.0) (2025-09-02)
 
 ### 新特性
 
